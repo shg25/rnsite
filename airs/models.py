@@ -1,4 +1,6 @@
 from django.db import models
+from datetime import datetime
+from pytz import timezone
 
 # 番組
 class Program(models.Model):
@@ -10,10 +12,10 @@ class Program(models.Model):
 # 放送
 class Air(models.Model):
     program = models.ForeignKey(Program, on_delete=models.CASCADE)
-    started = models.DateTimeField('date published')  # 開始日時
-    ended = models.DateTimeField('date published')  # 終了日時
+    started = models.DateTimeField('開始日時')
+    ended = models.DateTimeField('終了日時')
     def __str__(self):
-        return self.program.name
+        return self.program.name + " " + str(self.started.astimezone(timezone('Asia/Tokyo')))
     def was_aired_this_week(self):
         return self.started >= timezone.now() - datetime.timedelta(days=7)
 
