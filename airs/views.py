@@ -1,4 +1,5 @@
 from django.http import HttpResponse
+from django.http import Http404
 from django.shortcuts import render
 
 from .models import Air
@@ -11,7 +12,11 @@ def index(request):
 
 
 def detail(request, air_id):
-    return HttpResponse("You're looking at air %s." % air_id)
+    try:
+        air = Air.objects.get(pk=air_id)
+    except Air.DoesNotExist:
+        raise Http404("Air does not exist")
+    return render(request, 'airs/detail.html', {'air': air})
 
 
 def results(request, air_id):
