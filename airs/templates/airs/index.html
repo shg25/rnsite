@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>My test page</title>
+  </head>
+  <body>
+    {% if latest_air_list %}
+    <ul>
+    {% for air in latest_air_list %}
+        <li><a href="{% url 'airs:detail' air.id %}">{{ air.program.name }}</a></li>
+    {% endfor %}
+    </ul>
+    {% else %}
+    <p>No polls are available.</p>
+    {% endif %}
+  </body>
+</html>
