@@ -1,6 +1,6 @@
 from django.http import HttpResponse
 from django.http import Http404
-from django.shortcuts import render
+from django.shortcuts import get_object_or_404, render
 
 from .models import Air
 
@@ -10,14 +10,9 @@ def index(request):
     context = {'latest_air_list': latest_air_list}
     return render(request, 'airs/index.html', context)
 
-
 def detail(request, air_id):
-    try:
-        air = Air.objects.get(pk=air_id)
-    except Air.DoesNotExist:
-        raise Http404("Air does not exist")
+    air = get_object_or_404(Air, pk=air_id)
     return render(request, 'airs/detail.html', {'air': air})
-
 
 def results(request, air_id):
     response = "You're looking at the results of air %s."
