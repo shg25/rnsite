@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>My test page</title>
+  </head>
+  <body>
+    <h1>{{ air }}</h1>
+
+    <ul>
+    {% for nanitozo in air.nanitozo_set.all %}
+        <li>{{ nanitozo.comment }}</li>
+    {% endfor %}
+    </ul>
+
+    <a href="{% url 'airs:detail' air.id %}">Nanitozo again?</a>
+
+  </body>
+</html>

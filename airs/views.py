@@ -17,8 +17,8 @@ def detail(request, air_id):
 
 
 def results(request, air_id):
-    response = "You're looking at the results of air %s."
-    return HttpResponse(response % air_id)
+    air = get_object_or_404(Air, pk=air_id)
+    return render(request, 'airs/results.html', {'air': air})
 
 
 def vote(request, air_id):
