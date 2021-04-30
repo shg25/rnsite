@@ -5,11 +5,16 @@
     <title>My test page</title>
   </head>
   <body>
-    <h1>{{ air.program.name }}</h1>
-<ul>
-{% comment %} {% for choice in question.choice_set.all %}
-    <li>{{ choice.choice_text }}</li>
-{% endfor %} {% endcomment %}
-</ul>
+    <h1>{{ air }}</h1>
+    {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+
+    <form action="{% url 'airs:vote' air.id %}" method="post">{% csrf_token %}
+    {% for nanitozo in air.nanitozo_set.all %}
+      <input type="radio" name="nanitozo" id="nanitozo{{ forloop.counter }}" value="{{ nanitozo.id }}">
+      <label for="nanitozo{{ forloop.counter }}">{{ nanitozo.comment }}</label><br>
+    {% endfor %}
+      <input type="submit" value="Vote">
+    </form>
+
   </body>
 </html>
