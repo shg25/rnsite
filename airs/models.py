@@ -1,6 +1,7 @@
+import datetime
+
 from django.db import models
-from datetime import datetime
-from pytz import timezone
+from django.utils import timezone
 
 # 番組
 class Program(models.Model):
@@ -17,7 +18,8 @@ class Air(models.Model):
     def __str__(self):
         return self.program.name + " " + str(self.started.astimezone(timezone('Asia/Tokyo')))
     def was_aired_this_week(self):
-        return self.started >= timezone.now() - datetime.timedelta(days=7)
+        now = timezone.now()
+        return now - datetime.timedelta(days=7) <= self.started <= now
 
 
 # 何卒（聴取）
