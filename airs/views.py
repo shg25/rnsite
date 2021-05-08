@@ -2,6 +2,7 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render
 from django.urls import reverse
 from django.views import generic
+from django.utils import timezone
 
 from .models import Air, Nanitozo
 
@@ -14,8 +15,10 @@ class IndexView(generic.ListView):
     context_object_name = 'latest_air_list'
 
     def get_queryset(self):
-        """Return the last five published questions."""
-        return Air.objects.order_by('-started')[:5]
+        """
+        Return the last five published airs (not including those set to be started in the future).
+        """
+        return Air.objects.filter(started__lte=timezone.now()).order_by('-started')[:5]
 
 
 # def detail(request, air_id):

@@ -8,11 +8,11 @@
     {% if latest_air_list %}
     <ul>
     {% for air in latest_air_list %}
-        <li><a href="{% url 'airs:detail' air.id %}">{{ air.program.name }}</a></li>
+        <li><a href="{% url 'airs:detail' air.id %}">{{ air }}</a></li>
     {% endfor %}
     </ul>
     {% else %}
-    <p>No polls are available.</p>
+    <p>今週は誰も何卒してないなー</p>
     {% endif %}
   </body>
 </html>
