@@ -3,7 +3,7 @@ import datetime
 from django.test import TestCase
 from django.utils import timezone
 from django.urls import reverse
-from pytz import timezone as pytztimezone #TODO どこかにまとめる
+from pytz import timezone as pytztimezone  # TODO どこかにまとめる
 
 from .models import Air, Program
 
@@ -59,7 +59,7 @@ def create_air(program_name, started, ended):
     return Air.objects.create(program=create_program, started=started, ended=ended)
 
 
-class QuestionIndexViewTests(TestCase):
+class AirIndexViewTests(TestCase):
     def test_no_air(self):
         """
         If no airs exist, an appropriate message is displayed.
@@ -101,7 +101,7 @@ class QuestionIndexViewTests(TestCase):
         startedpast = timezone.now() + datetime.timedelta(days=-7, hours=-1)
         endedpast = timezone.now() + datetime.timedelta(days=-7)
         create_air(program_name="酒井健太ANN0", started=startedpast, ended=endedpast)
-        
+
         startedfuture = timezone.now() + datetime.timedelta(days=7, hours=-1)
         endedfuture = timezone.now() + datetime.timedelta(days=7)
         create_air(program_name="赤もみじANN0", started=startedfuture, ended=endedfuture)
@@ -117,7 +117,7 @@ class QuestionIndexViewTests(TestCase):
         startedpast7 = timezone.now() + datetime.timedelta(days=-7, hours=-1)
         endedpast7 = timezone.now() + datetime.timedelta(days=-7)
         create_air(program_name="酒井健太ANN0", started=startedpast7, ended=endedpast7)
-        
+
         startedpast6 = timezone.now() + datetime.timedelta(days=-6, hours=-1)
         endedpast6 = timezone.now() + datetime.timedelta(days=-6)
         create_air(program_name="赤もみじANN0", started=startedpast6, ended=endedpast6)
@@ -130,3 +130,29 @@ class QuestionIndexViewTests(TestCase):
             response.context['latest_air_list'],
             ['<Air: 赤もみじANN0 ' + startedpast6str + '>', '<Air: 酒井健太ANN0 ' + startedpast7str + '>']
         )
+
+
+class AirDetailViewTests(TestCase):
+    def test_future_air(self):
+        """
+        The detail view of a air with a started in the future returns a 404 not found.
+        """
+        startedfuture = timezone.now() + datetime.timedelta(days=7, hours=-1)
+        endedfuture = timezone.now() + datetime.timedelta(days=7)
+        future_air = create_air(program_name="赤もみじANN0", started=startedfuture, ended=endedfuture)
+
+        url = reverse('airs:detail', args=(future_air.id,))
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 404)
+
+    def test_past_air(self):
+        """
+        The detail view of a air with a started in the past displays the air's text.
+        """
+        startedpast7 = timezone.now() + datetime.timedelta(days=-7, hours=-1)
+        endedpast7 = timezone.now() + datetime.timedelta(days=-7)
+        past_air = create_air(program_name="酒井健太ANN0", started=startedpast7, ended=endedpast7)
+
+        url = reverse('airs:detail', args=(past_air.id,))
+        response = self.client.get(url)
+        self.assertContains(response, past_air.program.name)

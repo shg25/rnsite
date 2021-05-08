@@ -2,7 +2,7 @@ import datetime
 
 from django.db import models
 from django.utils import timezone
-from pytz import timezone as pytztimezone #TODO どこかにまとめる
+from pytz import timezone as pytztimezone  # TODO どこかにまとめる
 
 # 番組
 class Program(models.Model):

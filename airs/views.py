@@ -16,7 +16,7 @@ class IndexView(generic.ListView):
 
     def get_queryset(self):
         """
-        Return the last five published airs (not including those set to be started in the future).
+        Return the last five started airs (not including those set to be started in the future).
         """
         return Air.objects.filter(started__lte=timezone.now()).order_by('-started')[:5]
 
@@ -27,6 +27,11 @@ class IndexView(generic.ListView):
 class DetailView(generic.DetailView):
     model = Air
     template_name = 'airs/detail.html'
+    def get_queryset(self):
+        """
+        Excludes any airs that aren't started yet.
+        """
+        return Air.objects.filter(started__lte=timezone.now())
 
 # def results(request, air_id):
 #     air = get_object_or_404(Air, pk=air_id)
