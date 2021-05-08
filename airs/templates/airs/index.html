@@ -1,8 +1,10 @@
+{% load static %}
 <!DOCTYPE html>
 <html>
   <head>
     <meta charset="utf-8">
     <title>My test page</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'airs/style.css' %}">
   </head>
   <body>
     {% if latest_air_list %}
