@@ -21,6 +21,9 @@ class Air(models.Model):
     def was_aired_this_week(self):
         now = timezone.now()
         return now - datetime.timedelta(days=7) <= self.started <= now
+    was_aired_this_week.admin_order_field = 'started'  # 代わりにソートするカラムを指定する
+    was_aired_this_week.boolean = True  # 見た目を○×アイコンにする
+    was_aired_this_week.short_description = 'this week?'  # タイトルの表記設定
 
 
 # 何卒（聴取）
