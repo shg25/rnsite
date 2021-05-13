@@ -1,6 +1,7 @@
 import datetime
 
 from django.db import models
+from django.contrib.auth.models import User
 from django.utils import timezone
 from pytz import timezone as pytztimezone  # TODO どこかにまとめる
 
@@ -28,6 +29,7 @@ class Air(models.Model):
 
 # 何卒（聴取）
 class Nanitozo(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     air = models.ForeignKey(Air, on_delete=models.CASCADE)
     comment = models.CharField(max_length=200)  # 感想
     def __str__(self):
