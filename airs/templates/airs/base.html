@@ -1,0 +1,50 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>{% block title %}{% endblock title %}</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#1e87f0">
+
+  <link rel="icon" href="{% static 'favicon.ico' %}">
+
+  {% comment %} UIkit CSS {% endcomment %}
+  <link rel="stylesheet" href="{% static 'airs/css/uikit.min.css' %}">
+
+  <link rel="stylesheet" href="{% static 'airs/css/style.css' %}">
+
+  {% comment %} WEB FONT ...size(400 300 100) {% endcomment %}
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Mono:400|Roboto:400&display=swap">
+
+  {% block header %}
+  {% endblock header %}
+</head>
+<body>
+  <div id="app"></div>
+    <header id="header" class="uk-background-primary">
+      <div class="uk-light rn-padding uk-grid-collapse uk-flex-middle" uk-grid>
+      <h1 class="uk-width-expand uk-text-small uk-margin-remove uk-margin-right"><a href="/" class="uk-link-reset">R.N.<small>v2.0</small></a></h1>
+      <div class="uk-width-auto mgr-m">
+        {% comment %} <a href="/" class="uk-article-meta"><small>HOME</small></a> {% endcomment %}
+      </div>
+      <div class="uk-width-auto mgr-m">
+        {% comment %} <a href="/reports.html" class="uk-article-meta"><small>REPO</small></a> {% endcomment %}
+      </div>
+      <div class="uk-width-auto">
+        {% comment %} <rn-header-member v-if="header.memberId != null" v-bind:header="header"></rn-header-member>
+        <rn-header-guest v-else v-bind:header="header"></rn-header-guest> {% endcomment %}
+      </div>
+    </div>
+  </header>
+
+  <article id="members" class="rn-padding">
+    {% block content %}
+    {% endblock content %}
+  </article>
+
+  {% comment %} UIkit JS {% endcomment %}
+  <script src="{% static 'airs/js/uikit.min.js' %}"></script>
+  <script src="{% static 'airs/js/uikit-icons.min.js' %}"></script>
+</body>
+</html>

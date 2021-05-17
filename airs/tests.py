@@ -66,7 +66,7 @@ class AirIndexViewTests(TestCase):
         """
         response = self.client.get(reverse('airs:index'))
         self.assertEqual(response.status_code, 200)
-        self.assertContains(response, "今週は誰も何卒してないなー")
+        self.assertContains(response, "何卒0(ZERO)")
         self.assertQuerysetEqual(response.context['latest_air_list'], [])
 
     def test_past_air(self):
@@ -91,7 +91,7 @@ class AirIndexViewTests(TestCase):
         ended = timezone.now() + datetime.timedelta(days=7)
         create_air(program_name="赤もみじANN0", started=started, ended=ended)
         response = self.client.get(reverse('airs:index'))
-        self.assertContains(response, "今週は誰も何卒してないなー")
+        self.assertContains(response, "何卒0(ZERO)")
         self.assertQuerysetEqual(response.context['latest_air_list'], [])
 
     def test_future_question_and_past_air(self):
