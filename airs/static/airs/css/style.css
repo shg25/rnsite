@@ -1,0 +1,110 @@
+/* html {
+    background: transparent url("../images/background.png") repeat;
+} */
+
+body,
+.uk-h1,
+.uk-h2,
+.uk-h3,
+.uk-h4,
+.uk-h5,
+.uk-h6,
+.uk-heading-2xlarge,
+.uk-heading-large,
+.uk-heading-medium,
+.uk-heading-small,
+.uk-heading-xlarge,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: "Roboto Mono", "Roboto", sans-serif;
+}
+
+.transform-none {
+  text-transform: none !important;
+}
+
+.uc {
+  text-transform: uppercase;
+}
+
+.capitalize {
+  text-transform: capitalize !important;
+}
+
+.underline {
+  text-decoration: underline;
+}
+
+.mgl-ss {
+  margin-left: 2px;
+}
+
+.mgl-s {
+  margin-left: 4px;
+}
+
+.mgl-m {
+  margin-left: 8px;
+}
+
+.mgr-s {
+  margin-right: 4px;
+}
+
+.mgr-m {
+  margin-right: 8px;
+}
+
+.rn-padding {
+  padding: 8px;
+}
+
+.rn-padding-vertical {
+  padding: 8px 0;
+}
+
+.rn-padding-horizontal {
+  padding: 0 8px;
+}
+
+.border-left-muted {
+  border-left: 1px solid #999;
+  padding-left: 8px;
+}
+
+.border-left-success {
+  border-left: 1px solid #32d296;
+  padding-left: 8px;
+}
+
+.border-left-warning {
+  border-left: 1px solid #faa05a;
+  padding-left: 8px;
+}
+
+.border-left-danger {
+  border-left: 1px solid #f0506e;
+  padding-left: 8px;
+}
+
+.rn-text-color {
+  color: #222;
+}
+
+a:hover {
+  text-decoration: none;
+}
+
+/* copy
+.uk-background-primary {
+  background-color: #1e87f0;
+}
+
+.uk-background-secondary {
+  background-color: #222;
+}
+*/
