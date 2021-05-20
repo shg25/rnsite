@@ -1,5 +1,6 @@
 {% extends '../airs/base.html' %}
 {% comment %} {% load static %} {% endcomment %}
+{% load widget_tweaks %}
 
 {% block title %}ログイン - R.N.{% endblock title %}
 
@@ -23,18 +24,18 @@
 
 <form method="post" action="{% url 'login' %}">
 {% csrf_token %}
-<table>
-<tr>
-    <td>{{ form.username.label_tag }}</td>
-    <td>{{ form.username }}</td>
-</tr>
-<tr>
-    <td>{{ form.password.label_tag }}</td>
-    <td>{{ form.password }}</td>
-</tr>
-</table>
 
-<input type="submit" value="login">
+<div class="uk-margin-bottom">
+    <div class="uk-margin-small-bottom">{{ form.username.label_tag }}</div>
+    {{ form.username|add_class:"uk-input" }}
+</div>
+
+<div class="uk-margin-large-bottom">
+    <div class="uk-margin-small-bottom">{{ form.password.label_tag }}</div>
+    {{ form.password|add_class:"uk-input" }}
+</div>
+
+<input type="submit" value="login" class="uk-button uk-button-primary uk-width-1-1 uk-margin-small-bottom">
 <input type="hidden" name="next" value="{{ next }}">
 </form>
 
