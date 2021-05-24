@@ -25,16 +25,21 @@
     <header id="header" class="uk-background-primary">
       <div class="uk-light rn-padding uk-grid-collapse uk-flex-middle" uk-grid>
       <h1 class="uk-width-expand uk-text-small uk-margin-remove uk-margin-right"><a href="/" class="uk-link-reset">R.N.<small>v2.0</small></a></h1>
-      <div class="uk-width-auto mgr-m">
-        {% comment %} <a href="/" class="uk-article-meta"><small>HOME</small></a> {% endcomment %}
+      <ul class="uk-width-auto uk-iconnav">
+        {% if user.is_authenticated %}
+        <li><a href="#" uk-icon="icon: plus; ratio: 0.8"></a></li>
+        {% endif %}
+        {% if user.is_authenticated %}
+        <li><a href="{% url 'logout' %}" uk-icon="icon: sign-out; ratio: 0.8"></a></li>
+        {% else %}
+        <li><a href="{% url 'login' %}" uk-icon="icon: sign-in; ratio: 0.8"></a></li>
+        {% endif %}
+      </ul>
+      {% if user.is_authenticated %}
+      <div class="uk-width-auto mgl-m">
+        <span class="uk-article-meta">{{ user.first_name }}</span>
       </div>
-      <div class="uk-width-auto mgr-m">
-        {% comment %} <a href="/reports.html" class="uk-article-meta"><small>REPO</small></a> {% endcomment %}
-      </div>
-      <div class="uk-width-auto">
-        {% comment %} <rn-header-member v-if="header.memberId != null" v-bind:header="header"></rn-header-member>
-        <rn-header-guest v-else v-bind:header="header"></rn-header-guest> {% endcomment %}
-      </div>
+      {% endif %}
     </div>
   </header>
 
@@ -42,6 +47,12 @@
     {% block content %}
     {% endblock content %}
   </article>
+
+  <div>
+    <div class="uk-text-right rn-padding"><a href="#" uk-totop uk-scroll></a></div>
+    <hr class="uk-margin-remove">
+    <footer class="uk-panel uk-text-center uk-article-meta rn-padding">R.N.</footer>
+  </div>
 
   {% comment %} UIkit JS {% endcomment %}
   <script src="{% static 'airs/js/uikit.min.js' %}"></script>
