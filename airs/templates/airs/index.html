@@ -8,12 +8,106 @@
 
 {% block content %}
 
+<ul uk-tab>
+    <li class="uk-active"><a href="#" class="transform-none">放送</a></li>
+    <li><a href="#" class="transform-none">何卒</a></li>
+    <li>
+        <a href="#">…<span class="uk-margin-small-left" uk-icon="icon: triangle-down"></span></a>
+        <div uk-dropdown="mode: click">
+            <ul class="uk-nav uk-dropdown-nav">
+                <li class="uk-active"><a href="#">リスナー</a></li>
+                <li><a href="#">放送局</a></li>
+                <li><a href="#">番組</a></li>
+                <li><a href="#">出演者</a></li>
+            </ul>
+        </div>
+    </li>
+</ul>
+
+<ul uk-tab>
+    <li class="uk-active"><a href="#" class="transform-none">!!</a></li>
+    <li><a href="#" class="transform-none">1w<span class="uk-article-meta"> 88(999h)</span></a></li>
+    <li><a href="#" class="transform-none">2w<span class="uk-article-meta"> 88(999h)</span></a></li>
+</ul>
+
+<ul uk-tab>
+    <li class="uk-active"><a href="#" class="transform-none">新着</a></li>
+    <li><a href="#" class="transform-none">下書き</a></li>
+</ul>
+
+
+<div class="uk-padding-small uk-padding-remove-horizontal uk-padding-remove-top uk-animation-toggle" tabindex="0">
+    <hr class="uk-divider-small uk-margin-small-bottom">
+    <h3 class="uk-text-lead uk-padding-remove uk-margin-remove-top uk-margin-small-bottom">火<span class="uk-article-meta"> 6月22日</span></h3>
+
+    <a href="#" class="uk-display-block uk-link-heading uk-animation-slide-bottom-small border-left-muted">
+
+        <div class="uk-grid-collapse uk-flex uk-flex-middle uk-margin-remove uk-article-meta" uk-grid>
+            <div class="uk-width-expand uk-text-truncate">
+                <span class="mgr-s">24:00</span><span class="mgr-s">120分</span><span class="mgr-s">ニッポン放送という有楽町にあるあの放送局</span>
+            </div>
+            <div class="uk-text-truncate uk-flex uk-flex-middle">
+                <span uk-icon="icon: star; ratio: 0.7"></span><span class="mgr-s">99</span>
+                <span uk-icon="icon: happy; ratio: 0.7"></span><span class="mgr-s">99</span>
+                <span uk-icon="icon: comment; ratio: 0.7"></span><span class="mgr-s">99</span>
+                <span uk-icon="icon: user; ratio: 0.7"></span><span>99</span>
+            </div>
+        </div>
+
+        <div class="uk-grid-collapse uk-flex uk-flex-middle uk-margin-remove uk-article-meta" uk-grid>
+            <h5 class="uk-width-expand uk-text-small uk-text-truncate">マヂカルラブリー&モダンタイムス&アルコ&ピースのオールナイトニッポンZERO(0)</h5>
+            <div class="uk-text-small mgl-s">999pt</div>
+        </div>
+    </a>
+</div>
+
+
+
+
+<div class="uk-padding-small uk-padding-remove-horizontal uk-padding-remove-top uk-animation-toggle" tabindex="0">
+    <hr class="uk-divider-small uk-margin-small-bottom">
+    <h3 class="uk-text-lead uk-padding-remove uk-margin-remove-top uk-margin-small-bottom">火<span class="uk-article-meta"> 6月22日</span></h3>
+
+    <a href="#" class="uk-display-block uk-link-heading uk-animation-slide-bottom-small border-left-muted">
+
+        <div class="uk-grid-collapse uk-flex uk-flex-middle uk-margin-remove uk-article-meta" uk-grid>
+            <span class="mgr-s">SHG</span>
+            <span uk-icon="icon: star; ratio: 0.7" class="mgr-ss"></span>
+            <span uk-icon="icon: happy; ratio: 0.7" class="mgr-ss"></span>
+            <span uk-icon="icon: comment; ratio: 0.7" class="mgr-ss"></span>
+        </div>
+
+        <div class="uk-grid-collapse uk-flex uk-flex-middle uk-margin-remove uk-article-meta" uk-grid>
+            <div class="uk-width-expand uk-text-truncate">
+                <span class="mgr-s">水</span><span class="mgr-s">12/16</span><span class="mgr-s">24:00</span><span class="mgr-s">120分</span><span class="mgr-s">ニッポン放送という有楽町にあるあの放送局</span>
+            </div>
+            <div class="uk-text-truncate uk-flex uk-flex-middle">
+                <span uk-icon="icon: star; ratio: 0.7"></span><span class="mgr-s">99</span>
+                <span uk-icon="icon: happy; ratio: 0.7"></span><span class="mgr-s">99</span>
+                <span uk-icon="icon: comment; ratio: 0.7"></span><span class="mgr-s">99</span>
+                <span uk-icon="icon: user; ratio: 0.7"></span><span>99</span>
+            </div>
+        </div>
+
+        <div class="uk-grid-collapse uk-flex uk-flex-middle uk-margin-remove uk-article-meta" uk-grid>
+            <h5 class="uk-width-expand uk-text-small uk-text-truncate">マヂカルラブリー&モダンタイムス&アルコ&ピースのオールナイトニッポンZERO(0)</h5>
+            <div class="uk-text-small mgl-s">999pt</div>
+        </div>
+    </a>
+</div>
+
+
+
+
+
+
+{% comment %} サンプルデータ {% endcomment %}
 {% if latest_air_list %}
 
 <ul>
-{% for air in latest_air_list %}
+    {% for air in latest_air_list %}
     <li><a href="{% url 'airs:detail' air.id %}">{{ air }}</a></li>
-{% endfor %}
+    {% endfor %}
 </ul>
 
 {% else %}
