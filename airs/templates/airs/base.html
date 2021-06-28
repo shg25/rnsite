@@ -45,6 +45,7 @@
     </div>
   </header>
 
+  {% if request.resolver_match.url_name != 'login' %}
   <nav class="uk-navbar-container" uk-navbar>
     <div class="uk-navbar-left">
       <ul class="uk-navbar-nav">
@@ -77,6 +78,7 @@
       </ul>
     </div>
   </nav>
+  {% endif %}
 
   {% block content %}
   {% endblock content %}

@@ -8,38 +8,38 @@
 {% endblock header %}
 
 {% block content %}
+<article class="rn-padding">
+    <h1 class="uk-text-lead">　</h1>
 
-{% if form.errors %}
-<p>Your username and password didn't match. Please try again.</p>
-{% endif %}
+    {% if form.errors %}
+    <p>Your username and password didn't match. Please try again.</p>
+    {% endif %}
 
-{% if next %}
+    {% if next %}
     {% if user.is_authenticated %}
-    <p>Your account doesn't have access to this page. To proceed,
-    please login with an account that has access.</p>
+    <p>Your account doesn't have access to this page. To proceed, please login with an account that has access.</p>
     {% else %}
     <p>Please login to see this page.</p>
     {% endif %}
-{% endif %}
+    {% endif %}
 
-<form method="post" action="{% url 'login' %}">
-{% csrf_token %}
+    <form method="post" action="{% url 'login' %}">{% csrf_token %}
+        <div class="uk-margin-bottom">
+            <div class="uk-margin-small-bottom uk-text-small">{{ form.username.label_tag }}</div>
+            {{ form.username|add_class:"uk-input" }}
+        </div>
 
-<div class="uk-margin-bottom">
-    <div class="uk-margin-small-bottom">{{ form.username.label_tag }}</div>
-    {{ form.username|add_class:"uk-input" }}
-</div>
+        <div class="uk-margin-large-bottom">
+            <div class="uk-margin-small-bottom uk-text-small">{{ form.password.label_tag }}</div>
+            {{ form.password|add_class:"uk-input" }}
+        </div>
 
-<div class="uk-margin-large-bottom">
-    <div class="uk-margin-small-bottom">{{ form.password.label_tag }}</div>
-    {{ form.password|add_class:"uk-input" }}
-</div>
+        <input type="submit" value="login" class="uk-button uk-button-primary uk-width-1-1 uk-margin-small-bottom">
+        <input type="hidden" name="next" value="{{ next }}">
+    </form>
 
-<input type="submit" value="login" class="uk-button uk-button-primary uk-width-1-1 uk-margin-small-bottom">
-<input type="hidden" name="next" value="{{ next }}">
-</form>
+    {# Assumes you setup the password_reset view in your URLconf #}
+    {% comment %} <p><a href="{% url 'password_reset' %}">Lost password?</a></p> {% endcomment %}
 
-{# Assumes you setup the password_reset view in your URLconf #}
-{% comment %} <p><a href="{% url 'password_reset' %}">Lost password?</a></p> {% endcomment %}
-
+</article>
 {% endblock content %}
