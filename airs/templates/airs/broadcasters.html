@@ -1,0 +1,55 @@
+{% extends 'airs/base.html' %}
+{% comment %} {% load static %} {% endcomment %}
+
+{% block title %}R.N. v2.0{% endblock title %}
+
+{% block header %}
+{% endblock header %}
+
+{% block content %}
+<article class="rn-padding">
+    <h1 class="uk-text-lead">放送局</h1>
+
+    <div class="uk-margin-bottom uk-animation-toggle" tabindex="0">
+        <a href="#" class="uk-display-block uk-link-reset uk-animation-slide-bottom-small border-left-success">
+            <div class="uk-grid-collapse uk-flex-middle" uk-grid>
+                <h2 class="uk-width-expand uk-text-truncate uk-text-small">TBSラジオ</h2>
+            </div>
+        </a>
+    </div>
+
+    <div class="uk-margin-bottom uk-animation-toggle" tabindex="0">
+        <a href="#" class="uk-display-block uk-link-reset uk-animation-slide-bottom-small border-left-muted">
+            <div class="uk-grid-collapse uk-flex-middle" uk-grid>
+                <h2 class="uk-width-expand uk-text-truncate uk-text-small">ニッポン放送</h2>
+            </div>
+        </a>
+    </div>
+
+    <div class="uk-margin-bottom uk-animation-toggle" tabindex="0">
+        <a href="#" class="uk-display-block uk-link-reset uk-animation-slide-bottom-small">
+            <div class="uk-grid-collapse uk-flex-middle" uk-grid>
+                <h2 class="uk-width-expand uk-text-truncate uk-text-small">FM-FUJI</h2>
+            </div>
+        </a>
+    </div>
+
+
+</article>
+
+{% comment %} サンプルデータ {% endcomment %}
+{% if latest_air_list %}
+
+<ul>
+    {% for air in latest_air_list %}
+    <li><a href="{% url 'airs:detail' air.id %}">{{ air }}</a></li>
+    {% endfor %}
+</ul>
+
+{% else %}
+
+<p>何卒0(ZERO)</p>
+
+{% endif %}
+
+{% endblock content %}
