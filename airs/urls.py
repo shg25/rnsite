@@ -5,7 +5,9 @@ from . import views
 app_name = 'airs'
 urlpatterns = [
     # 何卒一覧
-    path('nanitozo/', views.NanitozoView.as_view(), name='nanitozo'),
+    path('nanitozos/', views.NanitozosView.as_view(), name='nanitozos'),
+    # 何卒！
+    path('nanitozo/', views.NanitozoPostView.as_view(), name='nanitozo'),
 
     # リスナー一覧
     path('users/', views.UsersView.as_view(), name='users'),
@@ -29,7 +31,6 @@ urlpatterns = [
     path('', views.IndexView.as_view(), name='index'),
     # 放送詳細 ex: '/1/'
     path('<int:pk>/', views.DetailView.as_view(), name='detail'),
-
 
 
     # 削除予定 /airs/5/results/
