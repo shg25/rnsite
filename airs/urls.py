@@ -4,10 +4,9 @@ from . import views
 
 app_name = 'airs'
 urlpatterns = [
-    # 放送一覧
-    path('', views.IndexView.as_view(), name='index'),
     # 何卒一覧
     path('nanitozo/', views.NanitozoView.as_view(), name='nanitozo'),
+
     # リスナー一覧
     path('users/', views.UsersView.as_view(), name='users'),
     # 放送局一覧
@@ -17,8 +16,21 @@ urlpatterns = [
     # 出演者一覧
     path('casts/', views.CastsView.as_view(), name='casts'),
 
+    # リスナー詳細 TODO キーをユーザー名にする
+    path('user/<int:pk>/', views.UserView.as_view(), name='user'),
+    # 放送局詳細 TODO キーを放送局の略称にする
+    path('broadcaster/<int:pk>/', views.BroadcasterView.as_view(), name='broadcaster'),
+    # 番組詳細 TODO キーを番組名ハッシュタグにしたいな
+    path('program/<int:pk>/', views.ProgramView.as_view(), name='program'),
+    # 出演者詳細 TODO これはIDでいいかなって気もするし微妙な気もする…SNSのIDとか？
+    path('cast/<int:pk>/', views.CastView.as_view(), name='cast'),
+    
+    # 放送一覧
+    path('', views.IndexView.as_view(), name='index'),
     # 放送詳細 ex: '/1/'
     path('<int:pk>/', views.DetailView.as_view(), name='detail'),
+
+
 
     # 削除予定 /airs/5/results/
     path('<int:pk>/results/', views.ResultsView.as_view(), name='results'),
