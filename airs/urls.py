@@ -6,6 +6,8 @@ app_name = 'airs'
 urlpatterns = [
     # ex: /airs/
     path('', views.IndexView.as_view(), name='index'),
+    # ex: /airs/
+    path('nanitozo/', views.NanitozoView.as_view(), name='nanitozo'),
     # ex: /airs/5/
     path('<int:pk>/', views.DetailView.as_view(), name='detail'),
     # ex: /airs/5/results/

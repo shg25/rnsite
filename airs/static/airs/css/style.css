@@ -99,6 +99,11 @@ a:hover {
   text-decoration: none;
 }
 
+.uk-navbar-nav>li>a {
+  min-height: auto;
+  padding: 8px;
+}
+
 /* copy
 .uk-background-primary {
   background-color: #1e87f0;

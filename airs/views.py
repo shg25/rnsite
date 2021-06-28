@@ -20,6 +20,16 @@ class IndexView(generic.ListView):
         """
         return Air.objects.filter(started__lte=timezone.now()).order_by('-started')[:5]
 
+class NanitozoView(generic.ListView):
+    template_name = 'airs/nanitozo.html'
+    context_object_name = 'latest_air_list'
+
+    def get_queryset(self):
+        """
+        Return the last five started airs (not including those set to be started in the future).
+        """
+        return Air.objects.filter(started__lte=timezone.now()).order_by('-started')[:5]
+
 
 # def detail(request, air_id):
 #     air = get_object_or_404(Air, pk=air_id)
