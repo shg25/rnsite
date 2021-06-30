@@ -21,8 +21,8 @@ class IndexView(generic.ListView):
         return Air.objects.filter(started__lte=timezone.now()).order_by('-started')[:5]
 
 
-class NanitozosView(generic.ListView):
-    template_name = 'airs/nanitozos.html'
+class NsView(generic.ListView):
+    template_name = 'airs/n/index.html'
     context_object_name = 'latest_air_list'
 
     def get_queryset(self):
@@ -32,8 +32,12 @@ class NanitozosView(generic.ListView):
         return Air.objects.filter(started__lte=timezone.now()).order_by('-started')[:5]
 
 
-class NanitozoPostView(generic.TemplateView):  # TODO Form系のViewにする
-    template_name = 'airs/nanitozo.html'
+class NCreateView(generic.TemplateView):  # TODO Form系のViewにする
+    template_name = 'airs/n/create.html'
+
+
+class NUpdateView(generic.TemplateView):  # TODO Form系のViewにする
+    template_name = 'airs/n/update.html'
 
 
 class UsersView(generic.ListView):

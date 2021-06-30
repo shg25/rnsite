@@ -50,7 +50,7 @@
     <div class="uk-navbar-left">
       <ul class="uk-navbar-nav">
         <li class="{% if request.resolver_match.url_name == 'index' %}uk-active{% endif %}"><a href="{% url 'airs:index' %}">放送</a></li>
-        <li class="{% if request.resolver_match.url_name == 'nanitozos' %}uk-active{% endif %}"><a href="{% url 'airs:nanitozos' %}">何卒</a></li>
+        <li class="{% if request.resolver_match.url_name == 'ns' %}uk-active{% endif %}"><a href="{% url 'airs:ns' %}">何卒</a></li>
         {% if request.resolver_match.url_name == 'users' %}
         <li class="uk-active"><a href="{% url 'airs:users' %}">リスナー</a></li>
         {% elif request.resolver_match.url_name == 'broadcasters' %}
@@ -75,7 +75,7 @@
     </div>
     <div class="uk-navbar-right">
       <ul class="uk-navbar-nav">
-        <li><a href="{% url 'airs:nanitozo' %}" class="">＋</a></li>
+        <li><a href="{% url 'airs:n_create' %}" class="">＋</a></li>
       </ul>
     </div>
   </nav>
