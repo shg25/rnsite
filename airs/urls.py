@@ -5,7 +5,7 @@ from . import views
 app_name = 'airs'
 urlpatterns = [
     # 何卒一覧
-    path('n/', views.NsView.as_view(), name='ns'),
+    path('ns/', views.NsView.as_view(), name='ns'),
     # 何卒作成
     path('n/create/', views.NCreateView.as_view(), name='n_create'),
     # 何卒修正

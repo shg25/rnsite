@@ -22,7 +22,7 @@ class IndexView(generic.ListView):
 
 
 class NsView(generic.ListView):
-    template_name = 'airs/n/index.html'
+    template_name = 'airs/ns.html'
     context_object_name = 'latest_air_list'
 
     def get_queryset(self):
@@ -33,11 +33,11 @@ class NsView(generic.ListView):
 
 
 class NCreateView(generic.TemplateView):  # TODO Form系のViewにする
-    template_name = 'airs/n/create.html'
+    template_name = 'airs/n_create.html'
 
 
 class NUpdateView(generic.TemplateView):  # TODO Form系のViewにする
-    template_name = 'airs/n/update.html'
+    template_name = 'airs/n_update.html'
 
 
 class UsersView(generic.ListView):
