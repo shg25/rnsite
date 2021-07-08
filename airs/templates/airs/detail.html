@@ -7,15 +7,229 @@
 {% endblock header %}
 
 {% block content %}
+<header class="rn-padding">
+  <h2 class="uk-text-default uk-margin-small-bottom">
+    <span class="uk-text-lead mgr-s">水</span><span class="mgr-s">12/16</span><span class="mgr-s">24:00</span><span class="mgr-s">120<small class="mgl-ss">min</small></span><span href="">ニッポン放送</span>
+  </h2>
+  <h1 class="uk-text-lead uk-margin-remove-top uk-margin-small-bottom">プレイステーション presents ライムスター宇多丸とマイゲーム・マイライフ</h1>
 
-<h1>{{ air }}</h1>
+  <div class="uk-flex uk-flex-middle">
+    <div class="uk-margin-small-right"><span uk-icon="icon: info" class="uk-icon"></span></div>
+    <div class="uk-margin-small-right uk-margin-small-top"><a href="#">放送局</a></div>
+    <div class="uk-margin-small-right uk-margin-small-top"><a href="#">番組</a></div>
+    <div class="uk-margin-small-right uk-margin-small-top"><a href="#">出演者</a></div>
+  </div>
+  <div class="uk-flex uk-flex-middle">
+    <div class="uk-margin-small-right"><span uk-icon="icon: link" class="uk-icon"></span></div>
+    <div class="uk-margin-small-right uk-margin-small-top"><a href="#">ラジコ</a></div>
+    <div class="uk-margin-small-right uk-margin-small-top"><a href="#">ラジコ+1w</a></div>
+    <div class="uk-margin-small-right uk-margin-small-top"><a href="#">URLコピー</a></div>
+  </div>
+</header>
+
+{% include 'base/separator.html' %}
+
+<div class="rn-padding">
+
+  <button class="uk-button uk-button-primary uk-width-1-1 uk-margin-small-bottom">何卒！</button>
+
+  {% comment %} リスナー数 {% endcomment %}
+  <div class="uk-flex uk-flex-middle">
+    <div class="uk-margin-small-right"><span uk-icon="icon: user" class="uk-icon"></span></div>
+    <div class="uk-margin-small-right uk-margin-small-top"><a href="#">99</a></div>
+    <div class="uk-margin-small-right uk-margin-small-top uk-text-small uk-text-truncate">
+      <a href="#">AAA</a>
+      <a href="#">SHG</a>
+      <a href="#">BBB</a>
+      <a href="#">CCC</a>
+      <a href="#">DDD</a>
+      <a href="#">EEE</a>
+      <a href="#">FFF</a>
+      <a href="#">GGG</a>
+      <a href="#">HHH</a>
+    </div>
+  </div>
+  {% comment %} コメント数 {% endcomment %}
+  <div class="uk-flex uk-flex-middle">
+    <div class="uk-margin-small-right"><span uk-icon="icon: comment" class="uk-icon"></span></div>
+    <div class="uk-margin-small-right uk-margin-small-top"><a href="#">2</a></div>
+    <div class="uk-margin-small-right uk-margin-small-top uk-text-small uk-text-truncate">
+      <a href="#">SHG</a>
+      <a href="#">BBB</a>
+    </div>
+  </div>
+  {% comment %} 満足数 {% endcomment %}
+  <div class="uk-flex uk-flex-middle">
+    <div class="uk-margin-small-right"><span uk-icon="icon: happy" class="uk-icon"></span></div>
+    <div class="uk-margin-small-right uk-margin-small-top"><a href="#">4</a></div>
+    <div class="uk-margin-small-right uk-margin-small-top uk-text-small uk-text-truncate">
+      <a href="#">AAA</a>
+      <a href="#">BBB</a>
+      <a href="#">DDD</a>
+      <a href="#">GGG</a>
+    </div>
+  </div>
+  {% comment %} 推し数 {% endcomment %}
+  <div class="uk-flex uk-flex-middle">
+    <div class="uk-margin-small-right"><span uk-icon="icon: star" class="uk-icon"></span></div>
+    <div class="uk-margin-small-right uk-margin-small-top"><a href="#">2</a></div>
+    <div class="uk-margin-small-right uk-margin-small-top uk-text-small uk-text-truncate">
+      <a href="#">AAA</a>
+      <a href="#">SHG</a>
+    </div>
+  </div>
+</div>
+
+{% include 'base/separator.html' %}
+
+<div class="rn-padding">
+  <h3 class="uk-text-default uk-margin-small-bottom">事前告知<small> ネタバレなし（のはず）</small></h3>
+  <span class="uk-text-small">ゲスト：酒井健太</span>
+</div>
+
+{% include 'base/separator.html' %}
+
+<div class="rn-padding">
+  <h3 class="uk-text-default uk-margin-small-bottom">番組内容<small> ネタバレあり</small></h3>
+  <span class="uk-text-small">・スーファミの話<br>・スト2の話<br>・ウイイレの話<be></span>
+</div>
+
+{% include 'base/separator.html' %}
+
+<div class="rn-padding">
+  <h3 class="uk-text-default uk-margin-small-bottom">推し</h3>
+
+  <ul class="uk-list uk-list-divider uk-margin-remove">
+    <li class="uk-margin-small-right uk-margin-small-top uk-flex uk-flex-middle">
+      <div class="uk-width-expand border-left-success">
+        <p class="uk-margin-remove">
+          <a href="#">SHG</a> <small>7/1 23:30</small>
+        </p>
+        <div>
+          <div class="uk-inline">
+            <p class="uk-text-small uk-margin-remove">
+              30〜40代のゲーム好きならオススメです。
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="uk-width-auto">
+        <a href="#" uk-icon="icon: file-edit" class="uk-icon-button uk-icon"></a>
+      </div>
+    </li>
+
+    <li class="uk-margin-small-right uk-margin-small-top uk-flex uk-flex-middle">
+      <div class="uk-width-expand">
+        <p class="uk-margin-remove">
+          <a href="#">AAA</a> <small>6/27 19:30（edited）</small>
+        </p>
+        <div>
+          <div class="uk-inline">
+            <p class="uk-text-small uk-margin-remove">
+              全てのゲーム好きが聴くべき
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="uk-width-auto">
+      </div>
+    </li>
+  </ul>
+</div>
+
+{% include 'base/separator.html' %}
+
+<div class="rn-padding">
+  <h3 class="uk-text-default uk-margin-small-bottom">感想</h3>
+
+  <ul class="uk-list uk-list-divider uk-margin-remove">
+    <li class="uk-margin-small-right uk-margin-small-top uk-flex uk-flex-middle">
+      <div class="uk-width-expand">
+        <p class="uk-margin-remove">
+          <a href="#">BBB</a><small> 7/2 00:30</small>
+        </p>
+        <div>
+          <div class="uk-inline">
+            <p class="uk-text-small uk-margin-remove">
+              普通の感想です。
+            </p>
+            <div onclick="this.remove()" class="uk-overlay-primary uk-background-secondary uk-position-cover">
+              <div class="uk-position-center"><span uk-icon="icon: lock; ratio: 2.0" class="mgl-ss uk-icon"></span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="uk-width-auto">
+
+      </div>
+    </li>
+
+    <li class="uk-margin-small-right uk-margin-small-top uk-flex uk-flex-middle">
+      <div class="uk-width-expand border-left-success">
+        <p class="uk-margin-remove">
+          <a href="#">SHG</a><small> 7/1 23:30</small>
+        </p>
+        <div>
+          <div class="uk-inline">
+            <p class="uk-text-small uk-margin-remove">
+              感想ですね。<br>これは感想ですが、感想でありまして、とても感想感想していて、感想なんだなと思わざるを得ない感想なのであります。<br><br>それもまた感想ですが。
+            </p>
+            <div onclick="this.remove()" class="uk-overlay-primary uk-background-secondary uk-position-cover">
+              <div class="uk-position-center">ネガ あと1</div>
+            </div>
+            <div onclick="this.remove()" class="uk-overlay-primary uk-background-secondary uk-position-cover">
+              <div class="uk-position-center">ネガ あと2</div>
+            </div>
+            <div onclick="this.remove()" class="uk-overlay-primary uk-background-secondary uk-position-cover">
+              <div class="uk-position-center">ネガ あと3</div>
+            </div>
+            <div onclick="this.remove()" class="uk-overlay-primary uk-background-secondary uk-position-cover">
+              <div class="uk-position-center">ネガ あと4</div>
+            </div>
+            <div onclick="this.remove()" class="uk-overlay-primary uk-background-secondary uk-position-cover">
+              <div class="uk-position-center">ネガ あと5</div>
+            </div>
+            <div onclick="this.remove()" class="uk-overlay-primary uk-background-secondary uk-position-cover">
+              <div class="uk-position-center">ネガ あと6</div>
+            </div>
+            <div onclick="this.remove()" class="uk-overlay-primary uk-background-secondary uk-position-cover">
+              <div class="uk-position-center">ネガ あと7</div>
+            </div>
+            <div onclick="this.remove()" class="uk-overlay-primary uk-background-secondary uk-position-cover">
+              <div class="uk-position-center">ネガ あと8</div>
+            </div>
+            <div onclick="this.remove()" class="uk-overlay-primary uk-background-secondary uk-position-cover">
+              <div class="uk-position-center">ネガ あと9</div>
+            </div>
+            <div onclick="this.remove()" class="uk-overlay-primary uk-background-secondary uk-position-cover">
+              <div class="uk-position-center">ネガ あと10</div>
+            </div>
+            <div onclick="this.remove()" class="uk-overlay-primary uk-background-secondary uk-position-cover">
+              <div class="uk-position-center"><span uk-icon="icon: lock; ratio: 2.0" class="mgl-ss uk-icon"></span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="uk-width-auto">
+        <a href="#" uk-icon="icon: file-edit" class="uk-icon-button uk-icon"></a>
+      </div>
+    </li>
+  </ul>
+</div>
+
+{% include 'base/separator.html' %}
+
+
+<br><br><br><br><br><br><br><br><br><br>
+
+<p>{{ air }}</p>
 {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
 
 <form action="{% url 'airs:vote' air.id %}" method="post">{% csrf_token %}
-{% for nanitozo in air.nanitozo_set.all %}
+  {% for nanitozo in air.nanitozo_set.all %}
   <input type="radio" name="nanitozo" id="nanitozo{{ forloop.counter }}" value="{{ nanitozo.id }}">
   <label for="nanitozo{{ forloop.counter }}">{{ nanitozo.comment }}</label><br>
-{% endfor %}
+  {% endfor %}
   <input type="submit" value="Vote" class="uk-button uk-button-default">
 </form>
 

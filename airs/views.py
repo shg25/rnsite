@@ -21,12 +21,119 @@ class IndexView(generic.ListView):
         return Air.objects.filter(started__lte=timezone.now()).order_by('-started')[:5]
 
 
+class NsView(generic.ListView):
+    template_name = 'airs/ns.html'
+    context_object_name = 'latest_air_list'
+
+    def get_queryset(self):
+        """
+        Return the last five started airs (not including those set to be started in the future).
+        """
+        return Air.objects.filter(started__lte=timezone.now()).order_by('-started')[:5]
+
+
+class NCreateView(generic.TemplateView):  # TODO Form系のViewにする
+    template_name = 'airs/n_create.html'
+
+
+class NUpdateView(generic.TemplateView):  # TODO Form系のViewにする
+    template_name = 'airs/n_update.html'
+
+
+class UsersView(generic.ListView):
+    template_name = 'airs/users.html'
+    context_object_name = 'latest_air_list'
+
+    def get_queryset(self):
+        """
+        Return the last five started airs (not including those set to be started in the future).
+        """
+        return Air.objects.filter(started__lte=timezone.now()).order_by('-started')[:5]
+
+
+class BroadcastersView(generic.ListView):
+    template_name = 'airs/broadcasters.html'
+    context_object_name = 'latest_air_list'
+
+    def get_queryset(self):
+        """
+        Return the last five started airs (not including those set to be started in the future).
+        """
+        return Air.objects.filter(started__lte=timezone.now()).order_by('-started')[:5]
+
+
+class ProgramsView(generic.ListView):
+    template_name = 'airs/programs.html'
+    context_object_name = 'latest_air_list'
+
+    def get_queryset(self):
+        """
+        Return the last five started airs (not including those set to be started in the future).
+        """
+        return Air.objects.filter(started__lte=timezone.now()).order_by('-started')[:5]
+
+
+class CastsView(generic.ListView):
+    template_name = 'airs/casts.html'
+    context_object_name = 'latest_air_list'
+
+    def get_queryset(self):
+        """
+        Return the last five started airs (not including those set to be started in the future).
+        """
+        return Air.objects.filter(started__lte=timezone.now()).order_by('-started')[:5]
+
+
+class UserView(generic.DetailView):
+    model = Air
+    template_name = 'airs/user.html'
+
+    def get_queryset(self):
+        """
+        Excludes any airs that aren't started yet.
+        """
+        return Air.objects.filter(started__lte=timezone.now())
+
+
+class BroadcasterView(generic.DetailView):
+    model = Air
+    template_name = 'airs/broadcaster.html'
+
+    def get_queryset(self):
+        """
+        Excludes any airs that aren't started yet.
+        """
+        return Air.objects.filter(started__lte=timezone.now())
+
+
+class ProgramView(generic.DetailView):
+    model = Air
+    template_name = 'airs/program.html'
+
+    def get_queryset(self):
+        """
+        Excludes any airs that aren't started yet.
+        """
+        return Air.objects.filter(started__lte=timezone.now())
+
+
+class CastView(generic.DetailView):
+    model = Air
+    template_name = 'airs/cast.html'
+
+    def get_queryset(self):
+        """
+        Excludes any airs that aren't started yet.
+        """
+        return Air.objects.filter(started__lte=timezone.now())
+
 # def detail(request, air_id):
 #     air = get_object_or_404(Air, pk=air_id)
 #     return render(request, 'airs/detail.html', {'air': air})
 class DetailView(generic.DetailView):
     model = Air
     template_name = 'airs/detail.html'
+
     def get_queryset(self):
         """
         Excludes any airs that aren't started yet.
@@ -39,6 +146,7 @@ class DetailView(generic.DetailView):
 class ResultsView(generic.DetailView):
     model = Air
     template_name = 'airs/results.html'
+
 
 def vote(request, air_id):
     air = get_object_or_404(Air, pk=air_id)
