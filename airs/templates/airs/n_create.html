@@ -7,7 +7,134 @@
 {% endblock header %}
 
 {% block content %}
-<article class="rn-padding">
+<div class="rn-padding">
     <h1 class="uk-text-lead">何卒！</h1>
-</article>
+    <small>
+        <div>処理内容のメモ</div>
+        <ol class="uk-margin-remove">
+            <li>ユーザ：シェアラジオの文言を送信</li>
+            <li>サーバ：受信した文言からURLを抜き出す</li>
+            <li>サーバ：対象のURLにスクレイピングしてタイトル取得</li>
+            <li>サーバ：タイトルをパースして、放送開始日時・放送終了日時・番組名・放送局を取得</li>
+            <li>サーバ：一致する放送局を検索</li>
+            <li>サーバ：番組名と放送開始時間から番組候補を検索</li>
+            <li>ユーザ：放送登録</li>
+            <li>ユーザ：何卒登録</li>
+            <li>ユーザ：必要に応じて何卒編集、削除</li>
+            <li>管理者：新規の放送局の場合は調整</li>
+            <li>管理者：新規の番組の場合は調整</li>
+        </ol>
+    </small>
+</div>
+
+<hr>
+
+<div class="rn-padding">
+    <form>
+        <fieldset class="uk-fieldset">
+            <legend class="uk-legend">シェアラジオの文言を送信</legend>
+            <div class="uk-margin">
+                <input class="uk-input uk-margin-small-bottom" type="text" placeholder="シェアラジオをコピペ">
+                <small>
+                    <small>
+                        <p class="uk-margin-small-bottom">番組名 | 放送局 | 2021/07/12/月 24:00-25:00 https://radiko.jp/share/?sid=TBS&t=20210713000000</p>
+                        <p class="uk-margin-remove">番組名 │ 放送局 | https://radiko.jp/share/?sid=TBS&t=20210713000000 #radiko #タグ1 #タグ2 #タグ3</p>
+                    </small>
+                </small>
+            </div>
+            <input type="submit" value="送信して内容を確認" class="uk-button uk-button-primary uk-width-1-1">
+        </fieldset>
+    </form>
+</div>
+
+<hr>
+
+<div class="rn-padding">
+    <form>
+        <fieldset class="uk-fieldset">
+
+            <legend class="uk-legend">放送情報</legend>
+
+            <div class="uk-margin">
+                <label class="uk-form-label">放送開始</label>
+                <div class="uk-form-controls uk-margin-bottom">
+                    <input type="text" class="uk-input" value="2018/07/19（月） 24:00" disabled>
+                </div>
+
+                <label class="uk-form-label">放送終了</label>
+                <div class="uk-form-controls uk-margin-bottom">
+                    <input type="text" class="uk-input" value="2018/07/19（月） 25:00" disabled>
+                </div>
+            </div>
+
+            <div class="uk-margin">
+                <div class="uk-form-label">放送局</div>
+                <div class="uk-form-controls rn-form-check-label">
+                    <label><input type="radio" name="broadcaster" class="uk-radio" checked> TBSラジオ</label><br>
+                    <label><input type="radio" name="broadcaster" class="uk-radio"> その他</label><br>
+                </div>
+            </div>
+
+            <div class="uk-margin">
+                <div class="uk-form-label">番組</div>
+                <div class="uk-form-controls rn-form-check-label">
+                    <label><input class="uk-radio" type="radio" name="program" checked> 空気階段の踊り場</label><br>
+                    <label><input class="uk-radio" type="radio" name="program"> 単発「番組名」</label><br>
+                    <label><input class="uk-radio" type="radio" name="program"> たぶん未登録のレギュラー番組</label>
+                </div>
+            </div>
+
+            <div class="uk-margin">
+                <div class="uk-form-label">ネタバレなし 事前告知</div>
+                <textarea class="uk-textarea" rows="4" placeholder="ゲスト：ハリウッドザコシショウ"></textarea>
+            </div>
+
+            <div class="uk-margin">
+                <div class="uk-form-label">ネタバレあり 放送内容</div>
+                <textarea class="uk-textarea" rows="4" placeholder="・「アルコ」はおじさん
+・「平子っち」はババア"></textarea>
+            </div>
+
+        </fieldset>
+    </form>
+</div>
+
+
+<div class="rn-padding">
+    <form>
+        <fieldset class="uk-fieldset">
+            <legend class="uk-legend">何卒！</legend>
+
+            <div class="uk-margin uk-grid-small uk-child-width-auto uk-grid rn-form-check-label">
+                <label><input class="uk-checkbox" type="checkbox"> 満足！</label>
+            </div>
+
+            <div class="uk-margin">
+                <div class="uk-form-label">推薦文</div>
+                <textarea class="uk-textarea" rows="4" placeholder="この放送をオススメしたいときに、どういうところがどんな人にオススメか、なるべくネタバレなしで書く"></textarea>
+            </div>
+
+            <div class="uk-margin">
+                <div class="uk-form-label">感想文</div>
+                <textarea class="uk-textarea" rows="4" placeholder="なんでもいいから思ったことを書いてください
+不快に感じる人もいるなーって思ったら下の「ネガ」を押しておいてください"></textarea>
+
+                <div class="uk-grid-small uk-child-width-auto uk-grid rn-form-check-label">
+                    <label><input class="uk-checkbox" type="checkbox"> ネガ</label>
+                </div>
+            </div>
+
+            <div class="uk-margin">
+                <div class="uk-form-label">推薦文と感想文の公開設定</div>
+                <div class="uk-grid-small uk-child-width-auto uk-grid rn-form-check-label">
+                    <label><input class="uk-radio" type="radio" name="public" checked> 公開</label>
+                    <label><input class="uk-radio" type="radio" name="public"> 下書き</label>
+                </div>
+            </div>
+
+            <input type="submit" value="何卒！" class="uk-button uk-button-primary uk-width-1-1">
+        </fieldset>
+    </form>
+</div>
+
 {% endblock content %}

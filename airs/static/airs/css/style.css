@@ -108,6 +108,10 @@ a:hover {
   height: 16px;
 }
 
+.rn-form-check-label {
+  line-height: 1.8;
+}
+
 /* copy
 .uk-background-primary {
   background-color: #1e87f0;
