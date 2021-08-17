@@ -29,6 +29,24 @@ class Broadcaster(models.Model):
         null=True, blank=True,
         max_length=400,
     )
+    wikipedia_url = models.CharField(
+        verbose_name='Wikipedia',
+        null=True, blank=True,
+        max_length=400,
+    )
+    area = models.CharField(
+        verbose_name='放送対象地域',
+        max_length=20,
+    )
+    address = models.CharField(
+        verbose_name='所在地',
+        max_length=400,
+    )
+    keyword = models.CharField(
+        verbose_name='キーワード',
+        null=True, blank=True,
+        max_length=400,
+    )
 
     def __str__(self):
         return self.name
@@ -47,6 +65,16 @@ class Program(models.Model):
     )
     site_url = models.CharField(
         verbose_name='サイトURL',
+        null=True, blank=True,
+        max_length=400,
+    )
+    wikipedia_url = models.CharField(
+        verbose_name='Wikipedia',
+        null=True, blank=True,
+        max_length=400,
+    )
+    twitter_url = models.CharField(
+        verbose_name='Twitter',
         null=True, blank=True,
         max_length=400,
     )

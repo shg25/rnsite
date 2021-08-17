@@ -7,7 +7,11 @@ class BroadcasterAdmin(admin.ModelAdmin):
         'name',
         'abbreviation',
         'search_index',
-        'site_url'
+        'site_url',
+        'wikipedia_url',
+        'area',
+        'address',
+        'keyword'
     ]
 
 
@@ -19,6 +23,8 @@ class ProgramAdmin(admin.ModelAdmin):
         'name',
         'search_index',
         'site_url',
+        'wikipedia_url',
+        'twitter_url',
         'key_station'
     ]
 
