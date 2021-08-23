@@ -1,0 +1,53 @@
+[{
+  "model": "airs.program",
+  "pk": 1,
+  "fields": {
+    "name": "アルコ&ピースのオールナイトニッポン",
+    "search_index": "ｱﾙｺ&ﾋﾟｰｽのｵｰﾙﾅｲﾄﾆｯﾎﾟﾝ",
+    "hashtag": "アルピーann",
+    "twitter_id": null,
+    "site_url": "http://www.allnightnippon.com/program/ap/",
+    "wikipedia_url": "https://ja.wikipedia.org/wiki/%E3%82%A2%E3%83%AB%E3%82%B3%26%E3%83%94%E3%83%BC%E3%82%B9%E3%81%AE%E3%82%AA%E3%83%BC%E3%83%AB%E3%83%8A%E3%82%A4%E3%83%88%E3%83%8B%E3%83%83%E3%83%9D%E3%83%B3%E3%82%B7%E3%83%AA%E3%83%BC%E3%82%BA",
+    "key_station": 2,
+    "per_week": 1.0
+  }
+}, {
+  "model": "airs.program",
+  "pk": 2,
+  "fields": {
+    "name": "アルコ&ピース D.C.GARAGE",
+    "search_index": "ｱﾙｺ&ﾋﾟｰｽd.c.garage",
+    "hashtag": "アルピーdcg",
+    "twitter_id": "dcg_tbsr",
+    "site_url": "https://www.tbsradio.jp/dcg/",
+    "wikipedia_url": "https://ja.wikipedia.org/wiki/%E3%82%A2%E3%83%AB%E3%82%B3%26%E3%83%94%E3%83%BC%E3%82%B9_D.C.GARAGE",
+    "key_station": 1,
+    "per_week": 1.0
+  }
+}, {
+  "model": "airs.program",
+  "pk": 3,
+  "fields": {
+    "name": "うしろシティ 星のギガボディ",
+    "search_index": "うしろｼﾃｨ星のｷﾞｶﾞﾎﾞﾃﾞｨ",
+    "hashtag": "星のギガボディ",
+    "twitter_id": "",
+    "site_url": "http://www.tbsradio.jp/giga/",
+    "wikipedia_url": "https://ja.wikipedia.org/wiki/%E3%81%86%E3%81%97%E3%82%8D%E3%82%B7%E3%83%86%E3%82%A3_%E6%98%9F%E3%81%AE%E3%82%AE%E3%82%AC%E3%83%9C%E3%83%87%E3%82%A3",
+    "key_station": 1,
+    "per_week": 1.0
+  }
+}, {
+  "model": "airs.program",
+  "pk": 4,
+  "fields": {
+    "name": "ハライチのターン！",
+    "search_index": "ﾊﾗｲﾁのﾀｰﾝ!",
+    "hashtag": "ハライチのターン",
+    "twitter_id": "tbsr_ht",
+    "site_url": "https://www.tbsradio.jp/ht/",
+    "wikipedia_url": "https://ja.wikipedia.org/wiki/%E3%83%8F%E3%83%A9%E3%82%A4%E3%83%81%E3%81%AE%E3%82%BF%E3%83%BC%E3%83%B3!",
+    "key_station": 1,
+    "per_week": 1.0
+  }
+}]
