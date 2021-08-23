@@ -13,16 +13,15 @@
         <div>処理内容のメモ</div>
         <ol class="uk-margin-remove">
             <li>ユーザ：シェアラジオの文言を送信</li>
-            <li>サーバ：受信した文言からURLを抜き出す</li>
-            <li>サーバ：対象のURLにスクレイピングしてタイトル取得</li>
-            <li>サーバ：タイトルをパースして、放送開始日時・放送終了日時・番組名・放送局を取得</li>
-            <li>サーバ：一致する放送局を検索</li>
-            <li>サーバ：番組名と放送開始時間から番組候補を検索</li>
-            <li>ユーザ：放送登録</li>
+            <li>サーバ：受信した文言からラジコのURLを抜き出す</li>
+            <li>サーバ：対象のURLからページタイトルをスクレイピング</li>
+            <li>サーバ：タイトルをパースして、放送開始日時・放送終了日時・放送名・放送局名を取得</li>
+            <li>サーバ：放送名から番組を検索</li>
+            <li>サーバ：放送局名から放送局を検索</li>
+            <li>ユーザ：放送登録 or 確認</li>
             <li>ユーザ：何卒登録</li>
             <li>ユーザ：必要に応じて何卒編集、削除</li>
-            <li>管理者：新規の放送局の場合は調整</li>
-            <li>管理者：新規の番組の場合は調整</li>
+            <li>管理者：番組と放送局がNullの場合は確認して必要に応じて調整</li>
         </ol>
     </small>
 </div>
@@ -56,6 +55,22 @@
             <legend class="uk-legend">放送情報</legend>
 
             <div class="uk-margin">
+                <label class="uk-form-label">放送名</label>
+                <div class="uk-form-controls uk-margin-bottom">
+                    <input type="text" class="uk-input uk-margin-small-bottom" value="空気階段の踊り場" disabled><br>
+                    <small>
+                        <small>
+                            <p class="uk-margin-remove">番組情報：<a href="">空気階段の踊り場</a></p>
+                        </small>
+                    </small>
+                </div>
+
+
+                <label class="uk-form-label">放送局</label>
+                <div class="uk-form-controls uk-margin-bottom">
+                    <input type="text" class="uk-input" value="TBSラジオ" disabled>
+                </div>
+
                 <label class="uk-form-label">放送開始</label>
                 <div class="uk-form-controls uk-margin-bottom">
                     <input type="text" class="uk-input" value="2018/07/19（月） 24:00" disabled>
@@ -64,23 +79,6 @@
                 <label class="uk-form-label">放送終了</label>
                 <div class="uk-form-controls uk-margin-bottom">
                     <input type="text" class="uk-input" value="2018/07/19（月） 25:00" disabled>
-                </div>
-            </div>
-
-            <div class="uk-margin">
-                <div class="uk-form-label">放送局</div>
-                <div class="uk-form-controls rn-form-check-label">
-                    <label><input type="radio" name="broadcaster" class="uk-radio" checked> TBSラジオ</label><br>
-                    <label><input type="radio" name="broadcaster" class="uk-radio"> その他</label><br>
-                </div>
-            </div>
-
-            <div class="uk-margin">
-                <div class="uk-form-label">番組</div>
-                <div class="uk-form-controls rn-form-check-label">
-                    <label><input class="uk-radio" type="radio" name="program" checked> 空気階段の踊り場</label><br>
-                    <label><input class="uk-radio" type="radio" name="program"> 単発「番組名」</label><br>
-                    <label><input class="uk-radio" type="radio" name="program"> たぶん未登録のレギュラー番組</label>
                 </div>
             </div>
 

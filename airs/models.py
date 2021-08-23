@@ -22,6 +22,7 @@ class Broadcaster(models.Model):
     )
     search_index = models.CharField(
         verbose_name='検索インデックス',
+        null=True, blank=True,
         max_length=400,
     )
     site_url = models.CharField(
@@ -61,6 +62,17 @@ class Program(models.Model):
     )
     search_index = models.CharField(
         verbose_name='検索インデックス',
+        null=True, blank=True,
+        max_length=400,
+    )
+    hashtag = models.CharField(
+        verbose_name='ハッシュタグ',
+        null=True, blank=True,
+        max_length=80,
+    )
+    twitter_id = models.CharField(
+        verbose_name='Twitter ID',
+        null=True, blank=True,
         max_length=400,
     )
     site_url = models.CharField(
@@ -73,14 +85,10 @@ class Program(models.Model):
         null=True, blank=True,
         max_length=400,
     )
-    twitter_url = models.CharField(
-        verbose_name='Twitter',
-        null=True, blank=True,
-        max_length=400,
-    )
     key_station = models.ForeignKey(
         Broadcaster, on_delete=models.CASCADE,
         verbose_name='キー局',
+        null=True, blank=True,
     )
 
     def __str__(self):
@@ -89,13 +97,23 @@ class Program(models.Model):
 
 # 放送
 class Air(models.Model):
+    name = models.CharField(
+        verbose_name='名前',
+        max_length=200,
+    )
+    share_text = models.CharField(
+        verbose_name='シェアラジオ全文',
+        max_length=400,
+    )
     program = models.ForeignKey(
         Program, on_delete=models.CASCADE,
         verbose_name='番組',
+        null=True, blank=True,
     )
     broadcaster = models.ForeignKey(
         Broadcaster, on_delete=models.CASCADE,
         verbose_name='放送局',
+        null=True, blank=True,
     )
     started = models.DateTimeField(
         verbose_name='開始日時',
@@ -113,7 +131,7 @@ class Air(models.Model):
     )
 
     def __str__(self):
-        return self.program.name + " " + str(self.started.astimezone(pytztimezone('Asia/Tokyo')))
+        return self.name + "_" + str(self.started.astimezone(pytztimezone('Asia/Tokyo')))
 
     def was_aired_this_week(self):
         now = timezone.now()
@@ -164,13 +182,15 @@ class Nanitozo(models.Model):
     )
     created = models.DateTimeField(
         verbose_name='作成日時',
+        auto_now_add=True,
     )
     updated = models.DateTimeField(
         verbose_name='更新日時',
+        auto_now=True,
     )
 
     def __str__(self):
-        return self.user.last_name + ' ' + str(self.air)
+        return self.user.last_name + '_' + str(self.air)
 
     class Meta:
         constraints = [
