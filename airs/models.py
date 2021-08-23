@@ -90,6 +90,10 @@ class Program(models.Model):
         verbose_name='キー局',
         null=True, blank=True,
     )
+    per_week = models.FloatField(
+        verbose_name='週何回放送か',
+        default=1,
+    )
 
     def __str__(self):
         return self.name
