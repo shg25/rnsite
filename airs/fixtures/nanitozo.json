@@ -1,0 +1,211 @@
+[{
+  "model": "airs.nanitozo",
+  "pk": 1,
+  "fields": {
+    "air": 1,
+    "user": 2,
+    "good": false,
+    "comment_open": true,
+    "comment_recommend": "",
+    "comment": "",
+    "comment_negative": "",
+    "created": "2019-04-30T15:00:00.000Z",
+    "updated": "2019-04-30T15:00:00.000Z"
+  }
+}, {
+  "model": "airs.nanitozo",
+  "pk": 2,
+  "fields": {
+    "air": 1,
+    "user": 3,
+    "good": false,
+    "comment_open": true,
+    "comment_recommend": "",
+    "comment": "",
+    "comment_negative": "",
+    "created": "2019-04-30T15:00:00.000Z",
+    "updated": "2019-04-30T15:00:00.000Z"
+  }
+}, {
+  "model": "airs.nanitozo",
+  "pk": 3,
+  "fields": {
+    "air": 1,
+    "user": 4,
+    "good": false,
+    "comment_open": true,
+    "comment_recommend": "",
+    "comment": "",
+    "comment_negative": "",
+    "created": "2019-04-30T15:00:00.000Z",
+    "updated": "2019-04-30T15:00:00.000Z"
+  }
+}, {
+  "model": "airs.nanitozo",
+  "pk": 4,
+  "fields": {
+    "air": 2,
+    "user": 2,
+    "good": false,
+    "comment_open": true,
+    "comment_recommend": "",
+    "comment": "",
+    "comment_negative": "",
+    "created": "2019-05-01T15:00:00.000Z",
+    "updated": "2019-05-01T15:00:00.000Z"
+  }
+}, {
+  "model": "airs.nanitozo",
+  "pk": 5,
+  "fields": {
+    "air": 2,
+    "user": 3,
+    "good": false,
+    "comment_open": true,
+    "comment_recommend": "",
+    "comment": "",
+    "comment_negative": "",
+    "created": "2019-05-01T15:00:00.000Z",
+    "updated": "2019-05-01T15:00:00.000Z"
+  }
+}, {
+  "model": "airs.nanitozo",
+  "pk": 6,
+  "fields": {
+    "air": 2,
+    "user": 4,
+    "good": false,
+    "comment_open": true,
+    "comment_recommend": "",
+    "comment": "",
+    "comment_negative": "",
+    "created": "2019-05-01T15:00:00.000Z",
+    "updated": "2019-05-01T15:00:00.000Z"
+  }
+}, {
+  "model": "airs.nanitozo",
+  "pk": 7,
+  "fields": {
+    "air": 3,
+    "user": 2,
+    "good": false,
+    "comment_open": true,
+    "comment_recommend": "",
+    "comment": "",
+    "comment_negative": "",
+    "created": "2019-05-02T15:00:00.000Z",
+    "updated": "2019-05-02T15:00:00.000Z"
+  }
+}, {
+  "model": "airs.nanitozo",
+  "pk": 8,
+  "fields": {
+    "air": 3,
+    "user": 3,
+    "good": false,
+    "comment_open": true,
+    "comment_recommend": "",
+    "comment": "",
+    "comment_negative": "",
+    "created": "2019-05-02T15:00:00.000Z",
+    "updated": "2019-05-02T15:00:00.000Z"
+  }
+}, {
+  "model": "airs.nanitozo",
+  "pk": 9,
+  "fields": {
+    "air": 3,
+    "user": 4,
+    "good": false,
+    "comment_open": true,
+    "comment_recommend": "",
+    "comment": "",
+    "comment_negative": "",
+    "created": "2019-05-02T15:00:00.000Z",
+    "updated": "2019-05-02T15:00:00.000Z"
+  }
+}, {
+  "model": "airs.nanitozo",
+  "pk": 10,
+  "fields": {
+    "air": 4,
+    "user": 4,
+    "good": false,
+    "comment_open": true,
+    "comment_recommend": "",
+    "comment": "",
+    "comment_negative": "",
+    "created": "2019-05-06T15:00:00.000Z",
+    "updated": "2019-05-06T15:00:00.000Z"
+  }
+}, {
+  "model": "airs.nanitozo",
+  "pk": 11,
+  "fields": {
+    "air": 5,
+    "user": 2,
+    "good": false,
+    "comment_open": true,
+    "comment_recommend": "",
+    "comment": "",
+    "comment_negative": "",
+    "created": "2019-05-06T15:00:00.000Z",
+    "updated": "2019-05-06T15:00:00.000Z"
+  }
+}, {
+  "model": "airs.nanitozo",
+  "pk": 12,
+  "fields": {
+    "air": 5,
+    "user": 3,
+    "good": false,
+    "comment_open": true,
+    "comment_recommend": "",
+    "comment": "",
+    "comment_negative": "",
+    "created": "2019-05-06T15:00:00.000Z",
+    "updated": "2019-05-06T15:00:00.000Z"
+  }
+}, {
+  "model": "airs.nanitozo",
+  "pk": 13,
+  "fields": {
+    "air": 6,
+    "user": 2,
+    "good": false,
+    "comment_open": true,
+    "comment_recommend": "",
+    "comment": "",
+    "comment_negative": "",
+    "created": "2019-05-07T15:00:00.000Z",
+    "updated": "2019-05-07T15:00:00.000Z"
+  }
+}, {
+  "model": "airs.nanitozo",
+  "pk": 14,
+  "fields": {
+    "air": 6,
+    "user": 3,
+    "good": false,
+    "comment_open": true,
+    "comment_recommend": "",
+    "comment": "",
+    "comment_negative": "",
+    "created": "2019-05-07T15:00:00.000Z",
+    "updated": "2019-05-07T15:00:00.000Z"
+  }
+}, {
+  "model": "airs.nanitozo",
+  "pk": 15,
+  "fields": {
+    "air": 6,
+    "user": 4,
+    "good": false,
+    "comment_open": true,
+    "comment_recommend": "",
+    "comment": "",
+    "comment_negative": "",
+    "created": "2019-05-07T15:00:00.000Z",
+    "updated": "2019-05-07T15:00:00.000Z"
+  }
+}]
