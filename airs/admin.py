@@ -59,7 +59,7 @@ class AirAdmin(admin.ModelAdmin):
         ('概要', {'fields': ['overview_before', 'overview_after']}),
     ]
     inlines = [NanitozoInline]
-    list_display = ('id', 'name', 'program', 'started', 'was_aired_this_week')
+    list_display = ('id', 'name', 'program', 'broadcaster', 'started', 'was_aired_this_week')
     list_display_links = ('name',)
     list_filter = ['started', 'program', 'broadcaster']
     ordering = ('-started',)

@@ -7,6 +7,12 @@ from django.utils import timezone
 from pytz import timezone as pytztimezone  # TODO どこかにまとめる
 
 
+def get_last_name(self):
+    return self.last_name
+
+User.add_to_class("__str__", get_last_name)
+
+
 # 放送局
 class Broadcaster(models.Model):
     name = models.CharField(
@@ -135,7 +141,7 @@ class Air(models.Model):
     )
 
     def __str__(self):
-        return self.name + "_" + str(self.started.astimezone(pytztimezone('Asia/Tokyo')))
+        return self.name[:8] + "_" + str(self.broadcaster)[:4] + "_" + str(self.started.astimezone(pytztimezone('Asia/Tokyo')))[:16]
 
     def was_aired_this_week(self):
         now = timezone.now()
