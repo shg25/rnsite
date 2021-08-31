@@ -1,0 +1,35 @@
+{% extends 'airs/base.html' %}
+{% comment %} {% load static %} {% endcomment %}
+
+{% block title %}{{ program.name }} - R.N. v2.0{% endblock title %}
+
+{% block header %}{% endblock header %}
+
+{% block content %}
+<article class="rn-padding">
+  {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+
+  <h1 class="uk-text-lead">{{ program.name }}</h1>
+
+  <dl class="uk-description-list">
+    <dt>ハッシュタグ</dt>
+    <dd>{{ program.hashtag }}</dd>
+
+    <dt>Twitter ID</dt>
+    <dd>{{ program.twitter_id }}</dd>
+
+    <dt>サイトURL</dt>
+    <dd><a href="{{ program.site_url }}" target="_blank">{{ program.site_url }}</a></dd>
+
+    <dt>Wikipedia</dt>
+    <dd><a href="{{ program.wikipedia_url }}" target="_blank">{{ program.wikipedia_url }}</a></dd>
+
+    <dt>キー局</dt>
+    <dd>{{ program.key_station }}</dd>
+
+    <dt>週何回放送か</dt>
+    <dd>{{ program.per_week }}</dd>
+  </dl>
+
+</article>
+{% endblock content %}
