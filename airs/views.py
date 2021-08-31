@@ -4,7 +4,7 @@ from django.urls import reverse
 from django.views import generic
 from django.utils import timezone
 
-from .models import Air, Nanitozo
+from .models import Broadcaster, Air, Nanitozo
 
 # def index(request):
 #     latest_air_list = Air.objects.order_by('-started')[:5]
@@ -52,14 +52,8 @@ class UsersView(generic.ListView):
 
 
 class BroadcastersView(generic.ListView):
-    template_name = 'airs/broadcasters.html'
-    context_object_name = 'latest_air_list'
-
-    def get_queryset(self):
-        """
-        Return the last five started airs (not including those set to be started in the future).
-        """
-        return Air.objects.filter(started__lte=timezone.now()).order_by('-started')[:5]
+    model = Broadcaster
+    paginate_by = 40
 
 
 class ProgramsView(generic.ListView):
@@ -96,14 +90,7 @@ class UserView(generic.DetailView):
 
 
 class BroadcasterView(generic.DetailView):
-    model = Air
-    template_name = 'airs/broadcaster.html'
-
-    def get_queryset(self):
-        """
-        Excludes any airs that aren't started yet.
-        """
-        return Air.objects.filter(started__lte=timezone.now())
+    model = Broadcaster
 
 
 class ProgramView(generic.DetailView):
