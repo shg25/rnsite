@@ -57,8 +57,6 @@
         <li class="uk-active"><a href="{% url 'airs:broadcasters' %}">放送局</a></li>
         {% elif request.resolver_match.url_name == 'programs' %}
         <li class="uk-active"><a href="{% url 'airs:programs' %}">番組</a></li>
-        {% elif request.resolver_match.url_name == 'casts' %}
-        <li class="uk-active"><a href="{% url 'airs:casts' %}">出演者</a></li>
         {% endif %}
         <li>
           <a href="#">…</a>
@@ -67,7 +65,6 @@
               <li class="{% if request.resolver_match.url_name == 'users' %}uk-active{% endif %}"><a href="{% url 'airs:users' %}">リスナー</a></li>
               <li class="{% if request.resolver_match.url_name == 'broadcasters' %}uk-active{% endif %}"><a href="{% url 'airs:broadcasters' %}">放送局</a></li>
               <li class="{% if request.resolver_match.url_name == 'programs' %}uk-active{% endif %}"><a href="{% url 'airs:programs' %}">番組</a></li>
-              <li class="{% if request.resolver_match.url_name == 'casts' %}uk-active{% endif %}"><a href="{% url 'airs:casts' %}">出演者</a></li>
             </ul>
           </div>
         </li>

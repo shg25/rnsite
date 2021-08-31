@@ -17,8 +17,6 @@ urlpatterns = [
     path('broadcasters/', views.BroadcastersView.as_view(), name='broadcasters'),
     # 番組一覧
     path('programs/', views.ProgramsView.as_view(), name='programs'),
-    # 出演者一覧
-    path('casts/', views.CastsView.as_view(), name='casts'),
 
     # リスナー詳細 TODO キーをユーザー名にする
     path('user/<int:pk>/', views.UserView.as_view(), name='user'),
@@ -26,9 +24,7 @@ urlpatterns = [
     path('broadcaster/<int:pk>/', views.BroadcasterView.as_view(), name='broadcaster'),
     # 番組詳細 TODO キーを番組名ハッシュタグにしたいな
     path('program/<int:pk>/', views.ProgramView.as_view(), name='program'),
-    # 出演者詳細 TODO これはIDでいいかなって気もするし微妙な気もする…SNSのIDとか？
-    path('cast/<int:pk>/', views.CastView.as_view(), name='cast'),
-    
+
     # 放送一覧
     path('', views.IndexView.as_view(), name='index'),
     # 放送詳細 ex: '/1/'
