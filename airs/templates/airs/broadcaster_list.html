@@ -1,0 +1,35 @@
+{% extends 'airs/base.html' %}
+{% comment %} {% load static %} {% endcomment %}
+
+{% block title %}放送局 - R.N. v2.0{% endblock title %}
+
+{% block header %}{% endblock header %}
+
+{% block content %}
+<article class="rn-padding">
+    <h1 class="uk-text-lead">放送局</h1>
+
+    {% if broadcaster_list %}
+
+    {% for broadcaster in broadcaster_list %}
+
+    <div class="uk-margin-bottom uk-animation-toggle" tabindex="0">
+        <a href="{% url 'airs:broadcaster' broadcaster.id %}" class="uk-display-block uk-link-reset uk-animation-slide-bottom-small border-left-muted">
+            <div class="uk-grid-collapse uk-flex-middle" uk-grid>
+                <h2 class="uk-width-expand uk-text-truncate uk-text-small">{{ broadcaster.name }}</h2>
+            </div>
+        </a>
+    </div>
+
+    {% endfor %}
+
+    {% include 'base/pagination.html' %}
+
+    {% else %}
+
+    <p>データなし（ありえない）</p>
+
+    {% endif %}
+
+</article>
+{% endblock content %}
