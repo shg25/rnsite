@@ -3,6 +3,7 @@ from django.shortcuts import get_object_or_404, render
 from django.urls import reverse
 from django.views import generic
 from django.utils import timezone
+from django.contrib.auth.models import User
 
 from .models import Broadcaster, Program, Air, Nanitozo
 
@@ -41,14 +42,9 @@ class NUpdateView(generic.TemplateView):  # TODO Form系のViewにする
 
 
 class UsersView(generic.ListView):
-    template_name = 'airs/users.html'
-    context_object_name = 'latest_air_list'
-
-    def get_queryset(self):
-        """
-        Return the last five started airs (not including those set to be started in the future).
-        """
-        return Air.objects.filter(started__lte=timezone.now()).order_by('-started')[:5]
+    model = User
+    # ページネーションなしの全件表示でいける想定
+    # 将来的には何卒した日時を保存して降順で表示するなど検討したいが、Djangoのauthでできるかどうか
 
 
 class BroadcastersView(generic.ListView):
@@ -74,14 +70,7 @@ class CastsView(generic.ListView):
 
 
 class UserView(generic.DetailView):
-    model = Air
-    template_name = 'airs/user.html'
-
-    def get_queryset(self):
-        """
-        Excludes any airs that aren't started yet.
-        """
-        return Air.objects.filter(started__lte=timezone.now())
+    model = User
 
 
 class BroadcasterView(generic.DetailView):

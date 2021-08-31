@@ -1,0 +1,33 @@
+{% extends 'airs/base.html' %}
+{% comment %} {% load static %} {% endcomment %}
+
+{% block title %}リスナー - R.N. v2.0{% endblock title %}
+
+{% block header %}{% endblock header %}
+
+{% block content %}
+<article class="rn-padding">
+    <h1 class="uk-text-lead">リスナー</h1>
+
+    {% if user_list %}
+
+    {% for user in user_list %}
+
+    <div class="uk-margin-bottom uk-animation-toggle" tabindex="0">
+        <a href="{% url 'airs:user' user.id %}" class="uk-display-block uk-link-reset uk-animation-slide-bottom-small border-left-muted">
+            <div class="uk-grid-collapse uk-flex-middle" uk-grid>
+                <h2 class="uk-width-expand uk-text-truncate uk-text-small">{{ user.last_name }}</h2>
+            </div>
+        </a>
+    </div>
+
+    {% endfor %}
+
+    {% else %}
+
+    <p>データなし（ありえない）</p>
+
+    {% endif %}
+
+</article>
+{% endblock content %}
