@@ -7,30 +7,30 @@ from django.contrib.auth.models import User
 
 from .models import Broadcaster, Program, Air, Nanitozo
 
-# def index(request):
-#     latest_air_list = Air.objects.order_by('-started')[:5]
-#     context = {'latest_air_list': latest_air_list}
-#     return render(request, 'airs/index.html', context)
 class IndexView(generic.ListView):
-    template_name = 'airs/index.html'
-    context_object_name = 'latest_air_list'
+    model = Air
+    queryset = Air.objects.filter(started__lte=timezone.now()).order_by('-started') # オススメの放送を取得する
 
-    def get_queryset(self):
-        """
-        Return the last five started airs (not including those set to be started in the future).
-        """
-        return Air.objects.filter(started__lte=timezone.now()).order_by('-started')[:5]
+    def get_context_data(self, *args, **kwargs):
+        context = super().get_context_data(*args, **kwargs)
+        w1_list = Air.objects.filter(started__lte=timezone.now()).order_by('-started')[:4] # TODO 今週分を取得する ダミーで4件取得にしてる
+        w2_list = Air.objects.filter(started__lte=timezone.now()).order_by('-started')[4:10] # TODO 先週分を取得する ダミーで4件目以降取得にしてる
+        context['w1_list'] = w1_list
+        context['w1_list_len'] = len(w1_list)
+        context['w2_list'] = w2_list
+        context['w2_list_len'] = len(w2_list)
+        return context
+        # TODO  全面的に filter(started__lte=timezone.now()) の値を調整する、実際は事前登録も可とするので、現在時刻との比較は不要
 
 
 class NsView(generic.ListView):
-    template_name = 'airs/ns.html'
-    context_object_name = 'latest_air_list'
+    model = Nanitozo
+    queryset = Nanitozo.objects.order_by('-created')[:40]
 
-    def get_queryset(self):
-        """
-        Return the last five started airs (not including those set to be started in the future).
-        """
-        return Air.objects.filter(started__lte=timezone.now()).order_by('-started')[:5]
+    def get_context_data(self, *args, **kwargs):
+        context = super().get_context_data(*args, **kwargs)
+        context['close_list'] = Nanitozo.objects.filter(comment_open__lte=False).order_by('-created')[:40]
+        return context
 
 
 class NCreateView(generic.TemplateView):  # TODO Form系のViewにする
@@ -58,17 +58,6 @@ class ProgramsView(generic.ListView):
     # 将来的には登録があった日時を保存して降順で表示するなど検討
 
 
-class CastsView(generic.ListView):
-    template_name = 'airs/casts.html'
-    context_object_name = 'latest_air_list'
-
-    def get_queryset(self):
-        """
-        Return the last five started airs (not including those set to be started in the future).
-        """
-        return Air.objects.filter(started__lte=timezone.now()).order_by('-started')[:5]
-
-
 class UserView(generic.DetailView):
     model = User
 
@@ -80,16 +69,6 @@ class BroadcasterView(generic.DetailView):
 class ProgramView(generic.DetailView):
     model = Program
 
-
-class CastView(generic.DetailView):
-    model = Air
-    template_name = 'airs/cast.html'
-
-    def get_queryset(self):
-        """
-        Excludes any airs that aren't started yet.
-        """
-        return Air.objects.filter(started__lte=timezone.now())
 
 # def detail(request, air_id):
 #     air = get_object_or_404(Air, pk=air_id)
