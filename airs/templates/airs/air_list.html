@@ -8,8 +8,8 @@
 {% block content %}
 <ul class="uk-tab" data-uk-tab="{connect:'#tab-contents'}">
     <li><a href="">!!</a></li>
-    <li><a href="">1w<span class="uk-article-meta"> {{ w1_list_len }}(999h)</span></a></li>
-    <li><a href="">2w<span class="uk-article-meta"> {{ w2_list_len }}(999h)</a></li>
+    <li><a href="">1w<small> {{ w1_list|length }}(999h)</small></a></li>
+    <li><a href="">2w<small> {{ w2_list|length }}(999h)</small></a></li>
 </ul>
 
 <article id="tab-contents" class="uk-switcher rn-padding">
