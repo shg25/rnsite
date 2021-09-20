@@ -10,6 +10,7 @@ from pytz import timezone as pytztimezone  # TODO どこかにまとめる
 def get_last_name(self):
     return self.last_name
 
+
 User.add_to_class("__str__", get_last_name)
 
 

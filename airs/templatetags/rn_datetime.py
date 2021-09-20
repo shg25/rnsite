@@ -40,8 +40,6 @@ def astimezone_tokyo(dt):
 def is_midnight(dt):
     return dt.hour < 5
 
-# 時間差を[timedelta]で取得して分数を算出して小数点以下は切り捨て
-
 
 def diff_minutes(before, after):
-    return floor(((after - before).seconds / 60))
+    return floor(((after - before).seconds / 60))  # 時間差を[timedelta]で取得して分数を算出して小数点以下は切り捨て
