@@ -16,9 +16,7 @@ class IndexView(generic.ListView):
         w1_list = Air.objects.filter(started__lte=timezone.now()).order_by('-started')[:4] # TODO 今週分を取得する ダミーで4件取得にしてる
         w2_list = Air.objects.filter(started__lte=timezone.now()).order_by('-started')[4:10] # TODO 先週分を取得する ダミーで4件目以降取得にしてる
         context['w1_list'] = w1_list
-        context['w1_list_len'] = len(w1_list)
         context['w2_list'] = w2_list
-        context['w2_list_len'] = len(w2_list)
         return context
         # TODO  全面的に filter(started__lte=timezone.now()) の値を調整する、実際は事前登録も可とするので、現在時刻との比較は不要
 
