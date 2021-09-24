@@ -1,5 +1,5 @@
 {% extends 'airs/base.html' %}
-{% comment %} {% load static %} {% endcomment %}
+{% load rn_datetime %}
 
 {% block title %}R.N. v2.0{% endblock title %}
 
@@ -16,9 +16,17 @@
     {% comment %} タブ1 {% endcomment %}
     <div>
         {% if air_list %}
-        {% for air in air_list %}
+        {% regroup air_list by started|rn_regroup_date as airs %}
+
+        {% for started, local_airs in airs %}
+        {% include 'base/lead.html' with title=started|rn_weekday caption=started|rn_md %}
+
+        {% for air in local_airs %}
         {% include 'list/item_air.html' with air=air %}
         {% endfor %}
+
+        {% endfor %}
+
         {% else %}
         <p>データなし</p>
         {% endif %}
@@ -27,9 +35,17 @@
     {% comment %} タブ2 {% endcomment %}
     <div>
         {% if w1_list %}
-        {% for air in w1_list %}
+        {% regroup w1_list by started|rn_regroup_date as airs %}
+
+        {% for started, local_airs in airs %}
+        {% include 'base/lead.html' with title=started|rn_weekday caption=started|rn_md %}
+
+        {% for air in local_airs %}
         {% include 'list/item_air.html' with air=air %}
         {% endfor %}
+
+        {% endfor %}
+
         {% else %}
         <p>今週なし</p>
         {% endif %}
@@ -38,13 +54,22 @@
     {% comment %} タブ3 {% endcomment %}
     <div>
         {% if w2_list %}
-        {% for air in w2_list %}
+        {% regroup w2_list by started|rn_regroup_date as airs %}
+
+        {% for started, local_airs in airs %}
+        {% include 'base/lead.html' with title=started|rn_weekday caption=started|rn_md %}
+
+        {% for air in local_airs %}
         {% include 'list/item_air.html' with air=air %}
         {% endfor %}
+
+        {% endfor %}
+
         {% else %}
         <p>先週なし</p>
         {% endif %}
     </div>
+
 </article>
 
 

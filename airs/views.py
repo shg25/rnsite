@@ -7,14 +7,15 @@ from django.contrib.auth.models import User
 
 from .models import Broadcaster, Program, Air, Nanitozo
 
+
 class IndexView(generic.ListView):
     model = Air
-    queryset = Air.objects.filter(started__lte=timezone.now()).order_by('-started') # オススメの放送を取得する
+    queryset = Air.objects.filter(started__lte=timezone.now()).order_by('-started')  # オススメの放送を取得する
 
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args, **kwargs)
-        w1_list = Air.objects.filter(started__lte=timezone.now()).order_by('-started')[:4] # TODO 今週分を取得する ダミーで4件取得にしてる
-        w2_list = Air.objects.filter(started__lte=timezone.now()).order_by('-started')[4:10] # TODO 先週分を取得する ダミーで4件目以降取得にしてる
+        w1_list = Air.objects.filter(started__lte=timezone.now()).order_by('-started')[:4]  # TODO 今週分を取得する ダミーで4件取得にしてる
+        w2_list = Air.objects.filter(started__lte=timezone.now()).order_by('-started')[4:10]  # TODO 先週分を取得する ダミーで4件目以降取得にしてる
         context['w1_list'] = w1_list
         context['w2_list'] = w2_list
         return context
@@ -81,9 +82,12 @@ class DetailView(generic.DetailView):
         """
         return Air.objects.filter(started__lte=timezone.now())
 
+
 # def results(request, air_id):
 #     air = get_object_or_404(Air, pk=air_id)
 #     return render(request, 'airs/results.html', {'air': air})
+
+
 class ResultsView(generic.DetailView):
     model = Air
     template_name = 'airs/results.html'
