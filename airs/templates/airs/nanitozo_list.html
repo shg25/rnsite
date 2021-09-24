@@ -1,5 +1,5 @@
 {% extends 'airs/base.html' %}
-{% comment %} {% load static %} {% endcomment %}
+{% load rn_datetime %}
 
 {% block title %}何卒 - R.N. v2.0{% endblock title %}
 
@@ -15,9 +15,17 @@
     {% comment %} タブ1 {% endcomment %}
     <div>
         {% if nanitozo_list %}
-        {% for nanitozo in nanitozo_list %}
+        {% regroup nanitozo_list by created|rn_regroup_date as nanitozos %}
+
+        {% for created, local_nanitozos in nanitozos %}
+        {% include 'base/lead.html' with title=created|rn_weekday caption=created|rn_md %}
+
+        {% for nanitozo in local_nanitozos %}
         {% include 'list/item_nanitozo.html' with nanitozo=nanitozo %}
         {% endfor %}
+
+        {% endfor %}
+
         {% else %}
         <p>何卒なし</p>
         {% endif %}
@@ -26,9 +34,17 @@
     {% comment %} タブ2 {% endcomment %}
     <div>
         {% if close_list %}
-        {% for nanitozo in close_list %}
+        {% regroup close_list by created|rn_regroup_date as nanitozos %}
+
+        {% for created, local_nanitozos in nanitozos %}
+        {% include 'base/lead.html' with title=created|rn_weekday caption=created|rn_md %}
+
+        {% for nanitozo in local_nanitozos %}
         {% include 'list/item_nanitozo.html' with nanitozo=nanitozo %}
         {% endfor %}
+
+        {% endfor %}
+
         {% else %}
         <p>下書きなし</p>
         {% endif %}
