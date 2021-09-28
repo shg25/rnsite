@@ -1,3 +1,5 @@
+import datetime
+
 from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render
 from django.urls import reverse
@@ -6,6 +8,7 @@ from django.utils import timezone
 from django.contrib.auth.models import User
 
 from .models import Broadcaster, Program, Air, Nanitozo
+from .forms import AirCreateForm
 
 
 class IndexView(generic.ListView):
@@ -32,8 +35,42 @@ class NsView(generic.ListView):
         return context
 
 
-class NCreateView(generic.TemplateView):  # TODO Form系のViewにする
+class NCreateView(generic.FormView):
     template_name = 'airs/n_create.html'
+    form_class = AirCreateForm
+    success_url = '/'
+
+    def form_valid(self, form):
+        # This method is called when valid form data has been POSTed.
+        # It should return an HttpResponse.
+        # print('\n-- form_valid ここから --\n')
+
+        share_text = form.cleaned_data['share_text']
+        # TODO シェアテキストを使ってスクレイピングしてタイトルを取得する
+
+        # これだけだとデータを差し替えられない
+        # form.cleaned_data['name'] = '番組名をセット'
+        # print(form.cleaned_data)
+
+        # [overview_before]と[overview_after]以外をセット TODO 全てスクレイピングしたタイトルを元にセットする
+        form.instance.name = '確認用のダミー番組名4'
+        form.instance.program = Program.objects.filter(search_index__contains='ｱﾙｺ').first()  # ヒットしない場合は[None]が入ってDBには[null]で保存
+        form.instance.broadcaster = Broadcaster.objects.filter(search_index__contains='luckyfm').first()  # ヒットしない場合は[None]が入ってDBには[null]で保存
+        form.instance.started = datetime.datetime(2021, 8, 30, 20, 0)  # 日本時刻で登録される模様 → DBは2021-08-30T06:00:00Z
+        form.instance.ended = datetime.datetime(2021, 8, 30, 21, 0)  # 日本時刻で登録される模様 → DBは2021-08-30T07:00:00Z
+        saved_air = form.save()
+
+        # TODO saveエラー時の処理（被りとか）
+
+        # 続けて何卒をデフォルト値で登録
+        user = self.request.user  # ログイン中のユーザー情報
+        saved_air.nanitozo_set.create(user=user)
+
+        # TODO createエラー時の処理（被りとか）
+
+        # print('\n-- form_valid ここまで --\n')
+        # return redirect('detail', id=saved_air.id) # TODO 詳細画面にリダイレクトするサンプルの引用だけど、form_valid内で適切かどうかは確認が必要 （renderを使うとか？）
+        return super().form_valid(form)
 
 
 class NUpdateView(generic.TemplateView):  # TODO Form系のViewにする

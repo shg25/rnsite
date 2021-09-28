@@ -142,7 +142,11 @@ class Air(models.Model):
     )
 
     def __str__(self):
-        return self.name[:8] + "_" + str(self.broadcaster)[:4] + "_" + str(self.started.astimezone(pytztimezone('Asia/Tokyo')))[:16]
+        if self.started == None:
+            return self.name[:8] + '_' + str(self.broadcaster)[:4] + '_'
+        else:
+            return self.name[:8] + '_' + str(self.broadcaster)[:4] + '_' + str(self.started.astimezone(pytztimezone('Asia/Tokyo')))[:16]
+        
 
     def was_aired_this_week(self):
         now = timezone.now()
