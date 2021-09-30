@@ -1,0 +1,10 @@
+<div class="uk-grid-collapse uk-flex-middle" uk-grid>
+    <div>
+        <span uk-icon="{{ icon }}" class="uk-icon"></span><span class="uk-text-middle mgl-s"><a href="#">{{ nanitozo_list|length }}</a></span>
+    </div>
+    {% if is_negative == False %}
+    <div class="uk-width-expand uk-text-truncate uk-text-small uk-margin-small-left mgt-s">
+        {% for nanitozo in nanitozo_list %}<a href="#">{{ nanitozo.user.last_name }}</a> {% endfor %}
+    </div>
+    {% endif %}
+</div>

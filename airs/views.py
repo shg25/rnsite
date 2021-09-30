@@ -111,13 +111,19 @@ class ProgramView(generic.DetailView):
 #     return render(request, 'airs/detail.html', {'air': air})
 class DetailView(generic.DetailView):
     model = Air
-    template_name = 'airs/detail.html'
 
-    def get_queryset(self):
-        """
-        Excludes any airs that aren't started yet.
-        """
-        return Air.objects.filter(started__lte=timezone.now())
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        air = context.get('object')
+        nanitozo_list = air.nanitozo_set.all()
+        context['nanitozo_list'] = nanitozo_list
+        context['good_nanitozo_list'] = list(filter(lambda x: x.good == True, nanitozo_list))
+        context['comment_recommend_nanitozo_list'] = list(filter(lambda x: x.comment_open == True and len(x.comment_recommend) != 0, nanitozo_list))
+        context['comment_open_nanitozo_list'] = list(filter(lambda x: x.comment_open == True and len(x.comment) != 0, nanitozo_list))
+        context['comment_negative_nanitozo_list'] = list(filter(lambda x: x.comment_open == True and len(x.comment_negative) != 0, nanitozo_list))
+
+        # context['user'] = self.request.user  # ログイン中のユーザー情報
+        return context
 
 
 # def results(request, air_id):

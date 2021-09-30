@@ -39,6 +39,10 @@ h6 {
   text-decoration: underline;
 }
 
+.mgt-s {
+  margin-top: 4px;
+}
+
 .mgl-ss {
   margin-left: 2px;
 }

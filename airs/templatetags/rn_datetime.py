@@ -27,6 +27,16 @@ def rn_md(dt):
 
 
 @register.filter
+def rn_hm(dt):
+    # 0〜4時は[+24h]で表示する（0→24、1→25、2→26、3→27、4→28）
+    # 終了時刻が5時の場合はラジコ上の終了時刻は29時と表記されるが、当サイトでは終了時刻は表示しないので不要
+    if is_midnight(dt):
+        hour = str(dt.hour + 24)
+    else:
+        hour = str(dt.hour)
+    return str(hour) + ':' + str(dt.strftime("%M"))
+
+@register.filter
 def init_rn_datetime(started, ended):
     return RNDatetime(started, ended)
 
@@ -38,16 +48,9 @@ class RNDatetime:
         started = astimezone_tokyo(started)  # 日本時間にしておく
         started = timedelta_midnight_date(started)
 
-        # 0〜4時は[+24h]で表示する（0→24、1→25、2→26、3→27、4→28）
-        # 終了時刻が5時の場合はラジコ上の終了時刻は29時と表記されるが、当サイトでは終了時刻は表示しないので不要
-        if is_midnight(started):
-            hour = str(started.hour + 24)
-        else:
-            hour = str(started.hour)
-
-        self.md = rn_md(started)
         self.weekday = rn_weekday(started)
-        self.hm = str(hour) + ':' + str(started.strftime("%M"))
+        self.md = rn_md(started)
+        self.hm = rn_hm(started)
 
 
 def astimezone_tokyo(dt):
