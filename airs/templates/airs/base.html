@@ -27,21 +27,14 @@
   <header id="header" class="uk-background-primary">
     <div class="uk-light rn-padding uk-grid-collapse uk-flex-middle" uk-grid>
       <h1 class="uk-width-expand uk-text-small uk-margin-remove uk-margin-right"><a href="/" class="uk-link-reset">R.N.<small>v2.0 検討中</small></a></h1>
-      <ul class="uk-width-auto uk-iconnav">
+      <div class="uk-width-auto">
         {% if user.is_authenticated %}
-        <li><a href="#" uk-icon="icon: plus; ratio: 0.8"></a></li>
-        {% endif %}
-        {% if user.is_authenticated %}
-        <li><a href="{% url 'logout' %}" uk-icon="icon: sign-out; ratio: 0.8"></a></li>
+        <span class="uk-text-small">{{ user.last_name }}</span>
+        <span><a href="{% url 'logout' %}" uk-icon="icon: sign-out; ratio: 0.8"></a></span>
         {% else %}
-        <li><a href="{% url 'login' %}" uk-icon="icon: sign-in; ratio: 0.8"></a></li>
+        <span><a href="{% url 'login' %}" uk-icon="icon: sign-in; ratio: 0.8"></a></span>
         {% endif %}
-      </ul>
-      {% if user.is_authenticated %}
-      <div class="uk-width-auto mgl-m">
-        <span class="uk-article-meta">{{ user.first_name }}</span>
       </div>
-      {% endif %}
     </div>
   </header>
 

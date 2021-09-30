@@ -1,0 +1,87 @@
+{% load rn_datetime %}
+
+<div class="rn-padding">
+    <h3 class="uk-text-default uk-margin-small-bottom">{{ title }}<small> {{ nanitozo_list|length }}</small></h3>
+
+    {% if nanitozo_list %}
+
+    <ul class="uk-list uk-list-divider uk-margin-remove">
+
+        {% for nanitozo in nanitozo_list %}
+
+        <li class="uk-margin-small-right uk-margin-small-top uk-flex uk-flex-middle">
+
+            <div class="uk-width-expand{% if user.is_authenticated and nanitozo.user.last_name == user.last_name%} border-left-success{% endif %}">
+                <p class="uk-margin-remove">
+                    <a href="#">{{ nanitozo.user.last_name }}</a>
+                    <small>{{ nanitozo.created|rn_md }} {{ nanitozo.created|rn_hm }}</small>
+                </p>
+                <div class="uk-inline">
+                    <p class="uk-text-small uk-margin-remove uk-text-break">
+                        {% comment %} 文字列で判定してるけどよくない {% endcomment %}
+                        {% if title == 'ネガ' %}
+                        {{ nanitozo.comment_negative|linebreaksbr }}
+                        {% elif title == '推し' %}
+                        {{ nanitozo.comment_recommend|linebreaksbr }}
+                        {% else %}
+                        {{ nanitozo.comment|linebreaksbr }}
+                        {% endif %}
+                    </p>
+                    {% if title == 'ネガ' %}
+                    <div onclick="this.remove()" class="uk-overlay-primary uk-background-secondary uk-position-cover">
+                        <div class="uk-position-center uk-text-small">Open!</div>
+                    </div>
+                    <div onclick="this.remove()" class="uk-overlay-primary uk-background-secondary uk-position-cover">
+                        <div class="uk-position-center uk-text-small">あと2</div>
+                    </div>
+                    <div onclick="this.remove()" class="uk-overlay-primary uk-background-secondary uk-position-cover">
+                        <div class="uk-position-center uk-text-small">あと3</div>
+                    </div>
+                    <div onclick="this.remove()" class="uk-overlay-primary uk-background-secondary uk-position-cover">
+                        <div class="uk-position-center uk-text-small">あと4</div>
+                    </div>
+                    <div onclick="this.remove()" class="uk-overlay-primary uk-background-secondary uk-position-cover">
+                        <div class="uk-position-center uk-text-small">あと5</div>
+                    </div>
+                    <div onclick="this.remove()" class="uk-overlay-primary uk-background-secondary uk-position-cover">
+                        <div class="uk-position-center uk-text-small">あと6</div>
+                    </div>
+                    <div onclick="this.remove()" class="uk-overlay-primary uk-background-secondary uk-position-cover">
+                        <div class="uk-position-center uk-text-small">あと7</div>
+                    </div>
+                    <div onclick="this.remove()" class="uk-overlay-primary uk-background-secondary uk-position-cover">
+                        <div class="uk-position-center uk-text-small">あと8</div>
+                    </div>
+                    <div onclick="this.remove()" class="uk-overlay-primary uk-background-secondary uk-position-cover">
+                        <div class="uk-position-center uk-text-small">あと9</div>
+                    </div>
+                    <div onclick="this.remove()" class="uk-overlay-primary uk-background-secondary uk-position-cover">
+                        <div class="uk-position-center uk-text-small">Tap!</div>
+                    </div>
+                    {% else %}
+                    <div onclick="this.remove()" class="uk-overlay-primary uk-background-secondary uk-position-cover">
+                        <div class="uk-position-center uk-text-small">Tap!</div>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+
+            {% if user.is_authenticated and nanitozo.user.last_name == user.last_name%}
+            <div class="uk-width-auto">
+                <a href="#" uk-icon="icon: file-edit" class="uk-icon-button uk-icon"></a>
+            </div>
+            {% endif %}
+
+        </li>
+
+        {% endfor %}
+
+    </ul>
+
+    {% else %}
+
+    <p class="uk-text-small">データなし</p>
+
+    {% endif %}
+
+</div>

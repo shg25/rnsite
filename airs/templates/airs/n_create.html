@@ -29,11 +29,12 @@
 <hr>
 
 <div class="rn-padding">
-    <form>
+    <form method="post">{% csrf_token %}
+        {% comment %} {{ form.as_p }} {% endcomment %} {% comment %} Formで指定したデータをセット {% endcomment %}
         <fieldset class="uk-fieldset">
-            <legend class="uk-legend">シェアラジオの文言を送信</legend>
+            <label for="id_share_text" class="uk-legend">シェアラジオの文言を送信</label>
             <div class="uk-margin">
-                <input class="uk-input uk-margin-small-bottom" type="text" placeholder="シェアラジオをコピペ">
+                <input name="share_text" id="id_share_text" maxlength="400" required="" class="uk-input uk-margin-small-bottom" type="text" placeholder="シェアラジオをコピペ">
                 <small>
                     <small>
                         <p class="uk-margin-small-bottom">番組名 | 放送局 | 2021/07/12/月 24:00-25:00 https://radiko.jp/share/?sid=TBS&t=20210713000000</p>
