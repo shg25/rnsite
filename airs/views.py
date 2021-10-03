@@ -118,11 +118,10 @@ class DetailView(generic.DetailView):
         nanitozo_list = air.nanitozo_set.all()
         context['nanitozo_list'] = nanitozo_list
         context['good_nanitozo_list'] = list(filter(lambda x: x.good == True, nanitozo_list))
-        context['comment_recommend_nanitozo_list'] = list(filter(lambda x: x.comment_open == True and len(x.comment_recommend) != 0, nanitozo_list))
+        context['comment_open_recommend_nanitozo_list'] = list(filter(lambda x: x.comment_open == True and len(x.comment_recommend) != 0, nanitozo_list))
         context['comment_open_nanitozo_list'] = list(filter(lambda x: x.comment_open == True and len(x.comment) != 0, nanitozo_list))
-        context['comment_negative_nanitozo_list'] = list(filter(lambda x: x.comment_open == True and len(x.comment_negative) != 0, nanitozo_list))
-
-        # context['user'] = self.request.user  # ログイン中のユーザー情報
+        context['comment_open_negative_nanitozo_list'] = list(filter(lambda x: x.comment_open == True and len(x.comment_negative) != 0, nanitozo_list))
+        context['is_nanitozo'] = bool(list(filter(lambda x: x.user == self.request.user, nanitozo_list)))
         return context
 
 

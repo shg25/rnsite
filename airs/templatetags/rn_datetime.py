@@ -12,22 +12,29 @@ weekday_list = ['月', '火', '水', '木', '金', '土', '日']
 
 @register.filter
 def rn_regroup_date(dt):
+    dt = astimezone_tokyo(dt)
     dt = timedelta_midnight_date(dt)
     return datetime.date(dt.year, dt.month, dt.day)
 
 
 @register.filter
-def rn_weekday(dt):
-    return weekday_list[dt.weekday()]
+def rn_ymdhm(dt):
+    dt = astimezone_tokyo(dt)
+    dt = timedelta_midnight_date(dt)
+    return str(dt.strftime('%Y/%m/%d')) + " " + rn_initialized_date_hm(dt)
 
 
 @register.filter
-def rn_md(dt):
+def rn_initialized_date_weekday(initialized_dt):
+    return weekday_list[initialized_dt.weekday()]
+
+
+@register.filter
+def rn_initialized_date_md(dt):
     return str(dt.month) + '/' + str(dt.day)
 
 
-@register.filter
-def rn_hm(dt):
+def rn_initialized_date_hm(dt):
     # 0〜4時は[+24h]で表示する（0→24、1→25、2→26、3→27、4→28）
     # 終了時刻が5時の場合はラジコ上の終了時刻は29時と表記されるが、当サイトでは終了時刻は表示しないので不要
     if is_midnight(dt):
@@ -35,6 +42,7 @@ def rn_hm(dt):
     else:
         hour = str(dt.hour)
     return str(hour) + ':' + str(dt.strftime("%M"))
+
 
 @register.filter
 def init_rn_datetime(started, ended):
@@ -48,9 +56,9 @@ class RNDatetime:
         started = astimezone_tokyo(started)  # 日本時間にしておく
         started = timedelta_midnight_date(started)
 
-        self.weekday = rn_weekday(started)
-        self.md = rn_md(started)
-        self.hm = rn_hm(started)
+        self.weekday = rn_initialized_date_weekday(started)
+        self.md = rn_initialized_date_md(started)
+        self.hm = rn_initialized_date_hm(started)
 
 
 def astimezone_tokyo(dt):

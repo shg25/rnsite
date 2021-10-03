@@ -1,7 +1,7 @@
 {% extends 'airs/base.html' %}
 {% load rn_datetime %}
 
-{% block title %}{{ air }} - R.N.{% endblock title %}
+{% block title %}{{ air.name }} {{ air.started|rn_ymdhm }} {{ air.broadcaster.name }} - R.N.{% endblock title %}
 
 {% block header %}
 {% endblock header %}
@@ -10,22 +10,30 @@
 
 {% with adt=air.started|init_rn_datetime:air.ended %}
 <header class="rn-padding">
-  <h2 class="uk-text-default uk-margin-small-bottom">
-    <span class="uk-text-lead">{{ air.started|rn_weekday }}</span> <span class="">{{ air.started|rn_md }}</span> <span class="">{{ adt.hm }}</span> <span class="">{{ adt.airtime }}<small>min</small></span><br><span href="">{{ air.broadcaster.name }}</span>
+  <h1 class="uk-text-lead uk-margin-remove">{{ air.name }}</h1>
+  <h2 class="uk-text-default uk-margin-remove-top uk-margin-small-bottom">
+    {{ air.started|rn_ymdhm }} {{ adt.airtime }}<small>min</small>
   </h2>
-  <h1 class="uk-text-lead uk-margin-remove-top uk-margin-small-bottom">{{ air.name }}</h1>
 
+  {% if air.broadcaster %}
   <div class="uk-flex uk-flex-middle">
-    <span uk-icon="icon: info" class="uk-icon"></span>
-    <span class="uk-text-middle mgl-s"><a href="#">放送局</a></span>
-    <span class="uk-text-middle uk-margin-small-left"><a href="#">番組</a></span>
+    <span uk-icon="icon: microphone" class="uk-icon"></span>
+    <span class="uk-text-middle mgl-s"><a href="{% url 'airs:broadcaster' air.broadcaster.id %}">{{ air.broadcaster.name }}</a></span>
   </div>
+  {% endif %}
   <div class="uk-flex uk-flex-middle">
+    {% comment %} TODO ラジコのURLの生成 {% endcomment %}
     <span uk-icon="icon: link" class="uk-icon"></span>
     <span class="uk-text-middle mgl-s"><a href="#">ラジコ</a></span>
     <span class="uk-text-middle uk-margin-small-left"><a href="#">URLコピー</a></span>
     <span class="uk-text-middle uk-margin-small-left"><a href="#">ラジコ+1w</a></span>
   </div>
+  {% if air.program %}
+  <div class="uk-flex uk-flex-middle">
+    <span uk-icon="icon: info" class="uk-icon"></span>
+    <span class="uk-text-middle mgl-s"><a href="{% url 'airs:program' air.program.id %}">{{ air.program.name }}</a></span>
+  </div>
+  {% endif %}
 </header>
 {% endwith %}
 
@@ -33,47 +41,62 @@
 
 <div class="rn-padding">
 
+  {% comment %} TODO:何卒→編集 {% endcomment %}
+  {% if user.is_authenticated %}
+  {% if is_nanitozo %}
+  <button class="uk-button uk-button-primary uk-width-1-1 uk-margin-small-bottom">何卒を編集</button>
+  {% else %}
   <button class="uk-button uk-button-primary uk-width-1-1 uk-margin-small-bottom">何卒！</button>
+  {% endif %}
+  {% endif %}
 
   {% comment %} リスナー数 {% endcomment %}
   {% include 'base/sum_reaction.html' with nanitozo_list=nanitozo_list icon='icon: user' is_negative=False %}
   {% comment %} 満足数 {% endcomment %}
   {% include 'base/sum_reaction.html' with nanitozo_list=good_nanitozo_list icon='icon: happy' is_negative=False %}
   {% comment %} 推し数 {% endcomment %}
-  {% include 'base/sum_reaction.html' with nanitozo_list=comment_recommend_nanitozo_list icon='icon: star' is_negative=False %}
+  {% include 'base/sum_reaction.html' with nanitozo_list=comment_open_recommend_nanitozo_list icon='icon: star' is_negative=False %}
   {% comment %} コメント数 {% endcomment %}
   {% include 'base/sum_reaction.html' with nanitozo_list=comment_open_nanitozo_list icon='icon: comment' is_negative=False %}
   {% comment %} ネガ {% endcomment %}
-  {% include 'base/sum_reaction.html' with nanitozo_list=comment_negative_nanitozo_list icon='icon: paint-bucket' is_negative=True %}
+  {% include 'base/sum_reaction.html' with nanitozo_list=comment_open_negative_nanitozo_list icon='icon: paint-bucket' is_negative=True %}
 </div>
 
 {% include 'base/separator.html' %}
 
 <div class="rn-padding">
   <h3 class="uk-text-default uk-margin-small-bottom">事前告知<small> ネタバレなし（のはず）</small></h3>
+  {% if air.overview_before %}
   <div class="uk-inline">
     <p class="uk-text-small uk-margin-remove uk-text-break">{{ air.overview_before|linebreaksbr }}</p>
     <div onclick="this.remove()" class="uk-overlay-primary uk-background-secondary uk-position-cover">
       <div class="uk-position-center uk-text-small">Tap!</div>
     </div>
   </div>
+  {% else %}
+  <p class="uk-text-small uk-margin-remove">データなし</p>
+  {% endif %}
 </div>
 
 {% include 'base/separator.html' %}
 
 <div class="rn-padding">
   <h3 class="uk-text-default uk-margin-small-bottom">番組内容<small> ネタバレあり</small></h3>
+  {% if air.overview_before %}
   <div class="uk-inline">
     <p class="uk-text-small uk-margin-remove uk-text-break">{{ air.overview_after|linebreaksbr }}</p>
     <div onclick="this.remove()" class="uk-overlay-primary uk-background-secondary uk-position-cover">
       <div class="uk-position-center uk-text-small">Tap!</div>
     </div>
   </div>
+  {% else %}
+  <p class="uk-text-small uk-margin-remove">データなし</p>
+  {% endif %}
 </div>
 
 {% include 'base/separator.html' %}
 
-{% include 'list/item_reaction.html' with title='推し' nanitozo_list=comment_recommend_nanitozo_list %}
+{% include 'list/item_reaction.html' with title='推し' nanitozo_list=comment_open_recommend_nanitozo_list %}
 
 {% include 'base/separator.html' %}
 
@@ -81,7 +104,7 @@
 
 {% include 'base/separator.html' %}
 
-{% include 'list/item_reaction.html' with title='ネガ' nanitozo_list=comment_negative_nanitozo_list %}
+{% include 'list/item_reaction.html' with title='ネガ' nanitozo_list=comment_open_negative_nanitozo_list %}
 
 {% include 'base/separator.html' %}
 

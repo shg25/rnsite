@@ -18,7 +18,7 @@
         {% regroup nanitozo_list by created|rn_regroup_date as nanitozos %}
 
         {% for created, local_nanitozos in nanitozos %}
-        {% include 'base/lead.html' with title=created|rn_weekday caption=created|rn_md %}
+        {% include 'base/lead.html' with title=created|rn_initialized_date_weekday caption=created|rn_initialized_date_md %}
 
         {% for nanitozo in local_nanitozos %}
         {% include 'list/item_nanitozo.html' with nanitozo=nanitozo %}
@@ -37,7 +37,7 @@
         {% regroup close_list by created|rn_regroup_date as nanitozos %}
 
         {% for created, local_nanitozos in nanitozos %}
-        {% include 'base/lead.html' with title=created|rn_weekday caption=created|rn_md %}
+        {% include 'base/lead.html' with title=created|rn_initialized_date_weekday caption=created|rn_initialized_date_md %}
 
         {% for nanitozo in local_nanitozos %}
         {% include 'list/item_nanitozo.html' with nanitozo=nanitozo %}
