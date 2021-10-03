@@ -13,8 +13,8 @@
 
             <div class="uk-width-expand{% if user.is_authenticated and nanitozo.user.last_name == user.last_name%} border-left-success{% endif %}">
                 <p class="uk-margin-remove">
-                    <a href="#">{{ nanitozo.user.last_name }}</a>
-                    <small>{{ nanitozo.created|rn_md }} {{ nanitozo.created|rn_hm }}</small>
+                    <a href="{% url 'airs:user' nanitozo.user.id %}">{{ nanitozo.user.last_name }}</a>
+                    <small>{{ nanitozo.created|rn_ymdhm }}</small>
                 </p>
                 <div class="uk-inline">
                     <p class="uk-text-small uk-margin-remove uk-text-break">
@@ -56,7 +56,7 @@
                         <div class="uk-position-center uk-text-small">あと9</div>
                     </div>
                     <div onclick="this.remove()" class="uk-overlay-primary uk-background-secondary uk-position-cover">
-                        <div class="uk-position-center uk-text-small">Tap!</div>
+                        <div class="uk-position-center uk-text-small">Tap?</div>
                     </div>
                     {% else %}
                     <div onclick="this.remove()" class="uk-overlay-primary uk-background-secondary uk-position-cover">
@@ -80,7 +80,7 @@
 
     {% else %}
 
-    <p class="uk-text-small">データなし</p>
+    <p class="uk-text-small uk-margin-remove">データなし</p>
 
     {% endif %}
 
