@@ -10,7 +10,7 @@ from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 
 from .models import Broadcaster, Program, Air, Nanitozo
-from .forms import AirCreateForm
+from .forms import AirCreateByShareTextForm
 
 
 class IndexView(generic.ListView):
@@ -37,9 +37,9 @@ class NsView(generic.ListView):
         return context
 
 
-class NCreateView(generic.FormView):
-    template_name = 'airs/n_create.html'
-    form_class = AirCreateForm
+class AirCreateByShareTextView(generic.FormView):
+    template_name = 'airs/air_create.html'
+    form_class = AirCreateByShareTextForm
     success_url = '/'
 
     def form_valid(self, form):

@@ -6,8 +6,6 @@ app_name = 'airs'
 urlpatterns = [
     # 何卒一覧
     path('ns/', views.NsView.as_view(), name='ns'),
-    # 何卒作成
-    path('n/create/', views.NCreateView.as_view(), name='n_create'),
     # 何卒修正
     path('n/update/<int:pk>', views.NUpdateView.as_view(), name='n_update'),
     # 何卒削除
@@ -27,6 +25,8 @@ urlpatterns = [
     # 番組詳細 TODO キーを番組名ハッシュタグにしたいな
     path('program/<int:pk>/', views.ProgramView.as_view(), name='program'),
 
+    # 放送作成 & 何卒作成
+    path('air/create/', views.AirCreateByShareTextView.as_view(), name='air_create'),
     # 放送更新
     path('air/update/<int:pk>', views.AirUpdateView.as_view(), name='air_update'),
     # 放送一覧
