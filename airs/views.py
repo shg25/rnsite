@@ -6,6 +6,8 @@ from django.urls import reverse
 from django.views import generic
 from django.utils import timezone
 from django.contrib.auth.models import User
+from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
 
 from .models import Broadcaster, Program, Air, Nanitozo
 from .forms import AirCreateForm
@@ -73,6 +75,10 @@ class NCreateView(generic.FormView):
         return super().form_valid(form)
 
 
+class NDeleteView(generic.DeleteView):
+    model = Air
+
+
 class NUpdateView(generic.TemplateView):  # TODO Form系のViewにする
     template_name = 'airs/n_update.html'
 
@@ -106,9 +112,16 @@ class ProgramView(generic.DetailView):
     model = Program
 
 
-# def detail(request, air_id):
-#     air = get_object_or_404(Air, pk=air_id)
-#     return render(request, 'airs/detail.html', {'air': air})
+@method_decorator(login_required, name='dispatch')
+class AirUpdateView(generic.UpdateView):
+    model = Air
+    fields = ['overview_before', 'overview_after']
+    template_name = 'airs/air_update.html'
+
+    def get_success_url(self):
+        return reverse('airs:detail', kwargs={'pk': self.kwargs['pk']})
+
+
 class DetailView(generic.DetailView):
     model = Air
 
@@ -123,11 +136,6 @@ class DetailView(generic.DetailView):
         context['comment_open_negative_nanitozo_list'] = list(filter(lambda x: x.comment_open == True and len(x.comment_negative) != 0, nanitozo_list))
         context['is_nanitozo'] = bool(list(filter(lambda x: x.user == self.request.user, nanitozo_list)))
         return context
-
-
-# def results(request, air_id):
-#     air = get_object_or_404(Air, pk=air_id)
-#     return render(request, 'airs/results.html', {'air': air})
 
 
 class ResultsView(generic.DetailView):
