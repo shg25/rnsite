@@ -44,9 +44,9 @@
   {% comment %} TODO:何卒→編集 {% endcomment %}
   {% if user.is_authenticated %}
   {% if is_nanitozo %}
-  <button class="uk-button uk-button-primary uk-width-1-1 uk-margin-small-bottom">何卒を編集</button>
+  <a href="" class="uk-button uk-button-primary uk-width-1-1 uk-margin-bottom">何卒を編集</a>
   {% else %}
-  <button class="uk-button uk-button-primary uk-width-1-1 uk-margin-small-bottom">何卒！</button>
+  <a href="" class="uk-button uk-button-primary uk-width-1-1 uk-margin-bottom">何卒！</a>
   {% endif %}
   {% endif %}
 
@@ -76,13 +76,9 @@
   {% else %}
   <p class="uk-text-small uk-margin-remove">データなし</p>
   {% endif %}
-</div>
 
-{% include 'base/separator.html' %}
-
-<div class="rn-padding">
   <h3 class="uk-text-default uk-margin-small-bottom">番組内容<small> ネタバレあり</small></h3>
-  {% if air.overview_before %}
+  {% if air.overview_after %}
   <div class="uk-inline">
     <p class="uk-text-small uk-margin-remove uk-text-break">{{ air.overview_after|linebreaksbr }}</p>
     <div onclick="this.remove()" class="uk-overlay-primary uk-background-secondary uk-position-cover">
@@ -91,6 +87,10 @@
   </div>
   {% else %}
   <p class="uk-text-small uk-margin-remove">データなし</p>
+  {% endif %}
+
+  {% if user.is_authenticated %}
+  <a href="{% url 'airs:air_update' air.id %}" class="uk-button uk-button-primary uk-width-1-1 uk-margin-large-top">事前告知と番組内容を編集</a>
   {% endif %}
 </div>
 

@@ -9,7 +9,9 @@ urlpatterns = [
     # 何卒作成
     path('n/create/', views.NCreateView.as_view(), name='n_create'),
     # 何卒修正
-    path('n/update/', views.NUpdateView.as_view(), name='n_update'),
+    path('n/update/<int:pk>', views.NUpdateView.as_view(), name='n_update'),
+    # 何卒削除
+    path('n/delete/<int:pk>', views.NDeleteView.as_view(), name='n_delete'),
 
     # リスナー一覧
     path('users/', views.UsersView.as_view(), name='users'),
@@ -25,6 +27,8 @@ urlpatterns = [
     # 番組詳細 TODO キーを番組名ハッシュタグにしたいな
     path('program/<int:pk>/', views.ProgramView.as_view(), name='program'),
 
+    # 放送更新
+    path('air/update/<int:pk>', views.AirUpdateView.as_view(), name='air_update'),
     # 放送一覧
     path('', views.IndexView.as_view(), name='index'),
     # 放送詳細 ex: '/1/'
