@@ -5,6 +5,7 @@ from django.shortcuts import get_object_or_404, render
 from django.urls import reverse
 from django.views import generic
 from django.utils import timezone
+from django.contrib import messages
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
@@ -131,9 +132,9 @@ class DetailView(generic.DetailView):
         nanitozo_list = air.nanitozo_set.all()
         context['nanitozo_list'] = nanitozo_list
         context['good_nanitozo_list'] = list(filter(lambda x: x.good == True, nanitozo_list))
-        context['comment_open_recommend_nanitozo_list'] = list(filter(lambda x: x.comment_open == True and len(x.comment_recommend) != 0, nanitozo_list))
-        context['comment_open_nanitozo_list'] = list(filter(lambda x: x.comment_open == True and len(x.comment) != 0, nanitozo_list))
-        context['comment_open_negative_nanitozo_list'] = list(filter(lambda x: x.comment_open == True and len(x.comment_negative) != 0, nanitozo_list))
+        context['comment_open_recommend_nanitozo_list'] = list(filter(lambda x: x.comment_open == True and x.comment_recommend != None and len(x.comment_recommend) != 0, nanitozo_list))
+        context['comment_open_nanitozo_list'] = list(filter(lambda x: x.comment_open == True and x.comment != None and len(x.comment) != 0, nanitozo_list))
+        context['comment_open_negative_nanitozo_list'] = list(filter(lambda x: x.comment_open == True and x.comment_negative != None and len(x.comment_negative) != 0, nanitozo_list))
         context['is_nanitozo'] = bool(list(filter(lambda x: x.user == self.request.user, nanitozo_list)))
         return context
 
@@ -141,6 +142,20 @@ class DetailView(generic.DetailView):
 class ResultsView(generic.DetailView):
     model = Air
     template_name = 'airs/results.html'
+
+
+@login_required
+def nanitozo_create(request, air_id):
+    air = get_object_or_404(Air, pk=air_id)
+    try:
+        user = request.user  # ログイン中のユーザー情報
+        air.nanitozo_set.create(user=user)
+    except:
+        messages.error(request, '既に何卒してました！')
+        return HttpResponseRedirect(reverse('airs:detail', args=(air.id,)))
+    else:
+        messages.success(request, '何卒！')
+        return HttpResponseRedirect(reverse('airs:detail', args=(air.id,)))
 
 
 def vote(request, air_id):

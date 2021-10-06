@@ -34,6 +34,8 @@ urlpatterns = [
     # 放送詳細 ex: '/1/'
     path('<int:pk>/', views.DetailView.as_view(), name='detail'),
 
+    # 既存の放送に何卒作成
+    path('<int:air_id>/nanitozo/', views.nanitozo_create, name='nanitozo_create'),
 
     # 削除予定 /airs/5/results/
     path('<int:pk>/results/', views.ResultsView.as_view(), name='results'),
