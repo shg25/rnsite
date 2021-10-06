@@ -65,10 +65,29 @@
     </div>
     <div class="uk-navbar-right">
       <ul class="uk-navbar-nav">
-        <li><a href="{% url 'airs:n_create' %}" class="">＋</a></li>
+        <li><a href="{% url 'airs:air_create' %}" class="">＋</a></li>
       </ul>
     </div>
   </nav>
+  {% endif %}
+
+  {% if messages %}
+  {% for message in messages %}
+  <div class="uk-margin-remove 
+  {% if message.tags == 'debug' or message.tags == 'info' %}
+  uk-alert-primary
+  {% elif message.tags == 'success' %}
+  uk-alert-success
+  {% elif message.tags == 'warning' %}
+  uk-alert-warning
+  {% elif message.tags == 'error' %}
+  uk-alert-danger
+  {% endif %}
+  " uk-alert>
+    <a class="uk-alert-close" uk-close></a>
+    <p>{{ message }}</p>
+  </div>
+  {% endfor %}
   {% endif %}
 
   {% block content %}
