@@ -76,10 +76,6 @@ class AirCreateByShareTextView(generic.FormView):
         return super().form_valid(form)
 
 
-class NDeleteView(generic.DeleteView):
-    model = Air
-
-
 class NUpdateView(generic.TemplateView):  # TODO Form系のViewにする
     template_name = 'airs/n_update.html'
 
@@ -135,7 +131,11 @@ class DetailView(generic.DetailView):
         context['comment_open_recommend_nanitozo_list'] = list(filter(lambda x: x.comment_open == True and x.comment_recommend != None and len(x.comment_recommend) != 0, nanitozo_list))
         context['comment_open_nanitozo_list'] = list(filter(lambda x: x.comment_open == True and x.comment != None and len(x.comment) != 0, nanitozo_list))
         context['comment_open_negative_nanitozo_list'] = list(filter(lambda x: x.comment_open == True and x.comment_negative != None and len(x.comment_negative) != 0, nanitozo_list))
-        context['is_nanitozo'] = bool(list(filter(lambda x: x.user == self.request.user, nanitozo_list)))
+
+        my_nanitozo_list = list(filter(lambda x: x.user == self.request.user, nanitozo_list))
+        if bool(my_nanitozo_list):
+            context['my_nanitozo'] = my_nanitozo_list[0]
+
         return context
 
 
@@ -157,6 +157,16 @@ def nanitozo_create(request, air_id):
         messages.success(request, '何卒！')
         return HttpResponseRedirect(reverse('airs:detail', args=(air.id,)))
 
+@login_required
+def nanitozo_delete(request, air_id, nanitozo_id):
+    try:
+        Nanitozo.objects.get(pk=nanitozo_id).delete()
+    except:
+        messages.error(request, '既に何卒を取り消してました！')
+        return HttpResponseRedirect(reverse('airs:detail', args=(air_id,)))
+    else:
+        messages.success(request, '何卒を取り消しました！')
+        return HttpResponseRedirect(reverse('airs:detail', args=(air_id,)))
 
 def vote(request, air_id):
     air = get_object_or_404(Air, pk=air_id)
