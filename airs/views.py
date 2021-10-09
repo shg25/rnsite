@@ -76,8 +76,13 @@ class AirCreateByShareTextView(generic.FormView):
         return super().form_valid(form)
 
 
-class NUpdateView(generic.TemplateView):  # TODO Form系のViewにする
-    template_name = 'airs/n_update.html'
+class NanitozoUpdateView(generic.UpdateView):
+    model = Nanitozo
+    fields = ['good', 'comment_open', 'comment_recommend', 'comment', 'comment_negative']
+    template_name = 'airs/nanitozo_update.html'
+
+    def get_success_url(self):
+        return reverse('airs:detail', kwargs={'pk': self.object.air.id})
 
 
 class UsersView(generic.ListView):
@@ -157,16 +162,18 @@ def nanitozo_create(request, air_id):
         messages.success(request, '何卒！')
         return HttpResponseRedirect(reverse('airs:detail', args=(air.id,)))
 
+
 @login_required
-def nanitozo_delete(request, air_id, nanitozo_id):
+def nanitozo_delete(request, air_id, pk):
     try:
-        Nanitozo.objects.get(pk=nanitozo_id).delete()
+        Nanitozo.objects.get(pk=pk).delete()
     except:
         messages.error(request, '既に何卒を取り消してました！')
         return HttpResponseRedirect(reverse('airs:detail', args=(air_id,)))
     else:
         messages.success(request, '何卒を取り消しました！')
         return HttpResponseRedirect(reverse('airs:detail', args=(air_id,)))
+
 
 def vote(request, air_id):
     air = get_object_or_404(Air, pk=air_id)
