@@ -7,7 +7,7 @@ urlpatterns = [
     # 何卒一覧
     path('ns/', views.NsView.as_view(), name='ns'),
     # 何卒修正
-    path('n/update/<int:pk>', views.NUpdateView.as_view(), name='n_update'),
+    path('nanitozo/update/<int:pk>', views.NanitozoUpdateView.as_view(), name='nanitozo_update'),
 
     # リスナー一覧
     path('users/', views.UsersView.as_view(), name='users'),
@@ -35,7 +35,7 @@ urlpatterns = [
     # 既存の放送に何卒作成
     path('<int:air_id>/nanitozo/create/', views.nanitozo_create, name='nanitozo_create'),
     # 何卒取消
-    path('<int:air_id>/nanitozo/delete/<int:nanitozo_id>', views.nanitozo_delete, name='nanitozo_delete'),
+    path('<int:air_id>/nanitozo/delete/<int:pk>', views.nanitozo_delete, name='nanitozo_delete'),
 
     # 削除予定 /airs/5/results/
     path('<int:pk>/results/', views.ResultsView.as_view(), name='results'),

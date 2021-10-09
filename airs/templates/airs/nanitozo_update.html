@@ -1,0 +1,52 @@
+{% extends 'airs/base.html' %}
+{% load rn_datetime %}
+
+{% block title %}R.N. v2.0{% endblock title %}
+
+{% block header %}
+{% endblock header %}
+
+{% block content %}
+<article class="rn-padding">
+    <h1 class="uk-text-lead uk-margin-small-bottom">何卒編集</h1>
+    <h2 class="uk-text-default uk-margin-remove-top uk-margin-remove-bottom">
+        {{ nanitozo.air.name }}<br>
+    </h2>
+    <p class="uk-text-small uk-margin-remove-top uk-margin-small-bottom">{{ nanitozo.air.started|rn_ymdhm }} {{ nanitozo.air.broadcaster.name }}</p>
+</article>
+
+{% include 'base/separator.html' %}
+
+<article class="rn-padding">
+    <form method="post">{% csrf_token %}
+
+        <p>
+            <input type="checkbox" name="good" id="id_good" class="uk-checkbox" {% if nanitozo.good %} checked{% endif %}>
+            <label for="id_good">満足<small> 個人的に満足だったらON</small></label>
+        </p>
+
+        <p>
+            <input type="checkbox" name="comment_open" id="id_comment_open" class="uk-checkbox" {% if nanitozo.comment_open %} checked{% endif %}>
+            <label for="id_comment_open">感想公開<small> OFFで以下の3つの文を下書き保存</small></label>
+        </p>
+
+        <p class="uk-margin-remove-top uk-margin-bottom">
+            <label for="id_comment_recommend">推し<small> ネタバレ少なめ推薦文</small></label>
+            <textarea name="comment_recommend" rows="4" id="id_comment_recommend" class="uk-textarea mgt-s" placeholder="">{{ nanitozo.comment_recommend|default_if_none:'' }}</textarea>
+        </p>
+
+        <p class="uk-margin-remove-top uk-margin-bottom">
+            <label for="id_comment">感想<small> ネタバレあり</small></label>
+            <textarea name="comment" rows="4" id="id_comment" class="uk-textarea mgt-s" placeholder="">{{ nanitozo.comment|default_if_none:'' }}</textarea>
+        </p>
+
+        <p class="uk-margin-remove-top uk-margin-bottom">
+            <label for="id_comment_negative">ネガ<small> 気分を害する人がいるかもな感想</small></label>
+            <textarea name="comment_negative" rows="4" id="id_comment_negative" class="uk-textarea mgt-s" placeholder="">{{ nanitozo.comment_negative|default_if_none:'' }}</textarea>
+        </p>
+
+        {% comment %} {{ form.as_p }} {% endcomment %}
+        <input type="submit" value="更新" class="uk-button uk-button-primary uk-width-1-1 uk-margin-small-bottom">
+    </form>
+</article>
+{% endblock content %}

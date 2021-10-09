@@ -10,6 +10,11 @@
 <article class="rn-padding">
     <h1 class="uk-text-lead uk-margin-remove-bottom">事前告知と放送内容の編集</h1>
     <p class="uk-article-meta uk-margin-remove-top">※この項目は共同編集で同時に他のリスナーが編集してたら上書きしてしまうので極力手早くお願いします（そのうち編集中でもいい感じに気付けるように修正します）</p>
+</article>
+
+{% include 'base/separator.html' %}
+
+<article class="rn-padding">
     <form method="post">{% csrf_token %}
         <p class="uk-margin-remove"><label for="id_overview_before">事前告知<small> ネタバレなし</small></label>
         <textarea name="overview_before" rows="4" id="id_overview_before" class="uk-textarea mgt-s" placeholder="ゲスト：なかやまきんに君
