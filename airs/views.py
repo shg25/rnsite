@@ -1,4 +1,8 @@
 import datetime
+import requests
+import mojimoji
+
+from bs4 import BeautifulSoup
 
 from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render
@@ -46,21 +50,136 @@ class AirCreateByShareTextView(generic.FormView):
     def form_valid(self, form):
         # This method is called when valid form data has been POSTed.
         # It should return an HttpResponse.
-        # print('\n-- form_valid ここから --\n')
 
+        # - - - - - - - - - - - - - - - - - - - - - - - -
+        # 投稿したシェアテキストを取得
         share_text = form.cleaned_data['share_text']
-        # TODO シェアテキストを使ってスクレイピングしてタイトルを取得する
+        # share_text = 'アルコ＆ピース D.C.GARAGE | TBSラジオ | 2021/10/05/火  24:00-25:00 https://radiko.jp/share/?sid=TBS&t=20211006000000' # 例1
 
-        # これだけだとデータを差し替えられない
-        # form.cleaned_data['name'] = '番組名をセット'
-        # print(form.cleaned_data)
+        # - - - - - - - - - - - - - - - - - - - - - - - -
+        # TODO [share_text]からラジコのURLを抜き出す
+        print(share_text)
+        radiko_url = "https://radiko.jp/share/?sid=TBS&t=20211006000000"
 
-        # [overview_before]と[overview_after]以外をセット TODO 全てスクレイピングしたタイトルを元にセットする
-        form.instance.name = '確認用のダミー番組名4'
-        form.instance.program = Program.objects.filter(search_index__contains='ｱﾙｺ').first()  # ヒットしない場合は[None]が入ってDBには[null]で保存
-        form.instance.broadcaster = Broadcaster.objects.filter(search_index__contains='luckyfm').first()  # ヒットしない場合は[None]が入ってDBには[null]で保存
-        form.instance.started = datetime.datetime(2021, 8, 30, 20, 0)  # 日本時刻で登録される模様 → DBは2021-08-30T06:00:00Z
-        form.instance.ended = datetime.datetime(2021, 8, 30, 21, 0)  # 日本時刻で登録される模様 → DBは2021-08-30T07:00:00Z
+        # - - - - - - - - - - - - - - - - - - - - - - - -
+        # BeautifulSoupでサイトタイトルを取得
+        html = requests.get(radiko_url)
+        soup = BeautifulSoup(html.content, "html.parser")
+        title = soup.find("title").text
+        # title = '2021年10月5日（火）24:00～25:00 | アルコ＆ピース D.C.GARAGE | TBSラジオ | radiko'
+        # print(title)
+
+        # - - - - - - - - - - - - - - - - - - - - - - - -
+        # タイトルに「|」が3つ以上含まれていることを確認
+        # ※タイトルにも含まれる可能性があるので3以上は許可
+        if title.count('|') < 3:
+            # print('「|」が3つない')
+            # TODO エラーメッセージ、遷移しないで詳細を表示したい気もする
+            return super().form_valid(form)
+
+        # - - - - - - - - - - - - - - - - - - - - - - - -
+        # タイトル末尾の「| radiko」を除去
+        # rfindで後ろから「|」を検索して、それより前だけ残す
+        title = title[:title.rfind('|')]
+        # print(title)
+
+        # - - - - - - - - - - - - - - - - - - - - - - - -
+        # タイトルから放送局名を取得
+        # rfindで後ろから「|」を検索して、それより後ろを取得 → 「| TBSラジオ 」
+        # 「|」を削除して、前後のスペースを除去 → 「TBSラジオ」
+        broadcaster_name = title[title.rfind('|'):].replace('|', '').strip()
+        # print(broadcaster_name)
+
+        # - - - - - - - - - - - - - - - - - - - - - - - -
+        # 放送局情報を取得
+
+        # 半角に変換して大文字は小文字にして検索インデックスの形式に
+        broadcaster_search_index = mojimoji.zen_to_han(broadcaster_name).lower().replace(' ', '')
+        # print(broadcaster_search_index)
+
+        # 放送局情報を検索 → これをAirデータに保存
+        # 検索がヒットしない場合は[None]が入ってDBには[null]で保存されるはず
+        broadcaster = Broadcaster.objects.filter(search_index=broadcaster_search_index).first()
+        # print(broadcaster)
+
+        # - - - - - - - - - - - - - - - - - - - - - - - -
+        # タイトルから放送局名を除去
+        # rfindで後ろから「|」を検索して、それより前だけ残す
+        title = title[:title.rfind('|')]
+        # title = '2021年10月5日（火）24:00～25:00 | アルコ＆ピース D.C.GARAGE '
+        # print(title)
+
+        # - - - - - - - - - - - - - - - - - - - - - - - -
+        # タイトルから番組名を取得
+        # findで前から「|」を検索して、それより後ろを取得 → 「| アルコ＆ピース D.C.GARAGE 」
+        # 「|」を削除して、前後のスペースを除去 → 「アルコ＆ピース D.C.GARAGE」
+        program_name = title[title.find('|'):].replace('|', '').strip()
+        # print(program_name)
+
+        # - - - - - - - - - - - - - - - - - - - - - - - -
+        # 番組情報を取得
+
+        # 半角に変換して大文字は小文字にして検索インデックスの形式に
+        program_search_index = mojimoji.zen_to_han(program_name).lower().replace(' ', '')
+        # print(program_search_index)
+
+        # 番組情報を検索 → これをAirデータに保存
+        # 検索がヒットしない場合は[None]が入ってDBには[null]で保存されるはず
+        program = Program.objects.filter(search_index=program_search_index).first()
+        # print(program)
+
+        # - - - - - - - - - - - - - - - - - - - - - - - -
+        # 放送開始日時と放送終了日時を作成
+
+        # findで前から「|」を検索して、それより前だけ残して、前後のスペースを除去 → 「2021年10月5日（火）24:00～25:00」
+        title = title[:title.find('|')].strip()
+        # print(title)
+
+        # 曜日を除去 → 「2021年10月5日24:00～25:00」が残る
+        title = title.replace('（月）', '').replace('（火）', '').replace('（水）', '').replace('（木）', '').replace('（金）', '').replace('（土）', '').replace('（日）', '')
+        # print(title)
+
+        # 「年」「月」「日」「:」「～」「:」を半角カンマに置換 → 「2021,10,5,24,00,25,00」
+        title = title.replace('年', ',').replace('月', ',').replace('日', ',').replace(':', ',').replace('～', ',')
+        # print(title)
+
+        # 半角カンマで分割して日付を作成
+        split_title = title.split(',')  # ['2021', '10', '5', '24', '00', '25', '00']
+        title_date = datetime.datetime(int(split_title[0]), int(split_title[1]), int(split_title[2]))
+
+        # 開始時間と終了時間を取得
+        started_hour = int(split_title[3])
+        started_minute = int(split_title[4])
+        ended_hour = int(split_title[5])
+        ended_minute = int(split_title[6])
+
+        # 開始日時と終了日時どちらも24時以降は次の日にして24時間マイナスする
+        if started_hour > 23:
+            started = title_date + datetime.timedelta(days=1)
+            started_hour = started_hour - 24
+        else:
+            started = title_date
+
+        started = datetime.datetime(started.year, started.month, started.day, started_hour, started_minute)
+
+        if ended_hour > 23:
+            ended = title_date + datetime.timedelta(days=1)
+            ended_hour = ended_hour - 24
+        else:
+            ended = title_date
+
+        ended = datetime.datetime(ended.year, ended.month, ended.day, ended_hour, ended_minute)
+
+        # print(started)
+        # print(ended)
+
+        # - - - - - - - - - - - - - - - - - - - - - - - -
+        # [overview_before]と[overview_after]以外をinstanceにセット
+        form.instance.name = program_name
+        form.instance.program = program
+        form.instance.broadcaster = broadcaster
+        form.instance.started = started  # 日本時刻として扱われる模様 例：datetimeで[2021-10-06 00:00:00]を登録 → DBは[2021-10-05T15:00:00Z]
+        form.instance.ended = ended  # 日本時刻として扱われる模様 例：datetimeで[2021-10-06 01:00:00]を登録 → DBは[2021-10-05T16:00:00Z]
         saved_air = form.save()
 
         # TODO saveエラー時の処理（被りとか）
