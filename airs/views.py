@@ -3,6 +3,7 @@ import requests
 import mojimoji
 
 from bs4 import BeautifulSoup
+from urlextract import URLExtract
 
 from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render
@@ -57,9 +58,21 @@ class AirCreateByShareTextView(generic.FormView):
         # share_text = 'アルコ＆ピース D.C.GARAGE | TBSラジオ | 2021/10/05/火  24:00-25:00 https://radiko.jp/share/?sid=TBS&t=20211006000000' # 例1
 
         # - - - - - - - - - - - - - - - - - - - - - - - -
-        # TODO [share_text]からラジコのURLを抜き出す
-        print(share_text)
-        radiko_url = "https://radiko.jp/share/?sid=TBS&t=20211006000000"
+        # [share_text]からラジコのURLを抜き出す
+        extractor = URLExtract()
+        urls = extractor.find_urls(share_text)
+        if len(urls) == 0:
+            # TODO 中断
+            return super().form_valid(form)
+
+        has_radiko = False
+        for url in urls:
+            has_radiko = 'radiko.jp' in url
+            if has_radiko:
+                radiko_url = url
+                break
+
+        # radiko_url = "https://radiko.jp/share/?sid=TBS&t=20211006000000"
 
         # - - - - - - - - - - - - - - - - - - - - - - - -
         # BeautifulSoupでサイトタイトルを取得
