@@ -43,6 +43,7 @@ class NsView(generic.ListView):
         return context
 
 
+@method_decorator(login_required, name='dispatch')
 class AirCreateByShareTextView(generic.FormView):
     template_name = 'airs/air_create.html'
     form_class = AirCreateByShareTextForm
@@ -224,6 +225,7 @@ class AirCreateByShareTextView(generic.FormView):
         return HttpResponseRedirect(reverse('airs:detail', args=(saved_air.id,)))
 
 
+@method_decorator(login_required, name='dispatch')
 class NanitozoUpdateView(generic.UpdateView):
     model = Nanitozo
     fields = ['good', 'comment_open', 'comment_recommend', 'comment', 'comment_negative']

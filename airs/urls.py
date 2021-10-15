@@ -6,7 +6,7 @@ app_name = 'airs'
 urlpatterns = [
     # 何卒一覧
     path('ns/', views.NsView.as_view(), name='ns'),
-    # 何卒修正
+    # 何卒修正（ログイン必須）
     path('nanitozo/update/<int:pk>', views.NanitozoUpdateView.as_view(), name='nanitozo_update'),
 
     # リスナー一覧
@@ -23,18 +23,18 @@ urlpatterns = [
     # 番組詳細 TODO キーを番組名ハッシュタグにしたいな
     path('program/<int:pk>/', views.ProgramView.as_view(), name='program'),
 
-    # 放送作成 & 何卒作成
+    # 放送作成 & 何卒作成（ログイン必須）
     path('air/create/', views.AirCreateByShareTextView.as_view(), name='air_create'),
-    # 放送更新
+    # 放送更新（ログイン必須）
     path('air/update/<int:pk>', views.AirUpdateView.as_view(), name='air_update'),
     # 放送一覧
     path('', views.IndexView.as_view(), name='index'),
     # 放送詳細 ex: '/1/'
     path('<int:pk>/', views.DetailView.as_view(), name='detail'),
 
-    # 既存の放送に何卒作成
+    # 既存の放送に何卒作成（ログイン必須）
     path('<int:air_id>/nanitozo/create/', views.nanitozo_create, name='nanitozo_create'),
-    # 何卒取消
+    # 何卒取消（ログイン必須）
     path('<int:air_id>/nanitozo/delete/<int:pk>', views.nanitozo_delete, name='nanitozo_delete'),
 
     # 削除予定 /airs/5/results/
