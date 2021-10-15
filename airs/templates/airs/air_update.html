@@ -18,13 +18,13 @@
     <form method="post">{% csrf_token %}
         <p class="uk-margin-remove"><label for="id_overview_before">事前告知<small> ネタバレなし</small></label>
         <textarea name="overview_before" rows="4" id="id_overview_before" class="uk-textarea mgt-s" placeholder="ゲスト：なかやまきんに君
-・筋肉ルーレットカジノ">{{ air.overview_before }}</textarea></p>
+・筋肉ルーレットカジノ">{{ air.overview_before|default_if_none:'' }}</textarea></p>
         <p class="uk-article-meta uk-margin-remove-top uk-margin-bottom">※前回の放送や放送前にTwitterで告知があったゲストや企画</p>
 
         <p class="uk-margin-remove"><label for="id_overview_after">放送内容<small> ネタバレあり</small></label>
         <textarea name="overview_after" rows="4" id="id_overview_after" class="uk-textarea mgt-s" placeholder="飛び入りゲスト：岡村隆史
 ・ご飯炊き対決
-・ネスミスはパン">{{ air.overview_after }}</textarea></p>
+・ネスミスはパン">{{ air.overview_after|default_if_none:'' }}</textarea></p>
         <p class="uk-article-meta uk-margin-remove-top uk-margin-bottom">※放送前に発表がなかったゲストや企画<br>　放送内の印象的なワード</p>
 
         <input type="submit" value="更新" class="uk-button uk-button-primary uk-width-1-1 uk-margin-small-bottom">
