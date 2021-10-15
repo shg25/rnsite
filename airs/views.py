@@ -62,8 +62,8 @@ class AirCreateByShareTextView(generic.FormView):
         extractor = URLExtract()
         urls = extractor.find_urls(share_text)
         if len(urls) == 0:
-            # TODO 中断
-            return super().form_valid(form)
+            messages.error(self.request, 'ラジコのURLがなさそう！ 投稿した「' + share_text + '」を管理人に教えて！！')  # TODO share_textをどこかに記録したい
+            return super().form_invalid(form)
 
         has_radiko = False
         for url in urls:
@@ -87,8 +87,11 @@ class AirCreateByShareTextView(generic.FormView):
         # ※タイトルにも含まれる可能性があるので3以上は許可
         if title.count('|') < 3:
             # print('「|」が3つない')
-            # TODO エラーメッセージ、遷移しないで詳細を表示したい気もする
-            return super().form_valid(form)
+            if 'この番組の配信は終了しました' in title:
+                messages.error(self.request, '配信終了してるっぽい！　どうしても登録が必要なら管理人に相談を')
+            else:
+                messages.error(self.request, 'なんか違和感！ 投稿した「' + share_text + '」と「' + title + '」を管理人に教えて！！')  # TODO share_textをどこかに記録したい
+            return super().form_invalid(form)
 
         # - - - - - - - - - - - - - - - - - - - - - - - -
         # タイトル末尾の「| radiko」を除去
@@ -183,8 +186,10 @@ class AirCreateByShareTextView(generic.FormView):
 
         ended = datetime.datetime(ended.year, ended.month, ended.day, ended_hour, ended_minute)
 
-        # print(started)
-        # print(ended)
+        # - - - - - - - - - - - - - - - - - - - - - - - -
+        if program_name == None or program_name == '' or started > ended:
+            messages.error(self.request, 'パースエラー！ [' + share_text + ']を管理人に教えて！')  # TODO share_textをどこかに記録したい
+            return super().form_invalid(form)
 
         # - - - - - - - - - - - - - - - - - - - - - - - -
         # [overview_before]と[overview_after]以外をinstanceにセット
@@ -193,19 +198,30 @@ class AirCreateByShareTextView(generic.FormView):
         form.instance.broadcaster = broadcaster
         form.instance.started = started  # 日本時刻として扱われる模様 例：datetimeで[2021-10-06 00:00:00]を登録 → DBは[2021-10-05T15:00:00Z]
         form.instance.ended = ended  # 日本時刻として扱われる模様 例：datetimeで[2021-10-06 01:00:00]を登録 → DBは[2021-10-05T16:00:00Z]
-        saved_air = form.save()
 
-        # TODO saveエラー時の処理（被りとか）
+        # - - - - - - - - - - - - - - - - - - - - - - - -
+        # 放送を保存 → 続けてログイン中のユーザー情報 & デフォルト値で何卒を登録
+        try:
+            saved_air = form.save()
+        except Exception as err:
+            messages.warning(self.request, '放送登録エラー：' + str(type(err)))  # TODO とりあえずエラータイプだけ表示しているがエラー内容によって調整したい
+            if broadcaster != None:
+                air = Air.objects.filter(broadcaster=broadcaster, started=started).first()
+                try:
+                    air.nanitozo_set.create(user=self.request.user)
+                except Exception as err:
+                    messages.error(self.request, '何卒登録エラー：' + str(type(err)))
+                    return HttpResponseRedirect(reverse('airs:detail', args=(air.id,)))
+                else:
+                    messages.success(self.request, '何卒！')
+                    return HttpResponseRedirect(reverse('airs:detail', args=(air.id,)))
+            else:
+                messages.error(self.request, '登録済みの放送です')
+                return super().form_invalid(form)
 
-        # 続けて何卒をデフォルト値で登録
-        user = self.request.user  # ログイン中のユーザー情報
-        saved_air.nanitozo_set.create(user=user)
-
-        # TODO createエラー時の処理（被りとか）
-
-        # print('\n-- form_valid ここまで --\n')
-        # return redirect('detail', id=saved_air.id) # TODO 詳細画面にリダイレクトするサンプルの引用だけど、form_valid内で適切かどうかは確認が必要 （renderを使うとか？）
-        return super().form_valid(form)
+        saved_air.nanitozo_set.create(user=self.request.user)
+        # return super().form_valid(form)
+        return HttpResponseRedirect(reverse('airs:detail', args=(saved_air.id,)))
 
 
 class NanitozoUpdateView(generic.UpdateView):
@@ -285,8 +301,7 @@ class ResultsView(generic.DetailView):
 def nanitozo_create(request, air_id):
     air = get_object_or_404(Air, pk=air_id)
     try:
-        user = request.user  # ログイン中のユーザー情報
-        air.nanitozo_set.create(user=user)
+        air.nanitozo_set.create(user=request.user)
     except:
         messages.error(request, '既に何卒してました！')
         return HttpResponseRedirect(reverse('airs:detail', args=(air.id,)))
