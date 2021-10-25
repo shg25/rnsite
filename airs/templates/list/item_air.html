@@ -1,21 +1,28 @@
+{% load air_nanitozo %}
 {% load rn_datetime %}
-{% with adt=air.started|init_rn_datetime:air.ended %}
-
+{% with adt=air.started|init_rn_datetime:air.ended nanitozo_count=air|air_nanitozo_count nanitozo_done=air|air_nanitozo_done:user %}
 
 <div class="uk-margin-bottom uk-animation-toggle" tabindex="0">
 
-    <a href="{% url 'airs:detail' air.id %}" class="uk-display-block uk-link-reset uk-animation-slide-bottom-small border-left-muted">
+    <a href="{% url 'airs:detail' air.id %}" class="uk-display-block uk-link-reset uk-animation-slide-bottom-small{% if nanitozo_done.good_done or nanitozo_done.comment_done %} border-left-success{% elif nanitozo_done.nanitozo_done %} border-left-muted{% endif %}">
 
         <div class="uk-grid-collapse uk-flex-middle" uk-grid>
             <h5 class="uk-width-expand uk-text-truncate uk-text-small">
                 <span class="mgr-s">{{ adt.hm }}</span><span class="mgr-s">{{ adt.airtime }}<small>min</small></span><span class="mgr-s">{{ air.broadcaster.abbreviation }}</span>
             </h5>
-            {% include 'airs/reactions.html' with recommend_count='99' favorite_count='99' review_count='99' listener_count='99' %}
+            <div class="uk-article-meta uk-flex uk-flex-middle">
+                {% comment %} 何卒数 {% endcomment %}
+                {% if nanitozo_done.nanitozo_done %}{% include 'base/icon_success.html' with icon='user' %}{% else %}{% include 'base/icon.html' with icon='user' %}{% endif %}<span class="mgl-ss mgr-s">{{ nanitozo_count.nanitozo_count }}</span>
+                {% comment %} 満足数 {% endcomment %}
+                {% if nanitozo_done.good_done %}{% include 'base/icon_success.html' with icon='happy' %}{% else %}{% include 'base/icon.html' with icon='happy' %}{% endif %}<span class="mgl-ss mgr-s">{{ nanitozo_count.good_count }}</span>
+                {% comment %} コメント数 {% endcomment %}
+                {% if nanitozo_done.comment_done %}{% include 'base/icon_success.html' with icon='comment' %}{% else %}{% include 'base/icon.html' with icon='comment' %}{% endif %}<span class="mgl-ss">{{ nanitozo_count.comment_count }}</span>
+            </div>
         </div>
 
         <div class="uk-grid-collapse uk-flex-middle" uk-grid>
             <h4 class="uk-width-expand uk-text-truncate uk-text-small">{{ air.name }}</h4>
-            <div class="mgl-s uk-text-small">999pt</div>
+            <div class="mgl-s uk-text-small">{{ nanitozo_count.score }}pt</div>
         </div>
     </a>
 </div>
