@@ -1,47 +1,30 @@
-import datetime
-
 from django import template
-from math import floor
-from pytz import timezone as pytztimezone
+
+from common.util.rn_datetime_output import *
 
 register = template.Library()
 
 
-weekday_list = ['月', '火', '水', '木', '金', '土', '日']
+@register.filter
+def rn_regroup_date(dt):
+    dt_date_initialized = initialize_date(dt)
+    return datetime.date(dt_date_initialized.year, dt_date_initialized.month, dt_date_initialized.day)
 
 
 @register.filter
-def rn_regroup_date(dt):
-    dt = astimezone_tokyo(dt)
-    dt = timedelta_midnight_date(dt)
-    return datetime.date(dt.year, dt.month, dt.day)
+def rn_regrouped_date_weekday(dt_date_initialized):
+    return output_weekday(dt_date_initialized)
+
+
+@register.filter
+def rn_regrouped_date_md(dt_date_initialized):
+    return output_md(dt_date_initialized)
 
 
 @register.filter
 def rn_ymdhm(dt):
-    dt = astimezone_tokyo(dt)
-    dt = timedelta_midnight_date(dt)
-    return str(dt.strftime('%Y/%m/%d')) + " " + rn_initialized_date_hm(dt)
-
-
-@register.filter
-def rn_initialized_date_weekday(initialized_dt):
-    return weekday_list[initialized_dt.weekday()]
-
-
-@register.filter
-def rn_initialized_date_md(dt):
-    return str(dt.month) + '/' + str(dt.day)
-
-
-def rn_initialized_date_hm(dt):
-    # 0〜4時は[+24h]で表示する（0→24、1→25、2→26、3→27、4→28）
-    # 終了時刻が5時の場合はラジコ上の終了時刻は29時と表記されるが、当サイトでは終了時刻は表示しないので不要
-    if is_midnight(dt):
-        hour = str(dt.hour + 24)
-    else:
-        hour = str(dt.hour)
-    return str(hour) + ':' + str(dt.strftime("%M"))
+    dt_date_initialized = initialize_date(dt)
+    return output_ymdhm(dt_date_initialized)
 
 
 @register.filter
@@ -51,29 +34,10 @@ def init_rn_datetime(started, ended):
 
 class RNDatetime:
     def __init__(self, started, ended):
-        self.airtime = diff_minutes(started, ended)  # 放送開始日時と放送終了日時の差分から放送時間を取得
+        self.airtime = output_diff_minutes(started, ended)  # 放送開始日時と放送終了日時の差分から放送時間を取得
 
-        started = astimezone_tokyo(started)  # 日本時間にしておく
-        started = timedelta_midnight_date(started)
+        started_date_initialized = initialize_date(started)
 
-        self.weekday = rn_initialized_date_weekday(started)
-        self.md = rn_initialized_date_md(started)
-        self.hm = rn_initialized_date_hm(started)
-
-
-def astimezone_tokyo(dt):
-    return dt.astimezone(pytztimezone('Asia/Tokyo'))
-
-
-def is_midnight(dt):
-    return dt.hour < 5
-
-
-def timedelta_midnight_date(dt):
-    if is_midnight(dt):
-        dt = dt + datetime.timedelta(days=-1)  # 0〜4時は日付を[-1日]で表示する
-    return dt
-
-
-def diff_minutes(before, after):
-    return floor(((after - before).seconds / 60))  # 時間差を[timedelta]で取得して分数を算出して小数点以下は切り捨て
+        self.weekday = output_weekday(started_date_initialized)
+        self.md = output_md(started_date_initialized)
+        self.hm = output_hm(started_date_initialized)

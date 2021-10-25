@@ -19,7 +19,7 @@
         {% regroup air_list by started|rn_regroup_date as airs %}
 
         {% for started, local_airs in airs %}
-        {% include 'base/lead.html' with title=started|rn_initialized_date_weekday caption=started|rn_initialized_date_md %}
+        {% include 'base/lead.html' with title=started|rn_regrouped_date_weekday caption=started|rn_regrouped_date_md %}
 
         {% for air in local_airs %}
         {% include 'list/item_air.html' with air=air %}
@@ -38,7 +38,7 @@
         {% regroup w1_list by started|rn_regroup_date as airs %}
 
         {% for started, local_airs in airs %}
-        {% include 'base/lead.html' with title=started|rn_initialized_date_weekday caption=started|rn_initialized_date_md %}
+        {% include 'base/lead.html' with title=started|rn_regrouped_date_weekday caption=started|rn_regrouped_date_md %}
 
         {% for air in local_airs %}
         {% include 'list/item_air.html' with air=air %}
@@ -57,7 +57,7 @@
         {% regroup w2_list by started|rn_regroup_date as airs %}
 
         {% for started, local_airs in airs %}
-        {% include 'base/lead.html' with title=started|rn_initialized_date_weekday caption=started|rn_initialized_date_md %}
+        {% include 'base/lead.html' with title=started|rn_regrouped_date_weekday caption=started|rn_regrouped_date_md %}
 
         {% for air in local_airs %}
         {% include 'list/item_air.html' with air=air %}
