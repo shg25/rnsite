@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'widget_tweaks',
+    'airs.templatetags.air_nanitozo',
     'airs.templatetags.rn_datetime',
 ]
 
@@ -70,6 +71,7 @@ TEMPLATES = [
                 'django.contrib.messages.context_processors.messages',
             ],
             'libraries': {
+                'air_nanitozo': 'airs.templatetags.air_nanitozo',
                 'rn_datetime': 'airs.templatetags.rn_datetime',
             }
         },
