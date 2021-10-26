@@ -9,6 +9,7 @@ class ProgramInline(admin.TabularInline):  # class NanitozoInline(admin.StackedI
 
 class BroadcasterAdmin(admin.ModelAdmin):
     fields = [
+        'share_id',
         'name',
         'abbreviation',
         'search_index',
@@ -19,7 +20,7 @@ class BroadcasterAdmin(admin.ModelAdmin):
         'keyword'
     ]
     inlines = [ProgramInline]
-    list_display = ('id', 'name', 'search_index', 'area', 'keyword')
+    list_display = ('id', 'share_id', 'name', 'search_index', 'area', 'keyword')
     list_display_links = ('name',)
     ordering = ('id',)
 
