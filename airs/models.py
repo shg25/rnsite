@@ -21,6 +21,11 @@ class Broadcaster(models.Model):
         unique=True,
         max_length=80,
     )
+    share_id = models.CharField(
+        verbose_name='シェアID',
+        unique=True,
+        max_length=80,
+    )
     abbreviation = models.CharField(
         verbose_name='略称',
         unique=True,
