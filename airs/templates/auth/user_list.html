@@ -12,6 +12,8 @@
     {% if user_list %}
 
     {% for user in user_list %}
+    {% if not user.is_superuser %}
+    {% comment %} TODO user_list検索の時点で制御するべきかもしれない {% endcomment %}
 
     <div class="uk-margin-bottom uk-animation-toggle" tabindex="0">
         <a href="{% url 'airs:user' user.id %}" class="uk-display-block uk-link-reset uk-animation-slide-bottom-small border-left-muted">
@@ -21,6 +23,7 @@
         </a>
     </div>
 
+    {% endif %}
     {% endfor %}
 
     {% else %}

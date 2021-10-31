@@ -7,6 +7,8 @@
 
 {% block content %}
 <article class="rn-padding">
+  {% if not user.is_superuser %}
+
   {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
 
   <h1 class="uk-text-lead">{{ user.last_name }}</h1>
@@ -16,5 +18,8 @@
     <dd>関連情報を表示する</dd>
   </dl>
 
+  {% comment %} {% else %} {% endcomment %}
+  {% comment %} TODO superuserの場合は何かしらエラーを表示した方がいいかもしれない {% endcomment %}
+  {% endif %}
 </article>
 {% endblock content %}

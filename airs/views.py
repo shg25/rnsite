@@ -11,12 +11,23 @@ from django.urls import reverse
 from django.views import generic
 from django.utils import timezone
 from django.contrib import messages
-from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import UserPassesTestMixin
+from django.contrib.auth.models import User
 from django.utils.decorators import method_decorator
 
 from .models import Broadcaster, Program, Air, Nanitozo
 from .forms import AirCreateByShareTextForm
+
+
+# 要ログイン & superuser不可（=一般メンバー限定）
+def login_required_only_general_member():
+    def wrapper(wrapped):
+        class WrappedClass(UserPassesTestMixin, wrapped):
+            def test_func(self):
+                return not self.request.user.is_superuser
+        return WrappedClass
+    return wrapper
 
 
 class IndexView(generic.ListView):
@@ -43,7 +54,7 @@ class NsView(generic.ListView):
         return context
 
 
-@method_decorator(login_required, name='dispatch')
+@login_required_only_general_member()
 class AirCreateByShareTextView(generic.FormView):
     template_name = 'airs/air_create.html'
     form_class = AirCreateByShareTextForm
@@ -225,7 +236,7 @@ class AirCreateByShareTextView(generic.FormView):
         return HttpResponseRedirect(reverse('airs:detail', args=(saved_air.id,)))
 
 
-@method_decorator(login_required, name='dispatch')
+@method_decorator(login_required, name='dispatch')  # TODO 本人しか更新できないようにする
 class NanitozoUpdateView(generic.UpdateView):
     model = Nanitozo
     fields = ['good', 'comment_open', 'comment_recommend', 'comment', 'comment_negative']
