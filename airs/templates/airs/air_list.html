@@ -7,9 +7,11 @@
 
 {% block content %}
 <ul class="uk-tab" data-uk-tab="{connect:'#tab-contents'}">
-    <li><a href="">!!</a></li>
-    <li><a href="">1w<small> {{ w1_list|length }}(999h)</small></a></li>
-    <li><a href="">2w<small> {{ w2_list|length }}(999h)</small></a></li>
+    <li><a href="">今週<small> {{ air_list|length }}</small></a></li>
+    <li><a href="">先週<small> {{ last_week_list|length }}</small></a></li>
+
+    {% comment %} # TODO オススメ放送取得（2/3） {% endcomment %}
+    {% comment %} <li><a href="">!!</a></li> {% endcomment %}
 </ul>
 
 <article id="tab-contents" class="uk-switcher rn-padding">
@@ -28,33 +30,14 @@
         {% endfor %}
 
         {% else %}
-        <p>データなし</p>
+        <p>今週なし</p>
         {% endif %}
     </div>
 
     {% comment %} タブ2 {% endcomment %}
     <div>
-        {% if w1_list %}
-        {% regroup w1_list by started|rn_regroup_date as airs %}
-
-        {% for started, local_airs in airs %}
-        {% include 'base/lead.html' with title=started|rn_regrouped_date_weekday caption=started|rn_regrouped_date_md %}
-
-        {% for air in local_airs %}
-        {% include 'list/item_air.html' with air=air %}
-        {% endfor %}
-
-        {% endfor %}
-
-        {% else %}
-        <p>今週なし</p>
-        {% endif %}
-    </div>
-
-    {% comment %} タブ3 {% endcomment %}
-    <div>
-        {% if w2_list %}
-        {% regroup w2_list by started|rn_regroup_date as airs %}
+        {% if last_week_list %}
+        {% regroup last_week_list by started|rn_regroup_date as airs %}
 
         {% for started, local_airs in airs %}
         {% include 'base/lead.html' with title=started|rn_regrouped_date_weekday caption=started|rn_regrouped_date_md %}
@@ -69,6 +52,27 @@
         <p>先週なし</p>
         {% endif %}
     </div>
+
+    {% comment %} タブ3 {% endcomment %}
+
+    {% comment %} # TODO オススメ放送取得（3/3） {% endcomment %}
+    {% comment %} <div>
+        {% if recommend_list %}
+        {% regroup recommend_list by started|rn_regroup_date as airs %}
+
+        {% for started, local_airs in airs %}
+        {% include 'base/lead.html' with title=started|rn_regrouped_date_weekday caption=started|rn_regrouped_date_md %}
+
+        {% for air in local_airs %}
+        {% include 'list/item_air.html' with air=air %}
+        {% endfor %}
+
+        {% endfor %}
+
+        {% else %}
+        <p>データなし</p>
+        {% endif %}
+    </div> {% endcomment %}
 
 </article>
 {% endblock content %}

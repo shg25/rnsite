@@ -16,6 +16,8 @@ from django.contrib.auth.mixins import UserPassesTestMixin
 from django.contrib.auth.models import User
 from django.utils.decorators import method_decorator
 
+from common.util.rn_datetime_output import *
+
 from .models import Broadcaster, Program, Air, Nanitozo
 from .forms import AirCreateByShareTextForm
 
@@ -25,21 +27,23 @@ def login_required_only_general_member():
     def wrapper(wrapped):
         class WrappedClass(UserPassesTestMixin, wrapped):
             def test_func(self):
-                return not self.request.user.is_superuser
+                return self.request.user.is_authenticated and not self.request.user.is_superuser
         return WrappedClass
     return wrapper
 
 
 class IndexView(generic.ListView):
     model = Air
-    queryset = Air.objects.filter(started__lte=timezone.now()).order_by('-started')  # オススメの放送を取得する
+    queryset = Air.objects.filter(started__gte=this_week_started()).order_by('-started')
 
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args, **kwargs)
-        w1_list = Air.objects.filter(started__lte=timezone.now()).order_by('-started')[:4]  # TODO 今週分を取得する ダミーで4件取得にしてる
-        w2_list = Air.objects.filter(started__lte=timezone.now()).order_by('-started')[4:10]  # TODO 先週分を取得する ダミーで4件目以降取得にしてる
-        context['w1_list'] = w1_list
-        context['w2_list'] = w2_list
+        last_week_list = Air.objects.filter(started__range=(last_week_started(), this_week_started())).order_by('-started')
+        context['last_week_list'] = last_week_list
+
+        # TODO オススメ放送取得（1/3）
+        # context['recommend_list'] = Air.objects.filter(started__range=(last_week_started(), timezone.now())).order_by('-started')
+
         return context
         # TODO  全面的に filter(started__lte=timezone.now()) の値を調整する、実際は事前登録も可とするので、現在時刻との比較は不要
 
@@ -50,7 +54,9 @@ class NsView(generic.ListView):
 
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args, **kwargs)
-        context['close_list'] = Nanitozo.objects.filter(comment_open__lte=False).order_by('-created')[:40]
+        if self.request.user.is_authenticated:
+            context['self_list'] = Nanitozo.objects.filter(user=self.request.user).order_by('-created')[:40]
+            context['close_list'] = Nanitozo.objects.filter(user=self.request.user).filter(comment_open=False).order_by('-created')[:40]
         return context
 
 
