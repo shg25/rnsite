@@ -8,132 +8,36 @@
 
 {% block content %}
 <div class="rn-padding">
-    <h1 class="uk-text-lead">何卒！</h1>
-    <small>
-        <div>処理内容のメモ</div>
-        <ol class="uk-margin-remove">
-            <li>ユーザ：シェアラジオの文言を送信</li>
-            <li>サーバ：受信した文言からラジコのURLを抜き出す</li>
-            <li>サーバ：対象のURLからページタイトルをスクレイピング</li>
-            <li>サーバ：タイトルをパースして、放送開始日時・放送終了日時・放送名・放送局名を取得</li>
-            <li>サーバ：放送名から番組を検索</li>
-            <li>サーバ：放送局名から放送局を検索</li>
-            <li>ユーザ：放送登録 or 確認</li>
-            <li>ユーザ：何卒登録</li>
-            <li>ユーザ：必要に応じて何卒編集、削除</li>
-            <li>管理者：番組と放送局がNullの場合は確認して必要に応じて調整</li>
-        </ol>
-    </small>
-</div>
-
-<hr>
-
-<div class="rn-padding">
     <form method="post">{% csrf_token %}
         {% comment %} {{ form.as_p }} {% endcomment %} {% comment %} Formで指定したデータをセット {% endcomment %}
         <fieldset class="uk-fieldset">
-            <label for="id_share_text" class="uk-legend">シェアラジオの文言を送信</label>
+            <label for="id_share_text" class="uk-legend">放送を登録して何卒する</label>
             <div class="uk-margin">
-                <input name="share_text" id="id_share_text" maxlength="400" required="" class="uk-input uk-margin-small-bottom" type="text" placeholder="シェアラジオをコピペ">
-                <small>
-                    <small>
-                        <p class="uk-margin-small-bottom">番組名 | 放送局 | 2021/07/12/月 24:00-25:00 https://radiko.jp/share/?sid=TBS&t=20210713000000</p>
-                        <p class="uk-margin-remove">番組名 │ 放送局 | https://radiko.jp/share/?sid=TBS&t=20210713000000 #radiko #タグ1 #タグ2 #タグ3</p>
-                    </small>
-                </small>
+                <input name="share_text" id="id_share_text" maxlength="400" required="required" class="uk-input" type="text" placeholder="シェアラジオをコピペ" autofocus>
             </div>
-            <input type="submit" value="送信して内容を確認" class="uk-button uk-button-primary uk-width-1-1">
+            <input type="submit" value="送信" class="uk-button uk-button-primary uk-width-1-1 uk-margin-small-bottom">
         </fieldset>
     </form>
 </div>
 
-<hr>
+{% include 'base/separator.html' %}
 
 <div class="rn-padding">
-    <form>
-        <fieldset class="uk-fieldset">
+    <h4>シェアラジオの例</h4>
+    <pre><code>例1 基本：
+番組名 | 放送局 | 2021/07/12/月 24:00-25:00 https://radiko.jp/share/?sid=TBS&t=20210713000000
 
-            <legend class="uk-legend">放送情報</legend>
+例2 SNS版：
+番組名 │ 放送局 | https://radiko.jp/share/?sid=TBS&t=20210713000000 #radiko #タグ1 #タグ2 #タグ3
 
-            <div class="uk-margin">
-                <label class="uk-form-label">放送名</label>
-                <div class="uk-form-controls uk-margin-bottom">
-                    <input type="text" class="uk-input uk-margin-small-bottom" value="空気階段の踊り場" disabled><br>
-                    <small>
-                        <small>
-                            <p class="uk-margin-remove">番組情報：<a href="">空気階段の踊り場</a></p>
-                        </small>
-                    </small>
-                </div>
+例3 URLのみ：
+https://radiko.jp/share/?sid=TBS&t=20210713000000</code></pre>
 
-
-                <label class="uk-form-label">放送局</label>
-                <div class="uk-form-controls uk-margin-bottom">
-                    <input type="text" class="uk-input" value="TBSラジオ" disabled>
-                </div>
-
-                <label class="uk-form-label">放送開始</label>
-                <div class="uk-form-controls uk-margin-bottom">
-                    <input type="text" class="uk-input" value="2018/07/19（月） 24:00" disabled>
-                </div>
-
-                <label class="uk-form-label">放送終了</label>
-                <div class="uk-form-controls uk-margin-bottom">
-                    <input type="text" class="uk-input" value="2018/07/19（月） 25:00" disabled>
-                </div>
-            </div>
-
-            <div class="uk-margin">
-                <div class="uk-form-label">ネタバレなし 事前告知</div>
-                <textarea class="uk-textarea" rows="4" placeholder="ゲスト：ハリウッドザコシショウ"></textarea>
-            </div>
-
-            <div class="uk-margin">
-                <div class="uk-form-label">ネタバレあり 放送内容</div>
-                <textarea class="uk-textarea" rows="4" placeholder="・「アルコ」はおじさん
-・「平子っち」はババア"></textarea>
-            </div>
-
-        </fieldset>
-    </form>
+    <h4>補足</h4>
+    <ul>
+        <li>送信内容からラジコのURLを抜き出して放送情報を取得へ</li>
+        <li>サイトのタイトルだけ見るのでTF期間が終わると取得不可</li>
+        <li>不必要な連打はやめて</li>
+    </ul>
 </div>
-
-
-<div class="rn-padding">
-    <form>
-        <fieldset class="uk-fieldset">
-            <legend class="uk-legend">何卒！</legend>
-
-            <div class="uk-margin uk-grid-small uk-child-width-auto uk-grid rn-form-check-label">
-                <label><input class="uk-checkbox" type="checkbox"> 満足！</label>
-            </div>
-
-            <div class="uk-margin">
-                <div class="uk-form-label">推薦文</div>
-                <textarea class="uk-textarea" rows="3" placeholder="この放送をオススメしたいときに、どういうところがどんな人にオススメか、なるべくネタバレなしで書く"></textarea>
-            </div>
-
-            <div class="uk-margin">
-                <div class="uk-form-label">感想文</div>
-                <textarea class="uk-textarea" rows="3" placeholder="聴いてみた感想をこちらへ"></textarea>
-            </div>
-
-            <div class="uk-margin">
-                <div class="uk-form-label">感想文ネガ</div>
-                <textarea class="uk-textarea" rows="3" placeholder="不快に感じる人も居るかもなーって感想はこちらへ"></textarea>
-            </div>
-
-            <div class="uk-margin">
-                <div class="uk-form-label">推薦文と感想文の公開設定</div>
-                <div class="uk-grid-small uk-child-width-auto uk-grid rn-form-check-label">
-                    <label><input class="uk-radio" type="radio" name="public" checked> 公開</label>
-                    <label><input class="uk-radio" type="radio" name="public"> 下書き</label>
-                </div>
-            </div>
-
-            <input type="submit" value="何卒！" class="uk-button uk-button-primary uk-width-1-1">
-        </fieldset>
-    </form>
-</div>
-
 {% endblock content %}
