@@ -4,26 +4,20 @@
 
 <div class="uk-margin-bottom uk-animation-toggle" tabindex="0">
 
-    <a href="{% url 'airs:detail' nanitozo.air.id %}" class="uk-display-block uk-link-reset uk-animation-slide-bottom-small border-left-muted">
+    <a href="{% url 'airs:detail' nanitozo.air.id %}" class="uk-display-block uk-link-reset uk-animation-slide-bottom-small{% if user.is_authenticated and nanitozo.user.last_name == user.last_name%} border-left-muted{% endif %}">
 
-        <div class="uk-grid-collapse uk-flex-middle" uk-grid>
-            <h5 class="uk-width-expand uk-text-truncate uk-text-small">
-                <span class="mgr-s">{{ nanitozo.user.last_name }}</span>
-                <span uk-icon="icon: comment; ratio: 0.7" class="mgr-s"></span><span uk-icon="icon: happy; ratio: 0.7" class="mgr-s"></span><span uk-icon="icon: star; ratio: 0.7" class="mgr-s"></span>
-            </h5>
-            <span class="mgr-s uk-text-small">{{ ndt.hm }}</span>
-        </div>
+        <h5 class="uk-text-small uk-margin-remove">
+            <span class="mgr-s">{{ nanitozo.user.last_name }}</span><span class="mgr-s">{{ ndt.hm }}</span>{% if nanitozo.good %}<span class="mgr-s">{% include 'base/icon.html' with icon='happy' %}</span>{% endif %}{% if nanitozo.has_comment %}{% include 'base/icon.html' with icon='comment' %}{% endif %}
+        </h5>
 
         <div class="uk-grid-collapse uk-flex-middle" uk-grid>
             <h4 class="uk-width-expand uk-text-truncate uk-text-small">{{ nanitozo.air.name }}</h4>
         </div>
 
-        <div class="uk-grid-collapse uk-flex-middle" uk-grid>
-            <h5 class="uk-width-expand uk-text-truncate uk-text-small">
-                {{ adt.md }}_{{ adt.weekday }}_{{ adt.hm }}
-                <span class="mgr-s">{{ nanitozo.air.broadcaster.abbreviation }}</span>
-            </h5>
-        </div>
+        <p class="uk-article-meta uk-margin-remove">
+            {{ adt.md }}_{{ adt.weekday }}_{{ adt.hm }}
+            <span class="mgr-s">{{ nanitozo.air.broadcaster.abbreviation }}</span>
+        </p>
     </a>
 </div>
 

@@ -47,3 +47,24 @@ def output_hm(dt_date_initialized):
 def output_weekday(dt_date_initialized):
     weekday_list = ['月', '火', '水', '木', '金', '土', '日']
     return weekday_list[dt_date_initialized.weekday()]
+
+
+#
+
+
+def this_week_started():
+    now = datetime.datetime.now()
+    if __is_midnight(now):
+        dt = now + datetime.timedelta(days=-8)
+    else:
+        dt = now + datetime.timedelta(days=-7)
+    return datetime.datetime(dt.year, dt.month, dt.day, 5, 0, 0, 0)
+
+
+def last_week_started():
+    now = datetime.datetime.now()
+    if __is_midnight(now):
+        dt = now + datetime.timedelta(days=-15)
+    else:
+        dt = now + datetime.timedelta(days=-14)
+    return datetime.datetime(dt.year, dt.month, dt.day, 5, 0, 0, 0)

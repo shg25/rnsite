@@ -151,7 +151,6 @@ class Air(models.Model):
             return self.name[:8] + '_' + str(self.broadcaster)[:4] + '_'
         else:
             return self.name[:8] + '_' + str(self.broadcaster)[:4] + '_' + str(self.started.astimezone(pytztimezone('Asia/Tokyo')))[:16]
-        
 
     def was_aired_this_week(self):
         now = timezone.now()
@@ -208,6 +207,12 @@ class Nanitozo(models.Model):
         verbose_name='更新日時',
         auto_now=True,
     )
+
+    def has_comment(self):
+        if not self.comment_open or (not self.comment_recommend and not self.comment and not self.comment_negative):
+            return False
+        else:
+            return True
 
     def __str__(self):
         return self.user.last_name + '_' + str(self.air)

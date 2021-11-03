@@ -7,7 +7,8 @@
 
 {% block content %}
 <ul class="uk-tab" data-uk-tab="{connect:'#tab-contents'}">
-    <li><a href="">新着</a></li>
+    <li><a href="">みんなの</a></li>
+    <li><a href="">自分の</a></li>
     <li><a href="">下書き</a></li>
 </ul>
 
@@ -32,6 +33,25 @@
     </div>
 
     {% comment %} タブ2 {% endcomment %}
+    <div>
+        {% if self_list %}
+        {% regroup self_list by created|rn_regroup_date as nanitozos %}
+
+        {% for created, local_nanitozos in nanitozos %}
+        {% include 'base/lead.html' with title=created|rn_regrouped_date_weekday caption=created|rn_regrouped_date_md %}
+
+        {% for nanitozo in local_nanitozos %}
+        {% include 'list/item_nanitozo.html' with nanitozo=nanitozo %}
+        {% endfor %}
+
+        {% endfor %}
+
+        {% else %}
+        <p>何卒なし</p>
+        {% endif %}
+    </div>
+
+    {% comment %} タブ3 {% endcomment %}
     <div>
         {% if close_list %}
         {% regroup close_list by created|rn_regroup_date as nanitozos %}
