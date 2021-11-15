@@ -22,11 +22,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))  # Heroku
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
-
-DEBUG = False
-
 ALLOWED_HOSTS = []
-
 
 # Application definition
 
@@ -138,6 +134,8 @@ STATIC_URL = '/static/'
 # Activate Django-Heroku.
 django_heroku.settings(locals())
 
+DEBUG = False
+
 try:
     from local_settings import *
 except ImportError:
@@ -145,3 +143,5 @@ except ImportError:
 
 if not DEBUG:
     SECRET_KEY = os.getenv('SECRET_KEY')
+    STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.StaticFilesStorage'
+
