@@ -9,7 +9,7 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render
 from django.urls import reverse
 from django.views import generic
-from django.utils import timezone
+from django.utils.timezone import make_aware
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import UserPassesTestMixin
@@ -179,7 +179,7 @@ class AirCreateByShareTextView(generic.FormView):
 
         # 半角カンマで分割して日付を作成
         split_title = title.split(',')  # ['2021', '10', '5', '24', '00', '25', '00']
-        title_date = datetime.datetime(int(split_title[0]), int(split_title[1]), int(split_title[2]))
+        title_date = make_aware(datetime.datetime(int(split_title[0]), int(split_title[1]), int(split_title[2])))
 
         # 開始時間と終了時間を取得
         started_hour = int(split_title[3])
@@ -194,7 +194,7 @@ class AirCreateByShareTextView(generic.FormView):
         else:
             started = title_date
 
-        started = datetime.datetime(started.year, started.month, started.day, started_hour, started_minute)
+        started = make_aware(datetime.datetime(started.year, started.month, started.day, started_hour, started_minute))
 
         if ended_hour > 23:
             ended = title_date + datetime.timedelta(days=1)
@@ -202,7 +202,7 @@ class AirCreateByShareTextView(generic.FormView):
         else:
             ended = title_date
 
-        ended = datetime.datetime(ended.year, ended.month, ended.day, ended_hour, ended_minute)
+        ended = make_aware(datetime.datetime(ended.year, ended.month, ended.day, ended_hour, ended_minute))
 
         # - - - - - - - - - - - - - - - - - - - - - - - -
         if program_name == None or program_name == '' or started > ended:

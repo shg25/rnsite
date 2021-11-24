@@ -2,6 +2,8 @@
 
 import datetime
 
+from django.utils.timezone import make_aware
+
 from pytz import timezone as pytztimezone
 from math import floor
 
@@ -58,7 +60,7 @@ def this_week_started():
         dt = now + datetime.timedelta(days=-8)
     else:
         dt = now + datetime.timedelta(days=-7)
-    return datetime.datetime(dt.year, dt.month, dt.day, 5, 0, 0, 0)
+    return make_aware(datetime.datetime(dt.year, dt.month, dt.day, 5, 0, 0, 0))
 
 
 def last_week_started():
@@ -67,4 +69,4 @@ def last_week_started():
         dt = now + datetime.timedelta(days=-15)
     else:
         dt = now + datetime.timedelta(days=-14)
-    return datetime.datetime(dt.year, dt.month, dt.day, 5, 0, 0, 0)
+    return make_aware(datetime.datetime(dt.year, dt.month, dt.day, 5, 0, 0, 0))
