@@ -41,3 +41,13 @@ class RNDatetime:
         self.weekday = output_weekday(started_date_initialized)
         self.md = output_md(started_date_initialized)
         self.hm = output_hm(started_date_initialized)
+
+
+@register.filter
+def radiko_link(started, broadcaster_share_id):
+    return output_radiko_link(started, broadcaster_share_id)
+
+
+@register.filter
+def radiko_link_next_week(started, broadcaster_share_id):
+    return output_radiko_link_next_week(started, broadcaster_share_id)

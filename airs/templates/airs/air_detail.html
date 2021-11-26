@@ -16,18 +16,22 @@
   </h2>
 
   {% if air.broadcaster %}
+
   <div class="uk-flex uk-flex-middle">
     <span uk-icon="icon: microphone" class="uk-icon"></span>
     <span class="uk-text-middle mgl-s"><a href="{% url 'airs:broadcaster' air.broadcaster.id %}">{{ air.broadcaster.name }}</a></span>
   </div>
-  {% endif %}
+
   <div class="uk-flex uk-flex-middle">
     {% comment %} TODO ラジコのURLの生成 {% endcomment %}
     <span uk-icon="icon: link" class="uk-icon"></span>
-    <span class="uk-text-middle mgl-s"><a href="#">ラジコ</a></span>
-    <span class="uk-text-middle uk-margin-small-left"><a href="#">URLコピー</a></span>
-    <span class="uk-text-middle uk-margin-small-left"><a href="#">ラジコ+1w</a></span>
+    <span class="uk-text-middle mgl-s"><a href="{{ air.started|radiko_link:air.broadcaster.share_id }}" target="_blank" rel="noopener noreferrer">ラジコ</a></span>
+    <span class="uk-text-middle uk-margin-small-left"><a href="#" onclick="copyToClipboardAndShowAlert('{{ air.started|radiko_link:air.broadcaster.share_id }}')">URLコピー</a></span>
+    <span class="uk-text-middle uk-margin-small-left"><a href="{{ air.started|radiko_link_next_week:air.broadcaster.share_id }}" target="_blank" rel="noopener noreferrer">ラジコ+1w</a></span>
   </div>
+
+  {% endif %}
+
   {% if air.program %}
   <div class="uk-flex uk-flex-middle">
     <span uk-icon="icon: info" class="uk-icon"></span>
