@@ -43,12 +43,30 @@ def output_hm(dt_date_initialized):
         str_hour_initialized = str(dt_date_initialized.hour + 24)
     else:
         str_hour_initialized = str(dt_date_initialized.hour)
-    return str_hour_initialized + ':' + str(dt_date_initialized.strftime("%M"))
+    return str_hour_initialized + ':' + str(dt_date_initialized.strftime('%M'))
 
 
 def output_weekday(dt_date_initialized):
     weekday_list = ['月', '火', '水', '木', '金', '土', '日']
     return weekday_list[dt_date_initialized.weekday()]
+
+
+#
+
+
+def output_radiko_link(dt, broadcaster_share_id):
+    dt_tokyo = dt.astimezone(pytztimezone('Asia/Tokyo'))  # タイムゾーンを日本時間にする
+    return __create_radiko_link(dt_tokyo, broadcaster_share_id)
+
+
+def output_radiko_link_next_week(dt, broadcaster_share_id):
+    dt_tokyo = dt.astimezone(pytztimezone('Asia/Tokyo'))  # タイムゾーンを日本時間にする
+    dt_tokyo = dt_tokyo + datetime.timedelta(days=+7)
+    return __create_radiko_link(dt_tokyo, broadcaster_share_id)
+
+
+def __create_radiko_link(dt_tokyo, broadcaster_share_id):
+    return 'http://radiko.jp/share/?sid=' + broadcaster_share_id + '&t=' + str(dt_tokyo.strftime('%Y%m%d%H%M')) + '00'
 
 
 #
