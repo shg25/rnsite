@@ -251,16 +251,6 @@ class NanitozoUpdateView(generic.UpdateView):
         return reverse('airs:detail', kwargs={'pk': self.object.air.id})
 
 
-class ProgramsView(generic.ListView):
-    model = Program
-    paginate_by = 40
-    # 将来的には登録があった日時を保存して降順で表示するなど検討
-
-
-class ProgramView(generic.DetailView):
-    model = Program
-
-
 @method_decorator(login_required, name='dispatch')
 class AirUpdateView(generic.UpdateView):
     model = Air

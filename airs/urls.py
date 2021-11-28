@@ -1,6 +1,6 @@
 from django.urls import path
 
-from .views import air_views, user_views, broadcaster_views
+from .views import air_views, user_views, broadcaster_views, program_views
 
 app_name = 'airs'
 urlpatterns = [
@@ -14,14 +14,14 @@ urlpatterns = [
     # 放送局一覧
     path('broadcasters/', broadcaster_views.BroadcasterListView.as_view(), name='broadcasters'),
     # 番組一覧
-    path('programs/', air_views.ProgramsView.as_view(), name='programs'),
+    path('programs/', program_views.ProgramsListView.as_view(), name='programs'),
 
     # リスナー詳細 TODO キーをユーザー名にする
     path('user/<int:pk>/', user_views.UserDetailView.as_view(), name='user'),
     # 放送局詳細 TODO キーを放送局の略称にする
     path('broadcaster/<int:pk>/', broadcaster_views.BroadcasterDetailView.as_view(), name='broadcaster'),
     # 番組詳細 TODO キーを番組名ハッシュタグにしたいな
-    path('program/<int:pk>/', air_views.ProgramView.as_view(), name='program'),
+    path('program/<int:pk>/', program_views.ProgramDetailView.as_view(), name='program'),
 
     # 放送作成 & 何卒作成（ログイン必須）
     path('air/create/', air_views.AirCreateByShareTextView.as_view(), name='air_create'),
