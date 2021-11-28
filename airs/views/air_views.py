@@ -258,11 +258,6 @@ class UsersView(generic.ListView):
     # 将来的には何卒した日時を保存して降順で表示するなど検討したいが、Djangoのauthでできるかどうか
 
 
-class BroadcastersView(generic.ListView):
-    model = Broadcaster
-    paginate_by = 40
-
-
 class ProgramsView(generic.ListView):
     model = Program
     paginate_by = 40
@@ -271,10 +266,6 @@ class ProgramsView(generic.ListView):
 
 class UserView(generic.DetailView):
     model = User
-
-
-class BroadcasterView(generic.DetailView):
-    model = Broadcaster
 
 
 class ProgramView(generic.DetailView):
