@@ -13,7 +13,6 @@ from django.utils.timezone import make_aware
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import UserPassesTestMixin
-from django.contrib.auth.models import User
 from django.utils.decorators import method_decorator
 
 from common.util.rn_datetime_output import *
@@ -252,20 +251,10 @@ class NanitozoUpdateView(generic.UpdateView):
         return reverse('airs:detail', kwargs={'pk': self.object.air.id})
 
 
-class UsersView(generic.ListView):
-    model = User
-    # ページネーションなしの全件表示でいける想定
-    # 将来的には何卒した日時を保存して降順で表示するなど検討したいが、Djangoのauthでできるかどうか
-
-
 class ProgramsView(generic.ListView):
     model = Program
     paginate_by = 40
     # 将来的には登録があった日時を保存して降順で表示するなど検討
-
-
-class UserView(generic.DetailView):
-    model = User
 
 
 class ProgramView(generic.DetailView):

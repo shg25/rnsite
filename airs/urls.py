@@ -1,7 +1,6 @@
 from django.urls import path
 
-from .views import air_views
-from .views import broadcaster_views
+from .views import air_views, user_views, broadcaster_views
 
 app_name = 'airs'
 urlpatterns = [
@@ -11,14 +10,14 @@ urlpatterns = [
     path('nanitozo/update/<int:pk>', air_views.NanitozoUpdateView.as_view(), name='nanitozo_update'),
 
     # リスナー一覧
-    path('users/', air_views.UsersView.as_view(), name='users'),
+    path('users/', user_views.UserListView.as_view(), name='users'),
     # 放送局一覧
     path('broadcasters/', broadcaster_views.BroadcasterListView.as_view(), name='broadcasters'),
     # 番組一覧
     path('programs/', air_views.ProgramsView.as_view(), name='programs'),
 
     # リスナー詳細 TODO キーをユーザー名にする
-    path('user/<int:pk>/', air_views.UserView.as_view(), name='user'),
+    path('user/<int:pk>/', user_views.UserDetailView.as_view(), name='user'),
     # 放送局詳細 TODO キーを放送局の略称にする
     path('broadcaster/<int:pk>/', broadcaster_views.BroadcasterDetailView.as_view(), name='broadcaster'),
     # 番組詳細 TODO キーを番組名ハッシュタグにしたいな
