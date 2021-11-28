@@ -18,8 +18,8 @@ from django.utils.decorators import method_decorator
 
 from common.util.rn_datetime_output import *
 
-from .models import Broadcaster, Program, Air, Nanitozo
-from .forms import AirCreateByShareTextForm
+from ..models import Broadcaster, Program, Air, Nanitozo
+from ..forms import AirCreateByShareTextForm
 
 
 # 要ログイン & superuser不可（=一般メンバー限定）
