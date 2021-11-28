@@ -4,24 +4,29 @@ from .views import air_views, user_views, broadcaster_views, program_views
 
 app_name = 'airs'
 urlpatterns = [
+    # リスナー一覧
+    path('users/', user_views.UserListView.as_view(), name='users'),
+    # リスナー詳細 TODO キーをユーザー名にする
+    path('user/<int:pk>/', user_views.UserDetailView.as_view(), name='user'),
+
+    # 放送局一覧
+    path('broadcasters/', broadcaster_views.BroadcasterListView.as_view(), name='broadcasters'),
+    # 放送局詳細 TODO キーを放送局の略称にする
+    path('broadcaster/<int:pk>/', broadcaster_views.BroadcasterDetailView.as_view(), name='broadcaster'),
+
+    # 番組一覧
+    path('programs/', program_views.ProgramsListView.as_view(), name='programs'),
+    # 番組詳細 TODO キーを番組名ハッシュタグにしたいな
+    path('program/<int:pk>/', program_views.ProgramDetailView.as_view(), name='program'),
+
     # 何卒一覧
     path('ns/', air_views.NsView.as_view(), name='ns'),
     # 何卒修正（ログイン必須）
     path('nanitozo/update/<int:pk>', air_views.NanitozoUpdateView.as_view(), name='nanitozo_update'),
-
-    # リスナー一覧
-    path('users/', user_views.UserListView.as_view(), name='users'),
-    # 放送局一覧
-    path('broadcasters/', broadcaster_views.BroadcasterListView.as_view(), name='broadcasters'),
-    # 番組一覧
-    path('programs/', program_views.ProgramsListView.as_view(), name='programs'),
-
-    # リスナー詳細 TODO キーをユーザー名にする
-    path('user/<int:pk>/', user_views.UserDetailView.as_view(), name='user'),
-    # 放送局詳細 TODO キーを放送局の略称にする
-    path('broadcaster/<int:pk>/', broadcaster_views.BroadcasterDetailView.as_view(), name='broadcaster'),
-    # 番組詳細 TODO キーを番組名ハッシュタグにしたいな
-    path('program/<int:pk>/', program_views.ProgramDetailView.as_view(), name='program'),
+    # 既存の放送に何卒作成（ログイン必須）
+    path('<int:air_id>/nanitozo/create/', air_views.nanitozo_create, name='nanitozo_create'),
+    # 何卒取消（ログイン必須）
+    path('<int:air_id>/nanitozo/delete/<int:pk>', air_views.nanitozo_delete, name='nanitozo_delete'),
 
     # 放送作成 & 何卒作成（ログイン必須）
     path('air/create/', air_views.AirCreateByShareTextView.as_view(), name='air_create'),
@@ -31,14 +36,4 @@ urlpatterns = [
     path('', air_views.IndexView.as_view(), name='index'),
     # 放送詳細 ex: '/1/'
     path('<int:pk>/', air_views.DetailView.as_view(), name='detail'),
-
-    # 既存の放送に何卒作成（ログイン必須）
-    path('<int:air_id>/nanitozo/create/', air_views.nanitozo_create, name='nanitozo_create'),
-    # 何卒取消（ログイン必須）
-    path('<int:air_id>/nanitozo/delete/<int:pk>', air_views.nanitozo_delete, name='nanitozo_delete'),
-
-    # 削除予定 /airs/5/results/
-    path('<int:pk>/results/', air_views.ResultsView.as_view(), name='results'),
-    # 削除予定 /airs/5/vote/
-    path('<int:air_id>/vote/', air_views.vote, name='vote'),
 ]

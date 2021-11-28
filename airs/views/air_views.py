@@ -281,11 +281,6 @@ class DetailView(generic.DetailView):
         return context
 
 
-class ResultsView(generic.DetailView):
-    model = Air
-    template_name = 'airs/results.html'
-
-
 @login_required
 def nanitozo_create(request, air_id):
     air = get_object_or_404(Air, pk=air_id)
@@ -309,22 +304,3 @@ def nanitozo_delete(request, air_id, pk):
     else:
         messages.success(request, '何卒を取り消しました！')
         return HttpResponseRedirect(reverse('airs:detail', args=(air_id,)))
-
-
-def vote(request, air_id):
-    air = get_object_or_404(Air, pk=air_id)
-    try:
-        selected_nanitozo = air.nanitozo_set.get(pk=request.POST['nanitozo'])
-    except (KeyError, Nanitozo.DoesNotExist):
-        # Redisplay the air voting form.
-        return render(request, 'airs/detail.html', {
-            'air': air,
-            'error_message': "You didn't select a choice.",
-        })
-    else:
-        selected_nanitozo.comment += "追加！"
-        selected_nanitozo.save()
-        # Always return an HttpResponseRedirect after successfully dealing
-        # with POST data. This prevents data from being posted twice if a
-        # user hits the Back button.
-        return HttpResponseRedirect(reverse('airs:results', args=(air.id,)))
