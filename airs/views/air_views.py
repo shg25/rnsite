@@ -1,9 +1,4 @@
 import datetime
-import requests
-import mojimoji
-
-from bs4 import BeautifulSoup
-from urlextract import URLExtract
 
 from django.http import HttpResponseRedirect
 from django.urls import reverse
@@ -15,6 +10,8 @@ from django.contrib.auth.mixins import UserPassesTestMixin
 from django.utils.decorators import method_decorator
 
 from common.util.rn_datetime_output import this_week_started, last_week_started
+from common.util.url_extensions import scraping_title
+from common.util.string_extensions import find_urls, share_text_to_search_index
 
 from ..models import Broadcaster, Program, Air
 from ..forms import AirCreateByShareTextForm
@@ -63,8 +60,7 @@ class AirCreateByShareTextView(generic.FormView):
 
         # - - - - - - - - - - - - - - - - - - - - - - - -
         # [share_text]からラジコのURLを抜き出す
-        extractor = URLExtract()
-        urls = extractor.find_urls(share_text)
+        urls = find_urls(share_text)
         if len(urls) == 0:
             messages.error(self.request, 'ラジコのURLがなさそう！ 投稿した「' + share_text + '」を管理人に教えて！！')  # TODO share_textをどこかに記録したい
             return super().form_invalid(form)
@@ -79,10 +75,8 @@ class AirCreateByShareTextView(generic.FormView):
         # radiko_url = "https://radiko.jp/share/?sid=TBS&t=20211006000000"
 
         # - - - - - - - - - - - - - - - - - - - - - - - -
-        # BeautifulSoupでサイトタイトルを取得
-        html = requests.get(radiko_url)
-        soup = BeautifulSoup(html.content, "html.parser")
-        title = soup.find("title").text
+        # ラジコのサイトからサイトタイトルを取得
+        title = scraping_title(radiko_url)
         # title = '2021年10月5日（火）24:00～25:00 | アルコ＆ピース D.C.GARAGE | TBSラジオ | radiko'
         # print(title)
 
@@ -108,19 +102,10 @@ class AirCreateByShareTextView(generic.FormView):
         # rfindで後ろから「|」を検索して、それより後ろを取得 → 「| TBSラジオ 」
         # 「|」を削除して、前後のスペースを除去 → 「TBSラジオ」
         broadcaster_name = title[title.rfind('|'):].replace('|', '').strip()
-        # print(broadcaster_name)
 
-        # - - - - - - - - - - - - - - - - - - - - - - - -
-        # 放送局情報を取得
-
-        # 半角に変換して大文字は小文字にして検索インデックスの形式に
-        broadcaster_search_index = mojimoji.zen_to_han(broadcaster_name).lower().replace(' ', '')
-        # print(broadcaster_search_index)
-
-        # 放送局情報を検索 → これをAirデータに保存
-        # 検索がヒットしない場合は[None]が入ってDBには[null]で保存されるはず
+        # Airに保存する放送局情報を取得（検索がヒットしない場合は[None]が入ってDBには[null]で保存されるはず）
+        broadcaster_search_index = share_text_to_search_index(broadcaster_name)
         broadcaster = Broadcaster.objects.filter(search_index=broadcaster_search_index).first()
-        # print(broadcaster)
 
         # - - - - - - - - - - - - - - - - - - - - - - - -
         # タイトルから放送局名を除去
@@ -134,19 +119,10 @@ class AirCreateByShareTextView(generic.FormView):
         # findで前から「|」を検索して、それより後ろを取得 → 「| アルコ＆ピース D.C.GARAGE 」
         # 「|」を削除して、前後のスペースを除去 → 「アルコ＆ピース D.C.GARAGE」
         program_name = title[title.find('|'):].replace('|', '').strip()
-        # print(program_name)
 
-        # - - - - - - - - - - - - - - - - - - - - - - - -
-        # 番組情報を取得
-
-        # 半角に変換して大文字は小文字にして検索インデックスの形式に
-        program_search_index = mojimoji.zen_to_han(program_name).lower().replace(' ', '')
-        # print(program_search_index)
-
-        # 番組情報を検索 → これをAirデータに保存
-        # 検索がヒットしない場合は[None]が入ってDBには[null]で保存されるはず
+        # Airに保存する番組情報を取得（検索がヒットしない場合は[None]が入ってDBには[null]で保存されるはず）
+        program_search_index = share_text_to_search_index(program_name)
         program = Program.objects.filter(search_index=program_search_index).first()
-        # print(program)
 
         # - - - - - - - - - - - - - - - - - - - - - - - -
         # 放送開始日時と放送終了日時を作成
