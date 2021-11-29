@@ -1,6 +1,6 @@
 from django.urls import path
 
-from .views import air_views, user_views, broadcaster_views, program_views
+from .views import air_views, user_views, broadcaster_views, program_views, nanitozo_views
 
 app_name = 'airs'
 urlpatterns = [
@@ -20,20 +20,20 @@ urlpatterns = [
     path('program/<int:pk>/', program_views.ProgramDetailView.as_view(), name='program'),
 
     # 何卒一覧
-    path('ns/', air_views.NsView.as_view(), name='ns'),
+    path('ns/', nanitozo_views.NanitozoListView.as_view(), name='ns'),
     # 何卒修正（ログイン必須）
-    path('nanitozo/update/<int:pk>', air_views.NanitozoUpdateView.as_view(), name='nanitozo_update'),
+    path('nanitozo/update/<int:pk>', nanitozo_views.NanitozoUpdateView.as_view(), name='nanitozo_update'),
     # 既存の放送に何卒作成（ログイン必須）
-    path('<int:air_id>/nanitozo/create/', air_views.nanitozo_create, name='nanitozo_create'),
+    path('<int:air_id>/nanitozo/create/', nanitozo_views.nanitozo_create, name='nanitozo_create'),
     # 何卒取消（ログイン必須）
-    path('<int:air_id>/nanitozo/delete/<int:pk>', air_views.nanitozo_delete, name='nanitozo_delete'),
+    path('<int:air_id>/nanitozo/delete/<int:pk>', nanitozo_views.nanitozo_delete, name='nanitozo_delete'),
 
     # 放送作成 & 何卒作成（ログイン必須）
     path('air/create/', air_views.AirCreateByShareTextView.as_view(), name='air_create'),
     # 放送更新（ログイン必須）
     path('air/update/<int:pk>', air_views.AirUpdateView.as_view(), name='air_update'),
     # 放送一覧
-    path('', air_views.IndexView.as_view(), name='index'),
+    path('', air_views.AirListView.as_view(), name='index'),
     # 放送詳細 ex: '/1/'
-    path('<int:pk>/', air_views.DetailView.as_view(), name='detail'),
+    path('<int:pk>/', air_views.AirDetailView.as_view(), name='detail'),
 ]

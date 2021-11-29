@@ -6,7 +6,6 @@ from bs4 import BeautifulSoup
 from urlextract import URLExtract
 
 from django.http import HttpResponseRedirect
-from django.shortcuts import get_object_or_404, render
 from django.urls import reverse
 from django.views import generic
 from django.utils.timezone import make_aware
@@ -15,9 +14,9 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import UserPassesTestMixin
 from django.utils.decorators import method_decorator
 
-from common.util.rn_datetime_output import *
+from common.util.rn_datetime_output import this_week_started, last_week_started
 
-from ..models import Broadcaster, Program, Air, Nanitozo
+from ..models import Broadcaster, Program, Air
 from ..forms import AirCreateByShareTextForm
 
 
@@ -31,7 +30,7 @@ def login_required_only_general_member():
     return wrapper
 
 
-class IndexView(generic.ListView):
+class AirListView(generic.ListView):
     model = Air
     queryset = Air.objects.filter(started__gte=this_week_started()).order_by('-started')
 
@@ -45,18 +44,6 @@ class IndexView(generic.ListView):
 
         return context
         # TODO  全面的に filter(started__lte=timezone.now()) の値を調整する、実際は事前登録も可とするので、現在時刻との比較は不要
-
-
-class NsView(generic.ListView):
-    model = Nanitozo
-    queryset = Nanitozo.objects.order_by('-created')[:40]
-
-    def get_context_data(self, *args, **kwargs):
-        context = super().get_context_data(*args, **kwargs)
-        if self.request.user.is_authenticated:
-            context['self_list'] = Nanitozo.objects.filter(user=self.request.user).order_by('-created')[:40]
-            context['close_list'] = Nanitozo.objects.filter(user=self.request.user).filter(comment_open=False).order_by('-created')[:40]
-        return context
 
 
 @login_required_only_general_member()
@@ -241,16 +228,6 @@ class AirCreateByShareTextView(generic.FormView):
         return HttpResponseRedirect(reverse('airs:detail', args=(saved_air.id,)))
 
 
-@method_decorator(login_required, name='dispatch')  # TODO 本人しか更新できないようにする
-class NanitozoUpdateView(generic.UpdateView):
-    model = Nanitozo
-    fields = ['good', 'comment_open', 'comment_recommend', 'comment', 'comment_negative']
-    template_name = 'airs/nanitozo_update.html'
-
-    def get_success_url(self):
-        return reverse('airs:detail', kwargs={'pk': self.object.air.id})
-
-
 @method_decorator(login_required, name='dispatch')
 class AirUpdateView(generic.UpdateView):
     model = Air
@@ -261,7 +238,7 @@ class AirUpdateView(generic.UpdateView):
         return reverse('airs:detail', kwargs={'pk': self.kwargs['pk']})
 
 
-class DetailView(generic.DetailView):
+class AirDetailView(generic.DetailView):
     model = Air
 
     def get_context_data(self, **kwargs):
@@ -279,28 +256,3 @@ class DetailView(generic.DetailView):
             context['my_nanitozo'] = my_nanitozo_list[0]
 
         return context
-
-
-@login_required
-def nanitozo_create(request, air_id):
-    air = get_object_or_404(Air, pk=air_id)
-    try:
-        air.nanitozo_set.create(user=request.user)
-    except:
-        messages.error(request, '既に何卒してました！')
-        return HttpResponseRedirect(reverse('airs:detail', args=(air.id,)))
-    else:
-        messages.success(request, '何卒！')
-        return HttpResponseRedirect(reverse('airs:detail', args=(air.id,)))
-
-
-@login_required
-def nanitozo_delete(request, air_id, pk):
-    try:
-        Nanitozo.objects.get(pk=pk).delete()
-    except:
-        messages.error(request, '既に何卒を取り消してました！')
-        return HttpResponseRedirect(reverse('airs:detail', args=(air_id,)))
-    else:
-        messages.success(request, '何卒を取り消しました！')
-        return HttpResponseRedirect(reverse('airs:detail', args=(air_id,)))
