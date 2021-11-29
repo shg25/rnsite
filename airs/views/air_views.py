@@ -9,7 +9,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import UserPassesTestMixin
 from django.utils.decorators import method_decorator
 
-from common.util.rn_datetime_output import this_week_started, last_week_started
+from common.util.datetime_extensions import this_week_started, last_week_started
 from common.util.url_extensions import scraping_title
 from common.util.string_extensions import find_urls, share_text_to_search_index
 
