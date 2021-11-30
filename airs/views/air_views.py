@@ -1,25 +1,17 @@
-import datetime
-import requests
-import mojimoji
-
-from bs4 import BeautifulSoup
-from urlextract import URLExtract
-
 from django.http import HttpResponseRedirect
-from django.shortcuts import get_object_or_404, render
 from django.urls import reverse
 from django.views import generic
-from django.utils.timezone import make_aware
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import UserPassesTestMixin
-from django.contrib.auth.models import User
 from django.utils.decorators import method_decorator
 
-from common.util.rn_datetime_output import *
+from common.util.datetime_extensions import this_week_started, last_week_started, new_datetime, new_date, timedelta_days
+from common.util.url_extensions import scraping_title
+from common.util.string_extensions import find_urls, share_text_to_search_index
 
-from .models import Broadcaster, Program, Air, Nanitozo
-from .forms import AirCreateByShareTextForm
+from ..models import Broadcaster, Program, Air
+from ..forms import AirCreateByShareTextForm
 
 
 # 要ログイン & superuser不可（=一般メンバー限定）
@@ -32,7 +24,7 @@ def login_required_only_general_member():
     return wrapper
 
 
-class IndexView(generic.ListView):
+class AirListView(generic.ListView):
     model = Air
     queryset = Air.objects.filter(started__gte=this_week_started()).order_by('-started')
 
@@ -46,18 +38,6 @@ class IndexView(generic.ListView):
 
         return context
         # TODO  全面的に filter(started__lte=timezone.now()) の値を調整する、実際は事前登録も可とするので、現在時刻との比較は不要
-
-
-class NsView(generic.ListView):
-    model = Nanitozo
-    queryset = Nanitozo.objects.order_by('-created')[:40]
-
-    def get_context_data(self, *args, **kwargs):
-        context = super().get_context_data(*args, **kwargs)
-        if self.request.user.is_authenticated:
-            context['self_list'] = Nanitozo.objects.filter(user=self.request.user).order_by('-created')[:40]
-            context['close_list'] = Nanitozo.objects.filter(user=self.request.user).filter(comment_open=False).order_by('-created')[:40]
-        return context
 
 
 @login_required_only_general_member()
@@ -77,8 +57,7 @@ class AirCreateByShareTextView(generic.FormView):
 
         # - - - - - - - - - - - - - - - - - - - - - - - -
         # [share_text]からラジコのURLを抜き出す
-        extractor = URLExtract()
-        urls = extractor.find_urls(share_text)
+        urls = find_urls(share_text)
         if len(urls) == 0:
             messages.error(self.request, 'ラジコのURLがなさそう！ 投稿した「' + share_text + '」を管理人に教えて！！')  # TODO share_textをどこかに記録したい
             return super().form_invalid(form)
@@ -93,10 +72,8 @@ class AirCreateByShareTextView(generic.FormView):
         # radiko_url = "https://radiko.jp/share/?sid=TBS&t=20211006000000"
 
         # - - - - - - - - - - - - - - - - - - - - - - - -
-        # BeautifulSoupでサイトタイトルを取得
-        html = requests.get(radiko_url)
-        soup = BeautifulSoup(html.content, "html.parser")
-        title = soup.find("title").text
+        # ラジコのサイトからサイトタイトルを取得
+        title = scraping_title(radiko_url)
         # title = '2021年10月5日（火）24:00～25:00 | アルコ＆ピース D.C.GARAGE | TBSラジオ | radiko'
         # print(title)
 
@@ -122,19 +99,10 @@ class AirCreateByShareTextView(generic.FormView):
         # rfindで後ろから「|」を検索して、それより後ろを取得 → 「| TBSラジオ 」
         # 「|」を削除して、前後のスペースを除去 → 「TBSラジオ」
         broadcaster_name = title[title.rfind('|'):].replace('|', '').strip()
-        # print(broadcaster_name)
 
-        # - - - - - - - - - - - - - - - - - - - - - - - -
-        # 放送局情報を取得
-
-        # 半角に変換して大文字は小文字にして検索インデックスの形式に
-        broadcaster_search_index = mojimoji.zen_to_han(broadcaster_name).lower().replace(' ', '')
-        # print(broadcaster_search_index)
-
-        # 放送局情報を検索 → これをAirデータに保存
-        # 検索がヒットしない場合は[None]が入ってDBには[null]で保存されるはず
+        # Airに保存する放送局情報を取得（検索がヒットしない場合は[None]が入ってDBには[null]で保存されるはず）
+        broadcaster_search_index = share_text_to_search_index(broadcaster_name)
         broadcaster = Broadcaster.objects.filter(search_index=broadcaster_search_index).first()
-        # print(broadcaster)
 
         # - - - - - - - - - - - - - - - - - - - - - - - -
         # タイトルから放送局名を除去
@@ -148,19 +116,10 @@ class AirCreateByShareTextView(generic.FormView):
         # findで前から「|」を検索して、それより後ろを取得 → 「| アルコ＆ピース D.C.GARAGE 」
         # 「|」を削除して、前後のスペースを除去 → 「アルコ＆ピース D.C.GARAGE」
         program_name = title[title.find('|'):].replace('|', '').strip()
-        # print(program_name)
 
-        # - - - - - - - - - - - - - - - - - - - - - - - -
-        # 番組情報を取得
-
-        # 半角に変換して大文字は小文字にして検索インデックスの形式に
-        program_search_index = mojimoji.zen_to_han(program_name).lower().replace(' ', '')
-        # print(program_search_index)
-
-        # 番組情報を検索 → これをAirデータに保存
-        # 検索がヒットしない場合は[None]が入ってDBには[null]で保存されるはず
+        # Airに保存する番組情報を取得（検索がヒットしない場合は[None]が入ってDBには[null]で保存されるはず）
+        program_search_index = share_text_to_search_index(program_name)
         program = Program.objects.filter(search_index=program_search_index).first()
-        # print(program)
 
         # - - - - - - - - - - - - - - - - - - - - - - - -
         # 放送開始日時と放送終了日時を作成
@@ -179,7 +138,7 @@ class AirCreateByShareTextView(generic.FormView):
 
         # 半角カンマで分割して日付を作成
         split_title = title.split(',')  # ['2021', '10', '5', '24', '00', '25', '00']
-        title_date = make_aware(datetime.datetime(int(split_title[0]), int(split_title[1]), int(split_title[2])))
+        title_date = new_date(int(split_title[0]), int(split_title[1]), int(split_title[2]))
 
         # 開始時間と終了時間を取得
         started_hour = int(split_title[3])
@@ -189,20 +148,20 @@ class AirCreateByShareTextView(generic.FormView):
 
         # 開始日時と終了日時どちらも24時以降は次の日にして24時間マイナスする
         if started_hour > 23:
-            started = title_date + datetime.timedelta(days=1)
+            started = timedelta_days(title_date, 1)
             started_hour = started_hour - 24
         else:
             started = title_date
 
-        started = make_aware(datetime.datetime(started.year, started.month, started.day, started_hour, started_minute))
+        started = new_datetime(started.year, started.month, started.day, started_hour, started_minute)
 
         if ended_hour > 23:
-            ended = title_date + datetime.timedelta(days=1)
+            ended = timedelta_days(title_date, 1)
             ended_hour = ended_hour - 24
         else:
             ended = title_date
 
-        ended = make_aware(datetime.datetime(ended.year, ended.month, ended.day, ended_hour, ended_minute))
+        ended = new_datetime(ended.year, ended.month, ended.day, ended_hour, ended_minute)
 
         # - - - - - - - - - - - - - - - - - - - - - - - -
         if program_name == None or program_name == '' or started > ended:
@@ -242,45 +201,6 @@ class AirCreateByShareTextView(generic.FormView):
         return HttpResponseRedirect(reverse('airs:detail', args=(saved_air.id,)))
 
 
-@method_decorator(login_required, name='dispatch')  # TODO 本人しか更新できないようにする
-class NanitozoUpdateView(generic.UpdateView):
-    model = Nanitozo
-    fields = ['good', 'comment_open', 'comment_recommend', 'comment', 'comment_negative']
-    template_name = 'airs/nanitozo_update.html'
-
-    def get_success_url(self):
-        return reverse('airs:detail', kwargs={'pk': self.object.air.id})
-
-
-class UsersView(generic.ListView):
-    model = User
-    # ページネーションなしの全件表示でいける想定
-    # 将来的には何卒した日時を保存して降順で表示するなど検討したいが、Djangoのauthでできるかどうか
-
-
-class BroadcastersView(generic.ListView):
-    model = Broadcaster
-    paginate_by = 40
-
-
-class ProgramsView(generic.ListView):
-    model = Program
-    paginate_by = 40
-    # 将来的には登録があった日時を保存して降順で表示するなど検討
-
-
-class UserView(generic.DetailView):
-    model = User
-
-
-class BroadcasterView(generic.DetailView):
-    model = Broadcaster
-
-
-class ProgramView(generic.DetailView):
-    model = Program
-
-
 @method_decorator(login_required, name='dispatch')
 class AirUpdateView(generic.UpdateView):
     model = Air
@@ -291,7 +211,7 @@ class AirUpdateView(generic.UpdateView):
         return reverse('airs:detail', kwargs={'pk': self.kwargs['pk']})
 
 
-class DetailView(generic.DetailView):
+class AirDetailView(generic.DetailView):
     model = Air
 
     def get_context_data(self, **kwargs):
@@ -309,52 +229,3 @@ class DetailView(generic.DetailView):
             context['my_nanitozo'] = my_nanitozo_list[0]
 
         return context
-
-
-class ResultsView(generic.DetailView):
-    model = Air
-    template_name = 'airs/results.html'
-
-
-@login_required
-def nanitozo_create(request, air_id):
-    air = get_object_or_404(Air, pk=air_id)
-    try:
-        air.nanitozo_set.create(user=request.user)
-    except:
-        messages.error(request, '既に何卒してました！')
-        return HttpResponseRedirect(reverse('airs:detail', args=(air.id,)))
-    else:
-        messages.success(request, '何卒！')
-        return HttpResponseRedirect(reverse('airs:detail', args=(air.id,)))
-
-
-@login_required
-def nanitozo_delete(request, air_id, pk):
-    try:
-        Nanitozo.objects.get(pk=pk).delete()
-    except:
-        messages.error(request, '既に何卒を取り消してました！')
-        return HttpResponseRedirect(reverse('airs:detail', args=(air_id,)))
-    else:
-        messages.success(request, '何卒を取り消しました！')
-        return HttpResponseRedirect(reverse('airs:detail', args=(air_id,)))
-
-
-def vote(request, air_id):
-    air = get_object_or_404(Air, pk=air_id)
-    try:
-        selected_nanitozo = air.nanitozo_set.get(pk=request.POST['nanitozo'])
-    except (KeyError, Nanitozo.DoesNotExist):
-        # Redisplay the air voting form.
-        return render(request, 'airs/detail.html', {
-            'air': air,
-            'error_message': "You didn't select a choice.",
-        })
-    else:
-        selected_nanitozo.comment += "追加！"
-        selected_nanitozo.save()
-        # Always return an HttpResponseRedirect after successfully dealing
-        # with POST data. This prevents data from being posted twice if a
-        # user hits the Back button.
-        return HttpResponseRedirect(reverse('airs:results', args=(air.id,)))

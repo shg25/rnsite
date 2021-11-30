@@ -18,7 +18,7 @@ def __is_midnight(dt):  # 0〜4時は深夜（= 1日前にシフト & Hourを[+2
 
 def __timedelta_midnight_date(dt):
     if __is_midnight(dt):
-        dt = dt + datetime.timedelta(days=-1)  # 0〜4時は日付を[-1日]で表示する
+        dt = timedelta_days(dt, -1)  # 0〜4時は日付を[-1日]で表示する
     return dt
 
 
@@ -61,7 +61,7 @@ def output_radiko_link(dt, broadcaster_share_id):
 
 def output_radiko_link_next_week(dt, broadcaster_share_id):
     dt_tokyo = dt.astimezone(pytztimezone('Asia/Tokyo'))  # タイムゾーンを日本時間にする
-    dt_tokyo = dt_tokyo + datetime.timedelta(days=+7)
+    dt_tokyo = timedelta_days(dt_tokyo, 7)
     return __create_radiko_link(dt_tokyo, broadcaster_share_id)
 
 
@@ -73,18 +73,37 @@ def __create_radiko_link(dt_tokyo, broadcaster_share_id):
 
 
 def this_week_started():
-    now = datetime.datetime.now()
+    now = __datetime_now()
     if __is_midnight(now):
-        dt = now + datetime.timedelta(days=-8)
+        dt = timedelta_days(now, -8)
     else:
-        dt = now + datetime.timedelta(days=-7)
-    return make_aware(datetime.datetime(dt.year, dt.month, dt.day, 5, 0, 0, 0))
+        dt = timedelta_days(now, -7)
+    return new_datetime(dt.year, dt.month, dt.day, 5, 0)
 
 
 def last_week_started():
-    now = datetime.datetime.now()
+    now = __datetime_now()
     if __is_midnight(now):
-        dt = now + datetime.timedelta(days=-15)
+        dt = timedelta_days(now, -15)
     else:
-        dt = now + datetime.timedelta(days=-14)
-    return make_aware(datetime.datetime(dt.year, dt.month, dt.day, 5, 0, 0, 0))
+        dt = timedelta_days(now, -14)
+    return new_datetime(dt.year, dt.month, dt.day, 5, 0)
+
+
+#
+# import datetime 関連の処理
+
+def __datetime_now():
+    return datetime.datetime.now()
+
+
+def new_datetime(year, month, day, hour, minute):
+    return make_aware(datetime.datetime(year, month, day, hour, minute))
+
+
+def new_date(year, month, day):
+    return make_aware(datetime.datetime(year, month, day))
+
+
+def timedelta_days(dt, delta_days):
+    return dt + datetime.timedelta(days=delta_days)

@@ -1,6 +1,6 @@
 from django import template
 
-from common.util.rn_datetime_output import *
+from common.util.datetime_extensions import *
 
 register = template.Library()
 
