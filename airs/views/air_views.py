@@ -1,15 +1,12 @@
-import datetime
-
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 from django.views import generic
-from django.utils.timezone import make_aware
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import UserPassesTestMixin
 from django.utils.decorators import method_decorator
 
-from common.util.datetime_extensions import this_week_started, last_week_started
+from common.util.datetime_extensions import this_week_started, last_week_started, new_datetime, new_date, timedelta_days
 from common.util.url_extensions import scraping_title
 from common.util.string_extensions import find_urls, share_text_to_search_index
 
@@ -141,7 +138,7 @@ class AirCreateByShareTextView(generic.FormView):
 
         # 半角カンマで分割して日付を作成
         split_title = title.split(',')  # ['2021', '10', '5', '24', '00', '25', '00']
-        title_date = make_aware(datetime.datetime(int(split_title[0]), int(split_title[1]), int(split_title[2])))
+        title_date = new_date(int(split_title[0]), int(split_title[1]), int(split_title[2]))
 
         # 開始時間と終了時間を取得
         started_hour = int(split_title[3])
@@ -151,20 +148,20 @@ class AirCreateByShareTextView(generic.FormView):
 
         # 開始日時と終了日時どちらも24時以降は次の日にして24時間マイナスする
         if started_hour > 23:
-            started = title_date + datetime.timedelta(days=1)
+            started = timedelta_days(title_date, 1)
             started_hour = started_hour - 24
         else:
             started = title_date
 
-        started = make_aware(datetime.datetime(started.year, started.month, started.day, started_hour, started_minute))
+        started = new_datetime(started.year, started.month, started.day, started_hour, started_minute)
 
         if ended_hour > 23:
-            ended = title_date + datetime.timedelta(days=1)
+            ended = timedelta_days(title_date, 1)
             ended_hour = ended_hour - 24
         else:
             ended = title_date
 
-        ended = make_aware(datetime.datetime(ended.year, ended.month, ended.day, ended_hour, ended_minute))
+        ended = new_datetime(ended.year, ended.month, ended.day, ended_hour, ended_minute)
 
         # - - - - - - - - - - - - - - - - - - - - - - - -
         if program_name == None or program_name == '' or started > ended:
