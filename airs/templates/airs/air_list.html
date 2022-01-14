@@ -7,7 +7,7 @@
 
 {% block content %}
 <ul class="uk-tab" data-uk-tab="{connect:'#tab-contents'}">
-    <li><a href="">今週<small> {{ air_list|length }}</small></a></li>
+    <li><a href="">今週<small> {{ this_week_list|length }}</small></a></li>
     <li><a href="">先週<small> {{ last_week_list|length }}</small></a></li>
 
     {% comment %} # TODO オススメ放送取得（2/3） {% endcomment %}
@@ -17,8 +17,8 @@
 <article id="tab-contents" class="uk-switcher rn-padding">
     {% comment %} タブ1 {% endcomment %}
     <div>
-        {% if air_list %}
-        {% regroup air_list by started|rn_regroup_date as airs %}
+        {% if this_week_list %}
+        {% regroup this_week_list by started|rn_regroup_date as airs %}
 
         {% for started, local_airs in airs %}
         {% include 'base/lead.html' with title=started|rn_regrouped_date_weekday caption=started|rn_regrouped_date_md %}

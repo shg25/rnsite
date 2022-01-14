@@ -26,10 +26,12 @@ def login_required_only_general_member():
 
 class AirListView(generic.ListView):
     model = Air
-    queryset = Air.objects.filter(started__gte=this_week_started()).order_by('-started')
+    # queryset = Air.objects.filter(started__gte=this_week_started()).order_by('-started') # これを使えばviewではair_listで取得できるがなぜかキャッシュらしきものが残るので一旦使わない
 
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args, **kwargs)
+        this_week_list = Air.objects.filter(started__gte=this_week_started()).order_by('-started')
+        context['this_week_list'] = this_week_list
         last_week_list = Air.objects.filter(started__range=(last_week_started(), this_week_started())).order_by('-started')
         context['last_week_list'] = last_week_list
 
