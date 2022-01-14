@@ -25,16 +25,16 @@
 
     <form method="post" action="{% url 'login' %}">{% csrf_token %}
         <div class="uk-margin-bottom">
-            <div class="uk-margin-small-bottom uk-text-small">{{ form.username.label_tag }}</div>
+            <div class="uk-margin-small-bottom uk-text-small">ログインID{% comment %}{{ form.username.label_tag }}{% endcomment %}</div>
             {{ form.username|add_class:"uk-input" }}
         </div>
 
         <div class="uk-margin-large-bottom">
-            <div class="uk-margin-small-bottom uk-text-small">{{ form.password.label_tag }}</div>
+            <div class="uk-margin-small-bottom uk-text-small">パスワード{% comment %}{{ form.password.label_tag }}{% endcomment %}</div>
             {{ form.password|add_class:"uk-input" }}
         </div>
 
-        <input type="submit" value="login" class="uk-button uk-button-primary uk-width-1-1 uk-margin-small-bottom">
+        <input type="submit" value="ログイン" class="uk-button uk-button-primary uk-width-1-1 uk-margin-small-bottom">
         <input type="hidden" name="next" value="{{ next }}">
     </form>
 
