@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'widget_tweaks',
     'airs.templatetags.air_nanitozo',
     'airs.templatetags.rn_datetime',
+    'django_extensions',
 ]
 
 MIDDLEWARE = [
