@@ -4,7 +4,7 @@
   "fields": {
     "share_id": "TBS",
     "name": "TBSラジオ",
-    "abbreviation": "TBSラジオ",
+    "abbreviation": "TBS",
     "search_index": "tbsﾗｼﾞｵ",
     "site_url": "https://www.tbsradio.jp/",
     "wikipedia_url": "https://ja.wikipedia.org/wiki/TBS%E3%83%A9%E3%82%B8%E3%82%AA",
@@ -60,7 +60,7 @@
   "fields": {
     "share_id": "CRT",
     "name": "CRT栃木放送",
-    "abbreviation": "CRT栃木放送",
+    "abbreviation": "CRT",
     "search_index": "crt栃木放送",
     "site_url": "http://www.crt-radio.co.jp/",
     "wikipedia_url": "https://ja.wikipedia.org/wiki/%E6%A0%83%E6%9C%A8%E6%94%BE%E9%80%81",
@@ -88,7 +88,7 @@
   "fields": {
     "share_id": "ABC",
     "name": "ABCラジオ",
-    "abbreviation": "ABCラジオ",
+    "abbreviation": "ABC",
     "search_index": "abcﾗｼﾞｵ",
     "site_url": "https://www.abc1008.com/",
     "wikipedia_url": "https://ja.wikipedia.org/wiki/%E6%9C%9D%E6%97%A5%E6%94%BE%E9%80%81%E3%83%A9%E3%82%B8%E3%82%AA",
@@ -102,7 +102,7 @@
   "fields": {
     "share_id": "MBS",
     "name": "MBSラジオ",
-    "abbreviation": "MBSラジオ",
+    "abbreviation": "MBS",
     "search_index": "mbsﾗｼﾞｵ",
     "site_url": "https://www.mbs1179.com/",
     "wikipedia_url": "https://ja.wikipedia.org/wiki/MBS%E3%83%A9%E3%82%B8%E3%82%AA",
@@ -158,7 +158,7 @@
   "fields": {
     "share_id": "WBS",
     "name": "wbs和歌山放送",
-    "abbreviation": "wbs和歌山放送",
+    "abbreviation": "wbs",
     "search_index": "wbs和歌山放送",
     "site_url": "https://www.wbs.co.jp/",
     "wikipedia_url": "https://ja.wikipedia.org/wiki/%E5%92%8C%E6%AD%8C%E5%B1%B1%E6%94%BE%E9%80%81",
@@ -172,7 +172,7 @@
   "fields": {
     "share_id": "CBC",
     "name": "CBCラジオ",
-    "abbreviation": "CBCラジオ",
+    "abbreviation": "CBC",
     "search_index": "cbcﾗｼﾞｵ",
     "site_url": "https://hicbc.com/radio/",
     "wikipedia_url": "https://ja.wikipedia.org/wiki/CBC%E3%83%A9%E3%82%B8%E3%82%AA",
@@ -214,7 +214,7 @@
   "fields": {
     "share_id": "HBC",
     "name": "HBCラジオ",
-    "abbreviation": "HBCラジオ",
+    "abbreviation": "HBC",
     "search_index": "hbcﾗｼﾞｵ",
     "site_url": "https://www.hbc.co.jp/radio/",
     "wikipedia_url": "https://ja.wikipedia.org/wiki/HBC%E3%83%A9%E3%82%B8%E3%82%AA",
@@ -228,7 +228,7 @@
   "fields": {
     "share_id": "STV",
     "name": "STVラジオ",
-    "abbreviation": "STVラジオ",
+    "abbreviation": "STV",
     "search_index": "stvﾗｼﾞｵ",
     "site_url": "https://www.stv.jp/radio/index.html",
     "wikipedia_url": "https://ja.wikipedia.org/wiki/STV%E3%83%A9%E3%82%B8%E3%82%AA",
@@ -242,7 +242,7 @@
   "fields": {
     "share_id": "RAB",
     "name": "RAB青森放送",
-    "abbreviation": "RAB青森放送",
+    "abbreviation": "RAB",
     "search_index": "rab青森放送",
     "site_url": "https://www.rab.co.jp/",
     "wikipedia_url": "https://ja.wikipedia.org/wiki/%E9%9D%92%E6%A3%AE%E6%94%BE%E9%80%81",
@@ -256,7 +256,7 @@
   "fields": {
     "share_id": "ABS",
     "name": "ABS秋田放送",
-    "abbreviation": "ABS秋田放送",
+    "abbreviation": "ABS",
     "search_index": "abs秋田放送",
     "site_url": "https://www.akita-abs.co.jp/",
     "wikipedia_url": "https://ja.wikipedia.org/wiki/%E7%A7%8B%E7%94%B0%E6%94%BE%E9%80%81",
@@ -270,7 +270,7 @@
   "fields": {
     "share_id": "IBC",
     "name": "IBCラジオ",
-    "abbreviation": "IBCラジオ",
+    "abbreviation": "IBC",
     "search_index": "ibcﾗｼﾞｵ",
     "site_url": "https://www.ibc.co.jp/radio/",
     "wikipedia_url": "https://ja.wikipedia.org/wiki/IBC%E5%B2%A9%E6%89%8B%E6%94%BE%E9%80%81",
@@ -284,7 +284,7 @@
   "fields": {
     "share_id": "TBC",
     "name": "TBCラジオ",
-    "abbreviation": "TBCラジオ",
+    "abbreviation": "TBC",
     "search_index": "tbcﾗｼﾞｵ",
     "site_url": "http://www.tbc-sendai.co.jp/02radio/",
     "wikipedia_url": "https://ja.wikipedia.org/wiki/%E6%9D%B1%E5%8C%97%E6%94%BE%E9%80%81",
@@ -298,7 +298,7 @@
   "fields": {
     "share_id": "YBC",
     "name": "YBC山形放送",
-    "abbreviation": "YBC山形放送",
+    "abbreviation": "YBC",
     "search_index": "ybc山形放送",
     "site_url": "http://www.ybc.co.jp/",
     "wikipedia_url": "https://ja.wikipedia.org/wiki/%E5%B1%B1%E5%BD%A2%E6%94%BE%E9%80%81",
@@ -312,7 +312,7 @@
   "fields": {
     "share_id": "RFC",
     "name": "RFCラジオ福島",
-    "abbreviation": "RFCラジオ",
+    "abbreviation": "RFC",
     "search_index": "rfcﾗｼﾞｵ福島",
     "site_url": "http://www.rfc.jp/",
     "wikipedia_url": "https://ja.wikipedia.org/wiki/%E3%83%A9%E3%82%B8%E3%82%AA%E7%A6%8F%E5%B3%B6",
@@ -326,7 +326,7 @@
   "fields": {
     "share_id": "BSN",
     "name": "BSNラジオ",
-    "abbreviation": "BSNラジオ",
+    "abbreviation": "BSN",
     "search_index": "bsnﾗｼﾞｵ",
     "site_url": "https://www.ohbsn.com/radio/",
     "wikipedia_url": "https://ja.wikipedia.org/wiki/%E6%96%B0%E6%BD%9F%E6%94%BE%E9%80%81",
@@ -340,7 +340,7 @@
   "fields": {
     "share_id": "SBC",
     "name": "SBCラジオ",
-    "abbreviation": "SBCラジオ",
+    "abbreviation": "SBC",
     "search_index": "sbcﾗｼﾞｵ",
     "site_url": "https://sbc21.co.jp/blogwp/radio/",
     "wikipedia_url": "https://ja.wikipedia.org/wiki/%E4%BF%A1%E8%B6%8A%E6%94%BE%E9%80%81",
@@ -354,7 +354,7 @@
   "fields": {
     "share_id": "YBS",
     "name": "YBSラジオ",
-    "abbreviation": "YBSラジオ",
+    "abbreviation": "YBS",
     "search_index": "ybsﾗｼﾞｵ",
     "site_url": "https://www.ybs.jp/timetable/radio/",
     "wikipedia_url": "https://ja.wikipedia.org/wiki/%E5%B1%B1%E6%A2%A8%E6%94%BE%E9%80%81",
@@ -368,7 +368,7 @@
   "fields": {
     "share_id": "SBS",
     "name": "SBSラジオ",
-    "abbreviation": "SBSラジオ",
+    "abbreviation": "SBS",
     "search_index": "sbsﾗｼﾞｵ",
     "site_url": "https://www.at-s.com/sbsradio/index.html",
     "wikipedia_url": "https://ja.wikipedia.org/wiki/%E9%9D%99%E5%B2%A1%E6%94%BE%E9%80%81",
@@ -382,7 +382,7 @@
   "fields": {
     "share_id": "KNB",
     "name": "KNBラジオ",
-    "abbreviation": "KNBラジオ",
+    "abbreviation": "KNB",
     "search_index": "knbﾗｼﾞｵ",
     "site_url": "https://www.knb.ne.jp/radio/",
     "wikipedia_url": "https://ja.wikipedia.org/wiki/%E5%8C%97%E6%97%A5%E6%9C%AC%E6%94%BE%E9%80%81",
@@ -396,7 +396,7 @@
   "fields": {
     "share_id": "MRO",
     "name": "MROラジオ",
-    "abbreviation": "MROラジオ",
+    "abbreviation": "MRO",
     "search_index": "mroﾗｼﾞｵ",
     "site_url": "https://www.mro.co.jp/radio/",
     "wikipedia_url": "https://ja.wikipedia.org/wiki/%E5%8C%97%E9%99%B8%E6%94%BE%E9%80%81",
@@ -410,7 +410,7 @@
   "fields": {
     "share_id": "FBC",
     "name": "FBCラジオ",
-    "abbreviation": "FBCラジオ",
+    "abbreviation": "FBC",
     "search_index": "fbcﾗｼﾞｵ",
     "site_url": "https://www.fbc.jp/radio/",
     "wikipedia_url": "https://ja.wikipedia.org/wiki/%E7%A6%8F%E4%BA%95%E6%94%BE%E9%80%81",
@@ -424,7 +424,7 @@
   "fields": {
     "share_id": "BSS",
     "name": "BSSラジオ",
-    "abbreviation": "BSSラジオ",
+    "abbreviation": "BSS",
     "search_index": "bssﾗｼﾞｵ",
     "site_url": "https://www.bss.jp/radio/",
     "wikipedia_url": "https://ja.wikipedia.org/wiki/%E5%B1%B1%E9%99%B0%E6%94%BE%E9%80%81",
@@ -438,7 +438,7 @@
   "fields": {
     "share_id": "RSK",
     "name": "RSKラジオ",
-    "abbreviation": "RSKラジオ",
+    "abbreviation": "RSK",
     "search_index": "rskﾗｼﾞｵ",
     "site_url": "https://www.rsk.co.jp/radio/",
     "wikipedia_url": "https://ja.wikipedia.org/wiki/RSK%E3%83%A9%E3%82%B8%E3%82%AA",
@@ -452,7 +452,7 @@
   "fields": {
     "share_id": "RCC",
     "name": "RCCラジオ",
-    "abbreviation": "RCCラジオ",
+    "abbreviation": "RCC",
     "search_index": "rccﾗｼﾞｵ",
     "site_url": "https://radio.rcc.jp/",
     "wikipedia_url": "https://ja.wikipedia.org/wiki/%E4%B8%AD%E5%9B%BD%E6%94%BE%E9%80%81",
@@ -466,7 +466,7 @@
   "fields": {
     "share_id": "KRY",
     "name": "KRY山口放送",
-    "abbreviation": "KRY山口放送",
+    "abbreviation": "KRY",
     "search_index": "kry山口放送",
     "site_url": "https://kry.co.jp/",
     "wikipedia_url": "https://ja.wikipedia.org/wiki/%E5%B1%B1%E5%8F%A3%E6%94%BE%E9%80%81",
@@ -480,7 +480,7 @@
   "fields": {
     "share_id": "RNC",
     "name": "RNC西日本放送",
-    "abbreviation": "RNC西日本放送",
+    "abbreviation": "RNC",
     "search_index": "rnc西日本放送",
     "site_url": "https://www.rnc.co.jp/",
     "wikipedia_url": "https://ja.wikipedia.org/wiki/%E8%A5%BF%E6%97%A5%E6%9C%AC%E6%94%BE%E9%80%81%E3%83%A9%E3%82%B8%E3%82%AA",
@@ -494,7 +494,7 @@
   "fields": {
     "share_id": "JRT",
     "name": "JRT四国放送",
-    "abbreviation": "JRT四国放送",
+    "abbreviation": "JRT",
     "search_index": "jrt四国放送",
     "site_url": "https://www.jrt.co.jp/",
     "wikipedia_url": "https://ja.wikipedia.org/wiki/%E5%9B%9B%E5%9B%BD%E6%94%BE%E9%80%81",
@@ -508,7 +508,7 @@
   "fields": {
     "share_id": "RNB",
     "name": "RNB南海放送",
-    "abbreviation": "RNB南海放送",
+    "abbreviation": "RNB",
     "search_index": "rnb南海放送",
     "site_url": "https://www.rnb.co.jp/",
     "wikipedia_url": "https://ja.wikipedia.org/wiki/%E5%8D%97%E6%B5%B7%E6%94%BE%E9%80%81",
@@ -522,7 +522,7 @@
   "fields": {
     "share_id": "RKC",
     "name": "RKC高知放送",
-    "abbreviation": "RKC高知放送",
+    "abbreviation": "RKC",
     "search_index": "rkc高知放送",
     "site_url": "http://www.rkc-kochi.co.jp/",
     "wikipedia_url": "https://ja.wikipedia.org/wiki/%E9%AB%98%E7%9F%A5%E6%94%BE%E9%80%81",
@@ -536,7 +536,7 @@
   "fields": {
     "share_id": "RKB",
     "name": "RKBラジオ",
-    "abbreviation": "RKBラジオ",
+    "abbreviation": "RKB",
     "search_index": "rkbﾗｼﾞｵ",
     "site_url": "https://rkb.jp/radio_top/",
     "wikipedia_url": "https://ja.wikipedia.org/wiki/RKB%E3%83%A9%E3%82%B8%E3%82%AA",
@@ -550,7 +550,7 @@
   "fields": {
     "share_id": "KBC",
     "name": "KBCラジオ",
-    "abbreviation": "KBCラジオ",
+    "abbreviation": "KBC",
     "search_index": "kbcﾗｼﾞｵ",
     "site_url": "https://kbc.co.jp/radio/",
     "wikipedia_url": "https://ja.wikipedia.org/wiki/KBC%E3%83%A9%E3%82%B8%E3%82%AA",
@@ -564,7 +564,7 @@
   "fields": {
     "share_id": "NBC",
     "name": "NBC長崎放送",
-    "abbreviation": "NBC長崎放送",
+    "abbreviation": "NBC",
     "search_index": "nbc長崎放送",
     "site_url": "https://www.nbc-nagasaki.co.jp/",
     "wikipedia_url": "https://ja.wikipedia.org/wiki/%E9%95%B7%E5%B4%8E%E6%94%BE%E9%80%81",
@@ -578,7 +578,7 @@
   "fields": {
     "share_id": "OBS",
     "name": "OBSラジオ",
-    "abbreviation": "OBSラジオ",
+    "abbreviation": "OBS",
     "search_index": "obsﾗｼﾞｵ",
     "site_url": "https://1098.am/",
     "wikipedia_url": "https://ja.wikipedia.org/wiki/%E5%A4%A7%E5%88%86%E6%94%BE%E9%80%81",
@@ -592,7 +592,7 @@
   "fields": {
     "share_id": "RKK",
     "name": "RKKラジオ",
-    "abbreviation": "RKKラジオ",
+    "abbreviation": "RKK",
     "search_index": "rkkﾗｼﾞｵ",
     "site_url": "https://rkk.jp/radio/",
     "wikipedia_url": "https://ja.wikipedia.org/wiki/%E7%86%8A%E6%9C%AC%E6%94%BE%E9%80%81",
@@ -606,7 +606,7 @@
   "fields": {
     "share_id": "MRT",
     "name": "宮崎放送",
-    "abbreviation": "宮崎放送",
+    "abbreviation": "MRT",
     "search_index": "宮崎放送",
     "site_url": "http://mrt.jp/special/crisis_rain/",
     "wikipedia_url": "https://ja.wikipedia.org/wiki/%E5%AE%AE%E5%B4%8E%E6%94%BE%E9%80%81",
@@ -620,7 +620,7 @@
   "fields": {
     "share_id": "MBC",
     "name": "MBCラジオ",
-    "abbreviation": "MBCラジオ",
+    "abbreviation": "MBC",
     "search_index": "mbcﾗｼﾞｵ",
     "site_url": "https://www.mbc.co.jp/radio/",
     "wikipedia_url": "https://ja.wikipedia.org/wiki/%E5%8D%97%E6%97%A5%E6%9C%AC%E6%94%BE%E9%80%81",
@@ -634,7 +634,7 @@
   "fields": {
     "share_id": "RBC",
     "name": "RBCiラジオ",
-    "abbreviation": "RBCiラジオ",
+    "abbreviation": "RBC",
     "search_index": "rbciﾗｼﾞｵ",
     "site_url": "https://www.rbc.co.jp/radio_top/",
     "wikipedia_url": "https://ja.wikipedia.org/wiki/%E7%90%89%E7%90%83%E6%94%BE%E9%80%81",
@@ -648,7 +648,7 @@
   "fields": {
     "share_id": "ROK",
     "name": "ラジオ沖縄",
-    "abbreviation": "ラジオ沖縄",
+    "abbreviation": "ROK",
     "search_index": "ﾗｼﾞｵ沖縄",
     "site_url": "https://www.rokinawa.co.jp/",
     "wikipedia_url": "https://ja.wikipedia.org/wiki/%E3%83%A9%E3%82%B8%E3%82%AA%E6%B2%96%E7%B8%84",
@@ -704,7 +704,7 @@
   "fields": {
     "share_id": "YFM",
     "name": "FMヨコハマ",
-    "abbreviation": "FMヨコハマ",
+    "abbreviation": "エフヨコ",
     "search_index": "fmﾖｺﾊﾏ",
     "site_url": "https://www.fmyokohama.co.jp/",
     "wikipedia_url": "https://ja.wikipedia.org/wiki/%E6%A8%AA%E6%B5%9C%E3%82%A8%E3%83%95%E3%82%A8%E3%83%A0%E6%94%BE%E9%80%81",
@@ -760,7 +760,7 @@
   "fields": {
     "share_id": "FMGUNMA",
     "name": "FM GUNMA",
-    "abbreviation": "FM GUNMA",
+    "abbreviation": "FM群馬",
     "search_index": "fmgunma",
     "site_url": "https://www.fmgunma.com/fmg863/",
     "wikipedia_url": "https://ja.wikipedia.org/wiki/%E3%82%A8%E3%83%95%E3%82%A8%E3%83%A0%E7%BE%A4%E9%A6%AC",
@@ -830,7 +830,7 @@
   "fields": {
     "share_id": "KISSFMKOBE",
     "name": "Kiss FM KOBE",
-    "abbreviation": "Kiss FM KOBE",
+    "abbreviation": "Kiss FM",
     "search_index": "kissfmkobe",
     "site_url": "https://www.kiss-fm.co.jp/",
     "wikipedia_url": "https://ja.wikipedia.org/wiki/%E5%85%B5%E5%BA%AB%E3%82%A8%E3%83%95%E3%82%A8%E3%83%A0%E6%94%BE%E9%80%81",
@@ -1026,7 +1026,7 @@
   "fields": {
     "share_id": "FMNIIGATA",
     "name": "FM NIIGATA",
-    "abbreviation": "FM NIIGATA",
+    "abbreviation": "FM新潟",
     "search_index": "fmniigata",
     "site_url": "https://www.fmniigata.com/",
     "wikipedia_url": "https://ja.wikipedia.org/wiki/%E3%82%A8%E3%83%95%E3%82%A8%E3%83%A0%E3%83%A9%E3%82%B8%E3%82%AA%E6%96%B0%E6%BD%9F",
@@ -1236,7 +1236,7 @@
   "fields": {
     "share_id": "FMFUKUOKA",
     "name": "FM FUKUOKA",
-    "abbreviation": "FM FUKUOKA",
+    "abbreviation": "FM福岡",
     "search_index": "fmfukuoka",
     "site_url": "https://fmfukuoka.co.jp/",
     "wikipedia_url": "https://ja.wikipedia.org/wiki/%E3%82%A8%E3%83%95%E3%82%A8%E3%83%A0%E7%A6%8F%E5%B2%A1",
@@ -1376,7 +1376,7 @@
   "fields": {
     "share_id": "RN1",
     "name": "ラジオNIKKEI第1",
-    "abbreviation": "ラジオNIKKEI第1",
+    "abbreviation": "NIKKEI 第1",
     "search_index": "ﾗｼﾞｵnikkei第1",
     "site_url": "http://www.radionikkei.jp/",
     "wikipedia_url": "https://ja.wikipedia.org/wiki/%E6%97%A5%E7%B5%8C%E3%83%A9%E3%82%B8%E3%82%AA%E7%A4%BE",
@@ -1390,7 +1390,7 @@
   "fields": {
     "share_id": "RN2",
     "name": "ラジオNIKKEI第2",
-    "abbreviation": "ラジオNIKKEI第2",
+    "abbreviation": "NIKKEI 第2",
     "search_index": "ﾗｼﾞｵnikkei第2",
     "site_url": "http://www.radionikkei.jp/",
     "wikipedia_url": "https://ja.wikipedia.org/wiki/%E6%97%A5%E7%B5%8C%E3%83%A9%E3%82%B8%E3%82%AA%E7%A4%BE",
@@ -1404,7 +1404,7 @@
   "fields": {
     "share_id": "JOAK",
     "name": "NHKラジオ第1（東京）",
-    "abbreviation": "NHKラジオ第1（東京）",
+    "abbreviation": "NHK 第1",
     "search_index": "nhkﾗｼﾞｵ第1(東京)",
     "site_url": "https://www.nhk.or.jp/radio/",
     "wikipedia_url": "https://ja.wikipedia.org/wiki/NHK%E3%83%A9%E3%82%B8%E3%82%AA%E7%AC%AC1%E6%94%BE%E9%80%81",
@@ -1418,7 +1418,7 @@
   "fields": {
     "share_id": "JOAK-FM",
     "name": "NHK-FM（東京）",
-    "abbreviation": "NHK-FM（東京）",
+    "abbreviation": "NHK FM",
     "search_index": "nhk-fm(東京)",
     "site_url": "https://www.nhk.or.jp/radio/",
     "wikipedia_url": "https://ja.wikipedia.org/wiki/NHK-FM%E6%94%BE%E9%80%81",
