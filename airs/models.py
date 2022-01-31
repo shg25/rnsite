@@ -32,10 +32,9 @@ class Broadcaster(models.Model):
         max_length=20,
         help_text='一覧に表示するための表記'
     )
-    search_index = models.CharField(
-        verbose_name='検索インデックス',
+    formatted_name = models.TextField(
+        verbose_name='整形した名前',
         null=True, blank=True,
-        max_length=400,
     )
     site_url = models.CharField(
         verbose_name='サイトURL',
@@ -72,10 +71,9 @@ class Program(models.Model):
         unique=True,
         max_length=200,
     )
-    search_index = models.CharField(
-        verbose_name='検索インデックス',
+    formatted_name = models.TextField(
+        verbose_name='整形した名前',
         null=True, blank=True,
-        max_length=400,
     )
     hashtag = models.CharField(
         verbose_name='ハッシュタグ',

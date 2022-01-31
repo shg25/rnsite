@@ -3,7 +3,7 @@
   "pk": 1,
   "fields": {
     "name": "アルコ&ピースのオールナイトニッポン",
-    "search_index": "ｱﾙｺ&ﾋﾟｰｽのｵｰﾙﾅｲﾄﾆｯﾎﾟﾝ",
+    "formatted_name": "ｱﾙｺ&ﾋﾟｰｽのｵｰﾙﾅｲﾄﾆｯﾎﾟﾝ",
     "hashtag": "アルピーann",
     "twitter_id": "",
     "site_url": "http://www.allnightnippon.com/program/ap/",
@@ -16,7 +16,7 @@
   "pk": 2,
   "fields": {
     "name": "アルコ&ピース D.C.GARAGE",
-    "search_index": "ｱﾙｺ&ﾋﾟｰｽd.c.garage",
+    "formatted_name": "ｱﾙｺ&ﾋﾟｰｽd.c.garage",
     "hashtag": "アルピーdcg",
     "twitter_id": "dcg_tbsr",
     "site_url": "https://www.tbsradio.jp/dcg/",
@@ -29,7 +29,7 @@
   "pk": 3,
   "fields": {
     "name": "うしろシティ 星のギガボディ",
-    "search_index": "うしろｼﾃｨ星のｷﾞｶﾞﾎﾞﾃﾞｨ",
+    "formatted_name": "うしろｼﾃｨ星のｷﾞｶﾞﾎﾞﾃﾞｨ",
     "hashtag": "星のギガボディ",
     "twitter_id": "",
     "site_url": "http://www.tbsradio.jp/giga/",
@@ -42,7 +42,7 @@
   "pk": 4,
   "fields": {
     "name": "ハライチのターン！",
-    "search_index": "ﾊﾗｲﾁのﾀｰﾝ!",
+    "formatted_name": "ﾊﾗｲﾁのﾀｰﾝ!",
     "hashtag": "ハライチのターン",
     "twitter_id": "tbsr_ht",
     "site_url": "https://www.tbsradio.jp/ht/",
@@ -55,7 +55,7 @@
   "pk": 5,
   "fields": {
     "name": "菅田将暉のオールナイトニッポン",
-    "search_index": "菅田将暉のｵｰﾙﾅｲﾄﾆｯﾎﾟﾝ",
+    "formatted_name": "菅田将暉のｵｰﾙﾅｲﾄﾆｯﾎﾟﾝ",
     "hashtag": "菅田将暉ANN",
     "twitter_id": "AnnSudamasaki",
     "site_url": "",
@@ -68,7 +68,7 @@
   "pk": 6,
   "fields": {
     "name": "星野源のオールナイトニッポン",
-    "search_index": "星野源のｵｰﾙﾅｲﾄﾆｯﾎﾟﾝ",
+    "formatted_name": "星野源のｵｰﾙﾅｲﾄﾆｯﾎﾟﾝ",
     "hashtag": "星野源ANN",
     "twitter_id": "",
     "site_url": "",
@@ -81,7 +81,7 @@
   "pk": 7,
   "fields": {
     "name": "乃木坂46のオールナイトニッポン",
-    "search_index": "乃木坂46のｵｰﾙﾅｲﾄﾆｯﾎﾟﾝ",
+    "formatted_name": "乃木坂46のｵｰﾙﾅｲﾄﾆｯﾎﾟﾝ",
     "hashtag": "乃木坂46ANN",
     "twitter_id": "NOGI46ann",
     "site_url": "",
@@ -94,7 +94,7 @@
   "pk": 8,
   "fields": {
     "name": "ナインティナインのオールナイトニッポン",
-    "search_index": "ﾅｲﾝﾃｨﾅｲﾝのｵｰﾙﾅｲﾄﾆｯﾎﾟﾝ",
+    "formatted_name": "ﾅｲﾝﾃｨﾅｲﾝのｵｰﾙﾅｲﾄﾆｯﾎﾟﾝ",
     "hashtag": "ナインティナインANN",
     "twitter_id": "NinetyNineANN",
     "site_url": "",
@@ -107,7 +107,7 @@
   "pk": 9,
   "fields": {
     "name": "三四郎のオールナイトニッポン0",
-    "search_index": "三四郎のｵｰﾙﾅｲﾄﾆｯﾎﾟﾝ0(zero)",
+    "formatted_name": "三四郎のｵｰﾙﾅｲﾄﾆｯﾎﾟﾝ0(zero)",
     "hashtag": "三四郎ANN0",
     "twitter_id": "SanshiroANN",
     "site_url": "",
@@ -120,7 +120,7 @@
   "pk": 10,
   "fields": {
     "name": "オードリーのオールナイトニッポン",
-    "search_index": "ｵｰﾄﾞﾘｰのｵｰﾙﾅｲﾄﾆｯﾎﾟﾝ",
+    "formatted_name": "ｵｰﾄﾞﾘｰのｵｰﾙﾅｲﾄﾆｯﾎﾟﾝ",
     "hashtag": "annkw",
     "twitter_id": "annkw5tyb",
     "site_url": "https://www.allnightnippon.com/kw/",
@@ -133,7 +133,7 @@
   "pk": 11,
   "fields": {
     "name": "ファーストサマーウイカのオールナイトニッポン0",
-    "search_index": "ﾌｧｰｽﾄｻﾏｰｳｲｶのｵｰﾙﾅｲﾄﾆｯﾎﾟﾝ0(zero)",
+    "formatted_name": "ﾌｧｰｽﾄｻﾏｰｳｲｶのｵｰﾙﾅｲﾄﾆｯﾎﾟﾝ0(zero)",
     "hashtag": "ウイカANN0",
     "twitter_id": "fsuann0",
     "site_url": "",
@@ -146,7 +146,7 @@
   "pk": 12,
   "fields": {
     "name": "Creepy Nutsのオールナイトニッポン0",
-    "search_index": "creepynutsのｵｰﾙﾅｲﾄﾆｯﾎﾟﾝ0(zero)",
+    "formatted_name": "creepynutsのｵｰﾙﾅｲﾄﾆｯﾎﾟﾝ0(zero)",
     "hashtag": "cnann0",
     "twitter_id": "cnann0",
     "site_url": "",
@@ -159,7 +159,7 @@
   "pk": 13,
   "fields": {
     "name": "佐久間宣行のオールナイトニッポン0",
-    "search_index": "佐久間宣行のｵｰﾙﾅｲﾄﾆｯﾎﾟﾝ0(zero)",
+    "formatted_name": "佐久間宣行のｵｰﾙﾅｲﾄﾆｯﾎﾟﾝ0(zero)",
     "hashtag": "佐久間宣行ANN0",
     "twitter_id": "SakumaANN0",
     "site_url": "",
@@ -172,7 +172,7 @@
   "pk": 14,
   "fields": {
     "name": "水溜りボンドのオールナイトニッポン0",
-    "search_index": "水溜りﾎﾞﾝﾄﾞ･ｶﾝﾀのｵｰﾙﾅｲﾄﾆｯﾎﾟﾝ0(zero),水溜りﾎﾞﾝﾄﾞのｵｰﾙﾅｲﾄﾆｯﾎﾟﾝ0(zero)",
+    "formatted_name": "水溜りﾎﾞﾝﾄﾞ･ｶﾝﾀのｵｰﾙﾅｲﾄﾆｯﾎﾟﾝ0(zero),水溜りﾎﾞﾝﾄﾞのｵｰﾙﾅｲﾄﾆｯﾎﾟﾝ0(zero)",
     "hashtag": "水溜りボンドANN0",
     "twitter_id": "mizuann0",
     "site_url": "",
@@ -185,7 +185,7 @@
   "pk": 15,
   "fields": {
     "name": "霜降り明星のオールナイトニッポン",
-    "search_index": "霜降り明星のｵｰﾙﾅｲﾄﾆｯﾎﾟﾝ",
+    "formatted_name": "霜降り明星のｵｰﾙﾅｲﾄﾆｯﾎﾟﾝ",
     "hashtag": "霜降り明星ANN",
     "twitter_id": "shimofuri_ANN",
     "site_url": "",
@@ -198,7 +198,7 @@
   "pk": 16,
   "fields": {
     "name": "マヂカルラブリーのオールナイトニッポン0",
-    "search_index": "ﾏﾁﾞｶﾙﾗﾌﾞﾘｰのｵｰﾙﾅｲﾄﾆｯﾎﾟﾝ0(zero)",
+    "formatted_name": "ﾏﾁﾞｶﾙﾗﾌﾞﾘｰのｵｰﾙﾅｲﾄﾆｯﾎﾟﾝ0(zero)",
     "hashtag": "マヂラブANN0",
     "twitter_id": "magiloveANN0",
     "site_url": "",
@@ -211,7 +211,7 @@
   "pk": 17,
   "fields": {
     "name": "伊集院光 深夜の馬鹿力",
-    "search_index": "junk伊集院光･深夜の馬鹿力,junk伊集院光深夜の馬鹿力",
+    "formatted_name": "junk伊集院光･深夜の馬鹿力,junk伊集院光深夜の馬鹿力",
     "hashtag": "ijuin",
     "twitter_id": "",
     "site_url": "",
@@ -224,7 +224,7 @@
   "pk": 18,
   "fields": {
     "name": "爆笑問題カーボーイ",
-    "search_index": "junk爆笑問題ｶｰﾎﾞｰｲ",
+    "formatted_name": "junk爆笑問題ｶｰﾎﾞｰｲ",
     "hashtag": "bakusho",
     "twitter_id": "",
     "site_url": "",
@@ -237,7 +237,7 @@
   "pk": 19,
   "fields": {
     "name": "山里亮太の不毛な議論",
-    "search_index": "junk山里亮太の不毛な議論",
+    "formatted_name": "junk山里亮太の不毛な議論",
     "hashtag": "fumou954",
     "twitter_id": "",
     "site_url": "",
@@ -250,7 +250,7 @@
   "pk": 20,
   "fields": {
     "name": "おぎやはぎのメガネびいき",
-    "search_index": "junkおぎやはぎのﾒｶﾞﾈびいき",
+    "formatted_name": "junkおぎやはぎのﾒｶﾞﾈびいき",
     "hashtag": "meganebiiki",
     "twitter_id": "",
     "site_url": "",
@@ -263,7 +263,7 @@
   "pk": 21,
   "fields": {
     "name": "バナナマンのバナナムーンGOLD",
-    "search_index": "junkﾊﾞﾅﾅﾏﾝのﾊﾞﾅﾅﾑｰﾝgold",
+    "formatted_name": "junkﾊﾞﾅﾅﾏﾝのﾊﾞﾅﾅﾑｰﾝgold",
     "hashtag": "bananamoon",
     "twitter_id": "",
     "site_url": "",
