@@ -113,23 +113,22 @@ class Program(models.Model):
 
 # 放送
 class Air(models.Model):
-    name = models.CharField(
-        verbose_name='名前',
-        max_length=200,
-    )
-    share_text = models.CharField(
-        verbose_name='シェアラジオ全文',
-        max_length=400,
+    broadcaster = models.ForeignKey(
+        Broadcaster, on_delete=models.CASCADE,
+        verbose_name='放送局',
+        null=True, blank=True,
     )
     program = models.ForeignKey(
         Program, on_delete=models.CASCADE,
         verbose_name='番組',
         null=True, blank=True,
     )
-    broadcaster = models.ForeignKey(
-        Broadcaster, on_delete=models.CASCADE,
-        verbose_name='放送局',
-        null=True, blank=True,
+    name = models.CharField(
+        verbose_name='名前',
+        max_length=200,
+    )
+    share_text = models.TextField(
+        verbose_name='シェアラジオ全文',
     )
     started = models.DateTimeField(
         verbose_name='開始日時',
