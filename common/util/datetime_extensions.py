@@ -54,19 +54,19 @@ def output_weekday(dt_date_initialized):
 #
 
 
-def output_radiko_link(dt, broadcaster_share_id):
+def output_radiko_link(dt, radiko_identifier):
     dt_tokyo = dt.astimezone(pytztimezone('Asia/Tokyo'))  # タイムゾーンを日本時間にする
-    return __create_radiko_link(dt_tokyo, broadcaster_share_id)
+    return __create_radiko_link(dt_tokyo, radiko_identifier)
 
 
-def output_radiko_link_next_week(dt, broadcaster_share_id):
+def output_radiko_link_next_week(dt, radiko_identifier):
     dt_tokyo = dt.astimezone(pytztimezone('Asia/Tokyo'))  # タイムゾーンを日本時間にする
     dt_tokyo = timedelta_days(dt_tokyo, 7)
-    return __create_radiko_link(dt_tokyo, broadcaster_share_id)
+    return __create_radiko_link(dt_tokyo, radiko_identifier)
 
 
-def __create_radiko_link(dt_tokyo, broadcaster_share_id):
-    return 'http://radiko.jp/share/?sid=' + broadcaster_share_id + '&t=' + str(dt_tokyo.strftime('%Y%m%d%H%M')) + '00'
+def __create_radiko_link(dt_tokyo, radiko_identifier):
+    return 'http://radiko.jp/share/?sid=' + radiko_identifier + '&t=' + str(dt_tokyo.strftime('%Y%m%d%H%M')) + '00'
 
 
 #

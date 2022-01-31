@@ -21,8 +21,8 @@ class Broadcaster(models.Model):
         unique=True,
         max_length=80,
     )
-    share_id = models.CharField(
-        verbose_name='シェアID',
+    radiko_identifier = models.CharField(
+        verbose_name='radiko ID',
         unique=True,
         max_length=80,
     )
@@ -32,10 +32,9 @@ class Broadcaster(models.Model):
         max_length=20,
         help_text='一覧に表示するための表記'
     )
-    search_index = models.CharField(
-        verbose_name='検索インデックス',
+    formatted_name = models.TextField(
+        verbose_name='整形した名前',
         null=True, blank=True,
-        max_length=400,
     )
     site_url = models.CharField(
         verbose_name='サイトURL',
@@ -47,17 +46,8 @@ class Broadcaster(models.Model):
         null=True, blank=True,
         max_length=400,
     )
-    area = models.CharField(
-        verbose_name='放送対象地域',
-        max_length=20,
-    )
     address = models.CharField(
         verbose_name='所在地',
-        max_length=400,
-    )
-    keyword = models.CharField(
-        verbose_name='キーワード',
-        null=True, blank=True,
         max_length=400,
     )
 
@@ -72,18 +62,12 @@ class Program(models.Model):
         unique=True,
         max_length=200,
     )
-    search_index = models.CharField(
-        verbose_name='検索インデックス',
+    formatted_name = models.TextField(
+        verbose_name='整形した名前',
         null=True, blank=True,
-        max_length=400,
     )
-    hashtag = models.CharField(
-        verbose_name='ハッシュタグ',
-        null=True, blank=True,
-        max_length=80,
-    )
-    twitter_id = models.CharField(
-        verbose_name='Twitter ID',
+    twitter_screen_name = models.CharField(
+        verbose_name='Twitterスクリーンネーム',
         null=True, blank=True,
         max_length=400,
     )
@@ -102,10 +86,6 @@ class Program(models.Model):
         verbose_name='キー局',
         null=True, blank=True,
     )
-    per_week = models.FloatField(
-        verbose_name='週何回放送か',
-        default=1,
-    )
 
     def __str__(self):
         return self.name
@@ -113,23 +93,22 @@ class Program(models.Model):
 
 # 放送
 class Air(models.Model):
-    name = models.CharField(
-        verbose_name='名前',
-        max_length=200,
-    )
-    share_text = models.CharField(
-        verbose_name='シェアラジオ全文',
-        max_length=400,
+    broadcaster = models.ForeignKey(
+        Broadcaster, on_delete=models.CASCADE,
+        verbose_name='放送局',
+        null=True, blank=True,
     )
     program = models.ForeignKey(
         Program, on_delete=models.CASCADE,
         verbose_name='番組',
         null=True, blank=True,
     )
-    broadcaster = models.ForeignKey(
-        Broadcaster, on_delete=models.CASCADE,
-        verbose_name='放送局',
-        null=True, blank=True,
+    name = models.CharField(
+        verbose_name='名前',
+        max_length=200,
+    )
+    share_text = models.TextField(
+        verbose_name='シェアラジオ全文',
     )
     started = models.DateTimeField(
         verbose_name='開始日時',

@@ -12,11 +12,9 @@
   <h1 class="uk-text-lead">{{ program.name }}</h1>
 
   <dl class="uk-description-list">
-    <dt>ハッシュタグ</dt>
-    <dd>{{ program.hashtag }}</dd>
 
-    <dt>Twitter ID</dt>
-    <dd>{{ program.twitter_id }}</dd>
+    <dt>Twitterスクリーンネーム</dt>
+    <dd>{{ program.twitter_screen_name }}</dd>
 
     <dt>サイトURL</dt>
     <dd><a href="{{ program.site_url }}" target="_blank">{{ program.site_url }}</a></dd>
@@ -26,9 +24,6 @@
 
     <dt>キー局</dt>
     <dd>{{ program.key_station }}</dd>
-
-    <dt>週何回放送か</dt>
-    <dd>{{ program.per_week }}</dd>
   </dl>
 
 </article>

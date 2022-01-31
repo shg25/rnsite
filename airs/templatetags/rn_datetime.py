@@ -44,10 +44,10 @@ class RNDatetime:
 
 
 @register.filter
-def radiko_link(started, broadcaster_share_id):
-    return output_radiko_link(started, broadcaster_share_id)
+def radiko_link(started, radiko_identifier):
+    return output_radiko_link(started, radiko_identifier)
 
 
 @register.filter
-def radiko_link_next_week(started, broadcaster_share_id):
-    return output_radiko_link_next_week(started, broadcaster_share_id)
+def radiko_link_next_week(started, radiko_identifier):
+    return output_radiko_link_next_week(started, radiko_identifier)

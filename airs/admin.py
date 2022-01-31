@@ -9,18 +9,16 @@ class ProgramInline(admin.TabularInline):  # class NanitozoInline(admin.StackedI
 
 class BroadcasterAdmin(admin.ModelAdmin):
     fields = [
-        'share_id',
+        'radiko_identifier',
         'name',
         'abbreviation',
-        'search_index',
+        'formatted_name',
         'site_url',
         'wikipedia_url',
-        'area',
-        'address',
-        'keyword'
+        'address'
     ]
     inlines = [ProgramInline]
-    list_display = ('id', 'share_id', 'name', 'search_index', 'area', 'keyword')
+    list_display = ('id', 'radiko_identifier', 'name', 'formatted_name')
     list_display_links = ('name',)
     ordering = ('id',)
 
@@ -31,17 +29,15 @@ admin.site.register(Broadcaster, BroadcasterAdmin)
 class ProgramAdmin(admin.ModelAdmin):
     fields = [
         'name',
-        'search_index',
-        'hashtag',
-        'twitter_id',
+        'formatted_name',
+        'twitter_screen_name',
         'site_url',
         'wikipedia_url',
-        'key_station',
-        'per_week'
+        'key_station_id'
     ]
-    list_display = ('id', 'name', 'key_station', 'per_week')
+    list_display = ('id', 'name', 'key_station_id')
     list_display_links = ('name',)
-    list_filter = ['key_station']
+    list_filter = ['key_station_id']
     ordering = ('id',)
 
 

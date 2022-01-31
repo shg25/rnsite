@@ -8,7 +8,7 @@ from django.utils.decorators import method_decorator
 
 from common.util.datetime_extensions import this_week_started, last_week_started, new_datetime, new_date, timedelta_days
 from common.util.url_extensions import scraping_title
-from common.util.string_extensions import find_urls, share_text_to_search_index
+from common.util.string_extensions import find_urls, share_text_to_formatted_name
 
 from ..models import Broadcaster, Program, Air
 from ..forms import AirCreateByShareTextForm
@@ -103,8 +103,8 @@ class AirCreateByShareTextView(generic.FormView):
         broadcaster_name = title[title.rfind('|'):].replace('|', '').strip()
 
         # Airに保存する放送局情報を取得（検索がヒットしない場合は[None]が入ってDBには[null]で保存されるはず）
-        broadcaster_search_index = share_text_to_search_index(broadcaster_name)
-        broadcaster = Broadcaster.objects.filter(search_index=broadcaster_search_index).first()
+        broadcaster_formatted_name = share_text_to_formatted_name(broadcaster_name)
+        broadcaster = Broadcaster.objects.filter(formatted_name=broadcaster_formatted_name).first()
 
         # - - - - - - - - - - - - - - - - - - - - - - - -
         # タイトルから放送局名を除去
@@ -120,8 +120,8 @@ class AirCreateByShareTextView(generic.FormView):
         program_name = title[title.find('|'):].replace('|', '').strip()
 
         # Airに保存する番組情報を取得（検索がヒットしない場合は[None]が入ってDBには[null]で保存されるはず）
-        program_search_index = share_text_to_search_index(program_name)
-        program = Program.objects.filter(search_index=program_search_index).first()
+        program_formatted_name = share_text_to_formatted_name(program_name)
+        program = Program.objects.filter(formatted_name=program_formatted_name).first()
 
         # - - - - - - - - - - - - - - - - - - - - - - - -
         # 放送開始日時と放送終了日時を作成
