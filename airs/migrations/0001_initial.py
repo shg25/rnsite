@@ -52,7 +52,7 @@ class Migration(migrations.Migration):
                 ('site_url', models.CharField(blank=True, max_length=400, null=True, verbose_name='サイトURL')),
                 ('wikipedia_url', models.CharField(blank=True, max_length=400, null=True, verbose_name='Wikipedia')),
                 ('per_week', models.FloatField(default=1, verbose_name='週何回放送か')),
-                ('key_station', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, to='airs.broadcaster', verbose_name='キー局')),
+                ('key_station_id', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, to='airs.broadcaster', verbose_name='キー局')),
             ],
         ),
         migrations.CreateModel(

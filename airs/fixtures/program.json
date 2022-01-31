@@ -8,7 +8,7 @@
     "twitter_screen_name": "",
     "site_url": "http://www.allnightnippon.com/program/ap/",
     "wikipedia_url": "https://ja.wikipedia.org/wiki/%E3%82%A2%E3%83%AB%E3%82%B3%26%E3%83%94%E3%83%BC%E3%82%B9%E3%81%AE%E3%82%AA%E3%83%BC%E3%83%AB%E3%83%8A%E3%82%A4%E3%83%88%E3%83%8B%E3%83%83%E3%83%9D%E3%83%B3%E3%82%B7%E3%83%AA%E3%83%BC%E3%82%BA",
-    "key_station": 2,
+    "key_station_id": 2,
     "per_week": 1
   }
 }, {
@@ -21,7 +21,7 @@
     "twitter_screen_name": "dcg_tbsr",
     "site_url": "https://www.tbsradio.jp/dcg/",
     "wikipedia_url": "https://ja.wikipedia.org/wiki/%E3%82%A2%E3%83%AB%E3%82%B3%26%E3%83%94%E3%83%BC%E3%82%B9_D.C.GARAGE",
-    "key_station": 1,
+    "key_station_id": 1,
     "per_week": 1
   }
 }, {
@@ -34,7 +34,7 @@
     "twitter_screen_name": "",
     "site_url": "http://www.tbsradio.jp/giga/",
     "wikipedia_url": "https://ja.wikipedia.org/wiki/%E3%81%86%E3%81%97%E3%82%8D%E3%82%B7%E3%83%86%E3%82%A3_%E6%98%9F%E3%81%AE%E3%82%AE%E3%82%AC%E3%83%9C%E3%83%87%E3%82%A3",
-    "key_station": 1,
+    "key_station_id": 1,
     "per_week": 1
   }
 }, {
@@ -47,7 +47,7 @@
     "twitter_screen_name": "tbsr_ht",
     "site_url": "https://www.tbsradio.jp/ht/",
     "wikipedia_url": "https://ja.wikipedia.org/wiki/%E3%83%8F%E3%83%A9%E3%82%A4%E3%83%81%E3%81%AE%E3%82%BF%E3%83%BC%E3%83%B3!",
-    "key_station": 1,
+    "key_station_id": 1,
     "per_week": 1
   }
 }, {
@@ -60,7 +60,7 @@
     "twitter_screen_name": "AnnSudamasaki",
     "site_url": "",
     "wikipedia_url": "",
-    "key_station": 2,
+    "key_station_id": 2,
     "per_week": 1
   }
 }, {
@@ -73,7 +73,7 @@
     "twitter_screen_name": "",
     "site_url": "",
     "wikipedia_url": "",
-    "key_station": 2,
+    "key_station_id": 2,
     "per_week": 1
   }
 }, {
@@ -86,7 +86,7 @@
     "twitter_screen_name": "NOGI46ann",
     "site_url": "",
     "wikipedia_url": "",
-    "key_station": 2,
+    "key_station_id": 2,
     "per_week": 1
   }
 }, {
@@ -99,7 +99,7 @@
     "twitter_screen_name": "NinetyNineANN",
     "site_url": "",
     "wikipedia_url": "",
-    "key_station": 2,
+    "key_station_id": 2,
     "per_week": 1
   }
 }, {
@@ -112,7 +112,7 @@
     "twitter_screen_name": "SanshiroANN",
     "site_url": "",
     "wikipedia_url": "",
-    "key_station": 2,
+    "key_station_id": 2,
     "per_week": 1
   }
 }, {
@@ -125,7 +125,7 @@
     "twitter_screen_name": "annkw5tyb",
     "site_url": "https://www.allnightnippon.com/kw/",
     "wikipedia_url": "https://ja.wikipedia.org/wiki/%E3%82%AA%E3%83%BC%E3%83%89%E3%83%AA%E3%83%BC%E3%81%AE%E3%82%AA%E3%83%BC%E3%83%AB%E3%83%8A%E3%82%A4%E3%83%88%E3%83%8B%E3%83%83%E3%83%9D%E3%83%B3",
-    "key_station": 2,
+    "key_station_id": 2,
     "per_week": 1
   }
 }, {
@@ -138,7 +138,7 @@
     "twitter_screen_name": "fsuann0",
     "site_url": "",
     "wikipedia_url": "",
-    "key_station": 2,
+    "key_station_id": 2,
     "per_week": 1
   }
 }, {
@@ -151,7 +151,7 @@
     "twitter_screen_name": "cnann0",
     "site_url": "",
     "wikipedia_url": "",
-    "key_station": 2,
+    "key_station_id": 2,
     "per_week": 1
   }
 }, {
@@ -164,7 +164,7 @@
     "twitter_screen_name": "SakumaANN0",
     "site_url": "",
     "wikipedia_url": "",
-    "key_station": 2,
+    "key_station_id": 2,
     "per_week": 1
   }
 }, {
@@ -177,7 +177,7 @@
     "twitter_screen_name": "mizuann0",
     "site_url": "",
     "wikipedia_url": "",
-    "key_station": 2,
+    "key_station_id": 2,
     "per_week": 1
   }
 }, {
@@ -190,7 +190,7 @@
     "twitter_screen_name": "shimofuri_ANN",
     "site_url": "",
     "wikipedia_url": "",
-    "key_station": 2,
+    "key_station_id": 2,
     "per_week": 1
   }
 }, {
@@ -203,7 +203,7 @@
     "twitter_screen_name": "magiloveANN0",
     "site_url": "",
     "wikipedia_url": "",
-    "key_station": 2,
+    "key_station_id": 2,
     "per_week": 1
   }
 }, {
@@ -216,7 +216,7 @@
     "twitter_screen_name": "",
     "site_url": "",
     "wikipedia_url": "",
-    "key_station": 1,
+    "key_station_id": 1,
     "per_week": 1
   }
 }, {
@@ -229,7 +229,7 @@
     "twitter_screen_name": "",
     "site_url": "",
     "wikipedia_url": "",
-    "key_station": 1,
+    "key_station_id": 1,
     "per_week": 1
   }
 }, {
@@ -242,7 +242,7 @@
     "twitter_screen_name": "",
     "site_url": "",
     "wikipedia_url": "",
-    "key_station": 1,
+    "key_station_id": 1,
     "per_week": 1
   }
 }, {
@@ -255,7 +255,7 @@
     "twitter_screen_name": "",
     "site_url": "",
     "wikipedia_url": "",
-    "key_station": 1,
+    "key_station_id": 1,
     "per_week": 1
   }
 }, {
@@ -268,7 +268,7 @@
     "twitter_screen_name": "",
     "site_url": "",
     "wikipedia_url": "",
-    "key_station": 1,
+    "key_station_id": 1,
     "per_week": 1
   }
 }]

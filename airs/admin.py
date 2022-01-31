@@ -36,12 +36,12 @@ class ProgramAdmin(admin.ModelAdmin):
         'twitter_screen_name',
         'site_url',
         'wikipedia_url',
-        'key_station',
+        'key_station_id',
         'per_week'
     ]
-    list_display = ('id', 'name', 'key_station', 'per_week')
+    list_display = ('id', 'name', 'key_station_id', 'per_week')
     list_display_links = ('name',)
-    list_filter = ['key_station']
+    list_filter = ['key_station_id']
     ordering = ('id',)
 
 
