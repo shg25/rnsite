@@ -2,7 +2,7 @@
   "model": "airs.broadcaster",
   "pk": 1,
   "fields": {
-    "share_id": "TBS",
+    "radiko_identifier": "TBS",
     "name": "TBSラジオ",
     "abbreviation": "TBS",
     "search_index": "tbsﾗｼﾞｵ",
@@ -16,7 +16,7 @@
   "model": "airs.broadcaster",
   "pk": 2,
   "fields": {
-    "share_id": "LFR",
+    "radiko_identifier": "LFR",
     "name": "ニッポン放送",
     "abbreviation": "ニッポン放送",
     "search_index": "ﾆｯﾎﾟﾝ放送",
@@ -30,7 +30,7 @@
   "model": "airs.broadcaster",
   "pk": 3,
   "fields": {
-    "share_id": "QRR",
+    "radiko_identifier": "QRR",
     "name": "文化放送",
     "abbreviation": "文化放送",
     "search_index": "文化放送",
@@ -44,7 +44,7 @@
   "model": "airs.broadcaster",
   "pk": 4,
   "fields": {
-    "share_id": "JORF",
+    "radiko_identifier": "JORF",
     "name": "ラジオ日本",
     "abbreviation": "ラジオ日本",
     "search_index": "ﾗｼﾞｵ日本",
@@ -58,7 +58,7 @@
   "model": "airs.broadcaster",
   "pk": 5,
   "fields": {
-    "share_id": "CRT",
+    "radiko_identifier": "CRT",
     "name": "CRT栃木放送",
     "abbreviation": "CRT",
     "search_index": "crt栃木放送",
@@ -72,7 +72,7 @@
   "model": "airs.broadcaster",
   "pk": 6,
   "fields": {
-    "share_id": "IBS",
+    "radiko_identifier": "IBS",
     "name": "LuckyFM 茨城放送",
     "abbreviation": "LuckyFM",
     "search_index": "luckyfm茨城放送",
@@ -86,7 +86,7 @@
   "model": "airs.broadcaster",
   "pk": 7,
   "fields": {
-    "share_id": "ABC",
+    "radiko_identifier": "ABC",
     "name": "ABCラジオ",
     "abbreviation": "ABC",
     "search_index": "abcﾗｼﾞｵ",
@@ -100,7 +100,7 @@
   "model": "airs.broadcaster",
   "pk": 8,
   "fields": {
-    "share_id": "MBS",
+    "radiko_identifier": "MBS",
     "name": "MBSラジオ",
     "abbreviation": "MBS",
     "search_index": "mbsﾗｼﾞｵ",
@@ -114,7 +114,7 @@
   "model": "airs.broadcaster",
   "pk": 9,
   "fields": {
-    "share_id": "OBC",
+    "radiko_identifier": "OBC",
     "name": "OBCラジオ大阪",
     "abbreviation": "ラジオ大阪",
     "search_index": "obcﾗｼﾞｵ大阪",
@@ -128,7 +128,7 @@
   "model": "airs.broadcaster",
   "pk": 10,
   "fields": {
-    "share_id": "CRK",
+    "radiko_identifier": "CRK",
     "name": "ラジオ関西",
     "abbreviation": "ラジオ関西",
     "search_index": "ﾗｼﾞｵ関西",
@@ -142,7 +142,7 @@
   "model": "airs.broadcaster",
   "pk": 11,
   "fields": {
-    "share_id": "KBS",
+    "radiko_identifier": "KBS",
     "name": "KBS京都ラジオ",
     "abbreviation": "KBS京都",
     "search_index": "kbs京都ﾗｼﾞｵ",
@@ -156,7 +156,7 @@
   "model": "airs.broadcaster",
   "pk": 12,
   "fields": {
-    "share_id": "WBS",
+    "radiko_identifier": "WBS",
     "name": "wbs和歌山放送",
     "abbreviation": "wbs",
     "search_index": "wbs和歌山放送",
@@ -170,7 +170,7 @@
   "model": "airs.broadcaster",
   "pk": 13,
   "fields": {
-    "share_id": "CBC",
+    "radiko_identifier": "CBC",
     "name": "CBCラジオ",
     "abbreviation": "CBC",
     "search_index": "cbcﾗｼﾞｵ",
@@ -184,7 +184,7 @@
   "model": "airs.broadcaster",
   "pk": 14,
   "fields": {
-    "share_id": "TOKAIRADIO",
+    "radiko_identifier": "TOKAIRADIO",
     "name": "東海ラジオ",
     "abbreviation": "東海ラジオ",
     "search_index": "東海ﾗｼﾞｵ",
@@ -198,7 +198,7 @@
   "model": "airs.broadcaster",
   "pk": 15,
   "fields": {
-    "share_id": "GBS",
+    "radiko_identifier": "GBS",
     "name": "ぎふチャン",
     "abbreviation": "ぎふチャン",
     "search_index": "ぎふﾁｬﾝ",
@@ -212,7 +212,7 @@
   "model": "airs.broadcaster",
   "pk": 16,
   "fields": {
-    "share_id": "HBC",
+    "radiko_identifier": "HBC",
     "name": "HBCラジオ",
     "abbreviation": "HBC",
     "search_index": "hbcﾗｼﾞｵ",
@@ -226,7 +226,7 @@
   "model": "airs.broadcaster",
   "pk": 17,
   "fields": {
-    "share_id": "STV",
+    "radiko_identifier": "STV",
     "name": "STVラジオ",
     "abbreviation": "STV",
     "search_index": "stvﾗｼﾞｵ",
@@ -240,7 +240,7 @@
   "model": "airs.broadcaster",
   "pk": 18,
   "fields": {
-    "share_id": "RAB",
+    "radiko_identifier": "RAB",
     "name": "RAB青森放送",
     "abbreviation": "RAB",
     "search_index": "rab青森放送",
@@ -254,7 +254,7 @@
   "model": "airs.broadcaster",
   "pk": 19,
   "fields": {
-    "share_id": "ABS",
+    "radiko_identifier": "ABS",
     "name": "ABS秋田放送",
     "abbreviation": "ABS",
     "search_index": "abs秋田放送",
@@ -268,7 +268,7 @@
   "model": "airs.broadcaster",
   "pk": 20,
   "fields": {
-    "share_id": "IBC",
+    "radiko_identifier": "IBC",
     "name": "IBCラジオ",
     "abbreviation": "IBC",
     "search_index": "ibcﾗｼﾞｵ",
@@ -282,7 +282,7 @@
   "model": "airs.broadcaster",
   "pk": 21,
   "fields": {
-    "share_id": "TBC",
+    "radiko_identifier": "TBC",
     "name": "TBCラジオ",
     "abbreviation": "TBC",
     "search_index": "tbcﾗｼﾞｵ",
@@ -296,7 +296,7 @@
   "model": "airs.broadcaster",
   "pk": 22,
   "fields": {
-    "share_id": "YBC",
+    "radiko_identifier": "YBC",
     "name": "YBC山形放送",
     "abbreviation": "YBC",
     "search_index": "ybc山形放送",
@@ -310,7 +310,7 @@
   "model": "airs.broadcaster",
   "pk": 23,
   "fields": {
-    "share_id": "RFC",
+    "radiko_identifier": "RFC",
     "name": "RFCラジオ福島",
     "abbreviation": "RFC",
     "search_index": "rfcﾗｼﾞｵ福島",
@@ -324,7 +324,7 @@
   "model": "airs.broadcaster",
   "pk": 24,
   "fields": {
-    "share_id": "BSN",
+    "radiko_identifier": "BSN",
     "name": "BSNラジオ",
     "abbreviation": "BSN",
     "search_index": "bsnﾗｼﾞｵ",
@@ -338,7 +338,7 @@
   "model": "airs.broadcaster",
   "pk": 25,
   "fields": {
-    "share_id": "SBC",
+    "radiko_identifier": "SBC",
     "name": "SBCラジオ",
     "abbreviation": "SBC",
     "search_index": "sbcﾗｼﾞｵ",
@@ -352,7 +352,7 @@
   "model": "airs.broadcaster",
   "pk": 26,
   "fields": {
-    "share_id": "YBS",
+    "radiko_identifier": "YBS",
     "name": "YBSラジオ",
     "abbreviation": "YBS",
     "search_index": "ybsﾗｼﾞｵ",
@@ -366,7 +366,7 @@
   "model": "airs.broadcaster",
   "pk": 27,
   "fields": {
-    "share_id": "SBS",
+    "radiko_identifier": "SBS",
     "name": "SBSラジオ",
     "abbreviation": "SBS",
     "search_index": "sbsﾗｼﾞｵ",
@@ -380,7 +380,7 @@
   "model": "airs.broadcaster",
   "pk": 28,
   "fields": {
-    "share_id": "KNB",
+    "radiko_identifier": "KNB",
     "name": "KNBラジオ",
     "abbreviation": "KNB",
     "search_index": "knbﾗｼﾞｵ",
@@ -394,7 +394,7 @@
   "model": "airs.broadcaster",
   "pk": 29,
   "fields": {
-    "share_id": "MRO",
+    "radiko_identifier": "MRO",
     "name": "MROラジオ",
     "abbreviation": "MRO",
     "search_index": "mroﾗｼﾞｵ",
@@ -408,7 +408,7 @@
   "model": "airs.broadcaster",
   "pk": 30,
   "fields": {
-    "share_id": "FBC",
+    "radiko_identifier": "FBC",
     "name": "FBCラジオ",
     "abbreviation": "FBC",
     "search_index": "fbcﾗｼﾞｵ",
@@ -422,7 +422,7 @@
   "model": "airs.broadcaster",
   "pk": 31,
   "fields": {
-    "share_id": "BSS",
+    "radiko_identifier": "BSS",
     "name": "BSSラジオ",
     "abbreviation": "BSS",
     "search_index": "bssﾗｼﾞｵ",
@@ -436,7 +436,7 @@
   "model": "airs.broadcaster",
   "pk": 32,
   "fields": {
-    "share_id": "RSK",
+    "radiko_identifier": "RSK",
     "name": "RSKラジオ",
     "abbreviation": "RSK",
     "search_index": "rskﾗｼﾞｵ",
@@ -450,7 +450,7 @@
   "model": "airs.broadcaster",
   "pk": 33,
   "fields": {
-    "share_id": "RCC",
+    "radiko_identifier": "RCC",
     "name": "RCCラジオ",
     "abbreviation": "RCC",
     "search_index": "rccﾗｼﾞｵ",
@@ -464,7 +464,7 @@
   "model": "airs.broadcaster",
   "pk": 34,
   "fields": {
-    "share_id": "KRY",
+    "radiko_identifier": "KRY",
     "name": "KRY山口放送",
     "abbreviation": "KRY",
     "search_index": "kry山口放送",
@@ -478,7 +478,7 @@
   "model": "airs.broadcaster",
   "pk": 35,
   "fields": {
-    "share_id": "RNC",
+    "radiko_identifier": "RNC",
     "name": "RNC西日本放送",
     "abbreviation": "RNC",
     "search_index": "rnc西日本放送",
@@ -492,7 +492,7 @@
   "model": "airs.broadcaster",
   "pk": 36,
   "fields": {
-    "share_id": "JRT",
+    "radiko_identifier": "JRT",
     "name": "JRT四国放送",
     "abbreviation": "JRT",
     "search_index": "jrt四国放送",
@@ -506,7 +506,7 @@
   "model": "airs.broadcaster",
   "pk": 37,
   "fields": {
-    "share_id": "RNB",
+    "radiko_identifier": "RNB",
     "name": "RNB南海放送",
     "abbreviation": "RNB",
     "search_index": "rnb南海放送",
@@ -520,7 +520,7 @@
   "model": "airs.broadcaster",
   "pk": 38,
   "fields": {
-    "share_id": "RKC",
+    "radiko_identifier": "RKC",
     "name": "RKC高知放送",
     "abbreviation": "RKC",
     "search_index": "rkc高知放送",
@@ -534,7 +534,7 @@
   "model": "airs.broadcaster",
   "pk": 39,
   "fields": {
-    "share_id": "RKB",
+    "radiko_identifier": "RKB",
     "name": "RKBラジオ",
     "abbreviation": "RKB",
     "search_index": "rkbﾗｼﾞｵ",
@@ -548,7 +548,7 @@
   "model": "airs.broadcaster",
   "pk": 40,
   "fields": {
-    "share_id": "KBC",
+    "radiko_identifier": "KBC",
     "name": "KBCラジオ",
     "abbreviation": "KBC",
     "search_index": "kbcﾗｼﾞｵ",
@@ -562,7 +562,7 @@
   "model": "airs.broadcaster",
   "pk": 41,
   "fields": {
-    "share_id": "NBC",
+    "radiko_identifier": "NBC",
     "name": "NBC長崎放送",
     "abbreviation": "NBC",
     "search_index": "nbc長崎放送",
@@ -576,7 +576,7 @@
   "model": "airs.broadcaster",
   "pk": 42,
   "fields": {
-    "share_id": "OBS",
+    "radiko_identifier": "OBS",
     "name": "OBSラジオ",
     "abbreviation": "OBS",
     "search_index": "obsﾗｼﾞｵ",
@@ -590,7 +590,7 @@
   "model": "airs.broadcaster",
   "pk": 43,
   "fields": {
-    "share_id": "RKK",
+    "radiko_identifier": "RKK",
     "name": "RKKラジオ",
     "abbreviation": "RKK",
     "search_index": "rkkﾗｼﾞｵ",
@@ -604,7 +604,7 @@
   "model": "airs.broadcaster",
   "pk": 44,
   "fields": {
-    "share_id": "MRT",
+    "radiko_identifier": "MRT",
     "name": "宮崎放送",
     "abbreviation": "MRT",
     "search_index": "宮崎放送",
@@ -618,7 +618,7 @@
   "model": "airs.broadcaster",
   "pk": 45,
   "fields": {
-    "share_id": "MBC",
+    "radiko_identifier": "MBC",
     "name": "MBCラジオ",
     "abbreviation": "MBC",
     "search_index": "mbcﾗｼﾞｵ",
@@ -632,7 +632,7 @@
   "model": "airs.broadcaster",
   "pk": 46,
   "fields": {
-    "share_id": "RBC",
+    "radiko_identifier": "RBC",
     "name": "RBCiラジオ",
     "abbreviation": "RBC",
     "search_index": "rbciﾗｼﾞｵ",
@@ -646,7 +646,7 @@
   "model": "airs.broadcaster",
   "pk": 47,
   "fields": {
-    "share_id": "ROK",
+    "radiko_identifier": "ROK",
     "name": "ラジオ沖縄",
     "abbreviation": "ROK",
     "search_index": "ﾗｼﾞｵ沖縄",
@@ -660,7 +660,7 @@
   "model": "airs.broadcaster",
   "pk": 48,
   "fields": {
-    "share_id": "FMT",
+    "radiko_identifier": "FMT",
     "name": "TOKYO FM",
     "abbreviation": "TOKYO FM",
     "search_index": "tokyofm",
@@ -674,7 +674,7 @@
   "model": "airs.broadcaster",
   "pk": 49,
   "fields": {
-    "share_id": "FMJ",
+    "radiko_identifier": "FMJ",
     "name": "J-WAVE",
     "abbreviation": "J-WAVE",
     "search_index": "j-wave",
@@ -688,7 +688,7 @@
   "model": "airs.broadcaster",
   "pk": 50,
   "fields": {
-    "share_id": "INT",
+    "radiko_identifier": "INT",
     "name": "InterFM897",
     "abbreviation": "InterFM897",
     "search_index": "interfm897",
@@ -702,7 +702,7 @@
   "model": "airs.broadcaster",
   "pk": 51,
   "fields": {
-    "share_id": "YFM",
+    "radiko_identifier": "YFM",
     "name": "FMヨコハマ",
     "abbreviation": "エフヨコ",
     "search_index": "fmﾖｺﾊﾏ",
@@ -716,7 +716,7 @@
   "model": "airs.broadcaster",
   "pk": 52,
   "fields": {
-    "share_id": "NACK5",
+    "radiko_identifier": "NACK5",
     "name": "NACK5",
     "abbreviation": "NACK5",
     "search_index": "nack5",
@@ -730,7 +730,7 @@
   "model": "airs.broadcaster",
   "pk": 53,
   "fields": {
-    "share_id": "BAYFM78",
+    "radiko_identifier": "BAYFM78",
     "name": "bayfm78",
     "abbreviation": "bayfm78",
     "search_index": "bayfm78",
@@ -744,7 +744,7 @@
   "model": "airs.broadcaster",
   "pk": 54,
   "fields": {
-    "share_id": "RADIOBERRY",
+    "radiko_identifier": "RADIOBERRY",
     "name": "RadioBerry",
     "abbreviation": "RadioBerry",
     "search_index": "radioberry",
@@ -758,7 +758,7 @@
   "model": "airs.broadcaster",
   "pk": 55,
   "fields": {
-    "share_id": "FMGUNMA",
+    "radiko_identifier": "FMGUNMA",
     "name": "FM GUNMA",
     "abbreviation": "FM群馬",
     "search_index": "fmgunma",
@@ -772,7 +772,7 @@
   "model": "airs.broadcaster",
   "pk": 56,
   "fields": {
-    "share_id": "FMO",
+    "radiko_identifier": "FMO",
     "name": "FM大阪",
     "abbreviation": "FM大阪",
     "search_index": "fm大阪",
@@ -786,7 +786,7 @@
   "model": "airs.broadcaster",
   "pk": 57,
   "fields": {
-    "share_id": 802,
+    "radiko_identifier": 802,
     "name": "FM802",
     "abbreviation": "FM802",
     "search_index": "fm802",
@@ -800,7 +800,7 @@
   "model": "airs.broadcaster",
   "pk": 58,
   "fields": {
-    "share_id": "CCL",
+    "radiko_identifier": "CCL",
     "name": "FM COCOLO",
     "abbreviation": "FM COCOLO",
     "search_index": "fmcocolo",
@@ -814,7 +814,7 @@
   "model": "airs.broadcaster",
   "pk": 59,
   "fields": {
-    "share_id": "E-RADIO",
+    "radiko_identifier": "E-RADIO",
     "name": "FM滋賀",
     "abbreviation": "FM滋賀",
     "search_index": "e-radiofm滋賀",
@@ -828,7 +828,7 @@
   "model": "airs.broadcaster",
   "pk": 60,
   "fields": {
-    "share_id": "KISSFMKOBE",
+    "radiko_identifier": "KISSFMKOBE",
     "name": "Kiss FM KOBE",
     "abbreviation": "Kiss FM",
     "search_index": "kissfmkobe",
@@ -842,7 +842,7 @@
   "model": "airs.broadcaster",
   "pk": 61,
   "fields": {
-    "share_id": "ALPHA-STATION",
+    "radiko_identifier": "ALPHA-STATION",
     "name": "α-STATION",
     "abbreviation": "α-STATION",
     "search_index": "α-stationfm京都",
@@ -856,7 +856,7 @@
   "model": "airs.broadcaster",
   "pk": 62,
   "fields": {
-    "share_id": "FMAICHI",
+    "radiko_identifier": "FMAICHI",
     "name": "FM AICHI",
     "abbreviation": "FM AICHI",
     "search_index": "fmaichi",
@@ -870,7 +870,7 @@
   "model": "airs.broadcaster",
   "pk": 63,
   "fields": {
-    "share_id": "ZIP-FM",
+    "radiko_identifier": "ZIP-FM",
     "name": "ZIP-FM",
     "abbreviation": "ZIP-FM",
     "search_index": "zip-fm",
@@ -884,7 +884,7 @@
   "model": "airs.broadcaster",
   "pk": 64,
   "fields": {
-    "share_id": "FMGIFU",
+    "radiko_identifier": "FMGIFU",
     "name": "FM GIFU",
     "abbreviation": "FM GIFU",
     "search_index": "fmgifu",
@@ -898,7 +898,7 @@
   "model": "airs.broadcaster",
   "pk": 65,
   "fields": {
-    "share_id": "FMMIE",
+    "radiko_identifier": "FMMIE",
     "name": "FM三重",
     "abbreviation": "FM三重",
     "search_index": "ﾚﾃﾞｨｵｷｭｰﾌﾞfm三重",
@@ -912,7 +912,7 @@
   "model": "airs.broadcaster",
   "pk": 66,
   "fields": {
-    "share_id": "AIR-G",
+    "radiko_identifier": "AIR-G",
     "name": "AIR-G'",
     "abbreviation": "AIR-G'",
     "search_index": "air-g'(fm北海道)",
@@ -926,7 +926,7 @@
   "model": "airs.broadcaster",
   "pk": 67,
   "fields": {
-    "share_id": "NORTHWAVE",
+    "radiko_identifier": "NORTHWAVE",
     "name": "FM NORTH WAVE",
     "abbreviation": "NORTH WAVE",
     "search_index": "fmnorthwave",
@@ -940,7 +940,7 @@
   "model": "airs.broadcaster",
   "pk": 68,
   "fields": {
-    "share_id": "AFB",
+    "radiko_identifier": "AFB",
     "name": "FM青森",
     "abbreviation": "FM青森",
     "search_index": "ｴﾌｴﾑ青森",
@@ -954,7 +954,7 @@
   "model": "airs.broadcaster",
   "pk": 69,
   "fields": {
-    "share_id": "AFM",
+    "radiko_identifier": "AFM",
     "name": "FM秋田",
     "abbreviation": "FM秋田",
     "search_index": "ｴﾌｴﾑ秋田",
@@ -968,7 +968,7 @@
   "model": "airs.broadcaster",
   "pk": 70,
   "fields": {
-    "share_id": "FMI",
+    "radiko_identifier": "FMI",
     "name": "FM岩手",
     "abbreviation": "FM岩手",
     "search_index": "ｴﾌｴﾑ岩手",
@@ -982,7 +982,7 @@
   "model": "airs.broadcaster",
   "pk": 71,
   "fields": {
-    "share_id": "DATEFM",
+    "radiko_identifier": "DATEFM",
     "name": "Date fm FM仙台",
     "abbreviation": "FM仙台",
     "search_index": "datefmｴﾌｴﾑ仙台",
@@ -996,7 +996,7 @@
   "model": "airs.broadcaster",
   "pk": 72,
   "fields": {
-    "share_id": "RFM",
+    "radiko_identifier": "RFM",
     "name": "FM山形",
     "abbreviation": "FM山形",
     "search_index": "rhythmstationｴﾌｴﾑ山形",
@@ -1010,7 +1010,7 @@
   "model": "airs.broadcaster",
   "pk": 73,
   "fields": {
-    "share_id": "FMF",
+    "radiko_identifier": "FMF",
     "name": "ふくしまFM",
     "abbreviation": "ふくしまFM",
     "search_index": "ふくしまfm",
@@ -1024,7 +1024,7 @@
   "model": "airs.broadcaster",
   "pk": 74,
   "fields": {
-    "share_id": "FMNIIGATA",
+    "radiko_identifier": "FMNIIGATA",
     "name": "FM NIIGATA",
     "abbreviation": "FM新潟",
     "search_index": "fmniigata",
@@ -1038,7 +1038,7 @@
   "model": "airs.broadcaster",
   "pk": 75,
   "fields": {
-    "share_id": "FMN",
+    "radiko_identifier": "FMN",
     "name": "FM長野",
     "abbreviation": "FM長野",
     "search_index": "fm長野",
@@ -1052,7 +1052,7 @@
   "model": "airs.broadcaster",
   "pk": 76,
   "fields": {
-    "share_id": "FM-FUJI",
+    "radiko_identifier": "FM-FUJI",
     "name": "FM FUJI",
     "abbreviation": "FM FUJI",
     "search_index": "fmfuji",
@@ -1066,7 +1066,7 @@
   "model": "airs.broadcaster",
   "pk": 77,
   "fields": {
-    "share_id": "K-MIX",
+    "radiko_identifier": "K-MIX",
     "name": "K-MIX SHIZUOKA",
     "abbreviation": "K-MIX",
     "search_index": "k-mixshizuoka",
@@ -1080,7 +1080,7 @@
   "model": "airs.broadcaster",
   "pk": 78,
   "fields": {
-    "share_id": "FMTOYAMA",
+    "radiko_identifier": "FMTOYAMA",
     "name": "FMとやま",
     "abbreviation": "FMとやま",
     "search_index": "fmとやま",
@@ -1094,7 +1094,7 @@
   "model": "airs.broadcaster",
   "pk": 79,
   "fields": {
-    "share_id": "HELLOFIVE",
+    "radiko_identifier": "HELLOFIVE",
     "name": "FM石川",
     "abbreviation": "FM石川",
     "search_index": "ｴﾌｴﾑ石川",
@@ -1108,7 +1108,7 @@
   "model": "airs.broadcaster",
   "pk": 80,
   "fields": {
-    "share_id": "FMFUKUI",
+    "radiko_identifier": "FMFUKUI",
     "name": "FM福井",
     "abbreviation": "FM福井",
     "search_index": "fm福井",
@@ -1122,7 +1122,7 @@
   "model": "airs.broadcaster",
   "pk": 81,
   "fields": {
-    "share_id": "FM-SANIN",
+    "radiko_identifier": "FM-SANIN",
     "name": "FM山陰",
     "abbreviation": "FM山陰",
     "search_index": "ｴﾌｴﾑ山陰",
@@ -1136,7 +1136,7 @@
   "model": "airs.broadcaster",
   "pk": 82,
   "fields": {
-    "share_id": "FM-OKAYAMA",
+    "radiko_identifier": "FM-OKAYAMA",
     "name": "FM岡山",
     "abbreviation": "FM岡山",
     "search_index": "fm岡山",
@@ -1150,7 +1150,7 @@
   "model": "airs.broadcaster",
   "pk": 83,
   "fields": {
-    "share_id": "HFM",
+    "radiko_identifier": "HFM",
     "name": "広島FM",
     "abbreviation": "広島FM",
     "search_index": "広島fm",
@@ -1164,7 +1164,7 @@
   "model": "airs.broadcaster",
   "pk": 84,
   "fields": {
-    "share_id": "FMY",
+    "radiko_identifier": "FMY",
     "name": "FM山口",
     "abbreviation": "FM山口",
     "search_index": "ｴﾌｴﾑ山口",
@@ -1178,7 +1178,7 @@
   "model": "airs.broadcaster",
   "pk": 85,
   "fields": {
-    "share_id": "FMKAGAWA",
+    "radiko_identifier": "FMKAGAWA",
     "name": "FM香川",
     "abbreviation": "FM香川",
     "search_index": "ｴﾌｴﾑ香川",
@@ -1192,7 +1192,7 @@
   "model": "airs.broadcaster",
   "pk": 86,
   "fields": {
-    "share_id": "FM807",
+    "radiko_identifier": "FM807",
     "name": "FM徳島",
     "abbreviation": "FM徳島",
     "search_index": "fm徳島",
@@ -1206,7 +1206,7 @@
   "model": "airs.broadcaster",
   "pk": 87,
   "fields": {
-    "share_id": "JOEU-FM",
+    "radiko_identifier": "JOEU-FM",
     "name": "FM愛媛",
     "abbreviation": "FM愛媛",
     "search_index": "fm愛媛",
@@ -1220,7 +1220,7 @@
   "model": "airs.broadcaster",
   "pk": 88,
   "fields": {
-    "share_id": "HI-SIX",
+    "radiko_identifier": "HI-SIX",
     "name": "FM高知",
     "abbreviation": "FM高知",
     "search_index": "ｴﾌｴﾑ高知",
@@ -1234,7 +1234,7 @@
   "model": "airs.broadcaster",
   "pk": 89,
   "fields": {
-    "share_id": "FMFUKUOKA",
+    "radiko_identifier": "FMFUKUOKA",
     "name": "FM FUKUOKA",
     "abbreviation": "FM福岡",
     "search_index": "fmfukuoka",
@@ -1248,7 +1248,7 @@
   "model": "airs.broadcaster",
   "pk": 90,
   "fields": {
-    "share_id": "CROSSFM",
+    "radiko_identifier": "CROSSFM",
     "name": "CROSS FM",
     "abbreviation": "CROSS FM",
     "search_index": "crossfm",
@@ -1262,7 +1262,7 @@
   "model": "airs.broadcaster",
   "pk": 91,
   "fields": {
-    "share_id": "LOVEFM",
+    "radiko_identifier": "LOVEFM",
     "name": "LOVE FM",
     "abbreviation": "LOVE FM",
     "search_index": "lovefm",
@@ -1276,7 +1276,7 @@
   "model": "airs.broadcaster",
   "pk": 92,
   "fields": {
-    "share_id": "FMS",
+    "radiko_identifier": "FMS",
     "name": "FM佐賀",
     "abbreviation": "FM佐賀",
     "search_index": "ｴﾌｴﾑ佐賀",
@@ -1290,7 +1290,7 @@
   "model": "airs.broadcaster",
   "pk": 93,
   "fields": {
-    "share_id": "FMNAGASAKI",
+    "radiko_identifier": "FMNAGASAKI",
     "name": "FM長崎",
     "abbreviation": "FM長崎",
     "search_index": "fm長崎",
@@ -1304,7 +1304,7 @@
   "model": "airs.broadcaster",
   "pk": 94,
   "fields": {
-    "share_id": "FM_OITA",
+    "radiko_identifier": "FM_OITA",
     "name": "FM大分",
     "abbreviation": "FM大分",
     "search_index": "ｴﾌｴﾑ大分",
@@ -1318,7 +1318,7 @@
   "model": "airs.broadcaster",
   "pk": 95,
   "fields": {
-    "share_id": "FMK",
+    "radiko_identifier": "FMK",
     "name": "FM熊本",
     "abbreviation": "FM熊本",
     "search_index": "fmkｴﾌｴﾑ熊本",
@@ -1332,7 +1332,7 @@
   "model": "airs.broadcaster",
   "pk": 96,
   "fields": {
-    "share_id": "JOYFM",
+    "radiko_identifier": "JOYFM",
     "name": "FM宮崎",
     "abbreviation": "FM宮崎",
     "search_index": "ｴﾌｴﾑ宮崎",
@@ -1346,7 +1346,7 @@
   "model": "airs.broadcaster",
   "pk": 97,
   "fields": {
-    "share_id": "MYUFM",
+    "radiko_identifier": "MYUFM",
     "name": "μFM",
     "abbreviation": "μFM",
     "search_index": "μfm",
@@ -1360,7 +1360,7 @@
   "model": "airs.broadcaster",
   "pk": 98,
   "fields": {
-    "share_id": "FM_OKINAWA",
+    "radiko_identifier": "FM_OKINAWA",
     "name": "FM沖縄",
     "abbreviation": "FM沖縄",
     "search_index": "fm沖縄",
@@ -1374,7 +1374,7 @@
   "model": "airs.broadcaster",
   "pk": 99,
   "fields": {
-    "share_id": "RN1",
+    "radiko_identifier": "RN1",
     "name": "ラジオNIKKEI第1",
     "abbreviation": "NIKKEI 第1",
     "search_index": "ﾗｼﾞｵnikkei第1",
@@ -1388,7 +1388,7 @@
   "model": "airs.broadcaster",
   "pk": 100,
   "fields": {
-    "share_id": "RN2",
+    "radiko_identifier": "RN2",
     "name": "ラジオNIKKEI第2",
     "abbreviation": "NIKKEI 第2",
     "search_index": "ﾗｼﾞｵnikkei第2",
@@ -1402,7 +1402,7 @@
   "model": "airs.broadcaster",
   "pk": 101,
   "fields": {
-    "share_id": "JOAK",
+    "radiko_identifier": "JOAK",
     "name": "NHKラジオ第1（東京）",
     "abbreviation": "NHK 第1",
     "search_index": "nhkﾗｼﾞｵ第1(東京)",
@@ -1416,7 +1416,7 @@
   "model": "airs.broadcaster",
   "pk": 102,
   "fields": {
-    "share_id": "JOAK-FM",
+    "radiko_identifier": "JOAK-FM",
     "name": "NHK-FM（東京）",
     "abbreviation": "NHK FM",
     "search_index": "nhk-fm(東京)",
@@ -1430,7 +1430,7 @@
   "model": "airs.broadcaster",
   "pk": 103,
   "fields": {
-    "share_id": "HOUSOU-DAIGAKU",
+    "radiko_identifier": "HOUSOU-DAIGAKU",
     "name": "放送大学",
     "abbreviation": "放送大学",
     "search_index": "放送大学",

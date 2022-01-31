@@ -31,7 +31,7 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('name', models.CharField(max_length=80, unique=True, verbose_name='名前')),
-                ('share_id', models.CharField(max_length=80, unique=True, verbose_name='シェアID')),
+                ('radiko_identifier', models.CharField(max_length=80, unique=True, verbose_name='シェアID')),
                 ('abbreviation', models.CharField(help_text='一覧に表示するための表記', max_length=20, unique=True, verbose_name='略称')),
                 ('search_index', models.CharField(blank=True, max_length=400, null=True, verbose_name='検索インデックス')),
                 ('site_url', models.CharField(blank=True, max_length=400, null=True, verbose_name='サイトURL')),

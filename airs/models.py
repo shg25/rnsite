@@ -21,8 +21,8 @@ class Broadcaster(models.Model):
         unique=True,
         max_length=80,
     )
-    share_id = models.CharField(
-        verbose_name='シェアID',
+    radiko_identifier = models.CharField(
+        verbose_name='radiko ID',
         unique=True,
         max_length=80,
     )
