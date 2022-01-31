@@ -80,8 +80,8 @@ class Program(models.Model):
         null=True, blank=True,
         max_length=80,
     )
-    twitter_id = models.CharField(
-        verbose_name='Twitter ID',
+    twitter_screen_name = models.CharField(
+        verbose_name='Twitterスクリーンネーム',
         null=True, blank=True,
         max_length=400,
     )

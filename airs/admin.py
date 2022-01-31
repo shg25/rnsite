@@ -33,7 +33,7 @@ class ProgramAdmin(admin.ModelAdmin):
         'name',
         'formatted_name',
         'hashtag',
-        'twitter_id',
+        'twitter_screen_name',
         'site_url',
         'wikipedia_url',
         'key_station',

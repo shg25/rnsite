@@ -48,7 +48,7 @@ class Migration(migrations.Migration):
                 ('name', models.CharField(max_length=200, unique=True, verbose_name='名前')),
                 ('formatted_name', models.TextField(blank=True, null=True, verbose_name='検索インデックス')),
                 ('hashtag', models.CharField(blank=True, max_length=80, null=True, verbose_name='ハッシュタグ')),
-                ('twitter_id', models.CharField(blank=True, max_length=400, null=True, verbose_name='Twitter ID')),
+                ('twitter_screen_name', models.CharField(blank=True, max_length=400, null=True, verbose_name='Twitter ID')),
                 ('site_url', models.CharField(blank=True, max_length=400, null=True, verbose_name='サイトURL')),
                 ('wikipedia_url', models.CharField(blank=True, max_length=400, null=True, verbose_name='Wikipedia')),
                 ('per_week', models.FloatField(default=1, verbose_name='週何回放送か')),
