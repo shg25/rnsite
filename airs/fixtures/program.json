@@ -4,12 +4,10 @@
   "fields": {
     "name": "アルコ&ピースのオールナイトニッポン",
     "formatted_name": "ｱﾙｺ&ﾋﾟｰｽのｵｰﾙﾅｲﾄﾆｯﾎﾟﾝ",
-    "hashtag": "アルピーann",
     "twitter_screen_name": "",
     "site_url": "http://www.allnightnippon.com/program/ap/",
     "wikipedia_url": "https://ja.wikipedia.org/wiki/%E3%82%A2%E3%83%AB%E3%82%B3%26%E3%83%94%E3%83%BC%E3%82%B9%E3%81%AE%E3%82%AA%E3%83%BC%E3%83%AB%E3%83%8A%E3%82%A4%E3%83%88%E3%83%8B%E3%83%83%E3%83%9D%E3%83%B3%E3%82%B7%E3%83%AA%E3%83%BC%E3%82%BA",
-    "key_station_id": 2,
-    "per_week": 1
+    "key_station_id": 2
   }
 }, {
   "model": "airs.program",
@@ -17,12 +15,10 @@
   "fields": {
     "name": "アルコ&ピース D.C.GARAGE",
     "formatted_name": "ｱﾙｺ&ﾋﾟｰｽd.c.garage",
-    "hashtag": "アルピーdcg",
     "twitter_screen_name": "dcg_tbsr",
     "site_url": "https://www.tbsradio.jp/dcg/",
     "wikipedia_url": "https://ja.wikipedia.org/wiki/%E3%82%A2%E3%83%AB%E3%82%B3%26%E3%83%94%E3%83%BC%E3%82%B9_D.C.GARAGE",
-    "key_station_id": 1,
-    "per_week": 1
+    "key_station_id": 1
   }
 }, {
   "model": "airs.program",
@@ -30,12 +26,10 @@
   "fields": {
     "name": "うしろシティ 星のギガボディ",
     "formatted_name": "うしろｼﾃｨ星のｷﾞｶﾞﾎﾞﾃﾞｨ",
-    "hashtag": "星のギガボディ",
     "twitter_screen_name": "",
     "site_url": "http://www.tbsradio.jp/giga/",
     "wikipedia_url": "https://ja.wikipedia.org/wiki/%E3%81%86%E3%81%97%E3%82%8D%E3%82%B7%E3%83%86%E3%82%A3_%E6%98%9F%E3%81%AE%E3%82%AE%E3%82%AC%E3%83%9C%E3%83%87%E3%82%A3",
-    "key_station_id": 1,
-    "per_week": 1
+    "key_station_id": 1
   }
 }, {
   "model": "airs.program",
@@ -43,12 +37,10 @@
   "fields": {
     "name": "ハライチのターン！",
     "formatted_name": "ﾊﾗｲﾁのﾀｰﾝ!",
-    "hashtag": "ハライチのターン",
     "twitter_screen_name": "tbsr_ht",
     "site_url": "https://www.tbsradio.jp/ht/",
     "wikipedia_url": "https://ja.wikipedia.org/wiki/%E3%83%8F%E3%83%A9%E3%82%A4%E3%83%81%E3%81%AE%E3%82%BF%E3%83%BC%E3%83%B3!",
-    "key_station_id": 1,
-    "per_week": 1
+    "key_station_id": 1
   }
 }, {
   "model": "airs.program",
@@ -56,12 +48,10 @@
   "fields": {
     "name": "菅田将暉のオールナイトニッポン",
     "formatted_name": "菅田将暉のｵｰﾙﾅｲﾄﾆｯﾎﾟﾝ",
-    "hashtag": "菅田将暉ANN",
     "twitter_screen_name": "AnnSudamasaki",
     "site_url": "",
     "wikipedia_url": "",
-    "key_station_id": 2,
-    "per_week": 1
+    "key_station_id": 2
   }
 }, {
   "model": "airs.program",
@@ -69,12 +59,10 @@
   "fields": {
     "name": "星野源のオールナイトニッポン",
     "formatted_name": "星野源のｵｰﾙﾅｲﾄﾆｯﾎﾟﾝ",
-    "hashtag": "星野源ANN",
     "twitter_screen_name": "",
     "site_url": "",
     "wikipedia_url": "",
-    "key_station_id": 2,
-    "per_week": 1
+    "key_station_id": 2
   }
 }, {
   "model": "airs.program",
@@ -82,12 +70,10 @@
   "fields": {
     "name": "乃木坂46のオールナイトニッポン",
     "formatted_name": "乃木坂46のｵｰﾙﾅｲﾄﾆｯﾎﾟﾝ",
-    "hashtag": "乃木坂46ANN",
     "twitter_screen_name": "NOGI46ann",
     "site_url": "",
     "wikipedia_url": "",
-    "key_station_id": 2,
-    "per_week": 1
+    "key_station_id": 2
   }
 }, {
   "model": "airs.program",
@@ -95,12 +81,10 @@
   "fields": {
     "name": "ナインティナインのオールナイトニッポン",
     "formatted_name": "ﾅｲﾝﾃｨﾅｲﾝのｵｰﾙﾅｲﾄﾆｯﾎﾟﾝ",
-    "hashtag": "ナインティナインANN",
     "twitter_screen_name": "NinetyNineANN",
     "site_url": "",
     "wikipedia_url": "",
-    "key_station_id": 2,
-    "per_week": 1
+    "key_station_id": 2
   }
 }, {
   "model": "airs.program",
@@ -108,12 +92,10 @@
   "fields": {
     "name": "三四郎のオールナイトニッポン0",
     "formatted_name": "三四郎のｵｰﾙﾅｲﾄﾆｯﾎﾟﾝ0(zero)",
-    "hashtag": "三四郎ANN0",
     "twitter_screen_name": "SanshiroANN",
     "site_url": "",
     "wikipedia_url": "",
-    "key_station_id": 2,
-    "per_week": 1
+    "key_station_id": 2
   }
 }, {
   "model": "airs.program",
@@ -121,12 +103,10 @@
   "fields": {
     "name": "オードリーのオールナイトニッポン",
     "formatted_name": "ｵｰﾄﾞﾘｰのｵｰﾙﾅｲﾄﾆｯﾎﾟﾝ",
-    "hashtag": "annkw",
     "twitter_screen_name": "annkw5tyb",
     "site_url": "https://www.allnightnippon.com/kw/",
     "wikipedia_url": "https://ja.wikipedia.org/wiki/%E3%82%AA%E3%83%BC%E3%83%89%E3%83%AA%E3%83%BC%E3%81%AE%E3%82%AA%E3%83%BC%E3%83%AB%E3%83%8A%E3%82%A4%E3%83%88%E3%83%8B%E3%83%83%E3%83%9D%E3%83%B3",
-    "key_station_id": 2,
-    "per_week": 1
+    "key_station_id": 2
   }
 }, {
   "model": "airs.program",
@@ -134,12 +114,10 @@
   "fields": {
     "name": "ファーストサマーウイカのオールナイトニッポン0",
     "formatted_name": "ﾌｧｰｽﾄｻﾏｰｳｲｶのｵｰﾙﾅｲﾄﾆｯﾎﾟﾝ0(zero)",
-    "hashtag": "ウイカANN0",
     "twitter_screen_name": "fsuann0",
     "site_url": "",
     "wikipedia_url": "",
-    "key_station_id": 2,
-    "per_week": 1
+    "key_station_id": 2
   }
 }, {
   "model": "airs.program",
@@ -147,12 +125,10 @@
   "fields": {
     "name": "Creepy Nutsのオールナイトニッポン0",
     "formatted_name": "creepynutsのｵｰﾙﾅｲﾄﾆｯﾎﾟﾝ0(zero)",
-    "hashtag": "cnann0",
     "twitter_screen_name": "cnann0",
     "site_url": "",
     "wikipedia_url": "",
-    "key_station_id": 2,
-    "per_week": 1
+    "key_station_id": 2
   }
 }, {
   "model": "airs.program",
@@ -160,12 +136,10 @@
   "fields": {
     "name": "佐久間宣行のオールナイトニッポン0",
     "formatted_name": "佐久間宣行のｵｰﾙﾅｲﾄﾆｯﾎﾟﾝ0(zero)",
-    "hashtag": "佐久間宣行ANN0",
     "twitter_screen_name": "SakumaANN0",
     "site_url": "",
     "wikipedia_url": "",
-    "key_station_id": 2,
-    "per_week": 1
+    "key_station_id": 2
   }
 }, {
   "model": "airs.program",
@@ -173,12 +147,10 @@
   "fields": {
     "name": "水溜りボンドのオールナイトニッポン0",
     "formatted_name": "水溜りﾎﾞﾝﾄﾞ･ｶﾝﾀのｵｰﾙﾅｲﾄﾆｯﾎﾟﾝ0(zero),水溜りﾎﾞﾝﾄﾞのｵｰﾙﾅｲﾄﾆｯﾎﾟﾝ0(zero)",
-    "hashtag": "水溜りボンドANN0",
     "twitter_screen_name": "mizuann0",
     "site_url": "",
     "wikipedia_url": "",
-    "key_station_id": 2,
-    "per_week": 1
+    "key_station_id": 2
   }
 }, {
   "model": "airs.program",
@@ -186,12 +158,10 @@
   "fields": {
     "name": "霜降り明星のオールナイトニッポン",
     "formatted_name": "霜降り明星のｵｰﾙﾅｲﾄﾆｯﾎﾟﾝ",
-    "hashtag": "霜降り明星ANN",
     "twitter_screen_name": "shimofuri_ANN",
     "site_url": "",
     "wikipedia_url": "",
-    "key_station_id": 2,
-    "per_week": 1
+    "key_station_id": 2
   }
 }, {
   "model": "airs.program",
@@ -199,12 +169,10 @@
   "fields": {
     "name": "マヂカルラブリーのオールナイトニッポン0",
     "formatted_name": "ﾏﾁﾞｶﾙﾗﾌﾞﾘｰのｵｰﾙﾅｲﾄﾆｯﾎﾟﾝ0(zero)",
-    "hashtag": "マヂラブANN0",
     "twitter_screen_name": "magiloveANN0",
     "site_url": "",
     "wikipedia_url": "",
-    "key_station_id": 2,
-    "per_week": 1
+    "key_station_id": 2
   }
 }, {
   "model": "airs.program",
@@ -212,12 +180,10 @@
   "fields": {
     "name": "伊集院光 深夜の馬鹿力",
     "formatted_name": "junk伊集院光･深夜の馬鹿力,junk伊集院光深夜の馬鹿力",
-    "hashtag": "ijuin",
     "twitter_screen_name": "",
     "site_url": "",
     "wikipedia_url": "",
-    "key_station_id": 1,
-    "per_week": 1
+    "key_station_id": 1
   }
 }, {
   "model": "airs.program",
@@ -225,12 +191,10 @@
   "fields": {
     "name": "爆笑問題カーボーイ",
     "formatted_name": "junk爆笑問題ｶｰﾎﾞｰｲ",
-    "hashtag": "bakusho",
     "twitter_screen_name": "",
     "site_url": "",
     "wikipedia_url": "",
-    "key_station_id": 1,
-    "per_week": 1
+    "key_station_id": 1
   }
 }, {
   "model": "airs.program",
@@ -238,12 +202,10 @@
   "fields": {
     "name": "山里亮太の不毛な議論",
     "formatted_name": "junk山里亮太の不毛な議論",
-    "hashtag": "fumou954",
     "twitter_screen_name": "",
     "site_url": "",
     "wikipedia_url": "",
-    "key_station_id": 1,
-    "per_week": 1
+    "key_station_id": 1
   }
 }, {
   "model": "airs.program",
@@ -251,12 +213,10 @@
   "fields": {
     "name": "おぎやはぎのメガネびいき",
     "formatted_name": "junkおぎやはぎのﾒｶﾞﾈびいき",
-    "hashtag": "meganebiiki",
     "twitter_screen_name": "",
     "site_url": "",
     "wikipedia_url": "",
-    "key_station_id": 1,
-    "per_week": 1
+    "key_station_id": 1
   }
 }, {
   "model": "airs.program",
@@ -264,11 +224,9 @@
   "fields": {
     "name": "バナナマンのバナナムーンGOLD",
     "formatted_name": "junkﾊﾞﾅﾅﾏﾝのﾊﾞﾅﾅﾑｰﾝgold",
-    "hashtag": "bananamoon",
     "twitter_screen_name": "",
     "site_url": "",
     "wikipedia_url": "",
-    "key_station_id": 1,
-    "per_week": 1
+    "key_station_id": 1
   }
 }]

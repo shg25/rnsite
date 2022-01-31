@@ -15,12 +15,10 @@ class BroadcasterAdmin(admin.ModelAdmin):
         'formatted_name',
         'site_url',
         'wikipedia_url',
-        'area',
-        'address',
-        'keyword'
+        'address'
     ]
     inlines = [ProgramInline]
-    list_display = ('id', 'radiko_identifier', 'name', 'formatted_name', 'area', 'keyword')
+    list_display = ('id', 'radiko_identifier', 'name', 'formatted_name')
     list_display_links = ('name',)
     ordering = ('id',)
 
@@ -32,14 +30,12 @@ class ProgramAdmin(admin.ModelAdmin):
     fields = [
         'name',
         'formatted_name',
-        'hashtag',
         'twitter_screen_name',
         'site_url',
         'wikipedia_url',
-        'key_station_id',
-        'per_week'
+        'key_station_id'
     ]
-    list_display = ('id', 'name', 'key_station_id', 'per_week')
+    list_display = ('id', 'name', 'key_station_id')
     list_display_links = ('name',)
     list_filter = ['key_station_id']
     ordering = ('id',)

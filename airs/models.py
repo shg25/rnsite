@@ -46,17 +46,8 @@ class Broadcaster(models.Model):
         null=True, blank=True,
         max_length=400,
     )
-    area = models.CharField(
-        verbose_name='放送対象地域',
-        max_length=20,
-    )
     address = models.CharField(
         verbose_name='所在地',
-        max_length=400,
-    )
-    keyword = models.CharField(
-        verbose_name='キーワード',
-        null=True, blank=True,
         max_length=400,
     )
 
@@ -74,11 +65,6 @@ class Program(models.Model):
     formatted_name = models.TextField(
         verbose_name='整形した名前',
         null=True, blank=True,
-    )
-    hashtag = models.CharField(
-        verbose_name='ハッシュタグ',
-        null=True, blank=True,
-        max_length=80,
     )
     twitter_screen_name = models.CharField(
         verbose_name='Twitterスクリーンネーム',
@@ -99,10 +85,6 @@ class Program(models.Model):
         Broadcaster, on_delete=models.CASCADE,
         verbose_name='キー局',
         null=True, blank=True,
-    )
-    per_week = models.FloatField(
-        verbose_name='週何回放送か',
-        default=1,
     )
 
     def __str__(self):

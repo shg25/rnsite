@@ -8,9 +8,7 @@
     "formatted_name": "tbsﾗｼﾞｵ",
     "site_url": "https://www.tbsradio.jp/",
     "wikipedia_url": "https://ja.wikipedia.org/wiki/TBS%E3%83%A9%E3%82%B8%E3%82%AA",
-    "address": "東京都港区赤坂五丁目3番6号 TBS放送センター9階",
-    "area": "関東広域圏",
-    "keyword": "JUNK"
+    "address": "東京都港区赤坂五丁目3番6号 TBS放送センター9階"
   }
 }, {
   "model": "airs.broadcaster",
@@ -22,9 +20,7 @@
     "formatted_name": "ﾆｯﾎﾟﾝ放送",
     "site_url": "https://www.1242.com/",
     "wikipedia_url": "https://ja.wikipedia.org/wiki/%E3%83%8B%E3%83%83%E3%83%9D%E3%83%B3%E6%94%BE%E9%80%81",
-    "address": "東京都千代田区有楽町1丁目9番3号 糖業会館・ニッポン放送本社ビル内",
-    "area": "関東広域圏",
-    "keyword": "オールナイトニッポン"
+    "address": "東京都千代田区有楽町1丁目9番3号 糖業会館・ニッポン放送本社ビル内"
   }
 }, {
   "model": "airs.broadcaster",
@@ -36,9 +32,7 @@
     "formatted_name": "文化放送",
     "site_url": "https://www.joqr.co.jp/",
     "wikipedia_url": "https://ja.wikipedia.org/wiki/%E6%96%87%E5%8C%96%E6%94%BE%E9%80%81",
-    "address": "東京都港区浜松町1丁目31番地",
-    "area": "関東広域圏",
-    "keyword": ""
+    "address": "東京都港区浜松町1丁目31番地"
   }
 }, {
   "model": "airs.broadcaster",
@@ -50,9 +44,7 @@
     "formatted_name": "ﾗｼﾞｵ日本",
     "site_url": "http://www.jorf.co.jp/",
     "wikipedia_url": "https://ja.wikipedia.org/wiki/%E3%82%A2%E3%83%BC%E3%83%AB%E3%83%BB%E3%82%A8%E3%83%95%E3%83%BB%E3%83%A9%E3%82%B8%E3%82%AA%E6%97%A5%E6%9C%AC",
-    "address": "神奈川県横浜市中区長者町5-85 三共横浜ビル",
-    "area": "神奈川県",
-    "keyword": ""
+    "address": "神奈川県横浜市中区長者町5-85 三共横浜ビル"
   }
 }, {
   "model": "airs.broadcaster",
@@ -64,9 +56,7 @@
     "formatted_name": "crt栃木放送",
     "site_url": "http://www.crt-radio.co.jp/",
     "wikipedia_url": "https://ja.wikipedia.org/wiki/%E6%A0%83%E6%9C%A8%E6%94%BE%E9%80%81",
-    "address": "栃木県宇都宮市昭和二丁目2番5号",
-    "area": "栃木県",
-    "keyword": ""
+    "address": "栃木県宇都宮市昭和二丁目2番5号"
   }
 }, {
   "model": "airs.broadcaster",
@@ -78,9 +68,7 @@
     "formatted_name": "luckyfm茨城放送",
     "site_url": "https://lucky-ibaraki.com/",
     "wikipedia_url": "https://ja.wikipedia.org/wiki/%E8%8C%A8%E5%9F%8E%E6%94%BE%E9%80%81",
-    "address": "茨城県水戸市千波町2084-2",
-    "area": "茨城県",
-    "keyword": ""
+    "address": "茨城県水戸市千波町2084-2"
   }
 }, {
   "model": "airs.broadcaster",
@@ -92,9 +80,7 @@
     "formatted_name": "abcﾗｼﾞｵ",
     "site_url": "https://www.abc1008.com/",
     "wikipedia_url": "https://ja.wikipedia.org/wiki/%E6%9C%9D%E6%97%A5%E6%94%BE%E9%80%81%E3%83%A9%E3%82%B8%E3%82%AA",
-    "address": "大阪府大阪市福島区福島1丁目1番30号",
-    "area": "近畿広域圏",
-    "keyword": ""
+    "address": "大阪府大阪市福島区福島1丁目1番30号"
   }
 }, {
   "model": "airs.broadcaster",
@@ -106,9 +92,7 @@
     "formatted_name": "mbsﾗｼﾞｵ",
     "site_url": "https://www.mbs1179.com/",
     "wikipedia_url": "https://ja.wikipedia.org/wiki/MBS%E3%83%A9%E3%82%B8%E3%82%AA",
-    "address": "大阪市北区茶屋町17番1号",
-    "area": "近畿広域圏",
-    "keyword": "アッパレやってまーす！"
+    "address": "大阪市北区茶屋町17番1号"
   }
 }, {
   "model": "airs.broadcaster",
@@ -120,9 +104,7 @@
     "formatted_name": "obcﾗｼﾞｵ大阪",
     "site_url": "http://www.obc1314.co.jp/",
     "wikipedia_url": "https://ja.wikipedia.org/wiki/%E5%A4%A7%E9%98%AA%E6%94%BE%E9%80%81",
-    "address": "大阪府大阪市港区弁天1丁目2番4号 OSAKA BAY TOWER 2番街西館4階",
-    "area": "近畿広域圏",
-    "keyword": ""
+    "address": "大阪府大阪市港区弁天1丁目2番4号 OSAKA BAY TOWER 2番街西館4階"
   }
 }, {
   "model": "airs.broadcaster",
@@ -134,9 +116,7 @@
     "formatted_name": "ﾗｼﾞｵ関西",
     "site_url": "https://jocr.jp/",
     "wikipedia_url": "https://ja.wikipedia.org/wiki/%E3%83%A9%E3%82%B8%E3%82%AA%E9%96%A2%E8%A5%BF",
-    "address": "兵庫県神戸市中央区東川崎町1丁目5番7号 神戸情報文化ビル7階",
-    "area": "兵庫県",
-    "keyword": ""
+    "address": "兵庫県神戸市中央区東川崎町1丁目5番7号 神戸情報文化ビル7階"
   }
 }, {
   "model": "airs.broadcaster",
@@ -148,9 +128,7 @@
     "formatted_name": "kbs京都ﾗｼﾞｵ",
     "site_url": "https://www.kbs-kyoto.co.jp/program/radio.htm",
     "wikipedia_url": "https://ja.wikipedia.org/wiki/%E4%BA%AC%E9%83%BD%E6%94%BE%E9%80%81",
-    "address": "京都府京都市上京区烏丸通一条下ル 龍前町600番1号",
-    "area": "京都府 滋賀県",
-    "keyword": ""
+    "address": "京都府京都市上京区烏丸通一条下ル 龍前町600番1号"
   }
 }, {
   "model": "airs.broadcaster",
@@ -162,9 +140,7 @@
     "formatted_name": "wbs和歌山放送",
     "site_url": "https://www.wbs.co.jp/",
     "wikipedia_url": "https://ja.wikipedia.org/wiki/%E5%92%8C%E6%AD%8C%E5%B1%B1%E6%94%BE%E9%80%81",
-    "address": "和歌山県和歌山市湊本町3丁目3番地",
-    "area": "和歌山県",
-    "keyword": ""
+    "address": "和歌山県和歌山市湊本町3丁目3番地"
   }
 }, {
   "model": "airs.broadcaster",
@@ -176,9 +152,7 @@
     "formatted_name": "cbcﾗｼﾞｵ",
     "site_url": "https://hicbc.com/radio/",
     "wikipedia_url": "https://ja.wikipedia.org/wiki/CBC%E3%83%A9%E3%82%B8%E3%82%AA",
-    "address": "愛知県名古屋市中区新栄1丁目2番8号",
-    "area": "中京広域圏",
-    "keyword": ""
+    "address": "愛知県名古屋市中区新栄1丁目2番8号"
   }
 }, {
   "model": "airs.broadcaster",
@@ -190,9 +164,7 @@
     "formatted_name": "東海ﾗｼﾞｵ",
     "site_url": "https://www.tokairadio.co.jp/",
     "wikipedia_url": "https://ja.wikipedia.org/wiki/%E6%9D%B1%E6%B5%B7%E3%83%A9%E3%82%B8%E3%82%AA%E6%94%BE%E9%80%81",
-    "address": "愛知県名古屋市東区東桜1丁目14番27号",
-    "area": "中京広域圏",
-    "keyword": ""
+    "address": "愛知県名古屋市東区東桜1丁目14番27号"
   }
 }, {
   "model": "airs.broadcaster",
@@ -204,9 +176,7 @@
     "formatted_name": "ぎふﾁｬﾝ",
     "site_url": "https://www.zf-web.com/",
     "wikipedia_url": "https://ja.wikipedia.org/wiki/%E5%B2%90%E9%98%9C%E6%94%BE%E9%80%81",
-    "address": "岐阜県岐阜市橋本町2丁目52番地 岐阜シティ・タワー43 4階",
-    "area": "岐阜県",
-    "keyword": ""
+    "address": "岐阜県岐阜市橋本町2丁目52番地 岐阜シティ・タワー43 4階"
   }
 }, {
   "model": "airs.broadcaster",
@@ -218,9 +188,7 @@
     "formatted_name": "hbcﾗｼﾞｵ",
     "site_url": "https://www.hbc.co.jp/radio/",
     "wikipedia_url": "https://ja.wikipedia.org/wiki/HBC%E3%83%A9%E3%82%B8%E3%82%AA",
-    "address": "北海道札幌市中央区北1条西5丁目2番地",
-    "area": "北海道",
-    "keyword": ""
+    "address": "北海道札幌市中央区北1条西5丁目2番地"
   }
 }, {
   "model": "airs.broadcaster",
@@ -232,9 +200,7 @@
     "formatted_name": "stvﾗｼﾞｵ",
     "site_url": "https://www.stv.jp/radio/index.html",
     "wikipedia_url": "https://ja.wikipedia.org/wiki/STV%E3%83%A9%E3%82%B8%E3%82%AA",
-    "address": "北海道札幌市中央区北1条西8丁目1番1号 STV放送会館内",
-    "area": "北海道",
-    "keyword": ""
+    "address": "北海道札幌市中央区北1条西8丁目1番1号 STV放送会館内"
   }
 }, {
   "model": "airs.broadcaster",
@@ -246,9 +212,7 @@
     "formatted_name": "rab青森放送",
     "site_url": "https://www.rab.co.jp/",
     "wikipedia_url": "https://ja.wikipedia.org/wiki/%E9%9D%92%E6%A3%AE%E6%94%BE%E9%80%81",
-    "address": "青森県青森市松森1丁目8番1号",
-    "area": "青森県",
-    "keyword": ""
+    "address": "青森県青森市松森1丁目8番1号"
   }
 }, {
   "model": "airs.broadcaster",
@@ -260,9 +224,7 @@
     "formatted_name": "abs秋田放送",
     "site_url": "https://www.akita-abs.co.jp/",
     "wikipedia_url": "https://ja.wikipedia.org/wiki/%E7%A7%8B%E7%94%B0%E6%94%BE%E9%80%81",
-    "address": "秋田県秋田市中通7丁目1番1-2号",
-    "area": "秋田県",
-    "keyword": ""
+    "address": "秋田県秋田市中通7丁目1番1-2号"
   }
 }, {
   "model": "airs.broadcaster",
@@ -274,9 +236,7 @@
     "formatted_name": "ibcﾗｼﾞｵ",
     "site_url": "https://www.ibc.co.jp/radio/",
     "wikipedia_url": "https://ja.wikipedia.org/wiki/IBC%E5%B2%A9%E6%89%8B%E6%94%BE%E9%80%81",
-    "address": "岩手県盛岡市志家町6番1号",
-    "area": "岩手県",
-    "keyword": ""
+    "address": "岩手県盛岡市志家町6番1号"
   }
 }, {
   "model": "airs.broadcaster",
@@ -288,9 +248,7 @@
     "formatted_name": "tbcﾗｼﾞｵ",
     "site_url": "http://www.tbc-sendai.co.jp/02radio/",
     "wikipedia_url": "https://ja.wikipedia.org/wiki/%E6%9D%B1%E5%8C%97%E6%94%BE%E9%80%81",
-    "address": "宮城県仙台市太白区八木山香澄町26番1号",
-    "area": "宮城県",
-    "keyword": ""
+    "address": "宮城県仙台市太白区八木山香澄町26番1号"
   }
 }, {
   "model": "airs.broadcaster",
@@ -302,9 +260,7 @@
     "formatted_name": "ybc山形放送",
     "site_url": "http://www.ybc.co.jp/",
     "wikipedia_url": "https://ja.wikipedia.org/wiki/%E5%B1%B1%E5%BD%A2%E6%94%BE%E9%80%81",
-    "address": "山形県山形市旅篭町2丁目5番12号 山形メディアタワー内",
-    "area": "山形県",
-    "keyword": ""
+    "address": "山形県山形市旅篭町2丁目5番12号 山形メディアタワー内"
   }
 }, {
   "model": "airs.broadcaster",
@@ -316,9 +272,7 @@
     "formatted_name": "rfcﾗｼﾞｵ福島",
     "site_url": "http://www.rfc.jp/",
     "wikipedia_url": "https://ja.wikipedia.org/wiki/%E3%83%A9%E3%82%B8%E3%82%AA%E7%A6%8F%E5%B3%B6",
-    "address": "福島県福島市下荒子8番地",
-    "area": "福島県",
-    "keyword": ""
+    "address": "福島県福島市下荒子8番地"
   }
 }, {
   "model": "airs.broadcaster",
@@ -330,9 +284,7 @@
     "formatted_name": "bsnﾗｼﾞｵ",
     "site_url": "https://www.ohbsn.com/radio/",
     "wikipedia_url": "https://ja.wikipedia.org/wiki/%E6%96%B0%E6%BD%9F%E6%94%BE%E9%80%81",
-    "address": "新潟県新潟市中央区川岸町3丁目18番地",
-    "area": "新潟県",
-    "keyword": ""
+    "address": "新潟県新潟市中央区川岸町3丁目18番地"
   }
 }, {
   "model": "airs.broadcaster",
@@ -344,9 +296,7 @@
     "formatted_name": "sbcﾗｼﾞｵ",
     "site_url": "https://sbc21.co.jp/blogwp/radio/",
     "wikipedia_url": "https://ja.wikipedia.org/wiki/%E4%BF%A1%E8%B6%8A%E6%94%BE%E9%80%81",
-    "address": "長野県長野市鶴賀問御所町1200番3号",
-    "area": "長野県",
-    "keyword": ""
+    "address": "長野県長野市鶴賀問御所町1200番3号"
   }
 }, {
   "model": "airs.broadcaster",
@@ -358,9 +308,7 @@
     "formatted_name": "ybsﾗｼﾞｵ",
     "site_url": "https://www.ybs.jp/timetable/radio/",
     "wikipedia_url": "https://ja.wikipedia.org/wiki/%E5%B1%B1%E6%A2%A8%E6%94%BE%E9%80%81",
-    "address": "山梨県甲府市北口二丁目6番10号",
-    "area": "山梨県",
-    "keyword": ""
+    "address": "山梨県甲府市北口二丁目6番10号"
   }
 }, {
   "model": "airs.broadcaster",
@@ -372,9 +320,7 @@
     "formatted_name": "sbsﾗｼﾞｵ",
     "site_url": "https://www.at-s.com/sbsradio/index.html",
     "wikipedia_url": "https://ja.wikipedia.org/wiki/%E9%9D%99%E5%B2%A1%E6%94%BE%E9%80%81",
-    "address": "静岡県静岡市駿河区登呂三丁目1番1号",
-    "area": "静岡県",
-    "keyword": ""
+    "address": "静岡県静岡市駿河区登呂三丁目1番1号"
   }
 }, {
   "model": "airs.broadcaster",
@@ -386,9 +332,7 @@
     "formatted_name": "knbﾗｼﾞｵ",
     "site_url": "https://www.knb.ne.jp/radio/",
     "wikipedia_url": "https://ja.wikipedia.org/wiki/%E5%8C%97%E6%97%A5%E6%9C%AC%E6%94%BE%E9%80%81",
-    "address": "富山県富山市牛島町10番18号",
-    "area": "富山県",
-    "keyword": ""
+    "address": "富山県富山市牛島町10番18号"
   }
 }, {
   "model": "airs.broadcaster",
@@ -400,9 +344,7 @@
     "formatted_name": "mroﾗｼﾞｵ",
     "site_url": "https://www.mro.co.jp/radio/",
     "wikipedia_url": "https://ja.wikipedia.org/wiki/%E5%8C%97%E9%99%B8%E6%94%BE%E9%80%81",
-    "address": "石川県金沢市本多町3丁目2番1号",
-    "area": "石川県",
-    "keyword": ""
+    "address": "石川県金沢市本多町3丁目2番1号"
   }
 }, {
   "model": "airs.broadcaster",
@@ -414,9 +356,7 @@
     "formatted_name": "fbcﾗｼﾞｵ",
     "site_url": "https://www.fbc.jp/radio/",
     "wikipedia_url": "https://ja.wikipedia.org/wiki/%E7%A6%8F%E4%BA%95%E6%94%BE%E9%80%81",
-    "address": "福井県福井市大和田2丁目510番地",
-    "area": "福井県",
-    "keyword": ""
+    "address": "福井県福井市大和田2丁目510番地"
   }
 }, {
   "model": "airs.broadcaster",
@@ -428,9 +368,7 @@
     "formatted_name": "bssﾗｼﾞｵ",
     "site_url": "https://www.bss.jp/radio/",
     "wikipedia_url": "https://ja.wikipedia.org/wiki/%E5%B1%B1%E9%99%B0%E6%94%BE%E9%80%81",
-    "address": "鳥取県米子市西福原1丁目1番71号",
-    "area": "鳥取県 島根県",
-    "keyword": ""
+    "address": "鳥取県米子市西福原1丁目1番71号"
   }
 }, {
   "model": "airs.broadcaster",
@@ -442,9 +380,7 @@
     "formatted_name": "rskﾗｼﾞｵ",
     "site_url": "https://www.rsk.co.jp/radio/",
     "wikipedia_url": "https://ja.wikipedia.org/wiki/RSK%E3%83%A9%E3%82%B8%E3%82%AA",
-    "address": "岡山県岡山市北区天神町9番24号 RSKイノベイティブ・メディアセンター",
-    "area": "岡山県",
-    "keyword": ""
+    "address": "岡山県岡山市北区天神町9番24号 RSKイノベイティブ・メディアセンター"
   }
 }, {
   "model": "airs.broadcaster",
@@ -456,9 +392,7 @@
     "formatted_name": "rccﾗｼﾞｵ",
     "site_url": "https://radio.rcc.jp/",
     "wikipedia_url": "https://ja.wikipedia.org/wiki/%E4%B8%AD%E5%9B%BD%E6%94%BE%E9%80%81",
-    "address": "広島県広島市中区基町21番3号",
-    "area": "広島県",
-    "keyword": ""
+    "address": "広島県広島市中区基町21番3号"
   }
 }, {
   "model": "airs.broadcaster",
@@ -470,9 +404,7 @@
     "formatted_name": "kry山口放送",
     "site_url": "https://kry.co.jp/",
     "wikipedia_url": "https://ja.wikipedia.org/wiki/%E5%B1%B1%E5%8F%A3%E6%94%BE%E9%80%81",
-    "address": "山口県周南市大字徳山5853-2（公園区）",
-    "area": "山口県",
-    "keyword": ""
+    "address": "山口県周南市大字徳山5853-2（公園区）"
   }
 }, {
   "model": "airs.broadcaster",
@@ -484,9 +416,7 @@
     "formatted_name": "rnc西日本放送",
     "site_url": "https://www.rnc.co.jp/",
     "wikipedia_url": "https://ja.wikipedia.org/wiki/%E8%A5%BF%E6%97%A5%E6%9C%AC%E6%94%BE%E9%80%81%E3%83%A9%E3%82%B8%E3%82%AA",
-    "address": "香川県高松市丸の内8番15号",
-    "area": "香川県",
-    "keyword": ""
+    "address": "香川県高松市丸の内8番15号"
   }
 }, {
   "model": "airs.broadcaster",
@@ -498,9 +428,7 @@
     "formatted_name": "jrt四国放送",
     "site_url": "https://www.jrt.co.jp/",
     "wikipedia_url": "https://ja.wikipedia.org/wiki/%E5%9B%9B%E5%9B%BD%E6%94%BE%E9%80%81",
-    "address": "徳島県徳島市中徳島町2丁目5番2号 徳島新聞放送会館内",
-    "area": "徳島県",
-    "keyword": ""
+    "address": "徳島県徳島市中徳島町2丁目5番2号 徳島新聞放送会館内"
   }
 }, {
   "model": "airs.broadcaster",
@@ -512,9 +440,7 @@
     "formatted_name": "rnb南海放送",
     "site_url": "https://www.rnb.co.jp/",
     "wikipedia_url": "https://ja.wikipedia.org/wiki/%E5%8D%97%E6%B5%B7%E6%94%BE%E9%80%81",
-    "address": "愛媛県松山市本町1丁目1番1号",
-    "area": "愛媛県",
-    "keyword": ""
+    "address": "愛媛県松山市本町1丁目1番1号"
   }
 }, {
   "model": "airs.broadcaster",
@@ -526,9 +452,7 @@
     "formatted_name": "rkc高知放送",
     "site_url": "http://www.rkc-kochi.co.jp/",
     "wikipedia_url": "https://ja.wikipedia.org/wiki/%E9%AB%98%E7%9F%A5%E6%94%BE%E9%80%81",
-    "address": "高知県高知市本町三丁目2番15号",
-    "area": "高知県",
-    "keyword": ""
+    "address": "高知県高知市本町三丁目2番15号"
   }
 }, {
   "model": "airs.broadcaster",
@@ -540,9 +464,7 @@
     "formatted_name": "rkbﾗｼﾞｵ",
     "site_url": "https://rkb.jp/radio_top/",
     "wikipedia_url": "https://ja.wikipedia.org/wiki/RKB%E3%83%A9%E3%82%B8%E3%82%AA",
-    "address": "福岡県福岡市早良区百道浜2丁目3番8号",
-    "area": "福岡県",
-    "keyword": ""
+    "address": "福岡県福岡市早良区百道浜2丁目3番8号"
   }
 }, {
   "model": "airs.broadcaster",
@@ -554,9 +476,7 @@
     "formatted_name": "kbcﾗｼﾞｵ",
     "site_url": "https://kbc.co.jp/radio/",
     "wikipedia_url": "https://ja.wikipedia.org/wiki/KBC%E3%83%A9%E3%82%B8%E3%82%AA",
-    "address": "福岡県福岡市中央区長浜1丁目1番1号",
-    "area": "福岡県",
-    "keyword": ""
+    "address": "福岡県福岡市中央区長浜1丁目1番1号"
   }
 }, {
   "model": "airs.broadcaster",
@@ -568,9 +488,7 @@
     "formatted_name": "nbc長崎放送",
     "site_url": "https://www.nbc-nagasaki.co.jp/",
     "wikipedia_url": "https://ja.wikipedia.org/wiki/%E9%95%B7%E5%B4%8E%E6%94%BE%E9%80%81",
-    "address": "長崎県長崎市上町1番35号",
-    "area": "長崎県 佐賀県",
-    "keyword": ""
+    "address": "長崎県長崎市上町1番35号"
   }
 }, {
   "model": "airs.broadcaster",
@@ -582,9 +500,7 @@
     "formatted_name": "obsﾗｼﾞｵ",
     "site_url": "https://1098.am/",
     "wikipedia_url": "https://ja.wikipedia.org/wiki/%E5%A4%A7%E5%88%86%E6%94%BE%E9%80%81",
-    "address": "大分県大分市今津留三丁目-1番-1号",
-    "area": "大分県",
-    "keyword": ""
+    "address": "大分県大分市今津留三丁目-1番-1号"
   }
 }, {
   "model": "airs.broadcaster",
@@ -596,9 +512,7 @@
     "formatted_name": "rkkﾗｼﾞｵ",
     "site_url": "https://rkk.jp/radio/",
     "wikipedia_url": "https://ja.wikipedia.org/wiki/%E7%86%8A%E6%9C%AC%E6%94%BE%E9%80%81",
-    "address": "熊本県熊本市中央区山崎町30番地",
-    "area": "熊本県",
-    "keyword": ""
+    "address": "熊本県熊本市中央区山崎町30番地"
   }
 }, {
   "model": "airs.broadcaster",
@@ -610,9 +524,7 @@
     "formatted_name": "宮崎放送",
     "site_url": "http://mrt.jp/special/crisis_rain/",
     "wikipedia_url": "https://ja.wikipedia.org/wiki/%E5%AE%AE%E5%B4%8E%E6%94%BE%E9%80%81",
-    "address": "宮崎県宮崎市橘通西4丁目6番7号",
-    "area": "宮崎県",
-    "keyword": ""
+    "address": "宮崎県宮崎市橘通西4丁目6番7号"
   }
 }, {
   "model": "airs.broadcaster",
@@ -624,9 +536,7 @@
     "formatted_name": "mbcﾗｼﾞｵ",
     "site_url": "https://www.mbc.co.jp/radio/",
     "wikipedia_url": "https://ja.wikipedia.org/wiki/%E5%8D%97%E6%97%A5%E6%9C%AC%E6%94%BE%E9%80%81",
-    "address": "鹿児島県鹿児島市高麗町5-25",
-    "area": "鹿児島県",
-    "keyword": ""
+    "address": "鹿児島県鹿児島市高麗町5-25"
   }
 }, {
   "model": "airs.broadcaster",
@@ -638,9 +548,7 @@
     "formatted_name": "rbciﾗｼﾞｵ",
     "site_url": "https://www.rbc.co.jp/radio_top/",
     "wikipedia_url": "https://ja.wikipedia.org/wiki/%E7%90%89%E7%90%83%E6%94%BE%E9%80%81",
-    "address": "沖縄県那覇市久茂地二丁目3番1号 琉球放送会館",
-    "area": "沖縄県",
-    "keyword": ""
+    "address": "沖縄県那覇市久茂地二丁目3番1号 琉球放送会館"
   }
 }, {
   "model": "airs.broadcaster",
@@ -652,9 +560,7 @@
     "formatted_name": "ﾗｼﾞｵ沖縄",
     "site_url": "https://www.rokinawa.co.jp/",
     "wikipedia_url": "https://ja.wikipedia.org/wiki/%E3%83%A9%E3%82%B8%E3%82%AA%E6%B2%96%E7%B8%84",
-    "address": "沖縄県那覇市西1-4-8",
-    "area": "沖縄県",
-    "keyword": ""
+    "address": "沖縄県那覇市西1-4-8"
   }
 }, {
   "model": "airs.broadcaster",
@@ -666,9 +572,7 @@
     "formatted_name": "tokyofm",
     "site_url": "https://www.tfm.co.jp/",
     "wikipedia_url": "https://ja.wikipedia.org/wiki/%E3%82%A8%E3%83%95%E3%82%A8%E3%83%A0%E6%9D%B1%E4%BA%AC",
-    "address": "東京都千代田区麹町1丁目7番地",
-    "area": "東京都",
-    "keyword": ""
+    "address": "東京都千代田区麹町1丁目7番地"
   }
 }, {
   "model": "airs.broadcaster",
@@ -680,9 +584,7 @@
     "formatted_name": "j-wave",
     "site_url": "https://www.j-wave.co.jp/",
     "wikipedia_url": "https://ja.wikipedia.org/wiki/J-WAVE",
-    "address": "東京都港区六本木6丁目10番1号 六本木ヒルズ森タワー33階",
-    "area": "東京都",
-    "keyword": ""
+    "address": "東京都港区六本木6丁目10番1号 六本木ヒルズ森タワー33階"
   }
 }, {
   "model": "airs.broadcaster",
@@ -694,9 +596,7 @@
     "formatted_name": "interfm897",
     "site_url": "https://www.interfm.co.jp/",
     "wikipedia_url": "https://ja.wikipedia.org/wiki/InterFM897",
-    "address": "東京都品川区東品川1丁目3番3号 テレビ東京天王洲スタジオ7階",
-    "area": "関東広域圏",
-    "keyword": ""
+    "address": "東京都品川区東品川1丁目3番3号 テレビ東京天王洲スタジオ7階"
   }
 }, {
   "model": "airs.broadcaster",
@@ -708,9 +608,7 @@
     "formatted_name": "fmﾖｺﾊﾏ",
     "site_url": "https://www.fmyokohama.co.jp/",
     "wikipedia_url": "https://ja.wikipedia.org/wiki/%E6%A8%AA%E6%B5%9C%E3%82%A8%E3%83%95%E3%82%A8%E3%83%A0%E6%94%BE%E9%80%81",
-    "address": "神奈川県横浜市西区みなとみらい2-2-1 横浜ランドマークタワー10F",
-    "area": "神奈川県",
-    "keyword": ""
+    "address": "神奈川県横浜市西区みなとみらい2-2-1 横浜ランドマークタワー10F"
   }
 }, {
   "model": "airs.broadcaster",
@@ -722,9 +620,7 @@
     "formatted_name": "nack5",
     "site_url": "https://www.nack5.co.jp/",
     "wikipedia_url": "https://ja.wikipedia.org/wiki/%E3%82%A8%E3%83%95%E3%82%A8%E3%83%A0%E3%83%8A%E3%83%83%E3%82%AF%E3%83%95%E3%82%A1%E3%82%A4%E3%83%96",
-    "address": "埼玉県さいたま市大宮区錦町682番地2 JACK大宮11階",
-    "area": "埼玉県",
-    "keyword": ""
+    "address": "埼玉県さいたま市大宮区錦町682番地2 JACK大宮11階"
   }
 }, {
   "model": "airs.broadcaster",
@@ -736,9 +632,7 @@
     "formatted_name": "bayfm78",
     "site_url": "https://www.bayfm.co.jp/",
     "wikipedia_url": "https://ja.wikipedia.org/wiki/%E3%83%99%E3%82%A4%E3%82%A8%E3%83%95%E3%82%A8%E3%83%A0",
-    "address": "千葉県千葉市美浜区中瀬2丁目6番1号 ワールドビジネスガーデン マリブウエスト27階",
-    "area": "千葉県",
-    "keyword": ""
+    "address": "千葉県千葉市美浜区中瀬2丁目6番1号 ワールドビジネスガーデン マリブウエスト27階"
   }
 }, {
   "model": "airs.broadcaster",
@@ -750,9 +644,7 @@
     "formatted_name": "radioberry",
     "site_url": "https://www.berry.co.jp/",
     "wikipedia_url": "https://ja.wikipedia.org/wiki/%E3%82%A8%E3%83%95%E3%82%A8%E3%83%A0%E6%A0%83%E6%9C%A8",
-    "address": "栃木県宇都宮市中央一丁目2番1号",
-    "area": "栃木県",
-    "keyword": ""
+    "address": "栃木県宇都宮市中央一丁目2番1号"
   }
 }, {
   "model": "airs.broadcaster",
@@ -764,9 +656,7 @@
     "formatted_name": "fmgunma",
     "site_url": "https://www.fmgunma.com/fmg863/",
     "wikipedia_url": "https://ja.wikipedia.org/wiki/%E3%82%A8%E3%83%95%E3%82%A8%E3%83%A0%E7%BE%A4%E9%A6%AC",
-    "address": "群馬県前橋市若宮町一丁目4番8号 GNビル",
-    "area": "群馬県",
-    "keyword": ""
+    "address": "群馬県前橋市若宮町一丁目4番8号 GNビル"
   }
 }, {
   "model": "airs.broadcaster",
@@ -778,9 +668,7 @@
     "formatted_name": "fm大阪",
     "site_url": "https://www.fmosaka.net/",
     "wikipedia_url": "https://ja.wikipedia.org/wiki/%E3%82%A8%E3%83%95%E3%82%A8%E3%83%A0%E5%A4%A7%E9%98%AA",
-    "address": "大阪府大阪市浪速区湊町1丁目3番1号 湊町リバープレイス内",
-    "area": "大阪府",
-    "keyword": ""
+    "address": "大阪府大阪市浪速区湊町1丁目3番1号 湊町リバープレイス内"
   }
 }, {
   "model": "airs.broadcaster",
@@ -792,9 +680,7 @@
     "formatted_name": "fm802",
     "site_url": "https://funky802.com/",
     "wikipedia_url": "https://ja.wikipedia.org/wiki/FM802",
-    "address": "大阪府大阪市北区天神橋2丁目北2番6号 大和南森町ビル8・9階",
-    "area": "大阪府",
-    "keyword": ""
+    "address": "大阪府大阪市北区天神橋2丁目北2番6号 大和南森町ビル8・9階"
   }
 }, {
   "model": "airs.broadcaster",
@@ -806,9 +692,7 @@
     "formatted_name": "fmcocolo",
     "site_url": "https://cocolo.jp/",
     "wikipedia_url": "https://ja.wikipedia.org/wiki/FM_COCOLO",
-    "address": "大阪府大阪市北区天神橋2丁目北2番6号 大和南森町ビル内",
-    "area": "大阪府",
-    "keyword": ""
+    "address": "大阪府大阪市北区天神橋2丁目北2番6号 大和南森町ビル内"
   }
 }, {
   "model": "airs.broadcaster",
@@ -820,9 +704,7 @@
     "formatted_name": "e-radiofm滋賀",
     "site_url": "https://www.e-radio.co.jp/",
     "wikipedia_url": "https://ja.wikipedia.org/wiki/%E3%82%A8%E3%83%95%E3%82%A8%E3%83%A0%E6%BB%8B%E8%B3%80",
-    "address": "滋賀県大津市西の庄19番10号 リンクスビル6階",
-    "area": "滋賀県",
-    "keyword": ""
+    "address": "滋賀県大津市西の庄19番10号 リンクスビル6階"
   }
 }, {
   "model": "airs.broadcaster",
@@ -834,9 +716,7 @@
     "formatted_name": "kissfmkobe",
     "site_url": "https://www.kiss-fm.co.jp/",
     "wikipedia_url": "https://ja.wikipedia.org/wiki/%E5%85%B5%E5%BA%AB%E3%82%A8%E3%83%95%E3%82%A8%E3%83%A0%E6%94%BE%E9%80%81",
-    "address": "兵庫県神戸市中央区波止場町5番6号 神戸メリケンパーク オリエンタルホテル2階",
-    "area": "兵庫県",
-    "keyword": ""
+    "address": "兵庫県神戸市中央区波止場町5番6号 神戸メリケンパーク オリエンタルホテル2階"
   }
 }, {
   "model": "airs.broadcaster",
@@ -848,9 +728,7 @@
     "formatted_name": "α-stationfm京都",
     "site_url": "https://fm-kyoto.jp/",
     "wikipedia_url": "https://ja.wikipedia.org/wiki/%E3%82%A8%E3%83%95%E3%82%A8%E3%83%A0%E4%BA%AC%E9%83%BD",
-    "address": "京都府京都市下京区烏丸通四条下ル 水銀屋町620番地 COCON KARASUMA 8階",
-    "area": "京都府",
-    "keyword": ""
+    "address": "京都府京都市下京区烏丸通四条下ル 水銀屋町620番地 COCON KARASUMA 8階"
   }
 }, {
   "model": "airs.broadcaster",
@@ -862,9 +740,7 @@
     "formatted_name": "fmaichi",
     "site_url": "https://fma.co.jp/",
     "wikipedia_url": "https://ja.wikipedia.org/wiki/%E3%82%A8%E3%83%95%E3%82%A8%E3%83%A0%E6%84%9B%E7%9F%A5",
-    "address": "愛知県名古屋市中区千代田二丁目15番18号 名古屋通信ビル7階",
-    "area": "愛知県",
-    "keyword": ""
+    "address": "愛知県名古屋市中区千代田二丁目15番18号 名古屋通信ビル7階"
   }
 }, {
   "model": "airs.broadcaster",
@@ -876,9 +752,7 @@
     "formatted_name": "zip-fm",
     "site_url": "https://zip-fm.co.jp/",
     "wikipedia_url": "https://ja.wikipedia.org/wiki/ZIP-FM",
-    "address": "愛知県名古屋市中区丸の内三丁目20番17号 KDX桜通ビル17・18階",
-    "area": "愛知県",
-    "keyword": ""
+    "address": "愛知県名古屋市中区丸の内三丁目20番17号 KDX桜通ビル17・18階"
   }
 }, {
   "model": "airs.broadcaster",
@@ -890,9 +764,7 @@
     "formatted_name": "fmgifu",
     "site_url": "https://www.fmgifu.com/",
     "wikipedia_url": "https://ja.wikipedia.org/wiki/%E3%82%A8%E3%83%95%E3%82%A8%E3%83%A0%E5%B2%90%E9%98%9C",
-    "address": "岐阜県大垣市小野四丁目35番10号 大垣市情報工房内",
-    "area": "岐阜県",
-    "keyword": ""
+    "address": "岐阜県大垣市小野四丁目35番10号 大垣市情報工房内"
   }
 }, {
   "model": "airs.broadcaster",
@@ -904,9 +776,7 @@
     "formatted_name": "ﾚﾃﾞｨｵｷｭｰﾌﾞfm三重",
     "site_url": "https://fmmie.jp/",
     "wikipedia_url": "https://ja.wikipedia.org/wiki/%E4%B8%89%E9%87%8D%E3%82%A8%E3%83%95%E3%82%A8%E3%83%A0%E6%94%BE%E9%80%81",
-    "address": "三重県津市観音寺町1043-1",
-    "area": "三重県",
-    "keyword": ""
+    "address": "三重県津市観音寺町1043-1"
   }
 }, {
   "model": "airs.broadcaster",
@@ -918,9 +788,7 @@
     "formatted_name": "air-g'(fm北海道)",
     "site_url": "https://www.air-g.co.jp/",
     "wikipedia_url": "https://ja.wikipedia.org/wiki/%E3%82%A8%E3%83%95%E3%82%A8%E3%83%A0%E5%8C%97%E6%B5%B7%E9%81%93",
-    "address": "北海道札幌市中央区北1条西2丁目 札幌時計台ビル14階",
-    "area": "北海道",
-    "keyword": ""
+    "address": "北海道札幌市中央区北1条西2丁目 札幌時計台ビル14階"
   }
 }, {
   "model": "airs.broadcaster",
@@ -932,9 +800,7 @@
     "formatted_name": "fmnorthwave",
     "site_url": "https://www.fmnorth.co.jp/",
     "wikipedia_url": "https://ja.wikipedia.org/wiki/%E3%82%A8%E3%83%95%E3%82%A8%E3%83%A0%E3%83%BB%E3%83%8E%E3%83%BC%E3%82%B9%E3%82%A6%E3%82%A7%E3%83%BC%E3%83%96",
-    "address": "北海道札幌市北区北7条西4丁目 新北海道ビル",
-    "area": "北海道",
-    "keyword": ""
+    "address": "北海道札幌市北区北7条西4丁目 新北海道ビル"
   }
 }, {
   "model": "airs.broadcaster",
@@ -946,9 +812,7 @@
     "formatted_name": "ｴﾌｴﾑ青森",
     "site_url": "https://www.afb.co.jp/",
     "wikipedia_url": "https://ja.wikipedia.org/wiki/%E3%82%A8%E3%83%95%E3%82%A8%E3%83%A0%E9%9D%92%E6%A3%AE",
-    "address": "青森県青森市堤町1丁目7番19号",
-    "area": "青森県",
-    "keyword": ""
+    "address": "青森県青森市堤町1丁目7番19号"
   }
 }, {
   "model": "airs.broadcaster",
@@ -960,9 +824,7 @@
     "formatted_name": "ｴﾌｴﾑ秋田",
     "site_url": "https://www.fm-akita.co.jp/",
     "wikipedia_url": "https://ja.wikipedia.org/wiki/%E3%82%A8%E3%83%95%E3%82%A8%E3%83%A0%E7%A7%8B%E7%94%B0",
-    "address": "秋田県秋田市八橋本町三丁目7番10号",
-    "area": "秋田県",
-    "keyword": ""
+    "address": "秋田県秋田市八橋本町三丁目7番10号"
   }
 }, {
   "model": "airs.broadcaster",
@@ -974,9 +836,7 @@
     "formatted_name": "ｴﾌｴﾑ岩手",
     "site_url": "https://www.fmii.co.jp/",
     "wikipedia_url": "https://ja.wikipedia.org/wiki/%E3%82%A8%E3%83%95%E3%82%A8%E3%83%A0%E5%B2%A9%E6%89%8B",
-    "address": "岩手県盛岡市内丸2番10号",
-    "area": "岩手県",
-    "keyword": ""
+    "address": "岩手県盛岡市内丸2番10号"
   }
 }, {
   "model": "airs.broadcaster",
@@ -988,9 +848,7 @@
     "formatted_name": "datefmｴﾌｴﾑ仙台",
     "site_url": "http://771.fm/smp/",
     "wikipedia_url": "https://ja.wikipedia.org/wiki/%E3%82%A8%E3%83%95%E3%82%A8%E3%83%A0%E4%BB%99%E5%8F%B0",
-    "address": "宮城県仙台市青葉区本町二丁目10番28号",
-    "area": "宮城県",
-    "keyword": ""
+    "address": "宮城県仙台市青葉区本町二丁目10番28号"
   }
 }, {
   "model": "airs.broadcaster",
@@ -1002,9 +860,7 @@
     "formatted_name": "rhythmstationｴﾌｴﾑ山形",
     "site_url": "http://www.rfm.co.jp/",
     "wikipedia_url": "https://ja.wikipedia.org/wiki/%E3%82%A8%E3%83%95%E3%82%A8%E3%83%A0%E5%B1%B1%E5%BD%A2",
-    "address": "山形県山形市松山三丁目14番69号",
-    "area": "山形県",
-    "keyword": ""
+    "address": "山形県山形市松山三丁目14番69号"
   }
 }, {
   "model": "airs.broadcaster",
@@ -1016,9 +872,7 @@
     "formatted_name": "ふくしまfm",
     "site_url": "https://www.fmf.co.jp/",
     "wikipedia_url": "https://ja.wikipedia.org/wiki/%E3%82%A8%E3%83%95%E3%82%A8%E3%83%A0%E7%A6%8F%E5%B3%B6",
-    "address": "福島県郡山市神明町4-4",
-    "area": "福島県",
-    "keyword": ""
+    "address": "福島県郡山市神明町4-4"
   }
 }, {
   "model": "airs.broadcaster",
@@ -1030,9 +884,7 @@
     "formatted_name": "fmniigata",
     "site_url": "https://www.fmniigata.com/",
     "wikipedia_url": "https://ja.wikipedia.org/wiki/%E3%82%A8%E3%83%95%E3%82%A8%E3%83%A0%E3%83%A9%E3%82%B8%E3%82%AA%E6%96%B0%E6%BD%9F",
-    "address": "新潟県新潟市中央区幸西四丁目3番5号",
-    "area": "新潟県",
-    "keyword": ""
+    "address": "新潟県新潟市中央区幸西四丁目3番5号"
   }
 }, {
   "model": "airs.broadcaster",
@@ -1044,9 +896,7 @@
     "formatted_name": "fm長野",
     "site_url": "http://www.fmnagano.co.jp/",
     "wikipedia_url": "https://ja.wikipedia.org/wiki/%E9%95%B7%E9%87%8E%E3%82%A8%E3%83%95%E3%82%A8%E3%83%A0%E6%94%BE%E9%80%81",
-    "address": "長野県松本市本庄一丁目13番5号",
-    "area": "長野県",
-    "keyword": ""
+    "address": "長野県松本市本庄一丁目13番5号"
   }
 }, {
   "model": "airs.broadcaster",
@@ -1058,9 +908,7 @@
     "formatted_name": "fmfuji",
     "site_url": "https://www.fmfuji.jp/",
     "wikipedia_url": "https://ja.wikipedia.org/wiki/%E3%82%A8%E3%83%95%E3%82%A8%E3%83%A0%E5%AF%8C%E5%A3%AB",
-    "address": "山梨県甲府市川田町アリア105番地",
-    "area": "山梨県",
-    "keyword": ""
+    "address": "山梨県甲府市川田町アリア105番地"
   }
 }, {
   "model": "airs.broadcaster",
@@ -1072,9 +920,7 @@
     "formatted_name": "k-mixshizuoka",
     "site_url": "https://www.k-mix.co.jp/",
     "wikipedia_url": "https://ja.wikipedia.org/wiki/%E9%9D%99%E5%B2%A1%E3%82%A8%E3%83%95%E3%82%A8%E3%83%A0%E6%94%BE%E9%80%81",
-    "address": "静岡県浜松市中区常盤町133-24",
-    "area": "静岡県",
-    "keyword": ""
+    "address": "静岡県浜松市中区常盤町133-24"
   }
 }, {
   "model": "airs.broadcaster",
@@ -1086,9 +932,7 @@
     "formatted_name": "fmとやま",
     "site_url": "http://www.fmtoyama.co.jp/",
     "wikipedia_url": "https://ja.wikipedia.org/wiki/%E5%AF%8C%E5%B1%B1%E3%82%A8%E3%83%95%E3%82%A8%E3%83%A0%E6%94%BE%E9%80%81",
-    "address": "富山県富山市奥田町2番11号",
-    "area": "富山県",
-    "keyword": ""
+    "address": "富山県富山市奥田町2番11号"
   }
 }, {
   "model": "airs.broadcaster",
@@ -1100,9 +944,7 @@
     "formatted_name": "ｴﾌｴﾑ石川",
     "site_url": "https://hellofive.jp/",
     "wikipedia_url": "https://ja.wikipedia.org/wiki/%E3%82%A8%E3%83%95%E3%82%A8%E3%83%A0%E7%9F%B3%E5%B7%9D",
-    "address": "石川県金沢市彦三町二丁目1番45号",
-    "area": "石川県",
-    "keyword": ""
+    "address": "石川県金沢市彦三町二丁目1番45号"
   }
 }, {
   "model": "airs.broadcaster",
@@ -1114,9 +956,7 @@
     "formatted_name": "fm福井",
     "site_url": "https://www.fmfukui.jp/docs/",
     "wikipedia_url": "https://ja.wikipedia.org/wiki/%E7%A6%8F%E4%BA%95%E3%82%A8%E3%83%95%E3%82%A8%E3%83%A0%E6%94%BE%E9%80%81",
-    "address": "福井県福井市御幸一丁目1番1号",
-    "area": "福井県",
-    "keyword": ""
+    "address": "福井県福井市御幸一丁目1番1号"
   }
 }, {
   "model": "airs.broadcaster",
@@ -1128,9 +968,7 @@
     "formatted_name": "ｴﾌｴﾑ山陰",
     "site_url": "http://www.fm-sanin.co.jp/",
     "wikipedia_url": "https://ja.wikipedia.org/wiki/%E3%82%A8%E3%83%95%E3%82%A8%E3%83%A0%E5%B1%B1%E9%99%B0",
-    "address": "島根県松江市学園南1丁目2番1号 くにびきメッセ西棟2階",
-    "area": "島根県 鳥取県",
-    "keyword": ""
+    "address": "島根県松江市学園南1丁目2番1号 くにびきメッセ西棟2階"
   }
 }, {
   "model": "airs.broadcaster",
@@ -1142,9 +980,7 @@
     "formatted_name": "fm岡山",
     "site_url": "http://www.fm-okayama.co.jp/",
     "wikipedia_url": "https://ja.wikipedia.org/wiki/%E5%B2%A1%E5%B1%B1%E3%82%A8%E3%83%95%E3%82%A8%E3%83%A0%E6%94%BE%E9%80%81",
-    "address": "岡山県岡山市北区中山下一丁目8番45号",
-    "area": "岡山県",
-    "keyword": ""
+    "address": "岡山県岡山市北区中山下一丁目8番45号"
   }
 }, {
   "model": "airs.broadcaster",
@@ -1156,9 +992,7 @@
     "formatted_name": "広島fm",
     "site_url": "http://hfm.jp/",
     "wikipedia_url": "https://ja.wikipedia.org/wiki/%E5%BA%83%E5%B3%B6%E3%82%A8%E3%83%95%E3%82%A8%E3%83%A0%E6%94%BE%E9%80%81",
-    "address": "広島県広島市南区皆実町一丁目8番2号",
-    "area": "広島県",
-    "keyword": ""
+    "address": "広島県広島市南区皆実町一丁目8番2号"
   }
 }, {
   "model": "airs.broadcaster",
@@ -1170,9 +1004,7 @@
     "formatted_name": "ｴﾌｴﾑ山口",
     "site_url": "http://www.fmy.co.jp/",
     "wikipedia_url": "https://ja.wikipedia.org/wiki/%E3%82%A8%E3%83%95%E3%82%A8%E3%83%A0%E5%B1%B1%E5%8F%A3",
-    "address": "山口県山口市緑町3-31",
-    "area": "山口県",
-    "keyword": ""
+    "address": "山口県山口市緑町3-31"
   }
 }, {
   "model": "airs.broadcaster",
@@ -1184,9 +1016,7 @@
     "formatted_name": "ｴﾌｴﾑ香川",
     "site_url": "https://www.fmkagawa.co.jp/",
     "wikipedia_url": "https://ja.wikipedia.org/wiki/%E3%82%A8%E3%83%95%E3%82%A8%E3%83%A0%E9%A6%99%E5%B7%9D",
-    "address": "香川県高松市上之町二丁目1番43号",
-    "area": "香川県",
-    "keyword": ""
+    "address": "香川県高松市上之町二丁目1番43号"
   }
 }, {
   "model": "airs.broadcaster",
@@ -1198,9 +1028,7 @@
     "formatted_name": "fm徳島",
     "site_url": "https://fm807.jp/",
     "wikipedia_url": "https://ja.wikipedia.org/wiki/%E3%82%A8%E3%83%95%E3%82%A8%E3%83%A0%E5%BE%B3%E5%B3%B6",
-    "address": "徳島県徳島市寺島本町西1丁目61番地 徳島駅クレメントプラザ5階",
-    "area": "徳島県",
-    "keyword": ""
+    "address": "徳島県徳島市寺島本町西1丁目61番地 徳島駅クレメントプラザ5階"
   }
 }, {
   "model": "airs.broadcaster",
@@ -1212,9 +1040,7 @@
     "formatted_name": "fm愛媛",
     "site_url": "https://www.joeufm.co.jp/",
     "wikipedia_url": "https://ja.wikipedia.org/wiki/%E3%82%A8%E3%83%95%E3%82%A8%E3%83%A0%E6%84%9B%E5%AA%9B",
-    "address": "愛媛県松山市竹原町1丁目10番7",
-    "area": "愛媛県",
-    "keyword": ""
+    "address": "愛媛県松山市竹原町1丁目10番7"
   }
 }, {
   "model": "airs.broadcaster",
@@ -1226,9 +1052,7 @@
     "formatted_name": "ｴﾌｴﾑ高知",
     "site_url": "http://www.fmkochi.com/",
     "wikipedia_url": "https://ja.wikipedia.org/wiki/%E3%82%A8%E3%83%95%E3%82%A8%E3%83%A0%E9%AB%98%E7%9F%A5",
-    "address": "高知県高知市鷹匠町二丁目1番5号",
-    "area": "高知県",
-    "keyword": ""
+    "address": "高知県高知市鷹匠町二丁目1番5号"
   }
 }, {
   "model": "airs.broadcaster",
@@ -1240,9 +1064,7 @@
     "formatted_name": "fmfukuoka",
     "site_url": "https://fmfukuoka.co.jp/",
     "wikipedia_url": "https://ja.wikipedia.org/wiki/%E3%82%A8%E3%83%95%E3%82%A8%E3%83%A0%E7%A6%8F%E5%B2%A1",
-    "address": "福岡県福岡市中央区清川一丁目9番19号 渡辺通南ビル",
-    "area": "福岡県",
-    "keyword": ""
+    "address": "福岡県福岡市中央区清川一丁目9番19号 渡辺通南ビル"
   }
 }, {
   "model": "airs.broadcaster",
@@ -1254,9 +1076,7 @@
     "formatted_name": "crossfm",
     "site_url": "https://www.crossfm.co.jp/pc/w_index.php",
     "wikipedia_url": "https://ja.wikipedia.org/wiki/CROSS_FM",
-    "address": "福岡県北九州市小倉北区京町3丁目1番1号セントシティ北九州 10階",
-    "area": "福岡県",
-    "keyword": ""
+    "address": "福岡県北九州市小倉北区京町3丁目1番1号セントシティ北九州 10階"
   }
 }, {
   "model": "airs.broadcaster",
@@ -1268,9 +1088,7 @@
     "formatted_name": "lovefm",
     "site_url": "https://lovefm.co.jp/",
     "wikipedia_url": "https://ja.wikipedia.org/wiki/%E3%83%A9%E3%83%96%E3%82%A8%E3%83%95%E3%82%A8%E3%83%A0%E5%9B%BD%E9%9A%9B%E6%94%BE%E9%80%811",
-    "address": "福岡県福岡市中央区今泉1丁目12番23号 西鉄今泉ビル5階",
-    "area": "福岡県",
-    "keyword": ""
+    "address": "福岡県福岡市中央区今泉1丁目12番23号 西鉄今泉ビル5階"
   }
 }, {
   "model": "airs.broadcaster",
@@ -1282,9 +1100,7 @@
     "formatted_name": "ｴﾌｴﾑ佐賀",
     "site_url": "https://www.fmsaga.co.jp/",
     "wikipedia_url": "https://ja.wikipedia.org/wiki/%E3%82%A8%E3%83%95%E3%82%A8%E3%83%A0%E4%BD%90%E8%B3%80",
-    "address": "佐賀県佐賀市本庄町袋286番地5 サガンスクエアビル",
-    "area": "佐賀県",
-    "keyword": ""
+    "address": "佐賀県佐賀市本庄町袋286番地5 サガンスクエアビル"
   }
 }, {
   "model": "airs.broadcaster",
@@ -1296,9 +1112,7 @@
     "formatted_name": "fm長崎",
     "site_url": "https://www.fmnagasaki.co.jp/",
     "wikipedia_url": "https://ja.wikipedia.org/wiki/%E3%82%A8%E3%83%95%E3%82%A8%E3%83%A0%E9%95%B7%E5%B4%8E",
-    "address": "長崎県長崎市栄町5番5号 FM長崎ビル7階",
-    "area": "長崎県",
-    "keyword": ""
+    "address": "長崎県長崎市栄町5番5号 FM長崎ビル7階"
   }
 }, {
   "model": "airs.broadcaster",
@@ -1310,9 +1124,7 @@
     "formatted_name": "ｴﾌｴﾑ大分",
     "site_url": "http://www.fmoita.co.jp/",
     "wikipedia_url": "https://ja.wikipedia.org/wiki/%E3%82%A8%E3%83%95%E3%82%A8%E3%83%A0%E5%A4%A7%E5%88%86",
-    "address": "大分県大分市府内町3-8-8 ハニカムプラザ4F",
-    "area": "大分県",
-    "keyword": ""
+    "address": "大分県大分市府内町3-8-8 ハニカムプラザ4F"
   }
 }, {
   "model": "airs.broadcaster",
@@ -1324,9 +1136,7 @@
     "formatted_name": "fmkｴﾌｴﾑ熊本",
     "site_url": "https://fmk.fm/",
     "wikipedia_url": "https://ja.wikipedia.org/wiki/%E3%82%A8%E3%83%95%E3%82%A8%E3%83%A0%E7%86%8A%E6%9C%AC",
-    "address": "熊本県熊本市中央区千葉城町5番50号",
-    "area": "熊本県",
-    "keyword": ""
+    "address": "熊本県熊本市中央区千葉城町5番50号"
   }
 }, {
   "model": "airs.broadcaster",
@@ -1338,9 +1148,7 @@
     "formatted_name": "ｴﾌｴﾑ宮崎",
     "site_url": "http://www.joyfm.co.jp/",
     "wikipedia_url": "https://ja.wikipedia.org/wiki/%E3%82%A8%E3%83%95%E3%82%A8%E3%83%A0%E5%AE%AE%E5%B4%8E",
-    "address": "宮崎県宮崎市祇園2丁目78番地",
-    "area": "宮崎県",
-    "keyword": ""
+    "address": "宮崎県宮崎市祇園2丁目78番地"
   }
 }, {
   "model": "airs.broadcaster",
@@ -1352,9 +1160,7 @@
     "formatted_name": "μfm",
     "site_url": "https://www.myufm.jp/",
     "wikipedia_url": "https://ja.wikipedia.org/wiki/%E3%82%A8%E3%83%95%E3%82%A8%E3%83%A0%E9%B9%BF%E5%85%90%E5%B3%B6",
-    "address": "鹿児島県鹿児島市東千石町1番38号 鹿児島商工会議所ビル3階",
-    "area": "鹿児島県",
-    "keyword": ""
+    "address": "鹿児島県鹿児島市東千石町1番38号 鹿児島商工会議所ビル3階"
   }
 }, {
   "model": "airs.broadcaster",
@@ -1366,9 +1172,7 @@
     "formatted_name": "fm沖縄",
     "site_url": "https://www.fmokinawa.co.jp/",
     "wikipedia_url": "https://ja.wikipedia.org/wiki/%E3%82%A8%E3%83%95%E3%82%A8%E3%83%A0%E6%B2%96%E7%B8%84",
-    "address": "沖縄県浦添市字小湾40番地",
-    "area": "沖縄県",
-    "keyword": ""
+    "address": "沖縄県浦添市字小湾40番地"
   }
 }, {
   "model": "airs.broadcaster",
@@ -1380,9 +1184,7 @@
     "formatted_name": "ﾗｼﾞｵnikkei第1",
     "site_url": "http://www.radionikkei.jp/",
     "wikipedia_url": "https://ja.wikipedia.org/wiki/%E6%97%A5%E7%B5%8C%E3%83%A9%E3%82%B8%E3%82%AA%E7%A4%BE",
-    "address": "東京都港区虎ノ門一丁目2番8号 虎ノ門琴平タワー内",
-    "area": "日本全国",
-    "keyword": ""
+    "address": "東京都港区虎ノ門一丁目2番8号 虎ノ門琴平タワー内"
   }
 }, {
   "model": "airs.broadcaster",
@@ -1394,9 +1196,7 @@
     "formatted_name": "ﾗｼﾞｵnikkei第2",
     "site_url": "http://www.radionikkei.jp/",
     "wikipedia_url": "https://ja.wikipedia.org/wiki/%E6%97%A5%E7%B5%8C%E3%83%A9%E3%82%B8%E3%82%AA%E7%A4%BE",
-    "address": "東京都港区虎ノ門一丁目2番8号 虎ノ門琴平タワー内",
-    "area": "日本全国",
-    "keyword": ""
+    "address": "東京都港区虎ノ門一丁目2番8号 虎ノ門琴平タワー内"
   }
 }, {
   "model": "airs.broadcaster",
@@ -1408,9 +1208,7 @@
     "formatted_name": "nhkﾗｼﾞｵ第1(東京)",
     "site_url": "https://www.nhk.or.jp/radio/",
     "wikipedia_url": "https://ja.wikipedia.org/wiki/NHK%E3%83%A9%E3%82%B8%E3%82%AA%E7%AC%AC1%E6%94%BE%E9%80%81",
-    "address": "東京都渋谷区神南二丁目2番1号 NHK放送センター",
-    "area": "東京",
-    "keyword": ""
+    "address": "東京都渋谷区神南二丁目2番1号 NHK放送センター"
   }
 }, {
   "model": "airs.broadcaster",
@@ -1422,9 +1220,7 @@
     "formatted_name": "nhk-fm(東京)",
     "site_url": "https://www.nhk.or.jp/radio/",
     "wikipedia_url": "https://ja.wikipedia.org/wiki/NHK-FM%E6%94%BE%E9%80%81",
-    "address": "東京都渋谷区神南二丁目2番1号 NHK放送センター",
-    "area": "東京",
-    "keyword": ""
+    "address": "東京都渋谷区神南二丁目2番1号 NHK放送センター"
   }
 }, {
   "model": "airs.broadcaster",
@@ -1436,8 +1232,6 @@
     "formatted_name": "放送大学",
     "site_url": "https://www.ouj.ac.jp/",
     "wikipedia_url": "https://ja.wikipedia.org/wiki/%E6%94%BE%E9%80%81%E5%A4%A7%E5%AD%A6_(%E5%9F%BA%E5%B9%B9%E6%94%BE%E9%80%81)",
-    "address": "千葉県千葉市美浜区若葉2-11",
-    "area": "関東広域圏",
-    "keyword": ""
+    "address": "千葉県千葉市美浜区若葉2-11"
   }
 }]
