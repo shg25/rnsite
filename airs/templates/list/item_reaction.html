@@ -32,28 +32,13 @@
                         <div class="uk-position-center uk-text-small">Open!</div>
                     </div>
                     <div onclick="this.remove()" class="uk-overlay-primary uk-background-secondary uk-position-cover">
-                        <div class="uk-position-center uk-text-small">あと2</div>
+                        <div class="uk-position-center uk-text-small">2</div>
                     </div>
                     <div onclick="this.remove()" class="uk-overlay-primary uk-background-secondary uk-position-cover">
-                        <div class="uk-position-center uk-text-small">あと3</div>
+                        <div class="uk-position-center uk-text-small">3</div>
                     </div>
                     <div onclick="this.remove()" class="uk-overlay-primary uk-background-secondary uk-position-cover">
-                        <div class="uk-position-center uk-text-small">あと4</div>
-                    </div>
-                    <div onclick="this.remove()" class="uk-overlay-primary uk-background-secondary uk-position-cover">
-                        <div class="uk-position-center uk-text-small">あと5</div>
-                    </div>
-                    <div onclick="this.remove()" class="uk-overlay-primary uk-background-secondary uk-position-cover">
-                        <div class="uk-position-center uk-text-small">あと6</div>
-                    </div>
-                    <div onclick="this.remove()" class="uk-overlay-primary uk-background-secondary uk-position-cover">
-                        <div class="uk-position-center uk-text-small">あと7</div>
-                    </div>
-                    <div onclick="this.remove()" class="uk-overlay-primary uk-background-secondary uk-position-cover">
-                        <div class="uk-position-center uk-text-small">あと8</div>
-                    </div>
-                    <div onclick="this.remove()" class="uk-overlay-primary uk-background-secondary uk-position-cover">
-                        <div class="uk-position-center uk-text-small">あと9</div>
+                        <div class="uk-position-center uk-text-small">4</div>
                     </div>
                     <div onclick="this.remove()" class="uk-overlay-primary uk-background-secondary uk-position-cover">
                         <div class="uk-position-center uk-text-small">Tap?</div>
@@ -65,13 +50,6 @@
                     {% endif %}
                 </div>
             </div>
-
-            {% if user.is_authenticated and nanitozo.user.last_name == user.last_name%}
-            <div class="uk-width-auto">
-                <a href="#" uk-icon="icon: file-edit" class="uk-icon-button uk-icon"></a>
-            </div>
-            {% endif %}
-
         </li>
 
         {% endfor %}
