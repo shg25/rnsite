@@ -16,19 +16,17 @@ User.add_to_class("__str__", get_last_name)
 
 # 放送局
 class Broadcaster(models.Model):
-    name = models.CharField(
-        verbose_name='名前',
-        unique=True,
-        max_length=80,
-    )
     radiko_identifier = models.CharField(
         verbose_name='radiko ID',
         unique=True,
         max_length=80,
     )
+    name = models.CharField(
+        verbose_name='名前',
+        max_length=80,
+    )
     abbreviation = models.CharField(
         verbose_name='略称',
-        unique=True,
         max_length=20,
         help_text='一覧に表示するための表記'
     )
