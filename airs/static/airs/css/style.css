@@ -109,7 +109,7 @@ a:hover {
 }
 
 .separator {
-  height: 16px;
+  height: 4px;
 }
 
 .rn-form-check-label {
@@ -127,5 +127,22 @@ a:hover {
 */
 
 .uk-background-muted {
-  background-color: #eee;
+  background-color: #ddd;
+}
+
+.wrapper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+}
+
+.content {
+  flex-grow: 1;
+  flex-basis: 0;
+  overflow-y: scroll;
 }
