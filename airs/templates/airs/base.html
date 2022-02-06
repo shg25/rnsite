@@ -24,80 +24,87 @@
 
 <body>
   <div id="app"></div>
-  <header id="header" class="uk-background-primary">
-    <div class="uk-light rn-padding uk-grid-collapse uk-flex-middle" uk-grid>
-      <h1 class="uk-width-expand uk-text-small uk-margin-remove uk-margin-right"><a href="/" class="uk-link-reset">R.N.<small>v2.0 検討中</small></a></h1>
-      <div class="uk-width-auto">
-        {% if user.is_authenticated %}
-        <span class="uk-text-small">{{ user.last_name }}</span>
-        <span><a href="{% url 'logout' %}" uk-icon="icon: sign-out; ratio: 0.8"></a></span>
-        {% else %}
-        <span><a href="{% url 'login' %}" uk-icon="icon: sign-in; ratio: 0.8"></a></span>
-        {% endif %}
+  <div class="wrapper">
+    <div class="content">
+      {% if messages %}
+      {% for message in messages %}
+      <div class="uk-margin-remove 
+{% if message.tags == 'debug' or message.tags == 'info' %}
+uk-alert-primary
+{% elif message.tags == 'success' %}
+uk-alert-success
+{% elif message.tags == 'warning' %}
+uk-alert-warning
+{% elif message.tags == 'error' %}
+uk-alert-danger
+{% endif %}
+" uk-alert>
+        <a class="uk-alert-close" uk-close></a>
+        <p>{{ message }}</p>
       </div>
-    </div>
-  </header>
+      {% endfor %}
+      {% endif %}
 
-  {% if request.resolver_match.url_name != 'login' %}
-  <nav class="uk-navbar-container" uk-navbar>
-    <div class="uk-navbar-left">
-      <ul class="uk-navbar-nav">
-        <li class="{% if request.resolver_match.url_name == 'index' %}uk-active{% endif %}"><a href="{% url 'airs:index' %}">放送</a></li>
-        <li class="{% if request.resolver_match.url_name == 'ns' %}uk-active{% endif %}"><a href="{% url 'airs:ns' %}">何卒</a></li>
-        {% if request.resolver_match.url_name == 'users' %}
-        <li class="uk-active"><a href="{% url 'airs:users' %}">リスナー</a></li>
-        {% elif request.resolver_match.url_name == 'broadcasters' %}
-        <li class="uk-active"><a href="{% url 'airs:broadcasters' %}">放送局</a></li>
-        {% elif request.resolver_match.url_name == 'programs' %}
-        <li class="uk-active"><a href="{% url 'airs:programs' %}">番組</a></li>
-        {% endif %}
-        <li>
-          <a href="#">…</a>
-          <div class="uk-navbar-dropdown">
-            <ul class="uk-nav uk-navbar-dropdown-nav">
-              <li class="{% if request.resolver_match.url_name == 'users' %}uk-active{% endif %}"><a href="{% url 'airs:users' %}">リスナー</a></li>
-              <li class="{% if request.resolver_match.url_name == 'broadcasters' %}uk-active{% endif %}"><a href="{% url 'airs:broadcasters' %}">放送局</a></li>
-              <li class="{% if request.resolver_match.url_name == 'programs' %}uk-active{% endif %}"><a href="{% url 'airs:programs' %}">番組</a></li>
-            </ul>
-          </div>
-        </li>
-      </ul>
+      {% block content %}
+      {% endblock content %}
     </div>
-    <div class="uk-navbar-right">
-      <ul class="uk-navbar-nav">
-        <li><a href="{% url 'airs:air_create' %}" class="">＋</a></li>
-      </ul>
-    </div>
-  </nav>
-  {% endif %}
 
-  {% if messages %}
-  {% for message in messages %}
-  <div class="uk-margin-remove 
-  {% if message.tags == 'debug' or message.tags == 'info' %}
-  uk-alert-primary
-  {% elif message.tags == 'success' %}
-  uk-alert-success
-  {% elif message.tags == 'warning' %}
-  uk-alert-warning
-  {% elif message.tags == 'error' %}
-  uk-alert-danger
-  {% endif %}
-  " uk-alert>
-    <a class="uk-alert-close" uk-close></a>
-    <p>{{ message }}</p>
+    <footer>
+      <hr class="uk-margin-remove">
+      {% comment %} ログイン画面以外で表示 {% endcomment %}
+      {% comment %} {% if request.resolver_match.url_name != 'login' %} {% endcomment %}
+      <nav class="uk-navbar-container" uk-navbar>
+        <div class="uk-navbar-left">
+          <ul class="uk-navbar-nav">
+            <li class="{% if request.resolver_match.url_name == 'index' %}uk-active{% endif %}"><a href="{% url 'airs:index' %}">放送</a></li>
+            <li class="{% if request.resolver_match.url_name == 'ns' %}uk-active{% endif %}"><a href="{% url 'airs:ns' %}">何卒</a></li>
+            {% comment %} {% if request.resolver_match.url_name == 'users' %}
+            <li class="uk-active"><a href="{% url 'airs:users' %}">リスナー</a></li>
+            {% elif request.resolver_match.url_name == 'broadcasters' %}
+            <li class="uk-active"><a href="{% url 'airs:broadcasters' %}">放送局</a></li>
+            {% elif request.resolver_match.url_name == 'programs' %}
+            <li class="uk-active"><a href="{% url 'airs:programs' %}">番組</a></li>
+            {% endif %} {% endcomment %}
+            <li>
+              <a href="#">…</a>
+              <div uk-dropdown="pos: top-center">
+                <ul class="uk-nav uk-navbar-dropdown-nav">
+                  <li class="{% if request.resolver_match.url_name == 'users' %}uk-active{% endif %}"><a href="{% url 'airs:users' %}">リスナー</a></li>
+                  <li class="{% if request.resolver_match.url_name == 'broadcasters' %}uk-active{% endif %}"><a href="{% url 'airs:broadcasters' %}">放送局</a></li>
+                  <li class="{% if request.resolver_match.url_name == 'programs' %}uk-active{% endif %}"><a href="{% url 'airs:programs' %}">番組</a></li>
+                </ul>
+              </div>
+            </li>
+          </ul>
+        </div>
+        <div class="uk-navbar-right">
+          {% if user.is_authenticated %}
+          <ul class="uk-navbar-nav">
+            <li>
+              <a>{{ user.last_name }}</a>
+              <div uk-dropdown="pos: top-center">
+                <ul class="uk-nav uk-navbar-dropdown-nav">
+                  <li class="uk-nav-header">{{ user.last_name }}</li>
+                  <li><a href="{% url 'password_change' %}" target="_blank" rel="noopener noreferrer">パスワード変更</a></li>
+                  <li><a href="{% url 'logout' %}">ログアウト</a></li>
+                  <li class="uk-nav-divider uk-margin-small-bottom"></li>
+                  <li>R.N.<small>v2.0</small></li>
+                </ul>
+              </div>
+            </li>
+          </ul>
+          <a href="{% url 'airs:air_create' %}" class="uk-button uk-button-primary uk-button-large rn-padding-horizontal">＋放送登録</a>
+          {% else %}
+          <ul class="uk-navbar-nav">
+            <li><a href="{% url 'login' %}">ログイン</a></li>
+          </ul>
+          {% endif %}
+        </div>
+        {% comment %} {% endif %} {% endcomment %}
+      </nav>
+    </footer>
   </div>
-  {% endfor %}
-  {% endif %}
 
-  {% block content %}
-  {% endblock content %}
-
-  <div>
-    <div class="uk-text-right rn-padding"><a href="#" uk-totop uk-scroll></a></div>
-    <hr class="uk-margin-remove">
-    <footer class="uk-panel uk-text-center uk-article-meta rn-padding">R.N.</footer>
-  </div>
 
   {% comment %} UIkit JS {% endcomment %}
   <script src="{% static 'airs/js/uikit.min.js' %}"></script>
