@@ -145,4 +145,5 @@ a:hover {
   flex-grow: 1;
   flex-basis: 0;
   overflow-y: scroll;
+  max-width: 100%;
 }
