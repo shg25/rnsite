@@ -52,14 +52,14 @@ class NanitozoInline(admin.StackedInline):  # class NanitozoInline(admin.Tabular
 class AirAdmin(admin.ModelAdmin):
     fieldsets = [
         (None, {'fields': ['name', 'share_text', 'program']}),
-        ('放送日時', {'fields': ['broadcaster', 'started', 'ended']}),
+        ('放送日時', {'fields': ['broadcaster', 'started_at', 'ended_at']}),
         ('概要', {'fields': ['overview_before', 'overview_after']}),
     ]
     inlines = [NanitozoInline]
-    list_display = ('id', 'name', 'program', 'broadcaster', 'started', 'was_aired_this_week')
+    list_display = ('id', 'name', 'program', 'broadcaster', 'started_at', 'was_aired_this_week')
     list_display_links = ('name',)
-    list_filter = ['started', 'program', 'broadcaster']
-    ordering = ('-started',)
+    list_filter = ['started_at', 'program', 'broadcaster']
+    ordering = ('-started_at',)
     search_fields = ['program']  # programやprogram_idだと検索はエラー、やり方を調整する必要があるらしい https://k-mawa.hateblo.jp/entry/2018/03/10/005936
 
 

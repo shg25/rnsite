@@ -1,6 +1,6 @@
 {% load air_nanitozo %}
 {% load rn_datetime %}
-{% with adt=air.started|init_rn_datetime:air.ended nanitozo_count=air|air_nanitozo_count nanitozo_done=air|air_nanitozo_done:user %}
+{% with adt=air.started_at|init_rn_datetime:air.ended_at nanitozo_count=air|air_nanitozo_count nanitozo_done=air|air_nanitozo_done:user %}
 
 <div class="uk-margin-bottom uk-animation-toggle" tabindex="0">
 
