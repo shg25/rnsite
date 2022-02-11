@@ -16,10 +16,10 @@
     {% comment %} タブ1 {% endcomment %}
     <div>
         {% if nanitozo_list %}
-        {% regroup nanitozo_list by created|rn_regroup_date as nanitozos %}
+        {% regroup nanitozo_list by created_at|rn_regroup_date as nanitozos %}
 
-        {% for created, local_nanitozos in nanitozos %}
-        {% include 'base/lead.html' with title=created|rn_regrouped_date_weekday caption=created|rn_regrouped_date_md %}
+        {% for created_at, local_nanitozos in nanitozos %}
+        {% include 'base/lead.html' with title=created_at|rn_regrouped_date_weekday caption=created_at|rn_regrouped_date_md %}
 
         {% for nanitozo in local_nanitozos %}
         {% include 'list/item_nanitozo.html' with nanitozo=nanitozo %}
@@ -35,10 +35,10 @@
     {% comment %} タブ2 {% endcomment %}
     <div>
         {% if self_list %}
-        {% regroup self_list by created|rn_regroup_date as nanitozos %}
+        {% regroup self_list by created_at|rn_regroup_date as nanitozos %}
 
-        {% for created, local_nanitozos in nanitozos %}
-        {% include 'base/lead.html' with title=created|rn_regrouped_date_weekday caption=created|rn_regrouped_date_md %}
+        {% for created_at, local_nanitozos in nanitozos %}
+        {% include 'base/lead.html' with title=created_at|rn_regrouped_date_weekday caption=created_at|rn_regrouped_date_md %}
 
         {% for nanitozo in local_nanitozos %}
         {% include 'list/item_nanitozo.html' with nanitozo=nanitozo %}
@@ -54,10 +54,10 @@
     {% comment %} タブ3 {% endcomment %}
     <div>
         {% if close_list %}
-        {% regroup close_list by created|rn_regroup_date as nanitozos %}
+        {% regroup close_list by created_at|rn_regroup_date as nanitozos %}
 
-        {% for created, local_nanitozos in nanitozos %}
-        {% include 'base/lead.html' with title=created|rn_regrouped_date_weekday caption=created|rn_regrouped_date_md %}
+        {% for created_at, local_nanitozos in nanitozos %}
+        {% include 'base/lead.html' with title=created_at|rn_regrouped_date_weekday caption=created_at|rn_regrouped_date_md %}
 
         {% for nanitozo in local_nanitozos %}
         {% include 'list/item_nanitozo.html' with nanitozo=nanitozo %}

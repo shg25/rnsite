@@ -73,10 +73,10 @@ class NanitozoAdmin(admin.ModelAdmin):
         ('リスナー', {'fields': ['user', 'good']}),
         ('コメント', {'fields': ['comment_open', 'comment_recommend', 'comment', 'comment_negative']}),
     ]
-    readonly_fields = ('created', 'updated')
-    list_display = ('id', 'user', 'air', 'created', 'updated')
+    readonly_fields = ('created_at', 'updated_at')
+    list_display = ('id', 'user', 'air', 'created_at', 'updated_at')
     list_filter = ['user']
-    ordering = ('-created',)
+    ordering = ('-created_at',)
 
 
 admin.site.register(Nanitozo, NanitozoAdmin)

@@ -176,11 +176,11 @@ class Nanitozo(models.Model):
         verbose_name='感想文ネガ',
         null=True, blank=True,
     )
-    created = models.DateTimeField(
+    created_at = models.DateTimeField(
         verbose_name='作成日時',
         auto_now_add=True,
     )
-    updated = models.DateTimeField(
+    updated_at = models.DateTimeField(
         verbose_name='更新日時',
         auto_now=True,
     )

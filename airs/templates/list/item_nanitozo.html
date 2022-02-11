@@ -1,5 +1,5 @@
 {% load rn_datetime %}
-{% with adt=nanitozo.air.started_at|init_rn_datetime:nanitozo.air.ended_at ndt=nanitozo.created|init_rn_datetime:nanitozo.updated %}
+{% with adt=nanitozo.air.started_at|init_rn_datetime:nanitozo.air.ended_at ndt=nanitozo.created_at|init_rn_datetime:nanitozo.updated_at %}
 
 
 <div class="uk-margin-bottom uk-animation-toggle" tabindex="0">
