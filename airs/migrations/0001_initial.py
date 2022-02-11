@@ -45,10 +45,10 @@ class Migration(migrations.Migration):
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('name', models.CharField(max_length=200, unique=True, verbose_name='名前')),
                 ('formatted_name', models.TextField(blank=True, null=True, verbose_name='整形した名前')),
-                ('twitter_screen_name', models.CharField(blank=True, max_length=400, null=True, verbose_name='Twitterスクリーンネーム')),
+                ('twitter_user_name', models.CharField(blank=True, max_length=400, null=True, verbose_name='Twitterスクリーンネーム')),
                 ('site_url', models.CharField(blank=True, max_length=400, null=True, verbose_name='サイトURL')),
                 ('wikipedia_url', models.CharField(blank=True, max_length=400, null=True, verbose_name='Wikipedia')),
-                ('key_station', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, to='airs.broadcaster', verbose_name='キー局')),
+                ('broadcaster', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, to='airs.broadcaster', verbose_name='キー局')),
             ],
         ),
         migrations.CreateModel(

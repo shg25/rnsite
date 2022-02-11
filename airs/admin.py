@@ -30,14 +30,14 @@ class ProgramAdmin(admin.ModelAdmin):
     fields = [
         'name',
         'formatted_name',
-        'twitter_screen_name',
+        'twitter_user_name',
         'site_url',
         'wikipedia_url',
-        'key_station_id'
+        'broadcaster'
     ]
-    list_display = ('id', 'name', 'key_station_id')
+    list_display = ('id', 'name', 'broadcaster')
     list_display_links = ('name',)
-    list_filter = ['key_station_id']
+    list_filter = ['broadcaster']
     ordering = ('id',)
 
 

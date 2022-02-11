@@ -64,8 +64,8 @@ class Program(models.Model):
         verbose_name='整形した名前',
         null=True, blank=True,
     )
-    twitter_screen_name = models.CharField(
-        verbose_name='Twitterスクリーンネーム',
+    twitter_user_name = models.CharField(
+        verbose_name='Twitterスクリーン名',
         null=True, blank=True,
         max_length=400,
     )
@@ -79,7 +79,7 @@ class Program(models.Model):
         null=True, blank=True,
         max_length=400,
     )
-    key_station = models.ForeignKey(
+    broadcaster = models.ForeignKey(
         Broadcaster, on_delete=models.CASCADE,
         verbose_name='キー局',
         null=True, blank=True,
