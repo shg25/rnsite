@@ -30,14 +30,14 @@ class ProgramAdmin(admin.ModelAdmin):
     fields = [
         'name',
         'formatted_name',
-        'twitter_screen_name',
+        'twitter_user_name',
         'site_url',
         'wikipedia_url',
-        'key_station_id'
+        'broadcaster'
     ]
-    list_display = ('id', 'name', 'key_station_id')
+    list_display = ('id', 'name', 'broadcaster')
     list_display_links = ('name',)
-    list_filter = ['key_station_id']
+    list_filter = ['broadcaster']
     ordering = ('id',)
 
 
@@ -52,14 +52,14 @@ class NanitozoInline(admin.StackedInline):  # class NanitozoInline(admin.Tabular
 class AirAdmin(admin.ModelAdmin):
     fieldsets = [
         (None, {'fields': ['name', 'share_text', 'program']}),
-        ('放送日時', {'fields': ['broadcaster', 'started', 'ended']}),
+        ('放送日時', {'fields': ['broadcaster', 'started_at', 'ended_at']}),
         ('概要', {'fields': ['overview_before', 'overview_after']}),
     ]
     inlines = [NanitozoInline]
-    list_display = ('id', 'name', 'program', 'broadcaster', 'started', 'was_aired_this_week')
+    list_display = ('id', 'name', 'program', 'broadcaster', 'started_at', 'was_aired_this_week')
     list_display_links = ('name',)
-    list_filter = ['started', 'program', 'broadcaster']
-    ordering = ('-started',)
+    list_filter = ['started_at', 'program', 'broadcaster']
+    ordering = ('-started_at',)
     search_fields = ['program']  # programやprogram_idだと検索はエラー、やり方を調整する必要があるらしい https://k-mawa.hateblo.jp/entry/2018/03/10/005936
 
 
@@ -73,10 +73,10 @@ class NanitozoAdmin(admin.ModelAdmin):
         ('リスナー', {'fields': ['user', 'good']}),
         ('コメント', {'fields': ['comment_open', 'comment_recommend', 'comment', 'comment_negative']}),
     ]
-    readonly_fields = ('created', 'updated')
-    list_display = ('id', 'user', 'air', 'created', 'updated')
+    readonly_fields = ('created_at', 'updated_at')
+    list_display = ('id', 'user', 'air', 'created_at', 'updated_at')
     list_filter = ['user']
-    ordering = ('-created',)
+    ordering = ('-created_at',)
 
 
 admin.site.register(Nanitozo, NanitozoAdmin)

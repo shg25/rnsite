@@ -6,8 +6,8 @@
     "share_text": "アルコ＆ピース D.C.GARAGE|TBSラジオ|2019/04/30/火 24:00-25:00 http://radiko.jp/share/?sid=TBS&t=20190501000000",
     "program": 2,
     "broadcaster": 1,
-    "started": "2019-04-30T15:00:00Z",
-    "ended": "2019-04-30T16:00:00Z",
+    "started_at": "2019-04-30T15:00:00Z",
+    "ended_at": "2019-04-30T16:00:00Z",
     "overview_before": "令和1発目で生放送",
     "overview_after": "飛び入りゲスト：うしろシティ金子、ハライチ\r\n・令和の怪物"
   }
@@ -19,8 +19,8 @@
     "share_text": "うしろシティ 星のギガボディ|TBSラジオ|2019/05/01/水 24:00-25:00 http://radiko.jp/share/?sid=TBS&t=20190502000003",
     "program": 3,
     "broadcaster": 1,
-    "started": "2019-05-01T15:00:00Z",
-    "ended": "2019-05-01T16:00:00Z",
+    "started_at": "2019-05-01T15:00:00Z",
+    "ended_at": "2019-05-01T16:00:00Z",
     "overview_before": "",
     "overview_after": ""
   }
@@ -32,8 +32,8 @@
     "share_text": "ハライチのターン！|TBSラジオ|2019/05/02/木 24:00-25:00 http://radiko.jp/share/?sid=TBS&t=20190503000000",
     "program": 4,
     "broadcaster": 1,
-    "started": "2019-05-02T15:00:00Z",
-    "ended": "2019-05-02T16:00:00Z",
+    "started_at": "2019-05-02T15:00:00Z",
+    "ended_at": "2019-05-02T16:00:00Z",
     "overview_before": "",
     "overview_after": ""
   }
@@ -45,8 +45,8 @@
     "share_text": "NHK･民放ラジオ特別番組「今日は一日“民放ラジオ番組”三昧 ～#このラジオがヤバい～」#このお笑いラジオがヤバい|ニッポン放送|2019/05/06/月 19:00-20:00 http://radiko.jp/share/?sid=LFR&t=20190506190000",
     "program": null,
     "broadcaster": 2,
-    "started": "2019-05-06T10:00:00Z",
-    "ended": "2019-05-06T11:00:00Z",
+    "started_at": "2019-05-06T10:00:00Z",
+    "ended_at": "2019-05-06T11:00:00Z",
     "overview_before": "",
     "overview_after": ""
   }
@@ -58,8 +58,8 @@
     "share_text": "今日は一日“民放ラジオ番組”三昧～＃このラジオがヤバい～ | TBSラジオ | 2019/05/06/月  19:00-20:00 http://radiko.jp/share/?sid=TBS&t=20190506190000",
     "program": null,
     "broadcaster": 1,
-    "started": "2019-05-06T10:00:00Z",
-    "ended": "2019-05-06T11:00:00Z",
+    "started_at": "2019-05-06T10:00:00Z",
+    "ended_at": "2019-05-06T11:00:00Z",
     "overview_before": "",
     "overview_after": ""
   }
@@ -71,8 +71,8 @@
     "share_text": "アルコ＆ピース D.C.GARAGE|TBSラジオ|2019/05/07/火 24:00-25:00 http://radiko.jp/share/?sid=TBS&t=20190508000000",
     "program": 2,
     "broadcaster": 1,
-    "started": "2019-05-07T15:00:00Z",
-    "ended": "2019-05-07T16:00:00Z",
+    "started_at": "2019-05-07T15:00:00Z",
+    "ended_at": "2019-05-07T16:00:00Z",
     "overview_before": "",
     "overview_after": ""
   }

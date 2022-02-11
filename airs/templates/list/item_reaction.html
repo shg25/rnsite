@@ -14,7 +14,7 @@
             <div class="uk-width-expand{% if user.is_authenticated and nanitozo.user.last_name == user.last_name%} border-left-success{% endif %}">
                 <p class="uk-margin-remove">
                     <a href="{% url 'airs:user' nanitozo.user.id %}">{{ nanitozo.user.last_name }}</a>
-                    <small>{{ nanitozo.created|rn_ymdhm }}</small>
+                    <small>{{ nanitozo.created_at|rn_ymdhm }}</small>
                 </p>
                 <div class="uk-inline">
                     <p class="uk-text-small uk-margin-remove uk-text-break">

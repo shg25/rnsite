@@ -1,18 +1,18 @@
 {% extends 'airs/base.html' %}
 {% load rn_datetime %}
 
-{% block title %}{{ air.name }} {{ air.started|rn_ymdhm }} {{ air.broadcaster.name }} - R.N.{% endblock title %}
+{% block title %}{{ air.name }} {{ air.started_at|rn_ymdhm }} {{ air.broadcaster.name }} - R.N.{% endblock title %}
 
 {% block header %}
 {% endblock header %}
 
 {% block content %}
 
-{% with adt=air.started|init_rn_datetime:air.ended %}
+{% with adt=air.started_at|init_rn_datetime:air.ended_at %}
 <header class="rn-padding">
   <h1 class="uk-text-lead uk-margin-remove">{{ air.name }}</h1>
   <h2 class="uk-text-default uk-margin-remove-top uk-margin-small-bottom">
-    {{ air.started|rn_ymdhm }} {{ adt.airtime }}<small>min</small>
+    {{ air.started_at|rn_ymdhm }} {{ adt.airtime }}<small>min</small>
   </h2>
 
   {% if air.broadcaster %}
@@ -25,9 +25,9 @@
   <div class="uk-flex uk-flex-middle">
     {% comment %} TODO ラジコのURLの生成 {% endcomment %}
     <span uk-icon="icon: link" class="uk-icon"></span>
-    <span class="uk-text-middle mgl-s"><a href="{{ air.started|radiko_link:air.broadcaster.radiko_identifier }}" target="_blank" rel="noopener noreferrer">ラジコ</a></span>
-    <span class="uk-text-middle uk-margin-small-left"><a href="#" onclick="copyToClipboardAndShowAlert('{{ air.started|radiko_link:air.broadcaster.radiko_identifier }}')">URLコピー</a></span>
-    <span class="uk-text-middle uk-margin-small-left"><a href="{{ air.started|radiko_link_next_week:air.broadcaster.radiko_identifier }}" target="_blank" rel="noopener noreferrer">ラジコ+1w</a></span>
+    <span class="uk-text-middle mgl-s"><a href="{{ air.started_at|radiko_link:air.broadcaster.radiko_identifier }}" target="_blank" rel="noopener noreferrer">ラジコ</a></span>
+    <span class="uk-text-middle uk-margin-small-left"><a href="#" onclick="copyToClipboardAndShowAlert('{{ air.started_at|radiko_link:air.broadcaster.radiko_identifier }}')">URLコピー</a></span>
+    <span class="uk-text-middle uk-margin-small-left"><a href="{{ air.started_at|radiko_link_next_week:air.broadcaster.radiko_identifier }}" target="_blank" rel="noopener noreferrer">ラジコ+1w</a></span>
   </div>
 
   {% endif %}

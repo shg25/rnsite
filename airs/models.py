@@ -64,8 +64,8 @@ class Program(models.Model):
         verbose_name='整形した名前',
         null=True, blank=True,
     )
-    twitter_screen_name = models.CharField(
-        verbose_name='Twitterスクリーンネーム',
+    twitter_user_name = models.CharField(
+        verbose_name='Twitterスクリーン名',
         null=True, blank=True,
         max_length=400,
     )
@@ -79,7 +79,7 @@ class Program(models.Model):
         null=True, blank=True,
         max_length=400,
     )
-    key_station = models.ForeignKey(
+    broadcaster = models.ForeignKey(
         Broadcaster, on_delete=models.CASCADE,
         verbose_name='キー局',
         null=True, blank=True,
@@ -108,10 +108,10 @@ class Air(models.Model):
     share_text = models.TextField(
         verbose_name='シェアラジオ全文',
     )
-    started = models.DateTimeField(
+    started_at = models.DateTimeField(
         verbose_name='開始日時',
     )
-    ended = models.DateTimeField(
+    ended_at = models.DateTimeField(
         verbose_name='終了日時',
     )
     overview_before = models.TextField(
@@ -124,15 +124,15 @@ class Air(models.Model):
     )
 
     def __str__(self):
-        if self.started == None:
+        if self.started_at == None:
             return self.name[:8] + '_' + str(self.broadcaster)[:4] + '_'
         else:
-            return self.name[:8] + '_' + str(self.broadcaster)[:4] + '_' + str(self.started.astimezone(pytztimezone('Asia/Tokyo')))[:16]
+            return self.name[:8] + '_' + str(self.broadcaster)[:4] + '_' + str(self.started_at.astimezone(pytztimezone('Asia/Tokyo')))[:16]
 
     def was_aired_this_week(self):
         now = timezone.now()
-        return now - datetime.timedelta(days=7) <= self.started <= now
-    was_aired_this_week.admin_order_field = 'started'  # 代わりにソートするカラムを指定する
+        return now - datetime.timedelta(days=7) <= self.started_at <= now
+    was_aired_this_week.admin_order_field = 'started_at'  # 代わりにソートするカラムを指定する
     was_aired_this_week.boolean = True  # 見た目を○×アイコンにする
     was_aired_this_week.short_description = 'this week?'  # タイトルの表記設定
 
@@ -140,7 +140,7 @@ class Air(models.Model):
         constraints = [
             # 同じ 放送局 と 開始日時 の組み合わせが登録済の場合は却下
             models.UniqueConstraint(
-                fields=['broadcaster', 'started'],
+                fields=['broadcaster', 'started_at'],
                 name='air_unique',
             ),
         ]
@@ -176,11 +176,11 @@ class Nanitozo(models.Model):
         verbose_name='感想文ネガ',
         null=True, blank=True,
     )
-    created = models.DateTimeField(
+    created_at = models.DateTimeField(
         verbose_name='作成日時',
         auto_now_add=True,
     )
-    updated = models.DateTimeField(
+    updated_at = models.DateTimeField(
         verbose_name='更新日時',
         auto_now=True,
     )

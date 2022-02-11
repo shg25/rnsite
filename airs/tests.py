@@ -19,7 +19,7 @@ class AirModelTests(TestCase):
         # 確認
         # print("now : " + str(now))
         # print("time: " + str(time))
-        future_air = Air(started=time)
+        future_air = Air(started_at=time)
         self.assertIs(future_air.was_aired_this_week(), False)
 
     def test_was_aired_this_week_with_old_started(self):
@@ -32,7 +32,7 @@ class AirModelTests(TestCase):
         # 確認
         # print("now : " + str(now))
         # print("time: " + str(time))
-        old_air = Air(started=time)
+        old_air = Air(started_at=time)
         self.assertIs(old_air.was_aired_this_week(), False)
 
     def test_was_aired_this_week_with_week1_started(self):
@@ -45,18 +45,18 @@ class AirModelTests(TestCase):
         # 確認
         # print("now : " + str(now))
         # print("time: " + str(time))
-        recent_air = Air(started=time)
+        recent_air = Air(started_at=time)
         self.assertIs(recent_air.was_aired_this_week(), True)
 
 
-def create_air(program_name, started, ended):
+def create_air(program_name, started_at, ended_at):
     """
     Create a question with the given `question_text` and published the
     given number of `days` offset to now (negative for questions published
     in the past, positive for questions that have yet to be published).
     """
     create_program = Program.objects.create(name=program_name)
-    return Air.objects.create(program=create_program, started=started, ended=ended)
+    return Air.objects.create(program=create_program, started_at=started_at, ended_at=ended_at)
 
 
 class AirIndexViewTests(TestCase):
@@ -75,7 +75,7 @@ class AirIndexViewTests(TestCase):
         """
         started = timezone.now() + datetime.timedelta(days=-7, hours=-1)
         ended = timezone.now() + datetime.timedelta(days=-7)
-        create_air(program_name="酒井健太ANN0", started=started, ended=ended)
+        create_air(program_name="酒井健太ANN0", started_at=started, ended_at=ended)
 
         response = self.client.get(reverse('airs:index'))
         self.assertEqual(response.status_code, 200)
@@ -89,7 +89,7 @@ class AirIndexViewTests(TestCase):
         """
         started = timezone.now() + datetime.timedelta(days=7, hours=-1)
         ended = timezone.now() + datetime.timedelta(days=7)
-        create_air(program_name="赤もみじANN0", started=started, ended=ended)
+        create_air(program_name="赤もみじANN0", started_at=started, ended_at=ended)
         response = self.client.get(reverse('airs:index'))
         self.assertContains(response, "何卒0(ZERO)")
         self.assertQuerysetEqual(response.context['latest_air_list'], [])
@@ -100,11 +100,11 @@ class AirIndexViewTests(TestCase):
         """
         startedpast = timezone.now() + datetime.timedelta(days=-7, hours=-1)
         endedpast = timezone.now() + datetime.timedelta(days=-7)
-        create_air(program_name="酒井健太ANN0", started=startedpast, ended=endedpast)
+        create_air(program_name="酒井健太ANN0", started_at=startedpast, ended_at=endedpast)
 
         startedfuture = timezone.now() + datetime.timedelta(days=7, hours=-1)
         endedfuture = timezone.now() + datetime.timedelta(days=7)
-        create_air(program_name="赤もみじANN0", started=startedfuture, ended=endedfuture)
+        create_air(program_name="赤もみじANN0", started_at=startedfuture, ended_at=endedfuture)
 
         response = self.client.get(reverse('airs:index'))
         startedstr = str(startedpast.astimezone(pytztimezone('Asia/Tokyo')))
@@ -116,11 +116,11 @@ class AirIndexViewTests(TestCase):
         """
         startedpast7 = timezone.now() + datetime.timedelta(days=-7, hours=-1)
         endedpast7 = timezone.now() + datetime.timedelta(days=-7)
-        create_air(program_name="酒井健太ANN0", started=startedpast7, ended=endedpast7)
+        create_air(program_name="酒井健太ANN0", started_at=startedpast7, ended_at=endedpast7)
 
         startedpast6 = timezone.now() + datetime.timedelta(days=-6, hours=-1)
         endedpast6 = timezone.now() + datetime.timedelta(days=-6)
-        create_air(program_name="赤もみじANN0", started=startedpast6, ended=endedpast6)
+        create_air(program_name="赤もみじANN0", started_at=startedpast6, ended_at=endedpast6)
 
         response = self.client.get(reverse('airs:index'))
 
@@ -139,7 +139,7 @@ class AirDetailViewTests(TestCase):
         """
         startedfuture = timezone.now() + datetime.timedelta(days=7, hours=-1)
         endedfuture = timezone.now() + datetime.timedelta(days=7)
-        future_air = create_air(program_name="赤もみじANN0", started=startedfuture, ended=endedfuture)
+        future_air = create_air(program_name="赤もみじANN0", started_at=startedfuture, ended_at=endedfuture)
 
         url = reverse('airs:detail', args=(future_air.id,))
         response = self.client.get(url)
@@ -151,7 +151,7 @@ class AirDetailViewTests(TestCase):
         """
         startedpast7 = timezone.now() + datetime.timedelta(days=-7, hours=-1)
         endedpast7 = timezone.now() + datetime.timedelta(days=-7)
-        past_air = create_air(program_name="酒井健太ANN0", started=startedpast7, ended=endedpast7)
+        past_air = create_air(program_name="酒井健太ANN0", started_at=startedpast7, ended_at=endedpast7)
 
         url = reverse('airs:detail', args=(past_air.id,))
         response = self.client.get(url)

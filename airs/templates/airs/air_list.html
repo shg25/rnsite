@@ -18,10 +18,10 @@
     {% comment %} タブ1 {% endcomment %}
     <div>
         {% if this_week_list %}
-        {% regroup this_week_list by started|rn_regroup_date as airs %}
+        {% regroup this_week_list by started_at|rn_regroup_date as airs %}
 
-        {% for started, local_airs in airs %}
-        {% include 'base/lead.html' with title=started|rn_regrouped_date_weekday caption=started|rn_regrouped_date_md %}
+        {% for started_at, local_airs in airs %}
+        {% include 'base/lead.html' with title=started_at|rn_regrouped_date_weekday caption=started_at|rn_regrouped_date_md %}
 
         {% for air in local_airs %}
         {% include 'list/item_air.html' with air=air %}
@@ -37,10 +37,10 @@
     {% comment %} タブ2 {% endcomment %}
     <div>
         {% if last_week_list %}
-        {% regroup last_week_list by started|rn_regroup_date as airs %}
+        {% regroup last_week_list by started_at|rn_regroup_date as airs %}
 
-        {% for started, local_airs in airs %}
-        {% include 'base/lead.html' with title=started|rn_regrouped_date_weekday caption=started|rn_regrouped_date_md %}
+        {% for started_at, local_airs in airs %}
+        {% include 'base/lead.html' with title=started_at|rn_regrouped_date_weekday caption=started_at|rn_regrouped_date_md %}
 
         {% for air in local_airs %}
         {% include 'list/item_air.html' with air=air %}
@@ -58,10 +58,10 @@
     {% comment %} # TODO オススメ放送取得（3/3） {% endcomment %}
     {% comment %} <div>
         {% if recommend_list %}
-        {% regroup recommend_list by started|rn_regroup_date as airs %}
+        {% regroup recommend_list by started_at|rn_regroup_date as airs %}
 
-        {% for started, local_airs in airs %}
-        {% include 'base/lead.html' with title=started|rn_regrouped_date_weekday caption=started|rn_regrouped_date_md %}
+        {% for started_at, local_airs in airs %}
+        {% include 'base/lead.html' with title=started_at|rn_regrouped_date_weekday caption=started_at|rn_regrouped_date_md %}
 
         {% for air in local_airs %}
         {% include 'list/item_air.html' with air=air %}

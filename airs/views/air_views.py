@@ -26,20 +26,20 @@ def login_required_only_general_member():
 
 class AirListView(generic.ListView):
     model = Air
-    # queryset = Air.objects.filter(started__gte=this_week_started()).order_by('-started') # これを使えばviewではair_listで取得できるがなぜかキャッシュらしきものが残るので一旦使わない
+    # queryset = Air.objects.filter(started_at__gte=this_week_started()).order_by('-started_at') # これを使えばviewではair_listで取得できるがなぜかキャッシュらしきものが残るので一旦使わない
 
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args, **kwargs)
-        this_week_list = Air.objects.filter(started__gte=this_week_started()).order_by('-started')
+        this_week_list = Air.objects.filter(started_at__gte=this_week_started()).order_by('-started_at')
         context['this_week_list'] = this_week_list
-        last_week_list = Air.objects.filter(started__range=(last_week_started(), this_week_started())).order_by('-started')
+        last_week_list = Air.objects.filter(started_at__range=(last_week_started(), this_week_started())).order_by('-started_at')
         context['last_week_list'] = last_week_list
 
         # TODO オススメ放送取得（1/3）
-        # context['recommend_list'] = Air.objects.filter(started__range=(last_week_started(), timezone.now())).order_by('-started')
+        # context['recommend_list'] = Air.objects.filter(started_at__range=(last_week_started(), timezone.now())).order_by('-started_at')
 
         return context
-        # TODO  全面的に filter(started__lte=timezone.now()) の値を調整する、実際は事前登録も可とするので、現在時刻との比較は不要
+        # TODO  全面的に filter(started_at__lte=timezone.now()) の値を調整する、実際は事前登録も可とするので、現在時刻との比較は不要
 
 
 @login_required_only_general_member()
@@ -150,23 +150,23 @@ class AirCreateByShareTextView(generic.FormView):
 
         # 開始日時と終了日時どちらも24時以降は次の日にして24時間マイナスする
         if started_hour > 23:
-            started = timedelta_days(title_date, 1)
+            started_at = timedelta_days(title_date, 1)
             started_hour = started_hour - 24
         else:
-            started = title_date
+            started_at = title_date
 
-        started = new_datetime(started.year, started.month, started.day, started_hour, started_minute)
+        started_at = new_datetime(started_at.year, started_at.month, started_at.day, started_hour, started_minute)
 
         if ended_hour > 23:
-            ended = timedelta_days(title_date, 1)
+            ended_at = timedelta_days(title_date, 1)
             ended_hour = ended_hour - 24
         else:
-            ended = title_date
+            ended_at = title_date
 
-        ended = new_datetime(ended.year, ended.month, ended.day, ended_hour, ended_minute)
+        ended_at = new_datetime(ended_at.year, ended_at.month, ended_at.day, ended_hour, ended_minute)
 
         # - - - - - - - - - - - - - - - - - - - - - - - -
-        if program_name == None or program_name == '' or started > ended:
+        if program_name == None or program_name == '' or started_at > ended_at:
             messages.error(self.request, 'パースエラー！ [' + share_text + ']を管理人に教えて！')  # TODO share_textをどこかに記録したい
             return super().form_invalid(form)
 
@@ -175,8 +175,8 @@ class AirCreateByShareTextView(generic.FormView):
         form.instance.name = program_name
         form.instance.program = program
         form.instance.broadcaster = broadcaster
-        form.instance.started = started  # 日本時刻として扱われる模様 例：datetimeで[2021-10-06 00:00:00]を登録 → DBは[2021-10-05T15:00:00Z]
-        form.instance.ended = ended  # 日本時刻として扱われる模様 例：datetimeで[2021-10-06 01:00:00]を登録 → DBは[2021-10-05T16:00:00Z]
+        form.instance.started_at = started_at  # 日本時刻として扱われる模様 例：datetimeで[2021-10-06 00:00:00]を登録 → DBは[2021-10-05T15:00:00Z]
+        form.instance.ended_at = ended_at  # 日本時刻として扱われる模様 例：datetimeで[2021-10-06 01:00:00]を登録 → DBは[2021-10-05T16:00:00Z]
 
         # - - - - - - - - - - - - - - - - - - - - - - - -
         # 放送を保存 → 続けてログイン中のユーザー情報 & デフォルト値で何卒を登録
@@ -185,7 +185,7 @@ class AirCreateByShareTextView(generic.FormView):
         except Exception as err:
             messages.warning(self.request, '放送登録エラー：' + str(type(err)))  # TODO とりあえずエラータイプだけ表示しているがエラー内容によって調整したい
             if broadcaster != None:
-                air = Air.objects.filter(broadcaster=broadcaster, started=started).first()
+                air = Air.objects.filter(broadcaster=broadcaster, started_at=started_at).first()
                 try:
                     air.nanitozo_set.create(user=self.request.user)
                 except Exception as err:

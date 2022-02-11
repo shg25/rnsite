@@ -9,8 +9,8 @@
     "comment_recommend": "",
     "comment": "",
     "comment_negative": "",
-    "created": "2019-04-30T15:00:00.000Z",
-    "updated": "2019-04-30T15:00:00.000Z"
+    "created_at": "2019-04-30T15:00:00.000Z",
+    "updated_at": "2019-04-30T15:00:00.000Z"
   }
 }, {
   "model": "airs.nanitozo",
@@ -23,8 +23,8 @@
     "comment_recommend": "",
     "comment": "",
     "comment_negative": "",
-    "created": "2019-04-30T15:00:00.000Z",
-    "updated": "2019-04-30T15:00:00.000Z"
+    "created_at": "2019-04-30T15:00:00.000Z",
+    "updated_at": "2019-04-30T15:00:00.000Z"
   }
 }, {
   "model": "airs.nanitozo",
@@ -37,8 +37,8 @@
     "comment_recommend": "",
     "comment": "",
     "comment_negative": "",
-    "created": "2019-04-30T15:00:00.000Z",
-    "updated": "2019-04-30T15:00:00.000Z"
+    "created_at": "2019-04-30T15:00:00.000Z",
+    "updated_at": "2019-04-30T15:00:00.000Z"
   }
 }, {
   "model": "airs.nanitozo",
@@ -51,8 +51,8 @@
     "comment_recommend": "",
     "comment": "",
     "comment_negative": "",
-    "created": "2019-05-01T15:00:00.000Z",
-    "updated": "2019-05-01T15:00:00.000Z"
+    "created_at": "2019-05-01T15:00:00.000Z",
+    "updated_at": "2019-05-01T15:00:00.000Z"
   }
 }, {
   "model": "airs.nanitozo",
@@ -65,8 +65,8 @@
     "comment_recommend": "",
     "comment": "",
     "comment_negative": "",
-    "created": "2019-05-01T15:00:00.000Z",
-    "updated": "2019-05-01T15:00:00.000Z"
+    "created_at": "2019-05-01T15:00:00.000Z",
+    "updated_at": "2019-05-01T15:00:00.000Z"
   }
 }, {
   "model": "airs.nanitozo",
@@ -79,8 +79,8 @@
     "comment_recommend": "",
     "comment": "",
     "comment_negative": "",
-    "created": "2019-05-01T15:00:00.000Z",
-    "updated": "2019-05-01T15:00:00.000Z"
+    "created_at": "2019-05-01T15:00:00.000Z",
+    "updated_at": "2019-05-01T15:00:00.000Z"
   }
 }, {
   "model": "airs.nanitozo",
@@ -93,8 +93,8 @@
     "comment_recommend": "",
     "comment": "",
     "comment_negative": "",
-    "created": "2019-05-02T15:00:00.000Z",
-    "updated": "2019-05-02T15:00:00.000Z"
+    "created_at": "2019-05-02T15:00:00.000Z",
+    "updated_at": "2019-05-02T15:00:00.000Z"
   }
 }, {
   "model": "airs.nanitozo",
@@ -107,8 +107,8 @@
     "comment_recommend": "",
     "comment": "",
     "comment_negative": "",
-    "created": "2019-05-02T15:00:00.000Z",
-    "updated": "2019-05-02T15:00:00.000Z"
+    "created_at": "2019-05-02T15:00:00.000Z",
+    "updated_at": "2019-05-02T15:00:00.000Z"
   }
 }, {
   "model": "airs.nanitozo",
@@ -121,8 +121,8 @@
     "comment_recommend": "",
     "comment": "",
     "comment_negative": "",
-    "created": "2019-05-02T15:00:00.000Z",
-    "updated": "2019-05-02T15:00:00.000Z"
+    "created_at": "2019-05-02T15:00:00.000Z",
+    "updated_at": "2019-05-02T15:00:00.000Z"
   }
 }, {
   "model": "airs.nanitozo",
@@ -135,8 +135,8 @@
     "comment_recommend": "",
     "comment": "",
     "comment_negative": "",
-    "created": "2019-05-06T15:00:00.000Z",
-    "updated": "2019-05-06T15:00:00.000Z"
+    "created_at": "2019-05-06T15:00:00.000Z",
+    "updated_at": "2019-05-06T15:00:00.000Z"
   }
 }, {
   "model": "airs.nanitozo",
@@ -149,8 +149,8 @@
     "comment_recommend": "",
     "comment": "",
     "comment_negative": "",
-    "created": "2019-05-06T15:00:00.000Z",
-    "updated": "2019-05-06T15:00:00.000Z"
+    "created_at": "2019-05-06T15:00:00.000Z",
+    "updated_at": "2019-05-06T15:00:00.000Z"
   }
 }, {
   "model": "airs.nanitozo",
@@ -163,8 +163,8 @@
     "comment_recommend": "",
     "comment": "",
     "comment_negative": "",
-    "created": "2019-05-06T15:00:00.000Z",
-    "updated": "2019-05-06T15:00:00.000Z"
+    "created_at": "2019-05-06T15:00:00.000Z",
+    "updated_at": "2019-05-06T15:00:00.000Z"
   }
 }, {
   "model": "airs.nanitozo",
@@ -177,8 +177,8 @@
     "comment_recommend": "",
     "comment": "",
     "comment_negative": "",
-    "created": "2019-05-07T15:00:00.000Z",
-    "updated": "2019-05-07T15:00:00.000Z"
+    "created_at": "2019-05-07T15:00:00.000Z",
+    "updated_at": "2019-05-07T15:00:00.000Z"
   }
 }, {
   "model": "airs.nanitozo",
@@ -191,8 +191,8 @@
     "comment_recommend": "",
     "comment": "",
     "comment_negative": "",
-    "created": "2019-05-07T15:00:00.000Z",
-    "updated": "2019-05-07T15:00:00.000Z"
+    "created_at": "2019-05-07T15:00:00.000Z",
+    "updated_at": "2019-05-07T15:00:00.000Z"
   }
 }, {
   "model": "airs.nanitozo",
@@ -205,7 +205,7 @@
     "comment_recommend": "",
     "comment": "",
     "comment_negative": "",
-    "created": "2019-05-07T15:00:00.000Z",
-    "updated": "2019-05-07T15:00:00.000Z"
+    "created_at": "2019-05-07T15:00:00.000Z",
+    "updated_at": "2019-05-07T15:00:00.000Z"
   }
 }]
