@@ -8,6 +8,7 @@ from django.utils.decorators import method_decorator
 
 from common.util.datetime_extensions import this_week_started, last_week_started, new_datetime, new_date, timedelta_days
 from common.util.url_extensions import scraping_title
+from common.util.log_extensions import logger_share_text
 from common.util.string_extensions import find_urls, share_text_to_formatted_name
 
 from ..models import Broadcaster, Program, Air
@@ -53,9 +54,13 @@ class AirCreateByShareTextView(generic.FormView):
         # It should return an HttpResponse.
 
         # - - - - - - - - - - - - - - - - - - - - - - - -
-        # 投稿したシェアテキストを取得
-        share_text = form.cleaned_data['share_text']
+        # 投稿したシェアテキストを取得 TODO 一時的にoverview_beforeから取得しているので修正する
+        share_text = form.cleaned_data['overview_before']
         # share_text = 'アルコ＆ピース D.C.GARAGE | TBSラジオ | 2021/10/05/火  24:00-25:00 https://radiko.jp/share/?sid=TBS&t=20211006000000' # 例1
+
+        # 投稿したシェアテキストはそのままログに記録する
+        print('printの挙動確認用：' + share_text)  # テスト
+        logger_share_text('loggerの挙動確認用：' + share_text)
 
         # - - - - - - - - - - - - - - - - - - - - - - - -
         # [share_text]からラジコのURLを抜き出す
@@ -177,6 +182,7 @@ class AirCreateByShareTextView(generic.FormView):
         form.instance.broadcaster = broadcaster
         form.instance.started_at = started_at  # 日本時刻として扱われる模様 例：datetimeで[2021-10-06 00:00:00]を登録 → DBは[2021-10-05T15:00:00Z]
         form.instance.ended_at = ended_at  # 日本時刻として扱われる模様 例：datetimeで[2021-10-06 01:00:00]を登録 → DBは[2021-10-05T16:00:00Z]
+        form.instance.overview_before = ''  # TODO 一時的に share_text がセットされているので空にしている
 
         # - - - - - - - - - - - - - - - - - - - - - - - -
         # 放送を保存 → 続けてログイン中のユーザー情報 & デフォルト値で何卒を登録

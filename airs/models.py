@@ -105,9 +105,6 @@ class Air(models.Model):
         verbose_name='名前',
         max_length=200,
     )
-    share_text = models.TextField(
-        verbose_name='シェアラジオ全文',
-    )
     started_at = models.DateTimeField(
         verbose_name='開始日時',
     )

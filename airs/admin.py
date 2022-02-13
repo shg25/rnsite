@@ -51,7 +51,7 @@ class NanitozoInline(admin.StackedInline):  # class NanitozoInline(admin.Tabular
 
 class AirAdmin(admin.ModelAdmin):
     fieldsets = [
-        (None, {'fields': ['name', 'share_text', 'program']}),
+        (None, {'fields': ['name', 'program']}),
         ('放送日時', {'fields': ['broadcaster', 'started_at', 'ended_at']}),
         ('概要', {'fields': ['overview_before', 'overview_after']}),
     ]
