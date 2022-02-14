@@ -11,7 +11,7 @@ from common.util.url_extensions import scraping_title
 from common.util.log_extensions import logger_share_text
 from common.util.string_extensions import find_urls, share_text_to_formatted_name
 
-from ..models import Broadcaster, Program, Air
+from ..models import Air, FormattedName
 from ..forms import AirCreateByShareTextForm
 
 
@@ -109,7 +109,8 @@ class AirCreateByShareTextView(generic.FormView):
 
         # Airに保存する放送局情報を取得（検索がヒットしない場合は[None]が入ってDBには[null]で保存されるはず）
         broadcaster_formatted_name = share_text_to_formatted_name(broadcaster_name)
-        broadcaster = Broadcaster.objects.filter(formatted_name=broadcaster_formatted_name).first()
+        broadcaster_formatted_name_object = FormattedName.objects.get(name=broadcaster_formatted_name)
+        broadcaster = broadcaster_formatted_name_object.broadcaster_set.first()
 
         # - - - - - - - - - - - - - - - - - - - - - - - -
         # タイトルから放送局名を除去
@@ -126,7 +127,8 @@ class AirCreateByShareTextView(generic.FormView):
 
         # Airに保存する番組情報を取得（検索がヒットしない場合は[None]が入ってDBには[null]で保存されるはず）
         program_formatted_name = share_text_to_formatted_name(program_name)
-        program = Program.objects.filter(formatted_name=program_formatted_name).first()
+        program_formatted_name_object = FormattedName.objects.get(name=program_formatted_name)
+        program = program_formatted_name_object.program_set.first()
 
         # - - - - - - - - - - - - - - - - - - - - - - - -
         # 放送開始日時と放送終了日時を作成

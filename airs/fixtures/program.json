@@ -3,7 +3,6 @@
   "pk": 1,
   "fields": {
     "name": "アルコ&ピースのオールナイトニッポン",
-    "formatted_name": "ｱﾙｺ&ﾋﾟｰｽのｵｰﾙﾅｲﾄﾆｯﾎﾟﾝ",
     "twitter_user_name": "",
     "site_url": "http://www.allnightnippon.com/program/ap/",
     "wikipedia_url": "https://ja.wikipedia.org/wiki/%E3%82%A2%E3%83%AB%E3%82%B3%26%E3%83%94%E3%83%BC%E3%82%B9%E3%81%AE%E3%82%AA%E3%83%BC%E3%83%AB%E3%83%8A%E3%82%A4%E3%83%88%E3%83%8B%E3%83%83%E3%83%9D%E3%83%B3%E3%82%B7%E3%83%AA%E3%83%BC%E3%82%BA",
@@ -14,7 +13,6 @@
   "pk": 2,
   "fields": {
     "name": "アルコ&ピース D.C.GARAGE",
-    "formatted_name": "ｱﾙｺ&ﾋﾟｰｽd.c.garage",
     "twitter_user_name": "dcg_tbsr",
     "site_url": "https://www.tbsradio.jp/dcg/",
     "wikipedia_url": "https://ja.wikipedia.org/wiki/%E3%82%A2%E3%83%AB%E3%82%B3%26%E3%83%94%E3%83%BC%E3%82%B9_D.C.GARAGE",
@@ -25,7 +23,6 @@
   "pk": 3,
   "fields": {
     "name": "うしろシティ 星のギガボディ",
-    "formatted_name": "うしろｼﾃｨ星のｷﾞｶﾞﾎﾞﾃﾞｨ",
     "twitter_user_name": "",
     "site_url": "http://www.tbsradio.jp/giga/",
     "wikipedia_url": "https://ja.wikipedia.org/wiki/%E3%81%86%E3%81%97%E3%82%8D%E3%82%B7%E3%83%86%E3%82%A3_%E6%98%9F%E3%81%AE%E3%82%AE%E3%82%AC%E3%83%9C%E3%83%87%E3%82%A3",
@@ -36,7 +33,6 @@
   "pk": 4,
   "fields": {
     "name": "ハライチのターン！",
-    "formatted_name": "ﾊﾗｲﾁのﾀｰﾝ!",
     "twitter_user_name": "tbsr_ht",
     "site_url": "https://www.tbsradio.jp/ht/",
     "wikipedia_url": "https://ja.wikipedia.org/wiki/%E3%83%8F%E3%83%A9%E3%82%A4%E3%83%81%E3%81%AE%E3%82%BF%E3%83%BC%E3%83%B3!",
@@ -47,7 +43,6 @@
   "pk": 5,
   "fields": {
     "name": "菅田将暉のオールナイトニッポン",
-    "formatted_name": "菅田将暉のｵｰﾙﾅｲﾄﾆｯﾎﾟﾝ",
     "twitter_user_name": "AnnSudamasaki",
     "site_url": "",
     "wikipedia_url": "",
@@ -58,7 +53,6 @@
   "pk": 6,
   "fields": {
     "name": "星野源のオールナイトニッポン",
-    "formatted_name": "星野源のｵｰﾙﾅｲﾄﾆｯﾎﾟﾝ",
     "twitter_user_name": "",
     "site_url": "",
     "wikipedia_url": "",
@@ -69,7 +63,6 @@
   "pk": 7,
   "fields": {
     "name": "乃木坂46のオールナイトニッポン",
-    "formatted_name": "乃木坂46のｵｰﾙﾅｲﾄﾆｯﾎﾟﾝ",
     "twitter_user_name": "NOGI46ann",
     "site_url": "",
     "wikipedia_url": "",
@@ -80,7 +73,6 @@
   "pk": 8,
   "fields": {
     "name": "ナインティナインのオールナイトニッポン",
-    "formatted_name": "ﾅｲﾝﾃｨﾅｲﾝのｵｰﾙﾅｲﾄﾆｯﾎﾟﾝ",
     "twitter_user_name": "NinetyNineANN",
     "site_url": "",
     "wikipedia_url": "",
@@ -91,7 +83,6 @@
   "pk": 9,
   "fields": {
     "name": "三四郎のオールナイトニッポン0",
-    "formatted_name": "三四郎のｵｰﾙﾅｲﾄﾆｯﾎﾟﾝ0(zero)",
     "twitter_user_name": "SanshiroANN",
     "site_url": "",
     "wikipedia_url": "",
@@ -102,7 +93,6 @@
   "pk": 10,
   "fields": {
     "name": "オードリーのオールナイトニッポン",
-    "formatted_name": "ｵｰﾄﾞﾘｰのｵｰﾙﾅｲﾄﾆｯﾎﾟﾝ",
     "twitter_user_name": "annkw5tyb",
     "site_url": "https://www.allnightnippon.com/kw/",
     "wikipedia_url": "https://ja.wikipedia.org/wiki/%E3%82%AA%E3%83%BC%E3%83%89%E3%83%AA%E3%83%BC%E3%81%AE%E3%82%AA%E3%83%BC%E3%83%AB%E3%83%8A%E3%82%A4%E3%83%88%E3%83%8B%E3%83%83%E3%83%9D%E3%83%B3",
@@ -113,7 +103,6 @@
   "pk": 11,
   "fields": {
     "name": "ファーストサマーウイカのオールナイトニッポン0",
-    "formatted_name": "ﾌｧｰｽﾄｻﾏｰｳｲｶのｵｰﾙﾅｲﾄﾆｯﾎﾟﾝ0(zero)",
     "twitter_user_name": "fsuann0",
     "site_url": "",
     "wikipedia_url": "",
@@ -124,7 +113,6 @@
   "pk": 12,
   "fields": {
     "name": "Creepy Nutsのオールナイトニッポン0",
-    "formatted_name": "creepynutsのｵｰﾙﾅｲﾄﾆｯﾎﾟﾝ0(zero)",
     "twitter_user_name": "cnann0",
     "site_url": "",
     "wikipedia_url": "",
@@ -135,7 +123,6 @@
   "pk": 13,
   "fields": {
     "name": "佐久間宣行のオールナイトニッポン0",
-    "formatted_name": "佐久間宣行のｵｰﾙﾅｲﾄﾆｯﾎﾟﾝ0(zero)",
     "twitter_user_name": "SakumaANN0",
     "site_url": "",
     "wikipedia_url": "",
@@ -146,7 +133,6 @@
   "pk": 14,
   "fields": {
     "name": "水溜りボンドのオールナイトニッポン0",
-    "formatted_name": "水溜りﾎﾞﾝﾄﾞ･ｶﾝﾀのｵｰﾙﾅｲﾄﾆｯﾎﾟﾝ0(zero),水溜りﾎﾞﾝﾄﾞのｵｰﾙﾅｲﾄﾆｯﾎﾟﾝ0(zero)",
     "twitter_user_name": "mizuann0",
     "site_url": "",
     "wikipedia_url": "",
@@ -157,7 +143,6 @@
   "pk": 15,
   "fields": {
     "name": "霜降り明星のオールナイトニッポン",
-    "formatted_name": "霜降り明星のｵｰﾙﾅｲﾄﾆｯﾎﾟﾝ",
     "twitter_user_name": "shimofuri_ANN",
     "site_url": "",
     "wikipedia_url": "",
@@ -168,7 +153,6 @@
   "pk": 16,
   "fields": {
     "name": "マヂカルラブリーのオールナイトニッポン0",
-    "formatted_name": "ﾏﾁﾞｶﾙﾗﾌﾞﾘｰのｵｰﾙﾅｲﾄﾆｯﾎﾟﾝ0(zero)",
     "twitter_user_name": "magiloveANN0",
     "site_url": "",
     "wikipedia_url": "",
@@ -179,7 +163,6 @@
   "pk": 17,
   "fields": {
     "name": "伊集院光 深夜の馬鹿力",
-    "formatted_name": "junk伊集院光･深夜の馬鹿力,junk伊集院光深夜の馬鹿力",
     "twitter_user_name": "",
     "site_url": "",
     "wikipedia_url": "",
@@ -190,7 +173,6 @@
   "pk": 18,
   "fields": {
     "name": "爆笑問題カーボーイ",
-    "formatted_name": "junk爆笑問題ｶｰﾎﾞｰｲ",
     "twitter_user_name": "",
     "site_url": "",
     "wikipedia_url": "",
@@ -201,7 +183,6 @@
   "pk": 19,
   "fields": {
     "name": "山里亮太の不毛な議論",
-    "formatted_name": "junk山里亮太の不毛な議論",
     "twitter_user_name": "",
     "site_url": "",
     "wikipedia_url": "",
@@ -212,7 +193,6 @@
   "pk": 20,
   "fields": {
     "name": "おぎやはぎのメガネびいき",
-    "formatted_name": "junkおぎやはぎのﾒｶﾞﾈびいき",
     "twitter_user_name": "",
     "site_url": "",
     "wikipedia_url": "",
@@ -223,7 +203,6 @@
   "pk": 21,
   "fields": {
     "name": "バナナマンのバナナムーンGOLD",
-    "formatted_name": "junkﾊﾞﾅﾅﾏﾝのﾊﾞﾅﾅﾑｰﾝgold",
     "twitter_user_name": "",
     "site_url": "",
     "wikipedia_url": "",
