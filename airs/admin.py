@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Broadcaster, Program, Air, Nanitozo
+from .models import Broadcaster, Program, Air, Nanitozo, FormattedName
 
 
 class ProgramInline(admin.TabularInline):  # class NanitozoInline(admin.StackedInline):
@@ -12,15 +12,18 @@ class BroadcasterAdmin(admin.ModelAdmin):
         'radiko_identifier',
         'name',
         'abbreviation',
-        'formatted_name',
         'site_url',
         'wikipedia_url',
-        'address'
+        'address',
+        'formatted_names'
     ]
     inlines = [ProgramInline]
-    list_display = ('id', 'radiko_identifier', 'name', 'formatted_name')
+    list_display = ('id', 'radiko_identifier', 'name', '_formatted_names')
     list_display_links = ('name',)
     ordering = ('id',)
+
+    def _formatted_names(self, row):
+        return ','.join([x.name for x in row.formatted_names.all()])
 
 
 admin.site.register(Broadcaster, BroadcasterAdmin)
@@ -29,16 +32,19 @@ admin.site.register(Broadcaster, BroadcasterAdmin)
 class ProgramAdmin(admin.ModelAdmin):
     fields = [
         'name',
-        'formatted_name',
         'twitter_user_name',
         'site_url',
         'wikipedia_url',
-        'broadcaster'
+        'broadcaster',
+        'formatted_names'
     ]
-    list_display = ('id', 'name', 'broadcaster')
+    list_display = ('id', 'name', 'broadcaster', '_formatted_names')
     list_display_links = ('name',)
     list_filter = ['broadcaster']
     ordering = ('id',)
+
+    def _formatted_names(self, row):
+        return ','.join([x.name for x in row.formatted_names.all()])
 
 
 admin.site.register(Program, ProgramAdmin)
@@ -80,3 +86,14 @@ class NanitozoAdmin(admin.ModelAdmin):
 
 
 admin.site.register(Nanitozo, NanitozoAdmin)
+
+
+class FormattedNameAdmin(admin.ModelAdmin):
+    fields = [
+        'name',
+    ]
+    list_display = ('id', 'name')
+    ordering = ('id',)
+
+
+admin.site.register(FormattedName, FormattedNameAdmin)

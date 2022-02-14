@@ -1,0 +1,619 @@
+[{
+  "model": "airs.formattedname",
+  "pk": 1,
+  "fields": {
+    "name": "tbsﾗｼﾞｵ"
+  }
+}, {
+  "model": "airs.formattedname",
+  "pk": 2,
+  "fields": {
+    "name": "ﾆｯﾎﾟﾝ放送"
+  }
+}, {
+  "model": "airs.formattedname",
+  "pk": 3,
+  "fields": {
+    "name": "文化放送"
+  }
+}, {
+  "model": "airs.formattedname",
+  "pk": 4,
+  "fields": {
+    "name": "ﾗｼﾞｵ日本"
+  }
+}, {
+  "model": "airs.formattedname",
+  "pk": 5,
+  "fields": {
+    "name": "crt栃木放送"
+  }
+}, {
+  "model": "airs.formattedname",
+  "pk": 6,
+  "fields": {
+    "name": "luckyfm茨城放送"
+  }
+}, {
+  "model": "airs.formattedname",
+  "pk": 7,
+  "fields": {
+    "name": "abcﾗｼﾞｵ"
+  }
+}, {
+  "model": "airs.formattedname",
+  "pk": 8,
+  "fields": {
+    "name": "mbsﾗｼﾞｵ"
+  }
+}, {
+  "model": "airs.formattedname",
+  "pk": 9,
+  "fields": {
+    "name": "obcﾗｼﾞｵ大阪"
+  }
+}, {
+  "model": "airs.formattedname",
+  "pk": 10,
+  "fields": {
+    "name": "ﾗｼﾞｵ関西"
+  }
+}, {
+  "model": "airs.formattedname",
+  "pk": 11,
+  "fields": {
+    "name": "kbs京都ﾗｼﾞｵ"
+  }
+}, {
+  "model": "airs.formattedname",
+  "pk": 12,
+  "fields": {
+    "name": "wbs和歌山放送"
+  }
+}, {
+  "model": "airs.formattedname",
+  "pk": 13,
+  "fields": {
+    "name": "cbcﾗｼﾞｵ"
+  }
+}, {
+  "model": "airs.formattedname",
+  "pk": 14,
+  "fields": {
+    "name": "東海ﾗｼﾞｵ"
+  }
+}, {
+  "model": "airs.formattedname",
+  "pk": 15,
+  "fields": {
+    "name": "ぎふﾁｬﾝ"
+  }
+}, {
+  "model": "airs.formattedname",
+  "pk": 16,
+  "fields": {
+    "name": "hbcﾗｼﾞｵ"
+  }
+}, {
+  "model": "airs.formattedname",
+  "pk": 17,
+  "fields": {
+    "name": "stvﾗｼﾞｵ"
+  }
+}, {
+  "model": "airs.formattedname",
+  "pk": 18,
+  "fields": {
+    "name": "rab青森放送"
+  }
+}, {
+  "model": "airs.formattedname",
+  "pk": 19,
+  "fields": {
+    "name": "abs秋田放送"
+  }
+}, {
+  "model": "airs.formattedname",
+  "pk": 20,
+  "fields": {
+    "name": "ibcﾗｼﾞｵ"
+  }
+}, {
+  "model": "airs.formattedname",
+  "pk": 21,
+  "fields": {
+    "name": "tbcﾗｼﾞｵ"
+  }
+}, {
+  "model": "airs.formattedname",
+  "pk": 22,
+  "fields": {
+    "name": "ybc山形放送"
+  }
+}, {
+  "model": "airs.formattedname",
+  "pk": 23,
+  "fields": {
+    "name": "rfcﾗｼﾞｵ福島"
+  }
+}, {
+  "model": "airs.formattedname",
+  "pk": 24,
+  "fields": {
+    "name": "bsnﾗｼﾞｵ"
+  }
+}, {
+  "model": "airs.formattedname",
+  "pk": 25,
+  "fields": {
+    "name": "sbcﾗｼﾞｵ"
+  }
+}, {
+  "model": "airs.formattedname",
+  "pk": 26,
+  "fields": {
+    "name": "ybsﾗｼﾞｵ"
+  }
+}, {
+  "model": "airs.formattedname",
+  "pk": 27,
+  "fields": {
+    "name": "sbsﾗｼﾞｵ"
+  }
+}, {
+  "model": "airs.formattedname",
+  "pk": 28,
+  "fields": {
+    "name": "knbﾗｼﾞｵ"
+  }
+}, {
+  "model": "airs.formattedname",
+  "pk": 29,
+  "fields": {
+    "name": "mroﾗｼﾞｵ"
+  }
+}, {
+  "model": "airs.formattedname",
+  "pk": 30,
+  "fields": {
+    "name": "fbcﾗｼﾞｵ"
+  }
+}, {
+  "model": "airs.formattedname",
+  "pk": 31,
+  "fields": {
+    "name": "bssﾗｼﾞｵ"
+  }
+}, {
+  "model": "airs.formattedname",
+  "pk": 32,
+  "fields": {
+    "name": "rskﾗｼﾞｵ"
+  }
+}, {
+  "model": "airs.formattedname",
+  "pk": 33,
+  "fields": {
+    "name": "rccﾗｼﾞｵ"
+  }
+}, {
+  "model": "airs.formattedname",
+  "pk": 34,
+  "fields": {
+    "name": "kry山口放送"
+  }
+}, {
+  "model": "airs.formattedname",
+  "pk": 35,
+  "fields": {
+    "name": "rnc西日本放送"
+  }
+}, {
+  "model": "airs.formattedname",
+  "pk": 36,
+  "fields": {
+    "name": "jrt四国放送"
+  }
+}, {
+  "model": "airs.formattedname",
+  "pk": 37,
+  "fields": {
+    "name": "rnb南海放送"
+  }
+}, {
+  "model": "airs.formattedname",
+  "pk": 38,
+  "fields": {
+    "name": "rkc高知放送"
+  }
+}, {
+  "model": "airs.formattedname",
+  "pk": 39,
+  "fields": {
+    "name": "rkbﾗｼﾞｵ"
+  }
+}, {
+  "model": "airs.formattedname",
+  "pk": 40,
+  "fields": {
+    "name": "kbcﾗｼﾞｵ"
+  }
+}, {
+  "model": "airs.formattedname",
+  "pk": 41,
+  "fields": {
+    "name": "nbc長崎放送"
+  }
+}, {
+  "model": "airs.formattedname",
+  "pk": 42,
+  "fields": {
+    "name": "obsﾗｼﾞｵ"
+  }
+}, {
+  "model": "airs.formattedname",
+  "pk": 43,
+  "fields": {
+    "name": "rkkﾗｼﾞｵ"
+  }
+}, {
+  "model": "airs.formattedname",
+  "pk": 44,
+  "fields": {
+    "name": "宮崎放送"
+  }
+}, {
+  "model": "airs.formattedname",
+  "pk": 45,
+  "fields": {
+    "name": "mbcﾗｼﾞｵ"
+  }
+}, {
+  "model": "airs.formattedname",
+  "pk": 46,
+  "fields": {
+    "name": "rbciﾗｼﾞｵ"
+  }
+}, {
+  "model": "airs.formattedname",
+  "pk": 47,
+  "fields": {
+    "name": "ﾗｼﾞｵ沖縄"
+  }
+}, {
+  "model": "airs.formattedname",
+  "pk": 48,
+  "fields": {
+    "name": "tokyofm"
+  }
+}, {
+  "model": "airs.formattedname",
+  "pk": 49,
+  "fields": {
+    "name": "j-wave"
+  }
+}, {
+  "model": "airs.formattedname",
+  "pk": 50,
+  "fields": {
+    "name": "interfm897"
+  }
+}, {
+  "model": "airs.formattedname",
+  "pk": 51,
+  "fields": {
+    "name": "fmﾖｺﾊﾏ"
+  }
+}, {
+  "model": "airs.formattedname",
+  "pk": 52,
+  "fields": {
+    "name": "nack5"
+  }
+}, {
+  "model": "airs.formattedname",
+  "pk": 53,
+  "fields": {
+    "name": "bayfm78"
+  }
+}, {
+  "model": "airs.formattedname",
+  "pk": 54,
+  "fields": {
+    "name": "radioberry"
+  }
+}, {
+  "model": "airs.formattedname",
+  "pk": 55,
+  "fields": {
+    "name": "fmgunma"
+  }
+}, {
+  "model": "airs.formattedname",
+  "pk": 56,
+  "fields": {
+    "name": "fm大阪"
+  }
+}, {
+  "model": "airs.formattedname",
+  "pk": 57,
+  "fields": {
+    "name": "fm802"
+  }
+}, {
+  "model": "airs.formattedname",
+  "pk": 58,
+  "fields": {
+    "name": "fmcocolo"
+  }
+}, {
+  "model": "airs.formattedname",
+  "pk": 59,
+  "fields": {
+    "name": "e-radiofm滋賀"
+  }
+}, {
+  "model": "airs.formattedname",
+  "pk": 60,
+  "fields": {
+    "name": "kissfmkobe"
+  }
+}, {
+  "model": "airs.formattedname",
+  "pk": 61,
+  "fields": {
+    "name": "α-stationfm京都"
+  }
+}, {
+  "model": "airs.formattedname",
+  "pk": 62,
+  "fields": {
+    "name": "fmaichi"
+  }
+}, {
+  "model": "airs.formattedname",
+  "pk": 63,
+  "fields": {
+    "name": "zip-fm"
+  }
+}, {
+  "model": "airs.formattedname",
+  "pk": 64,
+  "fields": {
+    "name": "fmgifu"
+  }
+}, {
+  "model": "airs.formattedname",
+  "pk": 65,
+  "fields": {
+    "name": "ﾚﾃﾞｨｵｷｭｰﾌﾞfm三重"
+  }
+}, {
+  "model": "airs.formattedname",
+  "pk": 66,
+  "fields": {
+    "name": "air-g'(fm北海道)"
+  }
+}, {
+  "model": "airs.formattedname",
+  "pk": 67,
+  "fields": {
+    "name": "fmnorthwave"
+  }
+}, {
+  "model": "airs.formattedname",
+  "pk": 68,
+  "fields": {
+    "name": "ｴﾌｴﾑ青森"
+  }
+}, {
+  "model": "airs.formattedname",
+  "pk": 69,
+  "fields": {
+    "name": "ｴﾌｴﾑ秋田"
+  }
+}, {
+  "model": "airs.formattedname",
+  "pk": 70,
+  "fields": {
+    "name": "ｴﾌｴﾑ岩手"
+  }
+}, {
+  "model": "airs.formattedname",
+  "pk": 71,
+  "fields": {
+    "name": "datefmｴﾌｴﾑ仙台"
+  }
+}, {
+  "model": "airs.formattedname",
+  "pk": 72,
+  "fields": {
+    "name": "rhythmstationｴﾌｴﾑ山形"
+  }
+}, {
+  "model": "airs.formattedname",
+  "pk": 73,
+  "fields": {
+    "name": "ふくしまfm"
+  }
+}, {
+  "model": "airs.formattedname",
+  "pk": 74,
+  "fields": {
+    "name": "fmniigata"
+  }
+}, {
+  "model": "airs.formattedname",
+  "pk": 75,
+  "fields": {
+    "name": "fm長野"
+  }
+}, {
+  "model": "airs.formattedname",
+  "pk": 76,
+  "fields": {
+    "name": "fmfuji"
+  }
+}, {
+  "model": "airs.formattedname",
+  "pk": 77,
+  "fields": {
+    "name": "k-mixshizuoka"
+  }
+}, {
+  "model": "airs.formattedname",
+  "pk": 78,
+  "fields": {
+    "name": "fmとやま"
+  }
+}, {
+  "model": "airs.formattedname",
+  "pk": 79,
+  "fields": {
+    "name": "ｴﾌｴﾑ石川"
+  }
+}, {
+  "model": "airs.formattedname",
+  "pk": 80,
+  "fields": {
+    "name": "fm福井"
+  }
+}, {
+  "model": "airs.formattedname",
+  "pk": 81,
+  "fields": {
+    "name": "ｴﾌｴﾑ山陰"
+  }
+}, {
+  "model": "airs.formattedname",
+  "pk": 82,
+  "fields": {
+    "name": "fm岡山"
+  }
+}, {
+  "model": "airs.formattedname",
+  "pk": 83,
+  "fields": {
+    "name": "広島fm"
+  }
+}, {
+  "model": "airs.formattedname",
+  "pk": 84,
+  "fields": {
+    "name": "ｴﾌｴﾑ山口"
+  }
+}, {
+  "model": "airs.formattedname",
+  "pk": 85,
+  "fields": {
+    "name": "ｴﾌｴﾑ香川"
+  }
+}, {
+  "model": "airs.formattedname",
+  "pk": 86,
+  "fields": {
+    "name": "fm徳島"
+  }
+}, {
+  "model": "airs.formattedname",
+  "pk": 87,
+  "fields": {
+    "name": "fm愛媛"
+  }
+}, {
+  "model": "airs.formattedname",
+  "pk": 88,
+  "fields": {
+    "name": "ｴﾌｴﾑ高知"
+  }
+}, {
+  "model": "airs.formattedname",
+  "pk": 89,
+  "fields": {
+    "name": "fmfukuoka"
+  }
+}, {
+  "model": "airs.formattedname",
+  "pk": 90,
+  "fields": {
+    "name": "crossfm"
+  }
+}, {
+  "model": "airs.formattedname",
+  "pk": 91,
+  "fields": {
+    "name": "lovefm"
+  }
+}, {
+  "model": "airs.formattedname",
+  "pk": 92,
+  "fields": {
+    "name": "ｴﾌｴﾑ佐賀"
+  }
+}, {
+  "model": "airs.formattedname",
+  "pk": 93,
+  "fields": {
+    "name": "fm長崎"
+  }
+}, {
+  "model": "airs.formattedname",
+  "pk": 94,
+  "fields": {
+    "name": "ｴﾌｴﾑ大分"
+  }
+}, {
+  "model": "airs.formattedname",
+  "pk": 95,
+  "fields": {
+    "name": "fmkｴﾌｴﾑ熊本"
+  }
+}, {
+  "model": "airs.formattedname",
+  "pk": 96,
+  "fields": {
+    "name": "ｴﾌｴﾑ宮崎"
+  }
+}, {
+  "model": "airs.formattedname",
+  "pk": 97,
+  "fields": {
+    "name": "μfm"
+  }
+}, {
+  "model": "airs.formattedname",
+  "pk": 98,
+  "fields": {
+    "name": "fm沖縄"
+  }
+}, {
+  "model": "airs.formattedname",
+  "pk": 99,
+  "fields": {
+    "name": "ﾗｼﾞｵnikkei第1"
+  }
+}, {
+  "model": "airs.formattedname",
+  "pk": 100,
+  "fields": {
+    "name": "ﾗｼﾞｵnikkei第2"
+  }
+}, {
+  "model": "airs.formattedname",
+  "pk": 101,
+  "fields": {
+    "name": "nhkﾗｼﾞｵ第1(東京)"
+  }
+}, {
+  "model": "airs.formattedname",
+  "pk": 102,
+  "fields": {
+    "name": "nhk-fm(東京)"
+  }
+}, {
+  "model": "airs.formattedname",
+  "pk": 103,
+  "fields": {
+    "name": "放送大学"
+  }
+}]

@@ -14,6 +14,21 @@ def get_last_name(self):
 User.add_to_class("__str__", get_last_name)
 
 
+# 整形した名前
+class FormattedName(models.Model):
+    name = models.CharField(
+        verbose_name='名前',
+        unique=True,
+        max_length=400,
+    )
+
+    class Meta:
+        ordering = ['name']
+
+    def __str__(self):
+        return self.name
+
+
 # 放送局
 class Broadcaster(models.Model):
     radiko_identifier = models.CharField(
@@ -30,10 +45,6 @@ class Broadcaster(models.Model):
         max_length=20,
         help_text='一覧に表示するための表記'
     )
-    formatted_name = models.TextField(
-        verbose_name='整形した名前',
-        null=True, blank=True,
-    )
     site_url = models.CharField(
         verbose_name='サイトURL',
         null=True, blank=True,
@@ -48,6 +59,11 @@ class Broadcaster(models.Model):
         verbose_name='所在地',
         max_length=400,
     )
+    formatted_names = models.ManyToManyField(
+        FormattedName,
+        verbose_name='整形した名前',
+        blank=True,
+    )
 
     def __str__(self):
         return self.name
@@ -59,10 +75,6 @@ class Program(models.Model):
         verbose_name='名前',
         unique=True,
         max_length=200,
-    )
-    formatted_name = models.TextField(
-        verbose_name='整形した名前',
-        null=True, blank=True,
     )
     twitter_user_name = models.CharField(
         verbose_name='Twitterスクリーン名',
@@ -83,6 +95,11 @@ class Program(models.Model):
         Broadcaster, on_delete=models.CASCADE,
         verbose_name='キー局',
         null=True, blank=True,
+    )
+    formatted_names = models.ManyToManyField(
+        FormattedName,
+        verbose_name='整形した名前',
+        blank=True,
     )
 
     def __str__(self):
