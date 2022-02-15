@@ -3,209 +3,863 @@
   "pk": 1,
   "fields": {
     "name": "アルコ&ピースのオールナイトニッポン",
+    "day_of_week": null,
     "twitter_user_name": "",
     "site_url": "http://www.allnightnippon.com/program/ap/",
     "wikipedia_url": "https://ja.wikipedia.org/wiki/%E3%82%A2%E3%83%AB%E3%82%B3%26%E3%83%94%E3%83%BC%E3%82%B9%E3%81%AE%E3%82%AA%E3%83%BC%E3%83%AB%E3%83%8A%E3%82%A4%E3%83%88%E3%83%8B%E3%83%83%E3%83%9D%E3%83%B3%E3%82%B7%E3%83%AA%E3%83%BC%E3%82%BA",
-    "broadcaster": 2
+    "broadcaster": 2,
+    "formatted_names": [104]
   }
 }, {
   "model": "airs.program",
   "pk": 2,
   "fields": {
     "name": "アルコ&ピース D.C.GARAGE",
+    "day_of_week": null,
     "twitter_user_name": "dcg_tbsr",
     "site_url": "https://www.tbsradio.jp/dcg/",
     "wikipedia_url": "https://ja.wikipedia.org/wiki/%E3%82%A2%E3%83%AB%E3%82%B3%26%E3%83%94%E3%83%BC%E3%82%B9_D.C.GARAGE",
-    "broadcaster": 1
+    "broadcaster": 1,
+    "formatted_names": [105]
   }
 }, {
   "model": "airs.program",
   "pk": 3,
   "fields": {
     "name": "うしろシティ 星のギガボディ",
+    "day_of_week": null,
     "twitter_user_name": "",
     "site_url": "http://www.tbsradio.jp/giga/",
     "wikipedia_url": "https://ja.wikipedia.org/wiki/%E3%81%86%E3%81%97%E3%82%8D%E3%82%B7%E3%83%86%E3%82%A3_%E6%98%9F%E3%81%AE%E3%82%AE%E3%82%AC%E3%83%9C%E3%83%87%E3%82%A3",
-    "broadcaster": 1
+    "broadcaster": 1,
+    "formatted_names": [106]
   }
 }, {
   "model": "airs.program",
   "pk": 4,
   "fields": {
     "name": "ハライチのターン！",
+    "day_of_week": null,
     "twitter_user_name": "tbsr_ht",
     "site_url": "https://www.tbsradio.jp/ht/",
     "wikipedia_url": "https://ja.wikipedia.org/wiki/%E3%83%8F%E3%83%A9%E3%82%A4%E3%83%81%E3%81%AE%E3%82%BF%E3%83%BC%E3%83%B3!",
-    "broadcaster": 1
+    "broadcaster": 1,
+    "formatted_names": [107]
   }
 }, {
   "model": "airs.program",
   "pk": 5,
   "fields": {
     "name": "菅田将暉のオールナイトニッポン",
+    "day_of_week": null,
     "twitter_user_name": "AnnSudamasaki",
     "site_url": "",
     "wikipedia_url": "",
-    "broadcaster": 2
+    "broadcaster": 2,
+    "formatted_names": [108]
   }
 }, {
   "model": "airs.program",
   "pk": 6,
   "fields": {
     "name": "星野源のオールナイトニッポン",
+    "day_of_week": null,
     "twitter_user_name": "",
     "site_url": "",
     "wikipedia_url": "",
-    "broadcaster": 2
+    "broadcaster": 2,
+    "formatted_names": [109]
   }
 }, {
   "model": "airs.program",
   "pk": 7,
   "fields": {
     "name": "乃木坂46のオールナイトニッポン",
+    "day_of_week": null,
     "twitter_user_name": "NOGI46ann",
     "site_url": "",
     "wikipedia_url": "",
-    "broadcaster": 2
+    "broadcaster": 2,
+    "formatted_names": [110]
   }
 }, {
   "model": "airs.program",
   "pk": 8,
   "fields": {
     "name": "ナインティナインのオールナイトニッポン",
+    "day_of_week": null,
     "twitter_user_name": "NinetyNineANN",
     "site_url": "",
     "wikipedia_url": "",
-    "broadcaster": 2
+    "broadcaster": 2,
+    "formatted_names": [111]
   }
 }, {
   "model": "airs.program",
   "pk": 9,
   "fields": {
     "name": "三四郎のオールナイトニッポン0",
+    "day_of_week": null,
     "twitter_user_name": "SanshiroANN",
     "site_url": "",
     "wikipedia_url": "",
-    "broadcaster": 2
+    "broadcaster": 2,
+    "formatted_names": [112, 125]
   }
 }, {
   "model": "airs.program",
   "pk": 10,
   "fields": {
     "name": "オードリーのオールナイトニッポン",
+    "day_of_week": null,
     "twitter_user_name": "annkw5tyb",
     "site_url": "https://www.allnightnippon.com/kw/",
     "wikipedia_url": "https://ja.wikipedia.org/wiki/%E3%82%AA%E3%83%BC%E3%83%89%E3%83%AA%E3%83%BC%E3%81%AE%E3%82%AA%E3%83%BC%E3%83%AB%E3%83%8A%E3%82%A4%E3%83%88%E3%83%8B%E3%83%83%E3%83%9D%E3%83%B3",
-    "broadcaster": 2
+    "broadcaster": 2,
+    "formatted_names": [113]
   }
 }, {
   "model": "airs.program",
   "pk": 11,
   "fields": {
     "name": "ファーストサマーウイカのオールナイトニッポン0",
+    "day_of_week": null,
     "twitter_user_name": "fsuann0",
     "site_url": "",
     "wikipedia_url": "",
-    "broadcaster": 2
+    "broadcaster": 2,
+    "formatted_names": [114]
   }
 }, {
   "model": "airs.program",
   "pk": 12,
   "fields": {
     "name": "Creepy Nutsのオールナイトニッポン0",
+    "day_of_week": null,
     "twitter_user_name": "cnann0",
     "site_url": "",
     "wikipedia_url": "",
-    "broadcaster": 2
+    "broadcaster": 2,
+    "formatted_names": [115]
   }
 }, {
   "model": "airs.program",
   "pk": 13,
   "fields": {
     "name": "佐久間宣行のオールナイトニッポン0",
+    "day_of_week": null,
     "twitter_user_name": "SakumaANN0",
     "site_url": "",
     "wikipedia_url": "",
-    "broadcaster": 2
+    "broadcaster": 2,
+    "formatted_names": [116]
   }
 }, {
   "model": "airs.program",
   "pk": 14,
   "fields": {
     "name": "水溜りボンドのオールナイトニッポン0",
+    "day_of_week": null,
     "twitter_user_name": "mizuann0",
     "site_url": "",
     "wikipedia_url": "",
-    "broadcaster": 2
+    "broadcaster": 2,
+    "formatted_names": [117]
   }
 }, {
   "model": "airs.program",
   "pk": 15,
   "fields": {
     "name": "霜降り明星のオールナイトニッポン",
+    "day_of_week": null,
     "twitter_user_name": "shimofuri_ANN",
     "site_url": "",
     "wikipedia_url": "",
-    "broadcaster": 2
+    "broadcaster": 2,
+    "formatted_names": [118, 126]
   }
 }, {
   "model": "airs.program",
   "pk": 16,
   "fields": {
     "name": "マヂカルラブリーのオールナイトニッポン0",
+    "day_of_week": null,
     "twitter_user_name": "magiloveANN0",
     "site_url": "",
     "wikipedia_url": "",
-    "broadcaster": 2
+    "broadcaster": 2,
+    "formatted_names": [119]
   }
 }, {
   "model": "airs.program",
   "pk": 17,
   "fields": {
     "name": "伊集院光 深夜の馬鹿力",
+    "day_of_week": null,
     "twitter_user_name": "",
     "site_url": "",
     "wikipedia_url": "",
-    "broadcaster": 1
+    "broadcaster": 1,
+    "formatted_names": [120, 127]
   }
 }, {
   "model": "airs.program",
   "pk": 18,
   "fields": {
     "name": "爆笑問題カーボーイ",
+    "day_of_week": null,
     "twitter_user_name": "",
     "site_url": "",
     "wikipedia_url": "",
-    "broadcaster": 1
+    "broadcaster": 1,
+    "formatted_names": [121]
   }
 }, {
   "model": "airs.program",
   "pk": 19,
   "fields": {
     "name": "山里亮太の不毛な議論",
+    "day_of_week": null,
     "twitter_user_name": "",
     "site_url": "",
     "wikipedia_url": "",
-    "broadcaster": 1
+    "broadcaster": 1,
+    "formatted_names": [122]
   }
 }, {
   "model": "airs.program",
   "pk": 20,
   "fields": {
     "name": "おぎやはぎのメガネびいき",
+    "day_of_week": null,
     "twitter_user_name": "",
     "site_url": "",
     "wikipedia_url": "",
-    "broadcaster": 1
+    "broadcaster": 1,
+    "formatted_names": [123]
   }
 }, {
   "model": "airs.program",
   "pk": 21,
   "fields": {
     "name": "バナナマンのバナナムーンGOLD",
+    "day_of_week": null,
     "twitter_user_name": "",
     "site_url": "",
     "wikipedia_url": "",
-    "broadcaster": 1
+    "broadcaster": 1,
+    "formatted_names": [124]
+  }
+}, {
+  "model": "airs.program",
+  "pk": 22,
+  "fields": {
+    "name": "アッパレやってまーす！月曜日",
+    "day_of_week": 0,
+    "twitter_user_name": "mbs_yarugetsu",
+    "site_url": "",
+    "wikipedia_url": "",
+    "broadcaster": 8,
+    "formatted_names": [128]
+  }
+}, {
+  "model": "airs.program",
+  "pk": 23,
+  "fields": {
+    "name": "アッパレやってまーす！火曜日",
+    "day_of_week": 1,
+    "twitter_user_name": "mbs_yaruka",
+    "site_url": "",
+    "wikipedia_url": "",
+    "broadcaster": 8,
+    "formatted_names": [128]
+  }
+}, {
+  "model": "airs.program",
+  "pk": 24,
+  "fields": {
+    "name": "アッパレやってまーす！水曜日（小林友治アワー）",
+    "day_of_week": 2,
+    "twitter_user_name": "yarusui1179",
+    "site_url": "",
+    "wikipedia_url": "",
+    "broadcaster": 8,
+    "formatted_names": [128]
+  }
+}, {
+  "model": "airs.program",
+  "pk": 25,
+  "fields": {
+    "name": "アッパレやってまーす！木曜日",
+    "day_of_week": 3,
+    "twitter_user_name": "mbs_yarumoku",
+    "site_url": "",
+    "wikipedia_url": "",
+    "broadcaster": 8,
+    "formatted_names": [128]
+  }
+}, {
+  "model": "airs.program",
+  "pk": 26,
+  "fields": {
+    "name": "アッパレやってまーす！～土曜日です～",
+    "day_of_week": 5,
+    "twitter_user_name": "mbs_yarudo",
+    "site_url": "",
+    "wikipedia_url": "",
+    "broadcaster": 8,
+    "formatted_names": [129]
+  }
+}, {
+  "model": "airs.program",
+  "pk": 27,
+  "fields": {
+    "name": "小籔・笑い飯の土020",
+    "day_of_week": null,
+    "twitter_user_name": "waraimeshihour",
+    "site_url": "",
+    "wikipedia_url": "",
+    "broadcaster": 8,
+    "formatted_names": [130]
+  }
+}, {
+  "model": "airs.program",
+  "pk": 28,
+  "fields": {
+    "name": "ナイツ ザ・ラジオショー（13時台）",
+    "day_of_week": null,
+    "twitter_user_name": "The_RadioShow",
+    "site_url": "",
+    "wikipedia_url": "",
+    "broadcaster": 2,
+    "formatted_names": [131]
+  }
+}, {
+  "model": "airs.program",
+  "pk": 29,
+  "fields": {
+    "name": "ナイツ ザ・ラジオショー（14時台）",
+    "day_of_week": null,
+    "twitter_user_name": "The_RadioShow",
+    "site_url": "",
+    "wikipedia_url": "",
+    "broadcaster": 2,
+    "formatted_names": [132]
+  }
+}, {
+  "model": "airs.program",
+  "pk": 30,
+  "fields": {
+    "name": "ナイツ ザ・ラジオショー（15時台）",
+    "day_of_week": null,
+    "twitter_user_name": "The_RadioShow",
+    "site_url": "",
+    "wikipedia_url": "",
+    "broadcaster": 2,
+    "formatted_names": [133]
+  }
+}, {
+  "model": "airs.program",
+  "pk": 31,
+  "fields": {
+    "name": "ナイツ ザ・ラジオショー（エンディング）",
+    "day_of_week": null,
+    "twitter_user_name": "The_RadioShow",
+    "site_url": "",
+    "wikipedia_url": "",
+    "broadcaster": 2,
+    "formatted_names": [134]
+  }
+}, {
+  "model": "airs.program",
+  "pk": 32,
+  "fields": {
+    "name": "中川家 ザ・ラジオショー（13時台）",
+    "day_of_week": null,
+    "twitter_user_name": "The_RadioShow",
+    "site_url": "",
+    "wikipedia_url": "",
+    "broadcaster": 2,
+    "formatted_names": [135]
+  }
+}, {
+  "model": "airs.program",
+  "pk": 33,
+  "fields": {
+    "name": "中川家 ザ・ラジオショー（14時台）",
+    "day_of_week": null,
+    "twitter_user_name": "The_RadioShow",
+    "site_url": "",
+    "wikipedia_url": "",
+    "broadcaster": 2,
+    "formatted_names": [136]
+  }
+}, {
+  "model": "airs.program",
+  "pk": 34,
+  "fields": {
+    "name": "中川家 ザ・ラジオショー（15時台）",
+    "day_of_week": null,
+    "twitter_user_name": "The_RadioShow",
+    "site_url": "",
+    "wikipedia_url": "",
+    "broadcaster": 2,
+    "formatted_names": [137]
+  }
+}, {
+  "model": "airs.program",
+  "pk": 35,
+  "fields": {
+    "name": "中川家 ザ・ラジオショー（エンディング）",
+    "day_of_week": null,
+    "twitter_user_name": "The_RadioShow",
+    "site_url": "",
+    "wikipedia_url": "",
+    "broadcaster": 2,
+    "formatted_names": [138]
+  }
+}, {
+  "model": "airs.program",
+  "pk": 36,
+  "fields": {
+    "name": "サンドウィッチマン ザ・ラジオショー サタデー",
+    "day_of_week": null,
+    "twitter_user_name": "sandradioshow",
+    "site_url": "",
+    "wikipedia_url": "",
+    "broadcaster": 2,
+    "formatted_names": [139]
+  }
+}, {
+  "model": "airs.program",
+  "pk": 37,
+  "fields": {
+    "name": "パンサー向井のチャリで30分",
+    "day_of_week": null,
+    "twitter_user_name": "mukachari30",
+    "site_url": "",
+    "wikipedia_url": "",
+    "broadcaster": 2,
+    "formatted_names": [140]
+  }
+}, {
+  "model": "airs.program",
+  "pk": 38,
+  "fields": {
+    "name": "高橋みなみと朝井リョウ ヨブンのこと",
+    "day_of_week": null,
+    "twitter_user_name": "yobun_no_koto",
+    "site_url": "",
+    "wikipedia_url": "",
+    "broadcaster": 2,
+    "formatted_names": [141]
+  }
+}, {
+  "model": "airs.program",
+  "pk": 39,
+  "fields": {
+    "name": "さらば青春の光の「青春デストロイヤー」",
+    "day_of_week": null,
+    "twitter_user_name": "",
+    "site_url": "",
+    "wikipedia_url": "",
+    "broadcaster": 41,
+    "formatted_names": [142]
+  }
+}, {
+  "model": "airs.program",
+  "pk": 40,
+  "fields": {
+    "name": "マイナビ Laughter Night",
+    "day_of_week": null,
+    "twitter_user_name": "SatLaugh954",
+    "site_url": "",
+    "wikipedia_url": "",
+    "broadcaster": 1,
+    "formatted_names": [143]
+  }
+}, {
+  "model": "airs.program",
+  "pk": 41,
+  "fields": {
+    "name": "かまいたちのヘイ！タクシー！",
+    "day_of_week": null,
+    "twitter_user_name": "kamataku_tbs",
+    "site_url": "",
+    "wikipedia_url": "",
+    "broadcaster": 1,
+    "formatted_names": [144]
+  }
+}, {
+  "model": "airs.program",
+  "pk": 42,
+  "fields": {
+    "name": "空気階段の踊り場",
+    "day_of_week": null,
+    "twitter_user_name": "kuki_odoriba",
+    "site_url": "",
+    "wikipedia_url": "",
+    "broadcaster": 1,
+    "formatted_names": [145]
+  }
+}, {
+  "model": "airs.program",
+  "pk": 43,
+  "fields": {
+    "name": "さらば青春の光がTaダ、Baカ、Saワギ",
+    "day_of_week": null,
+    "twitter_user_name": "sarabatbs",
+    "site_url": "",
+    "wikipedia_url": "",
+    "broadcaster": 1,
+    "formatted_names": [146]
+  }
+}, {
+  "model": "airs.program",
+  "pk": 44,
+  "fields": {
+    "name": "24時のハコ",
+    "day_of_week": null,
+    "twitter_user_name": "TBS_24hako",
+    "site_url": "",
+    "wikipedia_url": "",
+    "broadcaster": 1,
+    "formatted_names": [147]
+  }
+}, {
+  "model": "airs.program",
+  "pk": 45,
+  "fields": {
+    "name": "藤田ニコルのあしたはにちようび",
+    "day_of_week": null,
+    "twitter_user_name": "niconichi905954",
+    "site_url": "",
+    "wikipedia_url": "",
+    "broadcaster": 1,
+    "formatted_names": [148]
+  }
+}, {
+  "model": "airs.program",
+  "pk": 46,
+  "fields": {
+    "name": "まだ帰りたくない大人たちへ チョコレートナナナナイト！",
+    "day_of_week": null,
+    "twitter_user_name": "sbs_choco",
+    "site_url": "",
+    "wikipedia_url": "",
+    "broadcaster": 27,
+    "formatted_names": [149]
+  }
+}, {
+  "model": "airs.program",
+  "pk": 47,
+  "fields": {
+    "name": "TOROアニメーション総研",
+    "day_of_week": null,
+    "twitter_user_name": "toroani_sbs",
+    "site_url": "",
+    "wikipedia_url": "",
+    "broadcaster": 27,
+    "formatted_names": [150]
+  }
+}, {
+  "model": "airs.program",
+  "pk": 48,
+  "fields": {
+    "name": "週刊！しゃべレーザー",
+    "day_of_week": null,
+    "twitter_user_name": "sbs_shabelaser",
+    "site_url": "",
+    "wikipedia_url": "",
+    "broadcaster": 27,
+    "formatted_names": [151]
+  }
+}, {
+  "model": "airs.program",
+  "pk": 49,
+  "fields": {
+    "name": "俺たちの穴！",
+    "day_of_week": null,
+    "twitter_user_name": "",
+    "site_url": "",
+    "wikipedia_url": "",
+    "broadcaster": 76,
+    "formatted_names": [152]
+  }
+}, {
+  "model": "airs.program",
+  "pk": 50,
+  "fields": {
+    "name": "タイムちゃん",
+    "day_of_week": null,
+    "twitter_user_name": "fmfuji_timechan",
+    "site_url": "",
+    "wikipedia_url": "",
+    "broadcaster": 76,
+    "formatted_names": [153]
+  }
+}, {
+  "model": "airs.program",
+  "pk": 51,
+  "fields": {
+    "name": "四千ミルク",
+    "day_of_week": null,
+    "twitter_user_name": "fmfujiyonsen",
+    "site_url": "",
+    "wikipedia_url": "",
+    "broadcaster": 76,
+    "formatted_names": [154]
+  }
+}, {
+  "model": "airs.program",
+  "pk": 52,
+  "fields": {
+    "name": "沈黙の金曜日",
+    "day_of_week": null,
+    "twitter_user_name": "fmfujichinmoku",
+    "site_url": "",
+    "wikipedia_url": "",
+    "broadcaster": 76,
+    "formatted_names": [155]
+  }
+}, {
+  "model": "airs.program",
+  "pk": 53,
+  "fields": {
+    "name": "宮下草薙の15分",
+    "day_of_week": null,
+    "twitter_user_name": "miyakusa15fun",
+    "site_url": "",
+    "wikipedia_url": "",
+    "broadcaster": 3,
+    "formatted_names": [156]
+  }
+}, {
+  "model": "airs.program",
+  "pk": 54,
+  "fields": {
+    "name": "和牛のモーモーラジオ",
+    "day_of_week": null,
+    "twitter_user_name": "wagyu_joqr",
+    "site_url": "",
+    "wikipedia_url": "",
+    "broadcaster": 3,
+    "formatted_names": [157]
+  }
+}, {
+  "model": "airs.program",
+  "pk": 55,
+  "fields": {
+    "name": "ミキの深夜でんぱ！",
+    "day_of_week": null,
+    "twitter_user_name": "miki_joqr",
+    "site_url": "",
+    "wikipedia_url": "",
+    "broadcaster": 3,
+    "formatted_names": [158]
+  }
+}, {
+  "model": "airs.program",
+  "pk": 56,
+  "fields": {
+    "name": "チョコレートプラネットの東京遊泳",
+    "day_of_week": null,
+    "twitter_user_name": "chocopla_joqr",
+    "site_url": "",
+    "wikipedia_url": "",
+    "broadcaster": 3,
+    "formatted_names": [159]
+  }
+}, {
+  "model": "airs.program",
+  "pk": 57,
+  "fields": {
+    "name": "相席スタートの密会Midnight",
+    "day_of_week": null,
+    "twitter_user_name": "aiseki_joqr",
+    "site_url": "",
+    "wikipedia_url": "",
+    "broadcaster": 3,
+    "formatted_names": [160]
+  }
+}, {
+  "model": "airs.program",
+  "pk": 58,
+  "fields": {
+    "name": "ネガ⇒ポジ",
+    "day_of_week": null,
+    "twitter_user_name": "",
+    "site_url": "",
+    "wikipedia_url": "",
+    "broadcaster": 4,
+    "formatted_names": [161]
+  }
+}, {
+  "model": "airs.program",
+  "pk": 59,
+  "fields": {
+    "name": "ミルクボーイの煩悩の塊",
+    "day_of_week": null,
+    "twitter_user_name": "MILK_BOY1008",
+    "site_url": "",
+    "wikipedia_url": "",
+    "broadcaster": 7,
+    "formatted_names": [162]
+  }
+}, {
+  "model": "airs.program",
+  "pk": 60,
+  "fields": {
+    "name": "藤原竜也のラジオ",
+    "day_of_week": null,
+    "twitter_user_name": "tatsuradio1008",
+    "site_url": "",
+    "wikipedia_url": "",
+    "broadcaster": 7,
+    "formatted_names": [163]
+  }
+}, {
+  "model": "airs.program",
+  "pk": 61,
+  "fields": {
+    "name": "霜降り明星のだましうち！",
+    "day_of_week": null,
+    "twitter_user_name": "1008damashiuchi",
+    "site_url": "",
+    "wikipedia_url": "",
+    "broadcaster": 7,
+    "formatted_names": [164]
+  }
+}, {
+  "model": "airs.program",
+  "pk": 62,
+  "fields": {
+    "name": "さらば青春の光 東ブクロの学生芸人YOAKEMAE",
+    "day_of_week": null,
+    "twitter_user_name": "GG_YOAKEMAE",
+    "site_url": "",
+    "wikipedia_url": "",
+    "broadcaster": 10,
+    "formatted_names": [165]
+  }
+}, {
+  "model": "airs.program",
+  "pk": 63,
+  "fields": {
+    "name": "キョートリアル！ ～コンニチ的チュートリアル～",
+    "day_of_week": null,
+    "twitter_user_name": "kbs_real",
+    "site_url": "",
+    "wikipedia_url": "",
+    "broadcaster": 11,
+    "formatted_names": [166]
+  }
+}, {
+  "model": "airs.program",
+  "pk": 64,
+  "fields": {
+    "name": "ミキの兄弟でんぱ！",
+    "day_of_week": null,
+    "twitter_user_name": "kbs_miki",
+    "site_url": "",
+    "wikipedia_url": "",
+    "broadcaster": 11,
+    "formatted_names": [167]
+  }
+}, {
+  "model": "airs.program",
+  "pk": 65,
+  "fields": {
+    "name": "芸人お試しラジオ「デドコロ」",
+    "day_of_week": null,
+    "twitter_user_name": "dedokoro_radio",
+    "site_url": "",
+    "wikipedia_url": "",
+    "broadcaster": null,
+    "formatted_names": [168]
+  }
+}, {
+  "model": "airs.program",
+  "pk": 66,
+  "fields": {
+    "name": "有吉弘行のSUNDAY NIGHT DREAMER",
+    "day_of_week": null,
+    "twitter_user_name": "",
+    "site_url": "",
+    "wikipedia_url": "",
+    "broadcaster": null,
+    "formatted_names": [169]
+  }
+}, {
+  "model": "airs.program",
+  "pk": 67,
+  "fields": {
+    "name": "空想メディア",
+    "day_of_week": null,
+    "twitter_user_name": "QUUSOO_MEDIA",
+    "site_url": "",
+    "wikipedia_url": "",
+    "broadcaster": 48,
+    "formatted_names": [170]
+  }
+}, {
+  "model": "airs.program",
+  "pk": 68,
+  "fields": {
+    "name": "SPITZ 草野マサムネのロック大陸漫遊記",
+    "day_of_week": null,
+    "twitter_user_name": "",
+    "site_url": "",
+    "wikipedia_url": "",
+    "broadcaster": 48,
+    "formatted_names": [171]
+  }
+}, {
+  "model": "airs.program",
+  "pk": 69,
+  "fields": {
+    "name": "TOKYO SPEAKEASY",
+    "day_of_week": null,
+    "twitter_user_name": "TokyoSpeakeasy",
+    "site_url": "",
+    "wikipedia_url": "",
+    "broadcaster": 48,
+    "formatted_names": [172]
+  }
+}, {
+  "model": "airs.program",
+  "pk": 70,
+  "fields": {
+    "name": "日向坂46の余計な事までやりましょう",
+    "day_of_week": null,
+    "twitter_user_name": "yokei_tfm",
+    "site_url": "",
+    "wikipedia_url": "",
+    "broadcaster": 48,
+    "formatted_names": [173]
+  }
+}, {
+  "model": "airs.program",
+  "pk": 71,
+  "fields": {
+    "name": "チュウモリ『＃むかいの喋り方』",
+    "day_of_week": null,
+    "twitter_user_name": "mukai_syaberi",
+    "site_url": "",
+    "wikipedia_url": "",
+    "broadcaster": 13,
+    "formatted_names": [174]
+  }
+}, {
+  "model": "airs.program",
+  "pk": 72,
+  "fields": {
+    "name": "WEEKEND SHELTER",
+    "day_of_week": null,
+    "twitter_user_name": "",
+    "site_url": "",
+    "wikipedia_url": "",
+    "broadcaster": 61,
+    "formatted_names": [175]
   }
 }]
