@@ -6,28 +6,36 @@
 {% block header %}
 {% endblock header %}
 
+{% block nav %}
+<nav class="uk-navbar-container" uk-navbar>
+    <h1 class="uk-navbar-left uk-text-default uk-margin-remove rn-padding">放送概要編集</h1>
+    <div class="uk-navbar-right">
+        <input type="submit" form="form" value="&nbsp;更新&nbsp;" class="uk-button uk-button-primary uk-button rn-padding-horizontal mg-s">
+    </div>
+</nav>
+<hr class="uk-margin-remove">
+{% endblock nav %}
+
 {% block content %}
-<article class="rn-padding">
-    <h1 class="uk-text-lead uk-margin-remove-bottom">放送概要編集</h1>
-    <p class="uk-article-meta uk-margin-remove-top">※この項目は共同編集で同時に他のリスナーが編集してたら上書きしてしまうので極力手早くお願いします（そのうち編集中でもいい感じに気付けるように修正します）</p>
-</article>
+<form id="form" method="post">{% csrf_token %}
+    <article class="rn-padding">
+        <p class="uk-article-meta uk-margin-remove">共同編集で上書きしあう可能性があるので極力手早くお願いします（そのうちいい感じに解決できる方法考えます）</p>
+    </article>
 
-{% include 'base/separator.html' %}
+    <hr class="uk-margin-remove">
 
-<article class="rn-padding">
-    <form method="post">{% csrf_token %}
+    <article class="rn-padding">
         <p class="uk-margin-remove"><label for="id_overview_before">事前告知<small> ネタバレなし</small></label>
-        <textarea name="overview_before" rows="4" id="id_overview_before" class="uk-textarea mgt-s" placeholder="ゲスト：なかやまきんに君
+            <textarea name="overview_before" rows="4" id="id_overview_before" class="uk-textarea mgt-s" placeholder="ゲスト：なかやまきんに君
 ・筋肉ルーレットカジノ">{{ air.overview_before|default_if_none:'' }}</textarea></p>
         <p class="uk-article-meta uk-margin-remove-top uk-margin-bottom">※前回の放送や放送前にTwitterで告知があったゲストや企画</p>
 
         <p class="uk-margin-remove"><label for="id_overview_after">放送内容<small> ネタバレあり</small></label>
-        <textarea name="overview_after" rows="4" id="id_overview_after" class="uk-textarea mgt-s" placeholder="飛び入りゲスト：岡村隆史
+            <textarea name="overview_after" rows="4" id="id_overview_after" class="uk-textarea mgt-s" placeholder="飛び入りゲスト：岡村隆史
 ・ご飯炊き対決
 ・ネスミスはパン">{{ air.overview_after|default_if_none:'' }}</textarea></p>
         <p class="uk-article-meta uk-margin-remove-top uk-margin-bottom">※放送前に発表がなかったゲストや企画<br>　放送内の印象的なワード</p>
 
-        <input type="submit" value="更新" class="uk-button uk-button-primary uk-width-1-1 uk-margin-small-bottom">
-    </form>
-</article>
+    </article>
+</form>
 {% endblock content %}
