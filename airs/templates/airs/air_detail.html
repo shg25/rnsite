@@ -6,6 +6,53 @@
 {% block header %}
 {% endblock header %}
 
+{% block nav %}
+{% if user.is_authenticated %}
+<nav class="uk-navbar-container" uk-navbar>
+  <div class="uk-navbar-left"></div>
+  <div class="uk-navbar-right">
+    <ul class="uk-navbar-nav">
+      <li><a href="{% url 'airs:air_update' air.id %}">放送概要編集</a></li>
+      {% if my_nanitozo %}
+      <li><a href="{% url 'airs:nanitozo_update' my_nanitozo.id %}">何卒編集</a></li>
+      <li>
+        <a href="#">…</a>
+        <div uk-dropdown="pos: top-center">
+          <ul class="uk-nav uk-navbar-dropdown-nav">
+            <li>
+              <a href="#nanitozo-delete" uk-toggle>何卒取消</a>
+              <div id="nanitozo-delete" uk-modal>
+                <div class="uk-modal-dialog">
+                  <button class="uk-modal-close-default" type="button" uk-close></button>
+                  <div class="uk-modal-header">
+                    <h2 class="uk-modal-title">何卒を取り消す</h2>
+                  </div>
+                  <div class="uk-modal-body">
+                    <p>何卒を取り消す場合は「実行」をタップ！<br><br><span class="uk-text-danger">※投稿した各種感想文も削除されます</span><br><span class="uk-text-danger">※放送は削除されないしできません（必要があれば管理者に依頼を）</span></p>
+                  </div>
+                  <div class="uk-modal-footer uk-text-right">
+                    <button class="uk-button uk-button-default uk-modal-close" type="button">キャンセル</button>
+                    <a href="{% url 'airs:nanitozo_delete' air_id=air.id pk=my_nanitozo.id %}" class="uk-button uk-button-danger" type="button">実行</a>
+                  </div>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </li>
+      {% else %}
+      <li><a href="{% url 'airs:nanitozo_create' air.id %}" class="uk-text-primary">何卒！</a></li>
+      {% endif %}
+    </ul>
+  </div>
+</nav>
+<hr class="uk-margin-remove">
+
+{% comment %} <a class="uk-button uk-button-danger uk-width-1-1 uk-margin-bottom" href="#nanitozo-delete" uk-toggle>何卒取消</a> {% endcomment %}
+
+{% endif %}
+{% endblock nav %}
+
 {% block content %}
 
 {% with adt=air.started_at|init_rn_datetime:air.ended_at %}
@@ -44,32 +91,6 @@
 {% include 'base/separator.html' %}
 
 <div class="rn-padding">
-  {% if user.is_authenticated %}
-  {% if my_nanitozo %}
-  <a href="{% url 'airs:nanitozo_update' my_nanitozo.id %}" class="uk-button uk-button-primary uk-width-1-1 uk-margin-bottom">何卒編集</a>
-
-  <a class="uk-button uk-button-danger uk-width-1-1 uk-margin-bottom" href="#nanitozo-delete" uk-toggle>何卒取消</a>
-  <div id="nanitozo-delete" uk-modal>
-    <div class="uk-modal-dialog">
-      <button class="uk-modal-close-default" type="button" uk-close></button>
-      <div class="uk-modal-header">
-        <h2 class="uk-modal-title">何卒を取り消す</h2>
-      </div>
-      <div class="uk-modal-body">
-        <p>何卒を取り消す場合は「実行」をタップ！<br><br><span class="uk-text-danger">※投稿した各種感想文も削除されます</span><br><span class="uk-text-danger">※放送は削除されないしできません（必要があれば管理者に依頼を）</span></p>
-      </div>
-      <div class="uk-modal-footer uk-text-right">
-        <button class="uk-button uk-button-default uk-modal-close" type="button">キャンセル</button>
-        <a href="{% url 'airs:nanitozo_delete' air_id=air.id pk=my_nanitozo.id %}" class="uk-button uk-button-danger" type="button">実行</a>
-      </div>
-    </div>
-  </div>
-
-  {% else %}
-  <a href="{% url 'airs:nanitozo_create' air.id %}" class="uk-button uk-button-primary uk-width-1-1 uk-margin-bottom">何卒！</a>
-  {% endif %}
-  {% endif %}
-
   {% comment %} 何卒 {% endcomment %}
   {% include 'base/sum_reaction.html' with nanitozo_list=nanitozo_list icon='icon: user' label='何卒' is_negative=False %}
   {% comment %} 満足 {% endcomment %}
@@ -107,10 +128,6 @@
   </div>
   {% else %}
   <p class="uk-text-small uk-margin-remove">データなし</p>
-  {% endif %}
-
-  {% if user.is_authenticated %}
-  <a href="{% url 'airs:air_update' air.id %}" class="uk-button uk-button-primary uk-width-1-1 uk-margin-large-top">事前告知と番組内容を編集</a>
   {% endif %}
 </div>
 

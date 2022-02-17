@@ -25,6 +25,8 @@
 <body>
   <div id="app"></div>
   <div class="wrapper">
+    {% block nav %}
+    {% endblock nav %}
     <div class="content">
       {% if messages %}
       {% for message in messages %}
@@ -49,10 +51,11 @@ uk-alert-danger
       {% endblock content %}
     </div>
 
+    {% comment %} 入力フォームじゃない場合に下ナビ表示 {% endcomment %}
+    {% if request.resolver_match.url_name != 'nanitozo_update' and request.resolver_match.url_name != 'air_create' and request.resolver_match.url_name != 'air_update' %}
+
     <footer>
       <hr class="uk-margin-remove">
-      {% comment %} ログイン画面以外で表示 {% endcomment %}
-      {% comment %} {% if request.resolver_match.url_name != 'login' %} {% endcomment %}
       <nav class="uk-navbar-container" uk-navbar>
         <div class="uk-navbar-left">
           <ul class="uk-navbar-nav">
@@ -93,16 +96,18 @@ uk-alert-danger
               </div>
             </li>
           </ul>
-          <a href="{% url 'airs:air_create' %}" class="uk-button uk-button-primary uk-button-large rn-padding-horizontal">＋放送登録</a>
+          <a href="{% url 'airs:air_create' %}" class="uk-button uk-button-primary rn-padding-horizontal">+放送登録</a>
           {% else %}
           <ul class="uk-navbar-nav">
             <li><a href="{% url 'login' %}">ログイン</a></li>
           </ul>
           {% endif %}
         </div>
-        {% comment %} {% endif %} {% endcomment %}
       </nav>
     </footer>
+
+    {% endif %}
+
   </div>
 
 

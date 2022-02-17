@@ -39,6 +39,10 @@ h6 {
   text-decoration: underline;
 }
 
+.mg-s {
+  margin: 4px;
+}
+
 .mgt-s {
   margin-top: 4px;
 }
