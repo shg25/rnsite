@@ -107,11 +107,6 @@ class AirCreateByShareTextView(generic.FormView):
         # 「|」を削除して、前後のスペースを除去 → 「TBSラジオ」
         broadcaster_name = title[title.rfind('|'):].replace('|', '').strip()
 
-        # Airに保存する放送局情報を取得（検索がヒットしない場合は[None]が入ってDBには[null]で保存されるはず）
-        broadcaster_formatted_name = share_text_to_formatted_name(broadcaster_name)
-        broadcaster_formatted_name_object = FormattedName.objects.get(name=broadcaster_formatted_name)
-        broadcaster = broadcaster_formatted_name_object.broadcaster_set.first()
-
         # - - - - - - - - - - - - - - - - - - - - - - - -
         # タイトルから放送局名を除去
         # rfindで後ろから「|」を検索して、それより前だけ残す
@@ -124,11 +119,6 @@ class AirCreateByShareTextView(generic.FormView):
         # findで前から「|」を検索して、それより後ろを取得 → 「| アルコ＆ピース D.C.GARAGE 」
         # 「|」を削除して、前後のスペースを除去 → 「アルコ＆ピース D.C.GARAGE」
         program_name = title[title.find('|'):].replace('|', '').strip()
-
-        # Airに保存する番組情報を取得（検索がヒットしない場合は[None]が入ってDBには[null]で保存されるはず）
-        program_formatted_name = share_text_to_formatted_name(program_name)
-        program_formatted_name_object = FormattedName.objects.get(name=program_formatted_name)
-        program = program_formatted_name_object.program_set.first()
 
         # - - - - - - - - - - - - - - - - - - - - - - - -
         # 放送開始日時と放送終了日時を作成
@@ -171,6 +161,30 @@ class AirCreateByShareTextView(generic.FormView):
             ended_at = title_date
 
         ended_at = new_datetime(ended_at.year, ended_at.month, ended_at.day, ended_hour, ended_minute)
+
+        # - - - - - - - - - - - - - - - - - - - - - - - -
+        # Airに保存する放送局情報を取得（検索がヒットしない場合は[None]が入ってDBには[null]で保存されるはず）
+        broadcaster_formatted_name = share_text_to_formatted_name(broadcaster_name)
+        try:
+            broadcaster_formatted_name_object = FormattedName.objects.get(name=broadcaster_formatted_name)
+            broadcaster = broadcaster_formatted_name_object.broadcaster_set.first()
+        except FormattedName.DoesNotExist:
+            # broadcasterはFormattedNameがヒットしなくてもエラーにならないのでここを通らないはず
+            broadcaster = None
+
+        # Airに保存する番組情報を取得（検索がヒットしない場合は[None]が入ってDBには[null]で保存されるはず）
+        program_formatted_name = share_text_to_formatted_name(program_name)
+        try:
+            program_formatted_name_object = FormattedName.objects.get(name=program_formatted_name)
+            programs = program_formatted_name_object.program_set.all()
+            if programs.count() == 0:
+                program = None
+            elif programs.count() == 1:
+                program = programs.first()
+            else:
+                program = programs.filter(day_of_week=title_date.weekday()).first()
+        except FormattedName.DoesNotExist: # programはcatchしないとエラーになる（broadcasterはFormattedNameがヒットしなくてもなぜかエラーにならない）
+            program = None
 
         # - - - - - - - - - - - - - - - - - - - - - - - -
         if program_name == None or program_name == '' or started_at > ended_at:

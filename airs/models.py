@@ -2,6 +2,7 @@ import datetime
 
 from django.db import models
 from django.contrib.auth.models import User
+from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db.models import constraints
 from django.utils import timezone
 from pytz import timezone as pytztimezone  # TODO どこかにまとめる
@@ -75,6 +76,11 @@ class Program(models.Model):
         verbose_name='名前',
         unique=True,
         max_length=200,
+    )
+    day_of_week = models.IntegerField(
+        verbose_name='曜日',
+        null=True, blank=True,
+        validators=[MinValueValidator(0), MaxValueValidator(6)]
     )
     twitter_user_name = models.CharField(
         verbose_name='Twitterスクリーン名',

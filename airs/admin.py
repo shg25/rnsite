@@ -32,13 +32,14 @@ admin.site.register(Broadcaster, BroadcasterAdmin)
 class ProgramAdmin(admin.ModelAdmin):
     fields = [
         'name',
+        'day_of_week',
         'twitter_user_name',
         'site_url',
         'wikipedia_url',
         'broadcaster',
         'formatted_names'
     ]
-    list_display = ('id', 'name', 'broadcaster', '_formatted_names')
+    list_display = ('id', 'name', 'day_of_week', 'broadcaster', '_formatted_names')
     list_display_links = ('name',)
     list_filter = ['broadcaster']
     ordering = ('id',)
