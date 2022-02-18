@@ -1,3 +1,4 @@
+from django.db import IntegrityError
 from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404
 from django.urls import reverse
@@ -36,12 +37,13 @@ def nanitozo_create(request, air_id):
     air = get_object_or_404(Air, pk=air_id)
     try:
         air.nanitozo_set.create(user=request.user)
-    except:
-        messages.error(request, '既に何卒してました！')
-        return HttpResponseRedirect(reverse('airs:detail', args=(air.id,)))
+    except IntegrityError:
+        messages.warning(request, '何卒済みの放送')
+    except Exception as err:
+        messages.error(request, '何卒登録エラー：' + str(type(err)))
     else:
         messages.success(request, '何卒！')
-        return HttpResponseRedirect(reverse('airs:detail', args=(air.id,)))
+    return HttpResponseRedirect(reverse('airs:detail', args=(air.id,)))
 
 
 @login_required

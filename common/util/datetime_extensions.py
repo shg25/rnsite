@@ -38,7 +38,7 @@ def output_md(dt_date_initialized):
 
 def output_hm(dt_date_initialized):
     # 0〜4時は[+24h]で表示する（0→24、1→25、2→26、3→27、4→28）
-    # 終了時刻が5時の場合はラジコ上の終了時刻は29時と表記されるが、当サイトでは終了時刻は表示しないので不要
+    # 終了時刻が5時の場合はradiko上の終了時刻は29時と表記されるが、当サイトでは終了時刻は表示しないので不要
     if __is_midnight(dt_date_initialized):
         str_hour_initialized = str(dt_date_initialized.hour + 24)
     else:

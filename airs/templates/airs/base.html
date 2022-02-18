@@ -13,7 +13,7 @@
   {% comment %} UIkit CSS {% endcomment %}
   <link rel="stylesheet" href="{% static 'airs/css/uikit.min.css' %}">
 
-  <link rel="stylesheet" href="{% static 'airs/css/style.css' %}">
+  <link rel="stylesheet" href="{% static 'airs/css/style.css?20220220' %}">
 
   {% comment %} WEB FONT ...size(400 300 100) {% endcomment %}
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Mono:400|Roboto:400&display=swap">
@@ -30,20 +30,15 @@
     <div class="content">
       {% if messages %}
       {% for message in messages %}
-      <div class="uk-margin-remove 
-{% if message.tags == 'debug' or message.tags == 'info' %}
-uk-alert-primary
-{% elif message.tags == 'success' %}
-uk-alert-success
-{% elif message.tags == 'warning' %}
-uk-alert-warning
-{% elif message.tags == 'error' %}
-uk-alert-danger
-{% endif %}
-" uk-alert>
+      <div class="{% if message.tags == 'debug' or message.tags == 'info' %}uk-alert-primary
+{% elif message.tags == 'success' %}uk-alert-success
+{% elif message.tags == 'warning' %}uk-alert-warning
+{% elif message.tags == 'error' %}uk-alert-danger
+{% endif %} uk-margin-remove" uk-alert>
         <a class="uk-alert-close" uk-close></a>
-        <p>{{ message }}</p>
+        <p>{{ message | linebreaksbr }}</p>
       </div>
+      <hr class="uk-margin-remove">
       {% endfor %}
       {% endif %}
 

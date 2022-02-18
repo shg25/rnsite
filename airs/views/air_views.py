@@ -1,3 +1,4 @@
+from django.db import IntegrityError
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 from django.views import generic
@@ -63,10 +64,10 @@ class AirCreateByShareTextView(generic.FormView):
         logger_share_text('loggerの挙動確認用：' + share_text)
 
         # - - - - - - - - - - - - - - - - - - - - - - - -
-        # [share_text]からラジコのURLを抜き出す
+        # [share_text]からradikoのURLを抜き出す
         urls = find_urls(share_text)
         if len(urls) == 0:
-            messages.error(self.request, 'ラジコのURLがなさそう！ 投稿した「' + share_text + '」を管理人に教えて！！')  # TODO share_textをどこかに記録したい
+            messages.error(self.request, 'radikoのURLが見つかりません')  # TODO share_textをどこかに記録したい
             return super().form_invalid(form)
 
         has_radiko = False
@@ -79,7 +80,7 @@ class AirCreateByShareTextView(generic.FormView):
         # radiko_url = "https://radiko.jp/share/?sid=TBS&t=20211006000000"
 
         # - - - - - - - - - - - - - - - - - - - - - - - -
-        # ラジコのサイトからサイトタイトルを取得
+        # radikoのサイトからサイトタイトルを取得
         title = scraping_title(radiko_url)
         # title = '2021年10月5日（火）24:00～25:00 | アルコ＆ピース D.C.GARAGE | TBSラジオ | radiko'
         # print(title)
@@ -90,9 +91,9 @@ class AirCreateByShareTextView(generic.FormView):
         if title.count('|') < 3:
             # print('「|」が3つない')
             if 'この番組の配信は終了しました' in title:
-                messages.error(self.request, '配信終了してるっぽい！　どうしても登録が必要なら管理人に相談を')
+                messages.error(self.request, '配信が終了した放送\nどうにか登録したいならサイト管理者に相談を')
             else:
-                messages.error(self.request, 'なんか違和感！ 投稿した「' + share_text + '」と「' + title + '」を管理人に教えて！！')  # TODO share_textをどこかに記録したい
+                messages.error(self.request, 'なぜかエラー！\n送信内容をサイト管理者に伝えてください')  # TODO share_textをどこかに記録したい
             return super().form_invalid(form)
 
         # - - - - - - - - - - - - - - - - - - - - - - - -
@@ -183,12 +184,12 @@ class AirCreateByShareTextView(generic.FormView):
                 program = programs.first()
             else:
                 program = programs.filter(day_of_week=title_date.weekday()).first()
-        except FormattedName.DoesNotExist: # programはcatchしないとエラーになる（broadcasterはFormattedNameがヒットしなくてもなぜかエラーにならない）
+        except FormattedName.DoesNotExist:  # programはcatchしないとエラーになる（broadcasterはFormattedNameがヒットしなくてもなぜかエラーにならない）
             program = None
 
         # - - - - - - - - - - - - - - - - - - - - - - - -
         if program_name == None or program_name == '' or started_at > ended_at:
-            messages.error(self.request, 'パースエラー！ [' + share_text + ']を管理人に教えて！')  # TODO share_textをどこかに記録したい
+            messages.error(self.request, 'パースエラー！\n送信内容をサイト管理者に伝えてください')  # TODO share_textをどこかに記録したい
             return super().form_invalid(form)
 
         # - - - - - - - - - - - - - - - - - - - - - - - -
@@ -201,26 +202,34 @@ class AirCreateByShareTextView(generic.FormView):
         form.instance.overview_before = ''  # TODO 一時的に share_text がセットされているので空にしている
 
         # - - - - - - - - - - - - - - - - - - - - - - - -
-        # 放送を保存 → 続けてログイン中のユーザー情報 & デフォルト値で何卒を登録
+        # 放送登録
         try:
             saved_air = form.save()
-        except Exception as err:
-            messages.warning(self.request, '放送登録エラー：' + str(type(err)))  # TODO とりあえずエラータイプだけ表示しているがエラー内容によって調整したい
-            if broadcaster != None:
-                air = Air.objects.filter(broadcaster=broadcaster, started_at=started_at).first()
-                try:
-                    air.nanitozo_set.create(user=self.request.user)
-                except Exception as err:
-                    messages.error(self.request, '何卒登録エラー：' + str(type(err)))
-                    return HttpResponseRedirect(reverse('airs:detail', args=(air.id,)))
-                else:
-                    messages.success(self.request, '何卒！')
-                    return HttpResponseRedirect(reverse('airs:detail', args=(air.id,)))
-            else:
-                messages.error(self.request, '登録済みの放送です')
+        except IntegrityError:
+            messages.warning(self.request, '登録済みの放送')
+            if broadcaster == None:
+                messages.error(self.request, '放送局情報なし\n送信内容をサイト管理者に伝えてください')
                 return super().form_invalid(form)
+            else:
+                saved_air = Air.objects.filter(broadcaster=broadcaster, started_at=started_at).first()
+        except Exception as err:
+            messages.error(self.request, '放送登録エラー：' + str(type(err)))
+            return super().form_invalid(form)
+        else:
+            messages.success(self.request, '放送登録完了！')
 
-        saved_air.nanitozo_set.create(user=self.request.user)
+        # 何卒登録
+        try:
+            saved_air.nanitozo_set.create(user=self.request.user)
+        except IntegrityError:
+            messages.warning(self.request, '何卒済みの放送')
+            return HttpResponseRedirect(reverse('airs:detail', args=(saved_air.id,)))
+        except Exception as err:
+            messages.error(self.request, '何卒登録エラー：' + str(type(err)))
+            return HttpResponseRedirect(reverse('airs:detail', args=(saved_air.id,)))
+        else:
+            messages.success(self.request, '何卒！')
+
         # return super().form_valid(form)
         return HttpResponseRedirect(reverse('airs:detail', args=(saved_air.id,)))
 
