@@ -70,11 +70,10 @@
   </div>
 
   <div class="uk-flex uk-flex-middle">
-    {% comment %} TODO ラジコのURLの生成 {% endcomment %}
     <span uk-icon="icon: link" class="uk-icon"></span>
-    <span class="uk-text-middle mgl-s"><a href="{{ air.started_at|radiko_link:air.broadcaster.radiko_identifier }}" target="_blank" rel="noopener noreferrer">ラジコ</a></span>
+    <span class="uk-text-middle mgl-s"><a href="{{ air.started_at|radiko_link:air.broadcaster.radiko_identifier }}" target="_blank" rel="noopener noreferrer">radiko</a></span>
     <span class="uk-text-middle uk-margin-small-left"><a href="#" onclick="copyToClipboardAndShowAlert('{{ air.started_at|radiko_link:air.broadcaster.radiko_identifier }}')">URLコピー</a></span>
-    <span class="uk-text-middle uk-margin-small-left"><a href="{{ air.started_at|radiko_link_next_week:air.broadcaster.radiko_identifier }}" target="_blank" rel="noopener noreferrer">ラジコ+1w</a></span>
+    <span class="uk-text-middle uk-margin-small-left"><a href="{{ air.started_at|radiko_link_next_week:air.broadcaster.radiko_identifier }}" target="_blank" rel="noopener noreferrer">radiko+1w</a></span>
   </div>
 
   {% endif %}
