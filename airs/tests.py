@@ -3,9 +3,8 @@ import datetime
 from django.test import TestCase
 from django.utils import timezone
 from django.urls import reverse
-from pytz import timezone as pytztimezone  # TODO どこかにまとめる
 
-from .models import Air, Program
+from .models import Air
 
 
 class AirModelTests(TestCase):
@@ -49,14 +48,8 @@ class AirModelTests(TestCase):
         self.assertIs(recent_air.was_aired_this_week(), True)
 
 
-def create_air(program_name, started_at, ended_at):
-    """
-    Create a question with the given `question_text` and published the
-    given number of `days` offset to now (negative for questions published
-    in the past, positive for questions that have yet to be published).
-    """
-    create_program = Program.objects.create(name=program_name)
-    return Air.objects.create(program=create_program, started_at=started_at, ended_at=ended_at)
+def create_air(name, started_at, ended_at):
+    return Air.objects.create(name=name, started_at=started_at, ended_at=ended_at)
 
 
 class AirIndexViewTests(TestCase):
@@ -66,8 +59,8 @@ class AirIndexViewTests(TestCase):
         """
         response = self.client.get(reverse('airs:index'))
         self.assertEqual(response.status_code, 200)
-        self.assertContains(response, "何卒0(ZERO)")
-        self.assertQuerysetEqual(response.context['latest_air_list'], [])
+        self.assertContains(response, "今週なし")
+        self.assertQuerysetEqual(response.context['this_week_list'], [])
 
     def test_past_air(self):
         """
@@ -75,24 +68,23 @@ class AirIndexViewTests(TestCase):
         """
         started = timezone.now() + datetime.timedelta(days=-7, hours=-1)
         ended = timezone.now() + datetime.timedelta(days=-7)
-        create_air(program_name="酒井健太ANN0", started_at=started, ended_at=ended)
+        air = create_air("酒井健太ANN0", started, ended)
 
         response = self.client.get(reverse('airs:index'))
         self.assertEqual(response.status_code, 200)
+        self.assertQuerysetEqual(response.context['this_week_list'], [air], transform=lambda x: x)  # 「transform=lambda x: x」はおまじない的な
 
-        startedstr = str(started.astimezone(pytztimezone('Asia/Tokyo')))
-        self.assertQuerysetEqual(response.context['latest_air_list'], ['<Air: 酒井健太ANN0 ' + startedstr + '>'])
-
-    def test_future_air(self):
-        """
-        Airs with a started in the future aren't displayed on the index page.
-        """
-        started = timezone.now() + datetime.timedelta(days=7, hours=-1)
-        ended = timezone.now() + datetime.timedelta(days=7)
-        create_air(program_name="赤もみじANN0", started_at=started, ended_at=ended)
-        response = self.client.get(reverse('airs:index'))
-        self.assertContains(response, "何卒0(ZERO)")
-        self.assertQuerysetEqual(response.context['latest_air_list'], [])
+    # 今は未来のデータも表示している
+    # def test_future_air(self):
+    #     """
+    #     Airs with a started in the future aren't displayed on the index page.
+    #     """
+    #     started = timezone.now() + datetime.timedelta(days=7, hours=-1)
+    #     ended = timezone.now() + datetime.timedelta(days=7)
+    #     create_air("赤もみじANN0", started, ended)
+    #     response = self.client.get(reverse('airs:index'))
+    #     self.assertContains(response, "今週なし")
+    #     self.assertQuerysetEqual(response.context['this_week_list'], [])
 
     def test_future_question_and_past_air(self):
         """
@@ -100,15 +92,14 @@ class AirIndexViewTests(TestCase):
         """
         startedpast = timezone.now() + datetime.timedelta(days=-7, hours=-1)
         endedpast = timezone.now() + datetime.timedelta(days=-7)
-        create_air(program_name="酒井健太ANN0", started_at=startedpast, ended_at=endedpast)
+        air1 = create_air("酒井健太ANN0", startedpast, endedpast)
 
         startedfuture = timezone.now() + datetime.timedelta(days=7, hours=-1)
         endedfuture = timezone.now() + datetime.timedelta(days=7)
-        create_air(program_name="赤もみじANN0", started_at=startedfuture, ended_at=endedfuture)
+        air2 = create_air("赤もみじANN0", startedfuture, endedfuture)
 
         response = self.client.get(reverse('airs:index'))
-        startedstr = str(startedpast.astimezone(pytztimezone('Asia/Tokyo')))
-        self.assertQuerysetEqual(response.context['latest_air_list'], ['<Air: 酒井健太ANN0 ' + startedstr + '>'])
+        self.assertQuerysetEqual(response.context['this_week_list'], [air2, air1], transform=lambda x: x)  # 「transform=lambda x: x」はおまじない的な
 
     def test_two_past_airs(self):
         """
@@ -116,34 +107,29 @@ class AirIndexViewTests(TestCase):
         """
         startedpast7 = timezone.now() + datetime.timedelta(days=-7, hours=-1)
         endedpast7 = timezone.now() + datetime.timedelta(days=-7)
-        create_air(program_name="酒井健太ANN0", started_at=startedpast7, ended_at=endedpast7)
+        air1 = create_air("酒井健太ANN0", startedpast7, endedpast7)
 
         startedpast6 = timezone.now() + datetime.timedelta(days=-6, hours=-1)
         endedpast6 = timezone.now() + datetime.timedelta(days=-6)
-        create_air(program_name="赤もみじANN0", started_at=startedpast6, ended_at=endedpast6)
+        air2 = create_air("赤もみじANN0", startedpast6, endedpast6)
 
         response = self.client.get(reverse('airs:index'))
-
-        startedpast7str = str(startedpast7.astimezone(pytztimezone('Asia/Tokyo')))
-        startedpast6str = str(startedpast6.astimezone(pytztimezone('Asia/Tokyo')))
-        self.assertQuerysetEqual(
-            response.context['latest_air_list'],
-            ['<Air: 赤もみじANN0 ' + startedpast6str + '>', '<Air: 酒井健太ANN0 ' + startedpast7str + '>']
-        )
+        self.assertQuerysetEqual(response.context['this_week_list'], [air2, air1], transform=lambda x: x)  # 「transform=lambda x: x」はおまじない的な
 
 
 class AirDetailViewTests(TestCase):
-    def test_future_air(self):
-        """
-        The detail view of a air with a started in the future returns a 404 not found.
-        """
-        startedfuture = timezone.now() + datetime.timedelta(days=7, hours=-1)
-        endedfuture = timezone.now() + datetime.timedelta(days=7)
-        future_air = create_air(program_name="赤もみじANN0", started_at=startedfuture, ended_at=endedfuture)
+    # 今は未来のデータも表示している
+    # def test_future_air(self):
+    #     """
+    #     The detail view of a air with a started in the future returns a 404 not found.
+    #     """
+    #     startedfuture = timezone.now() + datetime.timedelta(days=7, hours=-1)
+    #     endedfuture = timezone.now() + datetime.timedelta(days=7)
+    #     future_air = create_air("赤もみじANN0", startedfuture, endedfuture)
 
-        url = reverse('airs:detail', args=(future_air.id,))
-        response = self.client.get(url)
-        self.assertEqual(response.status_code, 404)
+    #     url = reverse('airs:detail', args=(future_air.id,))
+    #     response = self.client.get(url)
+    #     self.assertEqual(response.status_code, 404)
 
     def test_past_air(self):
         """
@@ -151,8 +137,8 @@ class AirDetailViewTests(TestCase):
         """
         startedpast7 = timezone.now() + datetime.timedelta(days=-7, hours=-1)
         endedpast7 = timezone.now() + datetime.timedelta(days=-7)
-        past_air = create_air(program_name="酒井健太ANN0", started_at=startedpast7, ended_at=endedpast7)
+        past_air = create_air("酒井健太ANN0", startedpast7, endedpast7)
 
         url = reverse('airs:detail', args=(past_air.id,))
         response = self.client.get(url)
-        self.assertContains(response, past_air.program.name)
+        self.assertContains(response, past_air.name)
