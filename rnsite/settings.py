@@ -164,6 +164,10 @@ LOGGING = {
 LOGIN_REDIRECT_URL = 'airs:index'
 LOGOUT_REDIRECT_URL = 'airs:index'
 
+# ログインセッションの有効期限
+# SESSION_COOKIE_AGE = 1209600 # デフォルトの2週間
+SESSION_SAVE_EVERY_REQUEST = True # これを追加したら随時延長
+
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
