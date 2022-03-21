@@ -18,9 +18,10 @@ class BroadcasterAdmin(admin.ModelAdmin):
         'formatted_names'
     ]
     inlines = [ProgramInline]
-    list_display = ('id', 'radiko_identifier', 'name', '_formatted_names')
+    list_display = ('id', 'radiko_identifier', 'name', 'abbreviation', '_formatted_names')
     list_display_links = ('name',)
     ordering = ('id',)
+    search_fields = ['radiko_identifier', 'name', 'abbreviation']
 
     def _formatted_names(self, row):
         return ','.join([x.name for x in row.formatted_names.all()])
@@ -43,6 +44,7 @@ class ProgramAdmin(admin.ModelAdmin):
     list_display_links = ('name',)
     list_filter = ['broadcaster']
     ordering = ('id',)
+    search_fields = ['name']
 
     def _formatted_names(self, row):
         return ','.join([x.name for x in row.formatted_names.all()])
@@ -67,7 +69,7 @@ class AirAdmin(admin.ModelAdmin):
     list_display_links = ('name',)
     list_filter = ['started_at', 'program', 'broadcaster']
     ordering = ('-started_at',)
-    search_fields = ['program']  # programやprogram_idだと検索はエラー、やり方を調整する必要があるらしい https://k-mawa.hateblo.jp/entry/2018/03/10/005936
+    search_fields = ['name']
 
 
 admin.site.register(Air, AirAdmin)
@@ -95,6 +97,7 @@ class FormattedNameAdmin(admin.ModelAdmin):
     ]
     list_display = ('id', 'name')
     ordering = ('id',)
+    search_fields = ['name']
 
 
 admin.site.register(FormattedName, FormattedNameAdmin)
