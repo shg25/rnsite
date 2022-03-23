@@ -108,7 +108,7 @@
   <h3 class="uk-text-default uk-margin-small-bottom">事前告知<small> ネタバレなし（のはず）</small></h3>
   {% if air.overview_before %}
   <div class="uk-inline">
-    <p class="uk-text-small uk-margin-remove uk-text-break">{{ air.overview_before|linebreaksbr }}</p>
+    <p class="uk-text-small uk-margin-remove uk-text-break">{{ air.overview_before|urlizetrunc:16|linebreaksbr }}</p>
     <div onclick="this.remove()" class="uk-overlay-primary uk-background-secondary uk-position-cover">
       <div class="uk-position-center uk-text-small">Tap!</div>
     </div>
@@ -120,7 +120,7 @@
   <h3 class="uk-text-default uk-margin-small-bottom">番組内容<small> ネタバレあり</small></h3>
   {% if air.overview_after %}
   <div class="uk-inline">
-    <p class="uk-text-small uk-margin-remove uk-text-break">{{ air.overview_after|linebreaksbr }}</p>
+    <p class="uk-text-small uk-margin-remove uk-text-break">{{ air.overview_after|urlizetrunc:16|linebreaksbr }}</p>
     <div onclick="this.remove()" class="uk-overlay-primary uk-background-secondary uk-position-cover">
       <div class="uk-position-center uk-text-small">Tap!</div>
     </div>
