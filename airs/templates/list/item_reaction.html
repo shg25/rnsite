@@ -20,11 +20,11 @@
                     <p class="uk-text-small uk-margin-remove uk-text-break">
                         {% comment %} 文字列で判定してるけどよくない {% endcomment %}
                         {% if title == 'ネガ' %}
-                        {{ nanitozo.comment_negative|linebreaksbr }}
+                        {{ nanitozo.comment_negative|urlizetrunc:16|linebreaksbr }}
                         {% elif title == '推し' %}
-                        {{ nanitozo.comment_recommend|linebreaksbr }}
+                        {{ nanitozo.comment_recommend|urlizetrunc:16|linebreaksbr }}
                         {% else %}
-                        {{ nanitozo.comment|linebreaksbr }}
+                        {{ nanitozo.comment|urlizetrunc:16|linebreaksbr }}
                         {% endif %}
                     </p>
                     {% if title == 'ネガ' %}
