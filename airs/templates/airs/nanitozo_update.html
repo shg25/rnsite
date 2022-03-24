@@ -1,14 +1,15 @@
 {% extends 'airs/base.html' %}
+{% load rn_const %}
 {% load rn_datetime %}
 
-{% block title %}R.N. v2.0.2{% endblock title %}
+{% block title %}{% rn_const 'TITLE_NANITOZO_UPDATE' %}{% rn_const 'TITLE_SUFFIX' %}{% endblock title %}
 
 {% block header %}
 {% endblock header %}
 
 {% block nav %}
 <nav class="uk-navbar-container" uk-navbar>
-    <h1 class="uk-navbar-left uk-text-default uk-margin-remove rn-padding">何卒編集</h1>
+    <h1 class="uk-navbar-left uk-text-default uk-margin-remove rn-padding">{% rn_const 'TITLE_NANITOZO_UPDATE' %}</h1>
     <div class="uk-navbar-right">
         <input type="submit" form="form" value="&nbsp;更新&nbsp;" class="uk-button uk-button-primary uk-button rn-padding-horizontal mg-s">
     </div>

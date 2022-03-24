@@ -1,13 +1,14 @@
 {% extends 'airs/base.html' %}
+{% load rn_const %}
 {% comment %} {% load static %} {% endcomment %}
 
-{% block title %}放送局 - R.N. v2.0.2{% endblock title %}
+{% block title %}{% rn_const 'TITLE_BROADCASTER_LIST' %}{% rn_const 'TITLE_SUFFIX' %}{% endblock title %}
 
 {% block header %}{% endblock header %}
 
 {% block content %}
 <article class="rn-padding">
-    <h1 class="uk-text-lead">放送局</h1>
+    <h1 class="uk-text-lead">{% rn_const 'TITLE_BROADCASTER_LIST' %}</h1>
 
     {% if broadcaster_list %}
 

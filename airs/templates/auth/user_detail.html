@@ -1,7 +1,8 @@
 {% extends 'airs/base.html' %}
+{% load rn_const %}
 {% comment %} {% load static %} {% endcomment %}
 
-{% block title %}{{ user }} - R.N. v2.0.2{% endblock title %}
+{% block title %}{{ user }}{% rn_const 'TITLE_SUFFIX' %}{% endblock title %}
 
 {% block header %}{% endblock header %}
 

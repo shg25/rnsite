@@ -1,14 +1,15 @@
 {% extends 'airs/base.html' %}
+{% load rn_const %}
 {% comment %} {% load static %} {% endcomment %}
 
-{% block title %}R.N. v2.0.2{% endblock title %}
+{% block title %}{% rn_const 'TITLE_AIR_CREATE' %}{% rn_const 'TITLE_SUFFIX' %}{% endblock title %}
 
 {% block header %}
 {% endblock header %}
 
 {% block nav %}
 <nav class="uk-navbar-container" uk-navbar>
-    <h1 class="uk-navbar-left uk-text-default uk-margin-remove rn-padding">放送登録&nbsp;&amp;&nbsp;何卒</h1>
+    <h1 class="uk-navbar-left uk-text-default uk-margin-remove rn-padding">{% rn_const 'TITLE_AIR_CREATE' %}</h1>
     <div class="uk-navbar-right">
         <input type="submit" form="form" value="&nbsp;登録&nbsp;" class="uk-button uk-button-primary uk-button rn-padding-horizontal mg-s">
     </div>
