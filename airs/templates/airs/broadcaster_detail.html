@@ -1,7 +1,8 @@
 {% extends 'airs/base.html' %}
+{% load rn_const %}
 {% comment %} {% load static %} {% endcomment %}
 
-{% block title %}{{ broadcaster.name }} - R.N.{% endblock title %}
+{% block title %}{{ broadcaster.name }}{% rn_const 'TITLE_SUFFIX' %}{% endblock title %}
 
 {% block header %}{% endblock header %}
 

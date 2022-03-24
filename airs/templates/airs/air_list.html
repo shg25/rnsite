@@ -1,14 +1,15 @@
 {% extends 'airs/base.html' %}
+{% load rn_const %}
 {% load rn_datetime %}
 
-{% block title %}R.N. v2.0.2{% endblock title %}
+{% block title %}{% rn_const 'SITE_NAME' %}{% endblock title %}
 
 {% block header %}{% endblock header %}
 
 {% block content %}
 <ul class="uk-tab" data-uk-tab="{connect:'#tab-contents'}">
-    <li><a href="">今週<small> {{ this_week_list|length }}</small></a></li>
-    <li><a href="">先週<small> {{ last_week_list|length }}</small></a></li>
+    <li><a href="">{% rn_const 'THIS_WEEK' %}<small> {{ this_week_list|length }}</small></a></li>
+    <li><a href="">{% rn_const 'LAST_WEEK' %}<small> {{ last_week_list|length }}</small></a></li>
 
     {% comment %} # TODO オススメ放送取得（2/3） {% endcomment %}
     {% comment %} <li><a href="">!!</a></li> {% endcomment %}
@@ -30,7 +31,7 @@
         {% endfor %}
 
         {% else %}
-        <p>今週なし</p>
+        <p>{% rn_const 'NONE_THIS_WEEK' %}</p>
         {% endif %}
     </div>
 
@@ -49,7 +50,7 @@
         {% endfor %}
 
         {% else %}
-        <p>先週なし</p>
+        <p>{% rn_const 'NONE_LAST_WEEK' %}</p>
         {% endif %}
     </div>
 

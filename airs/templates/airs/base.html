@@ -1,4 +1,5 @@
 {% load static %}
+{% load rn_const %}
 <!DOCTYPE html>
 <html>
 
@@ -54,8 +55,8 @@
       <nav class="uk-navbar-container" uk-navbar>
         <div class="uk-navbar-left">
           <ul class="uk-navbar-nav">
-            <li class="{% if request.resolver_match.url_name == 'index' %}uk-active{% endif %}"><a href="{% url 'airs:index' %}">放送</a></li>
-            <li class="{% if request.resolver_match.url_name == 'ns' %}uk-active{% endif %}"><a href="{% url 'airs:ns' %}">何卒</a></li>
+            <li class="{% if request.resolver_match.url_name == 'index' %}uk-active{% endif %}"><a href="{% url 'airs:index' %}">{% rn_const 'TITLE_AIR_LIST' %}</a></li>
+            <li class="{% if request.resolver_match.url_name == 'ns' %}uk-active{% endif %}"><a href="{% url 'airs:ns' %}">{% rn_const 'TITLE_NANITOZO_LIST' %}</a></li>
             {% comment %} {% if request.resolver_match.url_name == 'users' %}
             <li class="uk-active"><a href="{% url 'airs:users' %}">リスナー</a></li>
             {% elif request.resolver_match.url_name == 'broadcasters' %}
@@ -67,9 +68,9 @@
               <a href="#">…</a>
               <div uk-dropdown="pos: top-center">
                 <ul class="uk-nav uk-navbar-dropdown-nav">
-                  <li class="{% if request.resolver_match.url_name == 'users' %}uk-active{% endif %}"><a href="{% url 'airs:users' %}">リスナー</a></li>
-                  <li class="{% if request.resolver_match.url_name == 'broadcasters' %}uk-active{% endif %}"><a href="{% url 'airs:broadcasters' %}">放送局</a></li>
-                  <li class="{% if request.resolver_match.url_name == 'programs' %}uk-active{% endif %}"><a href="{% url 'airs:programs' %}">番組</a></li>
+                  <li class="{% if request.resolver_match.url_name == 'users' %}uk-active{% endif %}"><a href="{% url 'airs:users' %}">{% rn_const 'TITLE_USER_LIST' %}</a></li>
+                  <li class="{% if request.resolver_match.url_name == 'broadcasters' %}uk-active{% endif %}"><a href="{% url 'airs:broadcasters' %}">{% rn_const 'TITLE_BROADCASTER_LIST' %}</a></li>
+                  <li class="{% if request.resolver_match.url_name == 'programs' %}uk-active{% endif %}"><a href="{% url 'airs:programs' %}">{% rn_const 'TITLE_PROGRAM_LIST' %}</a></li>
                 </ul>
               </div>
             </li>
@@ -83,18 +84,18 @@
               <div uk-dropdown="pos: top-center">
                 <ul class="uk-nav uk-navbar-dropdown-nav">
                   <li class="uk-nav-header">{{ user.last_name }}</li>
-                  <li><a href="{% url 'password_change' %}" target="_blank" rel="noopener noreferrer">パスワード変更</a></li>
-                  <li><a href="{% url 'logout' %}">ログアウト</a></li>
+                  <li><a href="{% url 'password_change' %}" target="_blank" rel="noopener noreferrer">{% rn_const 'TITLE_PASSWORD_CHANGE' %}</a></li>
+                  <li><a href="{% url 'logout' %}">{% rn_const 'TITLE_LOGOUT' %}</a></li>
                   <li class="uk-nav-divider uk-margin-small-bottom"></li>
-                  <li>R.N.<small>v2.0.2</small></li>
+                  <li>{% rn_const 'SITE_NAME' %}</li>
                 </ul>
               </div>
             </li>
           </ul>
-          <a href="{% url 'airs:air_create' %}" class="uk-button uk-button-primary rn-padding-horizontal">+放送登録</a>
+          <a href="{% url 'airs:air_create' %}" class="uk-button uk-button-primary rn-padding-horizontal">{% rn_const 'TITLE_AIR_CREATE_SHORT' %}</a>
           {% else %}
           <ul class="uk-navbar-nav">
-            <li><a href="{% url 'login' %}">ログイン</a></li>
+            <li><a href="{% url 'login' %}">{% rn_const 'TITLE_LOGIN' %}</a></li>
           </ul>
           {% endif %}
         </div>

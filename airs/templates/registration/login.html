@@ -1,8 +1,9 @@
 {% extends '../airs/base.html' %}
+{% load rn_const %}
 {% comment %} {% load static %} {% endcomment %}
 {% load widget_tweaks %}
 
-{% block title %}ログイン - R.N.{% endblock title %}
+{% block title %}{% rn_const 'TITLE_LOGIN' %}{% rn_const 'TITLE_SUFFIX' %}{% endblock title %}
 
 {% block header %}
 {% endblock header %}
