@@ -1,3 +1,3 @@
-from .model_tests import *
+from .models.air_model_tests import *
 
-from .air_views_tests import *
+from .views.air_views_tests import *
