@@ -7,7 +7,7 @@ from django.db.models import constraints
 from django.utils import timezone
 from pytz import timezone as pytztimezone  # TODO どこかにまとめる
 
-from airs.models_managers import NanitozoListManager, NanitozoSelfListManager, NanitozoCloseListManager
+from airs.models_managers import *
 
 
 def get_last_name(self):
@@ -144,6 +144,11 @@ class Air(models.Model):
         verbose_name='放送内容',
         null=True, blank=True,
     )
+
+    objects = models.Manager()
+    objects_this_week = AirThisWeekListManager()
+    objects_last_week = AirLastWeekListManager()
+    objects_identification = AirIdentificationManager()
 
     def __str__(self):
         return str(self.broadcaster)[:4] + '_' + str(self.started_at.astimezone(pytztimezone('Asia/Tokyo')))[:16] + '_' + self.name[:8]

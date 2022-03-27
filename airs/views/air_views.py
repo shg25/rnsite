@@ -7,7 +7,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import UserPassesTestMixin
 from django.utils.decorators import method_decorator
 
-from common.util.datetime_extensions import this_week_started, last_week_started, new_datetime, new_date, timedelta_days
+from common.util.datetime_extensions import new_datetime, new_date, timedelta_days
 from common.util.url_extensions import scraping_title
 from common.util.log_extensions import logger_share_text
 from common.util.string_extensions import find_urls, share_text_to_formatted_name
@@ -31,11 +31,10 @@ class AirListView(generic.ListView):
     # queryset = Air.objects.filter(started_at__gte=this_week_started()).order_by('-started_at') # これを使えばviewではair_listで取得できるがなぜかキャッシュらしきものが残るので一旦使わない
 
     def get_context_data(self, *args, **kwargs):
+        #TODO 2週間分を別々に取得しないで、一気に2週間分取得してそれぞれのリストに振り分ける → TODO オススメも書き出す
         context = super().get_context_data(*args, **kwargs)
-        this_week_list = Air.objects.filter(started_at__gte=this_week_started()).order_by('-started_at')
-        context['this_week_list'] = this_week_list
-        last_week_list = Air.objects.filter(started_at__range=(last_week_started(), this_week_started())).order_by('-started_at')
-        context['last_week_list'] = last_week_list
+        context['this_week_list'] = Air.objects_this_week.all()
+        context['last_week_list'] = Air.objects_last_week.all()
 
         # TODO オススメ放送取得（1/3）
         # context['recommend_list'] = Air.objects.filter(started_at__range=(last_week_started(), timezone.now())).order_by('-started_at')
@@ -211,7 +210,7 @@ class AirCreateByShareTextView(generic.FormView):
                 messages.error(self.request, '放送局情報なし\n送信内容をサイト管理者に伝えてください')
                 return super().form_invalid(form)
             else:
-                saved_air = Air.objects.filter(broadcaster=broadcaster, started_at=started_at).first()
+                saved_air = Air.objects_identification.get(broadcaster=broadcaster, started_at=started_at).first()
         except Exception as err:
             messages.error(self.request, '放送登録エラー：' + str(type(err)))
             return super().form_invalid(form)
