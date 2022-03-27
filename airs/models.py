@@ -7,6 +7,8 @@ from django.db.models import constraints
 from django.utils import timezone
 from pytz import timezone as pytztimezone  # TODO どこかにまとめる
 
+from airs.models_managers import NanitozoListManager, NanitozoSelfListManager, NanitozoCloseListManager
+
 
 def get_last_name(self):
     return self.last_name
@@ -201,6 +203,11 @@ class Nanitozo(models.Model):
         verbose_name='更新日時',
         auto_now=True,
     )
+
+    # objects = models.Manager() // 独自ManagerとデフォルトのManagerを併用したい場合はこれをセットする
+    objects = NanitozoListManager()
+    objects_self = NanitozoSelfListManager()
+    objects_close = NanitozoCloseListManager()
 
     def has_comment(self):
         if not self.comment_open or (not self.comment_recommend and not self.comment and not self.comment_negative):
