@@ -5,7 +5,7 @@ from django.test import TestCase
 from django.utils import timezone
 from django.urls import reverse
 
-from ..models import Air
+from ...models import Air
 
 UserModel = get_user_model()
 

@@ -7,6 +7,8 @@ from django.db.models import constraints
 from django.utils import timezone
 from pytz import timezone as pytztimezone  # TODO どこかにまとめる
 
+from airs.models_managers import *
+
 
 def get_last_name(self):
     return self.last_name
@@ -143,6 +145,11 @@ class Air(models.Model):
         null=True, blank=True,
     )
 
+    objects = models.Manager()
+    objects_this_week = AirThisWeekListManager()
+    objects_last_week = AirLastWeekListManager()
+    objects_identification = AirIdentificationManager()
+
     def __str__(self):
         return str(self.broadcaster)[:4] + '_' + str(self.started_at.astimezone(pytztimezone('Asia/Tokyo')))[:16] + '_' + self.name[:8]
 
@@ -201,6 +208,11 @@ class Nanitozo(models.Model):
         verbose_name='更新日時',
         auto_now=True,
     )
+
+    # objects = models.Manager() // 独自ManagerとデフォルトのManagerを併用したい場合はこれをセットする
+    objects = NanitozoListManager()
+    objects_self = NanitozoSelfListManager()
+    objects_close = NanitozoCloseListManager()
 
     def has_comment(self):
         if not self.comment_open or (not self.comment_recommend and not self.comment and not self.comment_negative):

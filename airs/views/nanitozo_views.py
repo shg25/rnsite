@@ -9,16 +9,18 @@ from django.utils.decorators import method_decorator
 
 from ..models import Air, Nanitozo
 
+_NANITOZO_LIST_LIMIT = 40
+
 
 class NanitozoListView(generic.ListView):
     model = Nanitozo
-    queryset = Nanitozo.objects.order_by('-created_at')[:40]
+    queryset = Nanitozo.objects.all()[:_NANITOZO_LIST_LIMIT]
 
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args, **kwargs)
         if self.request.user.is_authenticated:
-            context['self_list'] = Nanitozo.objects.filter(user=self.request.user).order_by('-created_at')[:40]
-            context['close_list'] = Nanitozo.objects.filter(user=self.request.user).filter(comment_open=False).order_by('-created_at')[:40]
+            context['self_list'] = Nanitozo.objects_self.get(self.request.user)[:_NANITOZO_LIST_LIMIT]
+            context['close_list'] = Nanitozo.objects_close.get(self.request.user)[:_NANITOZO_LIST_LIMIT]
         return context
 
 
