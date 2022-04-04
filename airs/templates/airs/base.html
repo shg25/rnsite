@@ -85,7 +85,7 @@
                 <ul class="uk-nav uk-navbar-dropdown-nav">
                   <li class="uk-nav-header">{{ user.last_name }}</li>
                   <li><a href="{% url 'password_change' %}" target="_blank" rel="noopener noreferrer">{% rn_const 'TITLE_PASSWORD_CHANGE' %}</a></li>
-                  <li><a href="{% url 'logout' %}">{% rn_const 'TITLE_LOGOUT' %}</a></li>
+                  <li><a href="javascript:window.location.replace('{% url 'logout' %}')">{% rn_const 'TITLE_LOGOUT' %}</a></li>
                   <li class="uk-nav-divider uk-margin-small-bottom"></li>
                   <li>{% rn_const 'SITE_NAME' %}</li>
                 </ul>
