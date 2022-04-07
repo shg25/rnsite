@@ -23,6 +23,10 @@ urlpatterns = [
     path('ns/', nanitozo_views.NanitozoListView.as_view(), name='ns'),
     # 何卒修正（ログイン必須）
     path('nanitozo/update/<int:pk>', nanitozo_views.NanitozoUpdateView.as_view(), name='nanitozo_update'),
+    # 何卒満足（ログイン必須）
+    path('<int:air_id>/nanitozo/apply_good/<int:pk>', nanitozo_views.nanitozo_apply_good, name='nanitozo_apply_good'),
+    # 何卒満足キャンセル（ログイン必須）
+    path('<int:air_id>/nanitozo/cancel_good/<int:pk>', nanitozo_views.nanitozo_cancel_good, name='nanitozo_cancel_good'),
     # 既存の放送に何卒作成（ログイン必須）
     path('<int:air_id>/nanitozo/create/', nanitozo_views.nanitozo_create, name='nanitozo_create'),
     # 何卒取消（ログイン必須）

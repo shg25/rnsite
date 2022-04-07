@@ -1,5 +1,5 @@
 from django.db import IntegrityError
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponseForbidden
 from django.shortcuts import get_object_or_404
 from django.urls import reverse
 from django.views import generic
@@ -46,6 +46,42 @@ def nanitozo_create(request, air_id):
     else:
         messages.success(request, '何卒！')
     return HttpResponseRedirect(reverse('airs:detail', args=(air.id,)))
+
+
+@login_required
+def nanitozo_apply_good(request, air_id, pk):
+    change_for = True
+
+    nanitozo = get_object_or_404(Nanitozo, pk=pk)
+
+    if nanitozo.good == change_for:  # 変更する必要があるか確認
+        messages.warning(request, 'もう満足してますね')
+    elif nanitozo.user != request.user:  # ログインしているユーザーが一致しているか確認
+        messages.error(request, 'あなたは誰…？')  # HttpResponseForbidden()を返した方が適切かもだけどメッセージだけで充分と判断
+    else:  # 問題なさそうなのでnanitozoをアップデート
+        nanitozo.good = change_for
+        nanitozo.save(update_fields=['good'])
+        messages.success(request, '満足！')
+
+    return HttpResponseRedirect(reverse('airs:detail', args=(air_id,)))
+
+
+@login_required
+def nanitozo_cancel_good(request, air_id, pk):
+    change_for = False
+
+    nanitozo = get_object_or_404(Nanitozo, pk=pk)
+
+    if nanitozo.good == change_for:  # 変更する必要があるか確認
+        messages.warning(request, '既に満足がキャンセルされてました')
+    elif nanitozo.user != request.user:  # ログインしているユーザーが一致しているか確認
+        messages.error(request, 'あなたは誰…？')  # HttpResponseForbidden()を返した方が適切かもだけどメッセージだけで充分と判断
+    else:  # 問題なさそうなのでnanitozoをアップデート
+        nanitozo.good = change_for
+        nanitozo.save(update_fields=['good'])
+        messages.success(request, '満足 has been キャンセルド！')
+
+    return HttpResponseRedirect(reverse('airs:detail', args=(air_id,)))
 
 
 @login_required

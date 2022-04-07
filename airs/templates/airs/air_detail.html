@@ -16,6 +16,11 @@
       <li><a href="{% url 'airs:air_update' air.id %}">{% rn_const 'TITLE_AIR_UPDATE' %}</a></li>
       {% if my_nanitozo %}
       <li><a href="{% url 'airs:nanitozo_update' my_nanitozo.id %}">{% rn_const 'TITLE_NANITOZO_UPDATE' %}</a></li>
+      {% if my_nanitozo.good == True %}
+      <li><a href="javascript:window.location.replace('{% url 'airs:nanitozo_cancel_good' air_id=air.id pk=my_nanitozo.id %}')">{% rn_const 'TITLE_NANITOZO_CANCEL_GOOD' %}</a></li>
+      {% else %}
+      <li><a href="javascript:window.location.replace('{% url 'airs:nanitozo_apply_good' air_id=air.id pk=my_nanitozo.id %}')">{% rn_const 'TITLE_NANITOZO_APPLY_GOOD' %}</a></li>
+      {% endif %}
       <li>
         <a href="#">…</a>
         <div uk-dropdown="pos: top-center">
