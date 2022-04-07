@@ -27,7 +27,7 @@ class NanitozoListView(generic.ListView):
 @method_decorator(login_required, name='dispatch')  # TODO 本人しか更新できないようにする
 class NanitozoUpdateView(generic.UpdateView):
     model = Nanitozo
-    fields = ['good', 'comment_open', 'comment_recommend', 'comment', 'comment_negative']
+    fields = ['comment_open', 'comment_recommend', 'comment', 'comment_negative']
     template_name = 'airs/nanitozo_update.html'
 
     def get_success_url(self):
