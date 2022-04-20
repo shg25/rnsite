@@ -1,0 +1,52 @@
+{% comment %}
+- icon: 見出しの前のアイコン
+- header: 見出し
+- description: 見出しの後に表示する説明
+- comment: 隠すべきコメントそのもの
+- is_negative: 簡単に見られないネガティブなコメント
+- nodata: コメントなし時のメッセージ
+{% endcomment %}
+<div>
+    {% if header %}
+    <h3 class="uk-text-small mgt-s mgb-0 uk-grid-collapse uk-flex-middle" uk-grid>
+        {% if icon %}
+        <div><span uk-icon="icon: {{ icon }}" class="uk-icon uk-text-middle mgr-s"></span></div>
+        {% endif %}
+        <div class="uk-text-middle">
+            {{ header }}{% if description %}<small> {{ description }}</small>{% endif %}
+        </div>
+    </h3>
+    {% endif %}
+    <div class="uk-cover-container">
+        {% if comment %}
+        <p class="rn-padding-vertical uk-text-small uk-margin-remove uk-text-break">
+            {{ comment|urlizetrunc:16|linebreaksbr }}
+        </p>
+        {% if is_negative %}
+        <div onclick="this.remove()" class="uk-overlay-primary uk-background-secondary uk-position-cover">
+            <div class="uk-position-center uk-text-small">Open!</div>
+        </div>
+        <div onclick="this.remove()" class="uk-overlay-primary uk-background-secondary uk-position-cover">
+            <div class="uk-position-center uk-text-small">2</div>
+        </div>
+        <div onclick="this.remove()" class="uk-overlay-primary uk-background-secondary uk-position-cover">
+            <div class="uk-position-center uk-text-small">3</div>
+        </div>
+        <div onclick="this.remove()" class="uk-overlay-primary uk-background-secondary uk-position-cover">
+            <div class="uk-position-center uk-text-small">4</div>
+        </div>
+        <div onclick="this.remove()" class="uk-overlay-primary uk-background-secondary uk-position-cover">
+            <div class="uk-position-center uk-text-small">Tap?</div>
+        </div>
+        {% else %}
+        <div onclick="this.remove()" class="uk-overlay-primary uk-background-secondary uk-position-cover">
+            <div class="uk-position-center uk-text-small">Tap!</div>
+        </div>
+        {% endif %}
+        {% else %}
+        <p class="rn-padding-vertical uk-text-small uk-margin-remove uk-text-break">
+            {{ nodata }}
+        </p>
+        {% endif %}
+    </div>
+</div>

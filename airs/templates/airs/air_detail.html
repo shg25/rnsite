@@ -16,6 +16,11 @@
       <li><a href="{% url 'airs:air_update' air.id %}">{% rn_const 'TITLE_AIR_UPDATE' %}</a></li>
       {% if my_nanitozo %}
       <li><a href="{% url 'airs:nanitozo_update' my_nanitozo.id %}">{% rn_const 'TITLE_NANITOZO_UPDATE' %}</a></li>
+      {% if my_nanitozo.good == True %}
+      <li><a href="javascript:window.location.replace('{% url 'airs:nanitozo_cancel_good' air_id=air.id pk=my_nanitozo.id %}')">{% rn_const 'TITLE_NANITOZO_CANCEL_GOOD' %}</a></li>
+      {% else %}
+      <li><a href="javascript:window.location.replace('{% url 'airs:nanitozo_apply_good' air_id=air.id pk=my_nanitozo.id %}')">{% rn_const 'TITLE_NANITOZO_APPLY_GOOD' %}</a></li>
+      {% endif %}
       <li>
         <a href="#">…</a>
         <div uk-dropdown="pos: top-center">
@@ -33,7 +38,7 @@
                   </div>
                   <div class="uk-modal-footer uk-text-right">
                     <button class="uk-button uk-button-default uk-modal-close" type="button">キャンセル</button>
-                    <a href="{% url 'airs:nanitozo_delete' air_id=air.id pk=my_nanitozo.id %}" class="uk-button uk-button-danger" type="button">実行</a>
+                    <a href="javascript:window.location.replace('{% url 'airs:nanitozo_delete' air_id=air.id pk=my_nanitozo.id %}')" class="uk-button uk-button-danger" type="button">実行</a>
                   </div>
                 </div>
               </div>
@@ -42,7 +47,7 @@
         </div>
       </li>
       {% else %}
-      <li><a href="{% url 'airs:nanitozo_create' air.id %}" class="uk-text-primary">何卒！</a></li>
+      <li><a href="javascript:window.location.replace('{% url 'airs:nanitozo_create' air.id %}')">何卒！</a></li>
       {% endif %}
     </ul>
   </div>
@@ -58,6 +63,28 @@
 
 {% with adt=air.started_at|init_rn_datetime:air.ended_at %}
 <header class="rn-padding">
+  {% if nanitozo_icon_list %}
+  <div class="uk-text-right">
+    {% for nanitozo_icon in nanitozo_icon_list %}<span uk-icon="{{ nanitozo_icon.0.value }}" class="uk-icon{% if nanitozo_icon.1 %} uk-text-success{% endif %}"></span>{% endfor %}
+    {% comment %} <div class="uk-position-relative">
+      <span uk-icon="icon: user" class="uk-icon uk-position-absolute uk-background-default"></span>
+      <span uk-icon="icon: user" class="uk-icon uk-position-absolute uk-background-default" style="margin-left:12px"></span>
+      <span uk-icon="icon: user" class="uk-icon uk-position-absolute uk-background-default" style="margin-left:24px"></span>
+      <span uk-icon="icon: happy" class="uk-icon uk-position-absolute uk-background-default" style="margin-left:36px"></span>
+      <span uk-icon="icon: happy" class="uk-icon uk-position-absolute uk-background-default" style="margin-left:48px"></span>
+      <span uk-icon="icon: happy" class="uk-icon uk-position-absolute uk-background-default" style="margin-left:60px"></span>
+      <span uk-icon="icon: star" class="uk-icon uk-position-absolute uk-background-default" style="margin-left:72px"></span>
+      <span uk-icon="icon: star" class="uk-icon uk-position-absolute uk-background-default" style="margin-left:84px"></span>
+      <span uk-icon="icon: star" class="uk-icon uk-position-absolute uk-background-default" style="margin-left:96px"></span>
+      <span uk-icon="icon: comment" class="uk-icon uk-position-absolute uk-background-default" style="margin-left:108px"></span>
+      <span uk-icon="icon: comment" class="uk-icon uk-position-absolute uk-background-default" style="margin-left:120px"></span>
+      <span uk-icon="icon: comment" class="uk-icon uk-position-absolute uk-background-default" style="margin-left:132px"></span>
+      <span uk-icon="icon: paint-bucket" class="uk-icon uk-position-absolute uk-background-default" style="margin-left:144px"></span>
+      <span uk-icon="icon: paint-bucket" class="uk-icon uk-position-absolute uk-background-default" style="margin-left:156px"></span>
+      <span uk-icon="icon: paint-bucket" class="uk-icon uk-position-absolute uk-background-default" style="margin-left:168px"></span>
+    </div> {% endcomment %}
+  </div>
+  {% endif %}
   <h1 class="uk-text-lead uk-margin-remove">{{ air.name }}</h1>
   <h2 class="uk-text-default uk-margin-remove-top uk-margin-small-bottom">
     {{ air.started_at|rn_ymdhm }} {{ adt.airtime }}<small>min</small>
@@ -88,59 +115,74 @@
 </header>
 {% endwith %}
 
-{% include 'base/separator.html' %}
+<hr class="uk-divider-small uk-margin-remove">
 
+{% comment %} 放送概要表示 ここから {% endcomment %}
 <div class="rn-padding">
-  {% comment %} 何卒 {% endcomment %}
-  {% include 'base/sum_reaction.html' with nanitozo_list=nanitozo_list icon='icon: user' label='何卒' is_negative=False %}
-  {% comment %} 満足 {% endcomment %}
-  {% include 'base/sum_reaction.html' with nanitozo_list=good_nanitozo_list icon='icon: happy' label='満足' is_negative=False %}
-  {% comment %} 推し {% endcomment %}
-  {% include 'base/sum_reaction.html' with nanitozo_list=comment_open_recommend_nanitozo_list icon='icon: star' label='推し' is_negative=False %}
-  {% comment %} 感想 {% endcomment %}
-  {% include 'base/sum_reaction.html' with nanitozo_list=comment_open_nanitozo_list icon='icon: comment' label='感想' is_negative=False %}
-  {% comment %} ネガ {% endcomment %}
-  {% include 'base/sum_reaction.html' with nanitozo_list=comment_open_negative_nanitozo_list icon='icon: paint-bucket' label='ネガ' is_negative=True %}
+  {% include 'base/block_comment.html' with header='事前告知' description='ネタバレなし（のはず）' comment=air.overview_before nodata='入力なし' %}
+  {% include 'base/block_comment.html' with header='番組内容' description='ネタバレあり' comment=air.overview_after nodata='入力なし' %}
 </div>
+{% comment %} 放送概要表示 ここまで {% endcomment %}
 
+{% comment %} 自分自身の何卒 ここから {% endcomment %}
+{% if my_nanitozo %}
 {% include 'base/separator.html' %}
 
-<div class="rn-padding">
-  <h3 class="uk-text-default uk-margin-small-bottom">事前告知<small> ネタバレなし（のはず）</small></h3>
-  {% if air.overview_before %}
-  <div class="uk-inline">
-    <p class="uk-text-small uk-margin-remove uk-text-break">{{ air.overview_before|urlizetrunc:16|linebreaksbr }}</p>
-    <div onclick="this.remove()" class="uk-overlay-primary uk-background-secondary uk-position-cover">
-      <div class="uk-position-center uk-text-small">Tap!</div>
+<h2 class="rn-padding uk-text-default uk-margin-remove">
+  Your何卒
+  <span class="uk-text-small">
+    <a href="{% url 'airs:nanitozo_update' my_nanitozo.id %}">{% rn_const 'TITLE_NANITOZO_UPDATE' %}</a>
+    {% if my_nanitozo.good == True %}
+    <a href="javascript:window.location.replace('{% url 'airs:nanitozo_cancel_good' air_id=air.id pk=my_nanitozo.id %}')">{% rn_const 'TITLE_NANITOZO_CANCEL_GOOD' %}</a>
+    {% else %}
+    <a href="javascript:window.location.replace('{% url 'airs:nanitozo_apply_good' air_id=air.id pk=my_nanitozo.id %}')">{% rn_const 'TITLE_NANITOZO_APPLY_GOOD' %}</a>
+    {% endif %}
+  </span>
+</h2>
+<div class="uk-background-muted">
+  <div class="rn-padding-card-list">
+    <div class="rn-padding uk-background-default">
+      {% if my_nanitozo.comment_recommend %}
+      {% include 'base/block_comment.html' with header='推し' icon='star' comment=my_nanitozo.comment_recommend %}
+      {% endif %}
+      {% if my_nanitozo.comment %}
+      {% include 'base/block_comment.html' with header='感想' icon='comment' comment=my_nanitozo.comment %}
+      {% endif %}
+      {% if my_nanitozo.comment_negative %}
+      {% include 'base/block_comment.html' with header='ネガ' icon='paint-bucket'  comment=my_nanitozo.comment_negative is_negative=True %}
+      {% endif %}
     </div>
   </div>
-  {% else %}
-  <p class="uk-text-small uk-margin-remove">データなし</p>
-  {% endif %}
+</div>
+{% endif %}
+{% comment %} 自分自身の何卒 ここまで {% endcomment %}
 
-  <h3 class="uk-text-default uk-margin-small-bottom">番組内容<small> ネタバレあり</small></h3>
-  {% if air.overview_after %}
-  <div class="uk-inline">
-    <p class="uk-text-small uk-margin-remove uk-text-break">{{ air.overview_after|urlizetrunc:16|linebreaksbr }}</p>
-    <div onclick="this.remove()" class="uk-overlay-primary uk-background-secondary uk-position-cover">
-      <div class="uk-position-center uk-text-small">Tap!</div>
+{% if other_nanitozo_list %}
+{% include 'base/separator.html' %}
+
+<div class="uk-background-muted">
+  <div class="rn-padding uk-background-default">
+    <h2 class="uk-text-default uk-margin-remove">
+      みんなの何卒
+    </h2>
+    <div>
+      {% comment %} 何卒 {% endcomment %}
+      {% include 'base/sum_reaction.html' with nanitozo_list=nanitozo_list icon='icon: user' label='何卒' is_negative=False %}
+      {% comment %} 満足 {% endcomment %}
+      {% include 'base/sum_reaction.html' with nanitozo_list=good_nanitozo_list icon='icon: happy' label='満足' is_negative=False %}
+      {% comment %} 推し {% endcomment %}
+      {% include 'base/sum_reaction.html' with nanitozo_list=comment_open_recommend_nanitozo_list icon='icon: star' label='推し' is_negative=False %}
+      {% comment %} 感想 {% endcomment %}
+      {% include 'base/sum_reaction.html' with nanitozo_list=comment_open_nanitozo_list icon='icon: comment' label='感想' is_negative=False %}
+      {% comment %} ネガ {% endcomment %}
+      {% include 'base/sum_reaction.html' with nanitozo_list=comment_open_negative_nanitozo_list icon='icon: paint-bucket' label='ネガ' is_negative=True %}
     </div>
   </div>
-  {% else %}
-  <p class="uk-text-small uk-margin-remove">データなし</p>
-  {% endif %}
+
+  {% for nanitozo in other_nanitozo_list %}
+  {% include 'list/item_reaction.html' with nanitozo=nanitozo %}
+  {% endfor %}
 </div>
-
-{% include 'base/separator.html' %}
-
-{% include 'list/item_reaction.html' with title='推し' nanitozo_list=comment_open_recommend_nanitozo_list %}
-
-{% include 'base/separator.html' %}
-
-{% include 'list/item_reaction.html' with title='感想' nanitozo_list=comment_open_nanitozo_list %}
-
-{% include 'base/separator.html' %}
-
-{% include 'list/item_reaction.html' with title='ネガ' nanitozo_list=comment_open_negative_nanitozo_list %}
+{% endif %}
 
 {% endblock content %}
