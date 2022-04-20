@@ -47,6 +47,10 @@ h6 {
   margin-top: 4px;
 }
 
+.mgb-0 {
+  margin-bottom: 0;
+}
+
 .mgb-s {
   margin-bottom: 4px;
 }
@@ -83,6 +87,10 @@ h6 {
   padding: 0 8px;
 }
 
+.rn-padding-card-list {
+  padding: 1px 8px 7px;
+}
+
 .border-left-muted {
   border-left: 1px solid #999;
   padding-left: 8px;
@@ -117,7 +125,7 @@ a:hover {
 }
 
 .separator {
-  height: 4px;
+  height: 8px;
 }
 
 .rn-form-check-label {
@@ -135,7 +143,7 @@ a:hover {
 */
 
 .uk-background-muted {
-  background-color: #ddd;
+  background-color: #eee;
 }
 
 .wrapper {
