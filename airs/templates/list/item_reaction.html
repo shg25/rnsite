@@ -2,10 +2,10 @@
 <div class="rn-padding-card-list uk-flex uk-flex-middle">
     <div class="rn-padding uk-background-default uk-width-expand{% if user.is_authenticated and nanitozo.user.last_name == user.last_name%} border-left-success{% endif %}">
         <div class="uk-grid-collapse uk-flex-middle" uk-grid>
-            <h2 class="uk-width-expand uk-text-default uk-margin-remove">
+            <h2 class="uk-width-auto uk-text-default uk-margin-remove">
                 <a href="{% url 'airs:user' nanitozo.user.id %}">{{ nanitozo.user.last_name }}</a>
             </h2>
-            <div class="uk-width-auto">
+            <div class="uk-width-auto mgl-m">
                 <small>{{ nanitozo.created_at|rn_ymdhm }}</small>
                 {% comment %} <small>{{ nanitozo.updated_at|rn_ymdhm }}</small> {% endcomment %}
             </div>

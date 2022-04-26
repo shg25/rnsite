@@ -66,23 +66,6 @@
   {% if nanitozo_icon_list %}
   <div class="uk-text-right">
     {% for nanitozo_icon in nanitozo_icon_list %}<span uk-icon="{{ nanitozo_icon.0.value }}" class="uk-icon{% if nanitozo_icon.1 %} uk-text-success{% endif %}"></span>{% endfor %}
-    {% comment %} <div class="uk-position-relative">
-      <span uk-icon="icon: user" class="uk-icon uk-position-absolute uk-background-default"></span>
-      <span uk-icon="icon: user" class="uk-icon uk-position-absolute uk-background-default" style="margin-left:12px"></span>
-      <span uk-icon="icon: user" class="uk-icon uk-position-absolute uk-background-default" style="margin-left:24px"></span>
-      <span uk-icon="icon: happy" class="uk-icon uk-position-absolute uk-background-default" style="margin-left:36px"></span>
-      <span uk-icon="icon: happy" class="uk-icon uk-position-absolute uk-background-default" style="margin-left:48px"></span>
-      <span uk-icon="icon: happy" class="uk-icon uk-position-absolute uk-background-default" style="margin-left:60px"></span>
-      <span uk-icon="icon: star" class="uk-icon uk-position-absolute uk-background-default" style="margin-left:72px"></span>
-      <span uk-icon="icon: star" class="uk-icon uk-position-absolute uk-background-default" style="margin-left:84px"></span>
-      <span uk-icon="icon: star" class="uk-icon uk-position-absolute uk-background-default" style="margin-left:96px"></span>
-      <span uk-icon="icon: comment" class="uk-icon uk-position-absolute uk-background-default" style="margin-left:108px"></span>
-      <span uk-icon="icon: comment" class="uk-icon uk-position-absolute uk-background-default" style="margin-left:120px"></span>
-      <span uk-icon="icon: comment" class="uk-icon uk-position-absolute uk-background-default" style="margin-left:132px"></span>
-      <span uk-icon="icon: paint-bucket" class="uk-icon uk-position-absolute uk-background-default" style="margin-left:144px"></span>
-      <span uk-icon="icon: paint-bucket" class="uk-icon uk-position-absolute uk-background-default" style="margin-left:156px"></span>
-      <span uk-icon="icon: paint-bucket" class="uk-icon uk-position-absolute uk-background-default" style="margin-left:168px"></span>
-    </div> {% endcomment %}
   </div>
   {% endif %}
   <h1 class="uk-text-lead uk-margin-remove">{{ air.name }}</h1>
@@ -128,9 +111,12 @@
 {% if my_nanitozo %}
 {% include 'base/separator.html' %}
 
-<h2 class="rn-padding uk-text-default uk-margin-remove">
-  Your何卒
-  <span class="uk-text-small">
+<div class="rn-padding uk-grid-collapse uk-flex-middle" uk-grid>
+  <h2 class="uk-width-auto uk-text-default uk-margin-remove">
+    Your何卒
+  </h2>
+  <div class="uk-width-expand uk-text-truncate mgl-m"><small>{{ my_nanitozo.created_at|rn_ymdhm }}</small></div>
+  <span class="uk-width-auto uk-text-small">
     <a href="{% url 'airs:nanitozo_update' my_nanitozo.id %}">{% rn_const 'TITLE_NANITOZO_UPDATE' %}</a>
     {% if my_nanitozo.good == True %}
     <a href="javascript:window.location.replace('{% url 'airs:nanitozo_cancel_good' air_id=air.id pk=my_nanitozo.id %}')">{% rn_const 'TITLE_NANITOZO_CANCEL_GOOD' %}</a>
@@ -138,10 +124,21 @@
     <a href="javascript:window.location.replace('{% url 'airs:nanitozo_apply_good' air_id=air.id pk=my_nanitozo.id %}')">{% rn_const 'TITLE_NANITOZO_APPLY_GOOD' %}</a>
     {% endif %}
   </span>
-</h2>
+</div>
+
 <div class="uk-background-muted">
   <div class="rn-padding-card-list">
     <div class="rn-padding uk-background-default">
+      {% if my_nanitozo.good %}
+      <h3 class="uk-text-small mgt-s mgb-0">
+        <span uk-icon="icon: happy" class="uk-icon mgr-s"></span>満足！
+      </h3>
+      {% endif %}
+
+      {% if not my_nanitozo.good and not my_nanitozo.comment_recommend and not my_nanitozo.comment and not my_nanitozo.comment_negative %}
+      <p class="uk-text-small uk-text-muted uk-margin-remove uk-text-break">感想なし</p>
+      {% endif %}
+
       {% if my_nanitozo.comment_recommend %}
       {% include 'base/block_comment.html' with header='推し' icon='star' comment=my_nanitozo.comment_recommend %}
       {% endif %}
@@ -158,7 +155,10 @@
 {% comment %} 自分自身の何卒 ここまで {% endcomment %}
 
 {% if other_nanitozo_list %}
+
+{% if not my_nanitozo %}
 {% include 'base/separator.html' %}
+{% endif %}
 
 <div class="uk-background-muted">
   <div class="rn-padding uk-background-default">

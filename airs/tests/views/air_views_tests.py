@@ -84,7 +84,7 @@ class AirDetailViewTests(TestCase):
 
         self.assertContains(response, self.air.name)
         self.assertNotContains(response, '+放送登録')
-        self.assertNotContains(response, '何卒編集')
+        self.assertNotContains(response, '感想編集')
 
     def test_連絡詳細_ログインして何卒してない(self):
         # ログイン
@@ -97,7 +97,7 @@ class AirDetailViewTests(TestCase):
         self.assertContains(response, self.air.name)
         self.assertContains(response, '+放送登録')
         self.assertContains(response, 'ABC')
-        self.assertNotContains(response, '何卒編集')
+        self.assertNotContains(response, '感想編集')
 
     def test_連絡詳細_ログインして何卒した(self):
         # ログイン
