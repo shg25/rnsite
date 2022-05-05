@@ -280,6 +280,7 @@ class AirDetailView(generic.DetailView):
         if bool(my_nanitozo_list):
             context['my_nanitozo'] = my_nanitozo_list[0]
 
-        context['other_nanitozo_list'] = list(filter(lambda x: x.user != self.request.user, nanitozo_list))
+        # 自分以外のnanitozo → やっぱり使わないかも
+        # context['other_nanitozo_list'] = list(filter(lambda x: x.user != self.request.user, nanitozo_list))
 
         return context

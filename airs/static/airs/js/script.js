@@ -12,3 +12,13 @@ const copyToClipboardAndShowAlert = text => {
         window.alert(text + ' をたぶんコピーしました（IEは無理っぽい）')
     }, 0)
 }
+
+// TODO まだ使ってない
+const submitTextarea = (textarea_id, url) => {
+    // const text = document.getElementById('textarea_nanitozo_comment_recommend').value
+    const text = document.getElementById(textarea_id).value
+    // copyToClipboardAndShowAlert(text)
+    window.location.replace(url)
+
+    // document.getElementById("span3").textContent = ta3;
+}
