@@ -163,3 +163,10 @@ a:hover {
   overflow-y: scroll;
   max-width: 100%;
 }
+
+input[type="checkbox"] + label.label_comment_open {
+  color: #faa05a;
+}
+input[type="checkbox"]:checked + label.label_comment_open {
+  color: #666;
+}
