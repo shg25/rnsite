@@ -13,16 +13,47 @@
   <div class="uk-navbar-left"></div>
   <div class="uk-navbar-right">
     <ul class="uk-navbar-nav">
-      <li><a href="{% url 'airs:air_update' air.id %}">{% rn_const 'TITLE_AIR_UPDATE' %}</a></li>
-      {% if my_nanitozo %}
       <li>
-        <a href="#modal-full" class="{% if not my_nanitozo.comment_open %}uk-text-warning{% elif my_nanitozo.has_comment %}uk-text-success{% endif %}" uk-toggle>{% rn_const 'TITLE_NANITOZO_UPDATE' %}</a>
-        <div id="modal-full" class="uk-modal-full" uk-modal>
+        <a href="#modal-overview" uk-toggle>{% rn_const 'TITLE_AIR_UPDATE' %}</a>
+        <div id="modal-overview" class="uk-modal-full" uk-modal>
           <div class="uk-modal-dialog">
-            <button class="uk-modal-close-full uk-close-large" type="button" uk-close></button>
+            <button class="uk-modal-close-full uk-modal-close-default" type="button" uk-close></button>
             <div uk-height-viewport>
               <div class="rn-padding">
-                <h1>{% rn_const 'TITLE_NANITOZO_UPDATE' %}</h1>
+                <h1 class="uk-text-lead">{% rn_const 'TITLE_AIR_UPDATE' %}</h1>
+                <form action="{% url 'airs:air_update' air.id %}" id="form_air_update" method="post">{% csrf_token %}
+                  <p class="uk-article-meta uk-margin-remove">共同編集で上書きしあう可能性があるので極力手早くお願いします（そのうちいい感じの解決方法を考えます）</p>
+                  <hr class="uk-divider-small">
+
+                  <p class="uk-margin-remove"><label for="id_overview_before">事前告知<small> ネタバレなし</small></label>
+                    <textarea name="overview_before" rows="4" id="id_overview_before" class="uk-textarea mgt-s" placeholder="ゲスト：なかやまきんに君
+・筋肉ルーレットカジノ">{{ air.overview_before|default_if_none:'' }}</textarea></p>
+                  <p class="uk-article-meta mgt-s uk-margin-bottom">※前回の放送や放送前にTwitterで告知があったゲストや企画</p>
+
+                  <p class="uk-margin-remove"><label for="id_overview_after">放送内容<small> ネタバレあり</small></label>
+                    <textarea name="overview_after" rows="4" id="id_overview_after" class="uk-textarea mgt-s" placeholder="飛び入りゲスト：岡村隆史
+・ご飯炊き対決
+・ネスミスはパン">{{ air.overview_after|default_if_none:'' }}</textarea></p>
+                  <p class="uk-article-meta mgt-s uk-margin-remove-bottom">※放送前に発表がなかったゲストや企画、放送内の印象的なワードなど</p>
+                  <div class="uk-text-right mgt-s">
+                    <input type="submit" form="form_air_update" value="&nbsp;更新&nbsp;" class="uk-button uk-button-primary uk-button">
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </li>
+
+      {% if my_nanitozo %}
+      <li>
+        <a href="#modal-comment" class="{% if not my_nanitozo.comment_open %}uk-text-warning{% elif my_nanitozo.has_comment %}uk-text-success{% endif %}" uk-toggle>{% rn_const 'TITLE_NANITOZO_UPDATE' %}</a>
+        <div id="modal-comment" class="uk-modal-full" uk-modal>
+          <div class="uk-modal-dialog">
+            <button class="uk-modal-close-full uk-modal-close-default" type="button" uk-close></button>
+            <div uk-height-viewport>
+              <div class="rn-padding">
+                <h1 class="uk-text-lead">{% rn_const 'TITLE_NANITOZO_UPDATE' %}</h1>
                 <form action="{% url 'airs:nanitozo_update' my_nanitozo.id %}" id="form" method="post">{% csrf_token %}
                   <div class="uk-margin-remove-top uk-margin-bottom">
                     <label for="id_comment_recommend"><span uk-icon="star" class="uk-icon"></span><span class="uk-text-middle mgl-ss">推し</span><small> ネタバレ少なめ推薦文</small></label>
