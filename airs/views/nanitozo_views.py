@@ -1,13 +1,13 @@
 from django.db import IntegrityError
-from django.http import HttpResponseRedirect, HttpResponseForbidden
+from django.http import HttpResponseForbidden, HttpResponseRedirect, HttpResponseNotAllowed
 from django.shortcuts import get_object_or_404
 from django.urls import reverse
 from django.views import generic
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from django.utils.decorators import method_decorator
 
 from ..models import Air, Nanitozo
+from ..forms import NanitozoUpdateForm
 
 _NANITOZO_LIST_LIMIT = 40
 
@@ -24,16 +24,6 @@ class NanitozoListView(generic.ListView):
         return context
 
 
-@method_decorator(login_required, name='dispatch')  # TODO 本人しか更新できないようにする
-class NanitozoUpdateView(generic.UpdateView):
-    model = Nanitozo
-    fields = ['comment_open', 'comment_recommend', 'comment', 'comment_negative']
-    template_name = 'airs/nanitozo_update.html'
-
-    def get_success_url(self):
-        return reverse('airs:detail', kwargs={'pk': self.object.air.id})
-
-
 @login_required
 def nanitozo_create(request, air_id):
     air = get_object_or_404(Air, pk=air_id)
@@ -46,6 +36,25 @@ def nanitozo_create(request, air_id):
     else:
         messages.success(request, '何卒！')
     return HttpResponseRedirect(reverse('airs:detail', args=(air.id,)))
+
+
+@login_required
+def nanitozo_update(request, air_id, pk):
+    if request.method != 'POST':
+        return HttpResponseNotAllowed('POSTじゃないと')
+
+    nanitozo = get_object_or_404(Nanitozo, pk=pk)
+
+    if nanitozo.user.id != request.user.id:
+        return HttpResponseForbidden()  # 編集権限なしエラー
+
+    form = NanitozoUpdateForm(request.POST, instance=nanitozo)
+    if form.is_valid():
+        form.save()
+        messages.success(request, '更新完了！')
+    else:
+        messages.error(request, '更新失敗！')
+    return HttpResponseRedirect(reverse('airs:detail', args=(air_id,)))
 
 
 @login_required

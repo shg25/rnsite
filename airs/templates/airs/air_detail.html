@@ -54,7 +54,7 @@
             <div uk-height-viewport>
               <div class="rn-padding">
                 <h1 class="uk-text-lead">{% rn_const 'TITLE_NANITOZO_UPDATE' %}</h1>
-                <form action="{% url 'airs:nanitozo_update' my_nanitozo.id %}" id="form" method="post">{% csrf_token %}
+                <form action="{% url 'airs:nanitozo_update' air_id=air.id pk=my_nanitozo.id %}" id="form_nanitozo_update" method="post">{% csrf_token %}
                   <div class="uk-margin-remove-top uk-margin-bottom">
                     <label for="id_comment_recommend"><span uk-icon="star" class="uk-icon"></span><span class="uk-text-middle mgl-ss">推し</span><small> ネタバレ少なめ推薦文</small></label>
                     <textarea name="comment_recommend" rows="4" id="id_comment_recommend" class="uk-textarea mgt-s">{{ my_nanitozo.comment_recommend|default_if_none:'' }}</textarea><br>
@@ -72,7 +72,7 @@
                       <input type="checkbox" name="comment_open" id="id_comment_open" class="uk-checkbox" {% if my_nanitozo.comment_open %} checked{% endif %}><label for="id_comment_open" class="label_comment_open mgl-s">感想公開<small> OFFで下書き保存</small></label>
                     </div>
                     <div class="uk-width-auto">
-                      <input type="submit" form="form" value="&nbsp;更新&nbsp;" class="uk-button uk-button-primary uk-button">
+                      <input type="submit" form="form_nanitozo_update" value="&nbsp;更新&nbsp;" class="uk-button uk-button-primary uk-button">
                     </div>
                   </div>
                 </form>

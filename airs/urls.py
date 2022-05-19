@@ -21,21 +21,21 @@ urlpatterns = [
 
     # 何卒一覧
     path('ns/', nanitozo_views.NanitozoListView.as_view(), name='ns'),
+    # 既存の放送に何卒作成（ログイン必須）
+    path('<int:air_id>/nanitozo/create/', nanitozo_views.nanitozo_create, name='nanitozo_create'),
     # 何卒修正（ログイン必須）
-    path('nanitozo/update/<int:pk>', nanitozo_views.NanitozoUpdateView.as_view(), name='nanitozo_update'),
+    path('<int:air_id>/nanitozo/update/<int:pk>', nanitozo_views.nanitozo_update, name='nanitozo_update'),
     # 何卒満足（ログイン必須）
     path('<int:air_id>/nanitozo/apply_good/<int:pk>', nanitozo_views.nanitozo_apply_good, name='nanitozo_apply_good'),
     # 何卒満足キャンセル（ログイン必須）
     path('<int:air_id>/nanitozo/cancel_good/<int:pk>', nanitozo_views.nanitozo_cancel_good, name='nanitozo_cancel_good'),
-    # 既存の放送に何卒作成（ログイン必須）
-    path('<int:air_id>/nanitozo/create/', nanitozo_views.nanitozo_create, name='nanitozo_create'),
     # 何卒取消（ログイン必須）
     path('<int:air_id>/nanitozo/delete/<int:pk>', nanitozo_views.nanitozo_delete, name='nanitozo_delete'),
 
     # 放送作成 & 何卒作成（ログイン必須）
     path('air/create/', air_views.AirCreateByShareTextView.as_view(), name='air_create'),
     # 放送更新（ログイン必須）
-    path('air/update/<int:pk>', air_views.AirUpdateView.as_view(), name='air_update'),
+    path('air/update/<int:pk>', air_views.air_update, name='air_update'),
     # 放送一覧
     path('', air_views.AirListView.as_view(), name='index'),
     # 放送詳細 ex: '/1/'

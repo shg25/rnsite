@@ -1,11 +1,11 @@
 from django.db import IntegrityError
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseNotAllowed, HttpResponseRedirect
 from django.urls import reverse
 from django.views import generic
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import UserPassesTestMixin
-from django.utils.decorators import method_decorator
+from django.shortcuts import get_object_or_404, redirect
 
 from common.util.datetime_extensions import new_datetime, new_date, timedelta_days
 from common.util.url_extensions import scraping_title
@@ -14,7 +14,7 @@ from common.util.string_extensions import find_urls, share_text_to_formatted_nam
 from common.util.enum.nanitozo_icon_type_extensions import NanitozoIconType
 
 from ..models import Air, FormattedName
-from ..forms import AirCreateByShareTextForm
+from ..forms import AirCreateByShareTextForm, AirUpdateForm
 
 
 # 要ログイン & superuser不可（=一般メンバー限定）
@@ -234,14 +234,19 @@ class AirCreateByShareTextView(generic.FormView):
         return HttpResponseRedirect(reverse('airs:detail', args=(saved_air.id,)))
 
 
-@method_decorator(login_required, name='dispatch')
-class AirUpdateView(generic.UpdateView):
-    model = Air
-    fields = ['overview_before', 'overview_after']
-    template_name = 'airs/air_update.html'
+@login_required
+def air_update(request, pk):
+    if request.method != 'POST':
+        return HttpResponseNotAllowed('POSTじゃないと')
 
-    def get_success_url(self):
-        return reverse('airs:detail', kwargs={'pk': self.kwargs['pk']})
+    air = get_object_or_404(Air, pk=pk)
+    form = AirUpdateForm(request.POST, instance=air)
+    if form.is_valid():
+        form.save()
+        messages.success(request, '更新完了！')
+    else:
+        messages.error(request, '更新失敗！')
+    return redirect('airs:detail', pk=pk)
 
 
 class AirDetailView(generic.DetailView):
