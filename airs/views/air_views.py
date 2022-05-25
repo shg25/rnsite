@@ -237,7 +237,7 @@ class AirCreateByShareTextView(generic.FormView):
 @login_required
 def air_update(request, pk):
     if request.method != 'POST':
-        return HttpResponseNotAllowed('POSTじゃないと')
+        return HttpResponseNotAllowed('POSTじゃないと')  # NOTE テストコードを実行するとなぜかここだけログが表示されるのが気になる、HttpResponseBadRequestとかに変えても同じ
 
     air = get_object_or_404(Air, pk=pk)
     form = AirUpdateForm(request.POST, instance=air)

@@ -39,9 +39,25 @@ def nanitozo_create(request, air_id):
 
 
 @login_required
+def nanitozo_delete(request, air_id, pk):
+    nanitozo = get_object_or_404(Nanitozo, pk=pk)
+    if nanitozo.user.id != request.user.id:
+        return HttpResponseForbidden()  # 編集権限なしエラー
+
+    try:
+        Nanitozo.objects.get(pk=pk).delete()
+    except:
+        messages.error(request, '既に何卒を取り消してました！')
+        return HttpResponseRedirect(reverse('airs:detail', args=(air_id,)))
+    else:
+        messages.success(request, '何卒を取り消しました！')
+        return HttpResponseRedirect(reverse('airs:detail', args=(air_id,)))
+
+
+@login_required
 def nanitozo_update(request, air_id, pk):
     if request.method != 'POST':
-        return HttpResponseNotAllowed('POSTじゃないと')
+        return HttpResponseNotAllowed('POSTじゃないと')  # NOTE テストコードを実行するとなぜかここだけログが表示されるのが気になる、HttpResponseBadRequestとかに変えても同じ
 
     nanitozo = get_object_or_404(Nanitozo, pk=pk)
 
@@ -91,15 +107,3 @@ def nanitozo_cancel_good(request, air_id, pk):
         messages.success(request, '満足 has been キャンセルド！')
 
     return HttpResponseRedirect(reverse('airs:detail', args=(air_id,)))
-
-
-@login_required
-def nanitozo_delete(request, air_id, pk):
-    try:
-        Nanitozo.objects.get(pk=pk).delete()
-    except:
-        messages.error(request, '既に何卒を取り消してました！')
-        return HttpResponseRedirect(reverse('airs:detail', args=(air_id,)))
-    else:
-        messages.success(request, '何卒を取り消しました！')
-        return HttpResponseRedirect(reverse('airs:detail', args=(air_id,)))
