@@ -193,6 +193,17 @@ class NanitozoUpdateTests(TestCase):
 
         self.assertEqual(response.status_code, 302)
 
+    def test_感想編集_post_別ユーザー(self):
+        # 別ユーザーでログイン
+        self.user = UserModel.objects.create(username='test2', email='test2@test.com', password='123456', last_name='BCD')
+        self.client.force_login(self.user)
+
+        data = {}
+        url = reverse('airs:nanitozo_update', args=(self.air.id, self.my_nanitozo.id))
+        response = self.client.post(url, data)
+
+        self.assertEqual(response.status_code, 403)
+
 
 class NanitozoGoodApplyCancelTests(TestCase):
 
@@ -231,4 +242,15 @@ class NanitozoGoodApplyCancelTests(TestCase):
         air = Air.objects.get(pk=self.air.id)
         my_nanitozo = air.nanitozo_set.filter(user=self.user).first()
         self.assertEqual(my_nanitozo.good, False)
+        self.assertEqual(response.status_code, 302)
+
+    def test_満足_get_別ユーザー(self):
+        # 別ユーザーでログイン
+        self.user = UserModel.objects.create(username='test2', email='test2@test.com', password='123456', last_name='BCD')
+        self.client.force_login(self.user)
+
+        url = reverse('airs:nanitozo_apply_good', args=(self.air.id, self.my_nanitozo.id))
+        response = self.client.get(url)
+
+        # Guestの場合と同じ結果になってしまう TODO Viewを今のリダイレクト形式から変えたら書き換える
         self.assertEqual(response.status_code, 302)
