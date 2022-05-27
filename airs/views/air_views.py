@@ -268,18 +268,33 @@ class AirDetailView(generic.DetailView):
         context['comment_open_nanitozo_list'] = list(filter(lambda x: x.comment_open == True and x.comment != None and len(x.comment) != 0, nanitozo_list))
         context['comment_open_negative_nanitozo_list'] = list(filter(lambda x: x.comment_open == True and x.comment_negative != None and len(x.comment_negative) != 0, nanitozo_list))
 
+        # 下書きではない and （コメント あり or ネガあり）
+        context['comment_open_mask_negative_nanitozo_list'] = list(filter(lambda x: x.comment_open == True and ((x.comment != None and len(x.comment) != 0) or (x.comment_negative != None and len(x.comment_negative) != 0)), nanitozo_list))
+
         nanitozo_icon_list = []
+        nanitozo_icon_list_mask_negative = []
         for nanitozo in context['comment_open_recommend_nanitozo_list']:
             nanitozo_icon_list.append((NanitozoIconType.comment_recommend, nanitozo.user == self.request.user))
+            nanitozo_icon_list_mask_negative.append((NanitozoIconType.comment_recommend, nanitozo.user == self.request.user))
         for nanitozo in context['good_nanitozo_list']:
             nanitozo_icon_list.append((NanitozoIconType.good, nanitozo.user == self.request.user))
+            nanitozo_icon_list_mask_negative.append((NanitozoIconType.good, nanitozo.user == self.request.user))
+
+        # [nanitozo_icon_list]は感想とネガそれぞれのアイコンをセット
         for nanitozo in context['comment_open_nanitozo_list']:
             nanitozo_icon_list.append((NanitozoIconType.comment, nanitozo.user == self.request.user))
         for nanitozo in context['comment_open_negative_nanitozo_list']:
             nanitozo_icon_list.append((NanitozoIconType.comment_negative, nanitozo.user == self.request.user))
+
+        # [nanitozo_icon_list_mask_negative]は感想とネガのどちらか1つがあればコメントアイコンを1つセット（両方あってもコメントアイコン1つだけ）
+        for nanitozo in context['comment_open_mask_negative_nanitozo_list']:
+            nanitozo_icon_list_mask_negative.append((NanitozoIconType.comment, nanitozo.user == self.request.user))
+
         for nanitozo in nanitozo_list:
             nanitozo_icon_list.append((NanitozoIconType.nanitozo, nanitozo.user == self.request.user))
+            nanitozo_icon_list_mask_negative.append((NanitozoIconType.nanitozo, nanitozo.user == self.request.user))
         context['nanitozo_icon_list'] = nanitozo_icon_list
+        context['nanitozo_icon_list_mask_negative'] = nanitozo_icon_list_mask_negative
 
         my_nanitozo_list = list(filter(lambda x: x.user == self.request.user, nanitozo_list))
         if bool(my_nanitozo_list):

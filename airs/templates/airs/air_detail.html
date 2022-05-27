@@ -128,9 +128,10 @@
 
 {% with adt=air.started_at|init_rn_datetime:air.ended_at %}
 <header class="rn-padding">
-  {% if nanitozo_icon_list %}
+  {% comment %} TODO nanitozo_icon_list_mask_negativeクリックで nanitozo_icon_listに表示を差し替える {% endcomment %}
+  {% if nanitozo_icon_list_mask_negative %}
   <div class="uk-text-right">
-    {% for nanitozo_icon in nanitozo_icon_list %}<span uk-icon="{{ nanitozo_icon.0.value }}" class="uk-icon{% if nanitozo_icon.1 %} uk-text-success{% endif %}"></span>{% endfor %}
+    {% for nanitozo_icon in nanitozo_icon_list_mask_negative %}<span uk-icon="{{ nanitozo_icon.0.value }}" class="uk-icon{% if nanitozo_icon.1 %} uk-text-success{% endif %}"></span>{% endfor %}
   </div>
   {% endif %}
   <h1 class="uk-text-lead uk-margin-remove">{{ air.name }}</h1>
