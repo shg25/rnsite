@@ -14,7 +14,7 @@
   {% comment %} UIkit CSS {% endcomment %}
   <link rel="stylesheet" href="{% static 'airs/css/uikit.min.css' %}">
 
-  <link rel="stylesheet" href="{% static 'airs/css/style.css' %}?20220319">
+  <link rel="stylesheet" href="{% static 'airs/css/style.css' %}{% rn_const 'VERSION_NAME_FOR_STATIC_FILE' %}">
 
   {% comment %} WEB FONT ...size(400 300 100) {% endcomment %}
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Mono:400|Roboto:400&display=swap">
@@ -110,7 +110,7 @@
   {% comment %} UIkit JS {% endcomment %}
   <script src="{% static 'airs/js/uikit.min.js' %}"></script>
   <script src="{% static 'airs/js/uikit-icons.min.js' %}"></script>
-  <script src="{% static 'airs/js/script.js' %}?20220320"></script>
+  <script src="{% static 'airs/js/script.js' %}{% rn_const 'VERSION_NAME_FOR_STATIC_FILE' %}"></script>
 </body>
 
 </html>

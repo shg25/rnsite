@@ -3,7 +3,9 @@ from django import template
 register = template.Library()
 
 
-VERSION_NAME = 'v2.0.2'
+VERSION_NAME = 'v2.1.0'
+VERSION_NAME_FOR_STATIC_FILE = '?20220528'
+
 SITE_NAME = 'R.N.' + ' ' + VERSION_NAME
 TITLE_SUFFIX = ' - ' + SITE_NAME
 
