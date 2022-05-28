@@ -3,7 +3,9 @@ from django import template
 register = template.Library()
 
 
-VERSION_NAME = 'v2.0.2'
+VERSION_NAME = 'v2.1.0'
+VERSION_NAME_FOR_STATIC_FILE = '?20220528'
+
 SITE_NAME = 'R.N.' + ' ' + VERSION_NAME
 TITLE_SUFFIX = ' - ' + SITE_NAME
 
@@ -17,7 +19,7 @@ TITLE_AIR_CREATE_SHORT = '+放送登録'
 TITLE_AIR_UPDATE = '放送概要編集'
 
 TITLE_NANITOZO_LIST = '何卒'
-TITLE_NANITOZO_UPDATE = '何卒編集'
+TITLE_NANITOZO_UPDATE = '感想編集'
 TITLE_NANITOZO_DELETE = '何卒取消'
 TITLE_NANITOZO_APPLY_GOOD = '満足？'
 TITLE_NANITOZO_CANCEL_GOOD = '満足！'

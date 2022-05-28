@@ -1,28 +1,44 @@
 {% load air_nanitozo %}
 {% load rn_datetime %}
-{% with adt=air.started_at|init_rn_datetime:air.ended_at nanitozo_count=air|air_nanitozo_count nanitozo_done=air|air_nanitozo_done:user %}
+{% with adt=air.started_at|init_rn_datetime:air.ended_at air_nanitozo_icon_list=air|air_nanitozo_icon_list:user nanitozo_done=air|air_nanitozo_done:user %}
 
 <div class="uk-margin-bottom uk-animation-toggle" tabindex="0">
 
     <a href="{% url 'airs:detail' air.id %}" class="uk-display-block uk-link-reset uk-animation-slide-bottom-small{% if nanitozo_done.good_done or nanitozo_done.comment_done %} border-left-success{% elif nanitozo_done.nanitozo_done %} border-left-muted{% endif %}">
 
         <div class="uk-grid-collapse uk-flex-middle" uk-grid>
-            <h5 class="uk-width-expand uk-text-truncate uk-text-small">
+            <h5 class="uk-width-auto uk-text-small">
                 <span class="mgr-s">{{ adt.hm }}</span><span class="mgr-s">{{ adt.airtime }}<small>min</small></span><span class="mgr-s">{{ air.broadcaster.abbreviation }}</span>
             </h5>
-            <div class="uk-article-meta uk-flex uk-flex-middle">
-                {% comment %} 何卒数 {% endcomment %}
-                {% if nanitozo_done.nanitozo_done %}{% include 'base/icon_success.html' with icon='user' %}{% else %}{% include 'base/icon.html' with icon='user' %}{% endif %}<span class="mgl-ss mgr-s">{{ nanitozo_count.nanitozo_count }}</span>
-                {% comment %} 満足数 {% endcomment %}
-                {% if nanitozo_done.good_done %}{% include 'base/icon_success.html' with icon='happy' %}{% else %}{% include 'base/icon.html' with icon='happy' %}{% endif %}<span class="mgl-ss mgr-s">{{ nanitozo_count.good_count }}</span>
-                {% comment %} コメント数 {% endcomment %}
-                {% if nanitozo_done.comment_done %}{% include 'base/icon_success.html' with icon='comment' %}{% else %}{% include 'base/icon.html' with icon='comment' %}{% endif %}<span class="mgl-ss">{{ nanitozo_count.comment_count }}</span>
+            <div class="uk-width-expand uk-text-right  mgl-m">
+                {% for nanitozo_icon in air_nanitozo_icon_list %}<span uk-icon="{{ nanitozo_icon.0.value }}" class="uk-icon{% if nanitozo_icon.1 %} uk-text-success{% endif %}"></span>{% endfor %}
             </div>
+
+            {% comment %} アイコンを重ねて表示したいけど上手くいかないので後回し {% endcomment %}
+            {% comment %} <div class="uk-position-relative">
+                <span uk-icon="icon: user" class="uk-icon uk-position-absolute uk-background-default"></span>
+                <span uk-icon="icon: user" class="uk-icon uk-position-absolute uk-background-default" style="margin-left:12px"></span>
+                <span uk-icon="icon: user" class="uk-icon uk-position-absolute uk-background-default" style="margin-left:24px"></span>
+                <span uk-icon="icon: happy" class="uk-icon uk-position-absolute uk-background-default" style="margin-left:36px"></span>
+                <span uk-icon="icon: happy" class="uk-icon uk-position-absolute uk-background-default" style="margin-left:48px"></span>
+                <span uk-icon="icon: happy" class="uk-icon uk-position-absolute uk-background-default" style="margin-left:60px"></span>
+                <span uk-icon="icon: star" class="uk-icon uk-position-absolute uk-background-default" style="margin-left:72px"></span>
+                <span uk-icon="icon: star" class="uk-icon uk-position-absolute uk-background-default" style="margin-left:84px"></span>
+                <span uk-icon="icon: star" class="uk-icon uk-position-absolute uk-background-default" style="margin-left:96px"></span>
+                <span uk-icon="icon: comment" class="uk-icon uk-position-absolute uk-background-default" style="margin-left:108px"></span>
+                <span uk-icon="icon: comment" class="uk-icon uk-position-absolute uk-background-default" style="margin-left:120px"></span>
+                <span uk-icon="icon: comment" class="uk-icon uk-position-absolute uk-background-default" style="margin-left:132px"></span>
+                <span uk-icon="icon: paint-bucket" class="uk-icon uk-position-absolute uk-background-default" style="margin-left:144px"></span>
+                <span uk-icon="icon: paint-bucket" class="uk-icon uk-position-absolute uk-background-default" style="margin-left:156px"></span>
+                <span uk-icon="icon: paint-bucket" class="uk-icon uk-position-absolute uk-background-default" style="margin-left:168px"></span>
+            </div> {% endcomment %}
+
         </div>
 
         <div class="uk-grid-collapse uk-flex-middle" uk-grid>
             <h4 class="uk-width-expand uk-text-truncate uk-text-small">{{ air.name }}</h4>
-            <div class="mgl-s uk-text-small">{{ nanitozo_count.score }}pt</div>
+            {% comment %} スコアは一旦非表示 TODO 今週じゃない場合は+1Wのradikoリンクつけたい {% endcomment %}
+            {% comment %} <div class="mgl-s uk-text-small">{{ nanitozo_count.score }}pt</div> {% endcomment %}
         </div>
     </a>
 </div>

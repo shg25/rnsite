@@ -84,7 +84,7 @@ class AirDetailViewTests(TestCase):
 
         self.assertContains(response, self.air.name)
         self.assertNotContains(response, '+放送登録')
-        self.assertNotContains(response, '何卒編集')
+        self.assertNotContains(response, '感想編集')
 
     def test_連絡詳細_ログインして何卒してない(self):
         # ログイン
@@ -97,7 +97,7 @@ class AirDetailViewTests(TestCase):
         self.assertContains(response, self.air.name)
         self.assertContains(response, '+放送登録')
         self.assertContains(response, 'ABC')
-        self.assertNotContains(response, '何卒編集')
+        self.assertNotContains(response, '感想編集')
 
     def test_連絡詳細_ログインして何卒した(self):
         # ログイン
@@ -113,4 +113,101 @@ class AirDetailViewTests(TestCase):
         self.assertContains(response, self.air.name)
         self.assertContains(response, '+放送登録')
         self.assertContains(response, 'ABC')
-        self.assertContains(response, '何卒編集')
+        self.assertContains(response, '感想編集')
+
+
+class AirUpdateTests(TestCase):
+
+    def setUp(self):
+        started = timezone.now() + datetime.timedelta(days=-7, hours=-1)
+        ended = timezone.now() + datetime.timedelta(days=-7)
+        self.air = Air.objects.create(
+            name='酒井健太ANN0',
+            started_at=started,
+            ended_at=ended,
+            overview_before='事前告知の初期値',
+            overview_after='放送内容の初期値',
+        )
+
+    def test_連絡概要編集_get_ゲスト_then_302(self):
+        url = reverse('airs:air_update', args=(self.air.id,))
+        response = self.client.get(url)
+        # [login_required]で処理前に弾かれる
+        self.assertEqual(response.status_code, 302)
+
+    def test_連絡概要編集_post_ゲスト_then_302(self):
+        url = reverse('airs:air_update', args=(self.air.id,))
+        response = self.client.post(url, {})
+        # [login_required]で処理前に弾かれる
+        self.assertEqual(response.status_code, 302)
+
+    def test_連絡概要編集_get_then_405(self):
+        # ログイン
+        self.user = UserModel.objects.create(username='test', email='test@test.com', password='123456', last_name='ABC')
+        self.client.force_login(self.user)
+
+        url = reverse('airs:air_update', args=(self.air.id,))
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 405)
+
+    def test_連絡概要編集_post_内容ナシ_対象の項目が空になる(self):
+        # ログイン
+        self.user = UserModel.objects.create(username='test', email='test@test.com', password='123456', last_name='ABC')
+        self.client.force_login(self.user)
+
+        # この時点では初期値が取得できる
+        air = Air.objects.get(pk=self.air.id)
+        self.assertEqual(air.overview_before, '事前告知の初期値')
+        self.assertEqual(air.overview_after, '放送内容の初期値')
+
+        data = {}
+        url = reverse('airs:air_update', args=(self.air.id,))
+        response = self.client.post(url, data)
+
+        # 対象のカラムを空にするとデータも空になる
+        air = Air.objects.get(pk=self.air.id)
+        self.assertEqual(air.overview_before, '')
+        self.assertEqual(air.overview_after, '')
+
+        self.assertEqual(response.status_code, 302)
+
+    def test_連絡概要編集_post_想定通りのフィールド名(self):
+        # ログイン
+        self.user = UserModel.objects.create(username='test', email='test@test.com', password='123456', last_name='ABC')
+        self.client.force_login(self.user)
+
+        data = {
+            'overview_before': '事前告知を更新した',
+            'overview_after': '放送内容を更新した'
+        }
+        url = reverse('airs:air_update', args=(self.air.id,))
+        response = self.client.post(url, data)
+
+        # 更新成功の確認
+        air = Air.objects.get(pk=self.air.id)
+        self.assertEqual(air.overview_before, '事前告知を更新した')
+        self.assertEqual(air.overview_after, '放送内容を更新した')
+
+        self.assertEqual(response.status_code, 302)
+
+    def test_連絡概要編集_post_想定外のフィールド名(self):
+        # ログイン
+        self.user = UserModel.objects.create(username='test', email='test@test.com', password='123456', last_name='ABC')
+        self.client.force_login(self.user)
+
+        data = {
+            'name': '名前をPOSTしてみる',
+            'overview_before': '事前告知を更新した',
+            'overview_after': '放送内容を更新した'
+        }
+        url = reverse('airs:air_update', args=(self.air.id,))
+        response = self.client.post(url, data)
+
+        # nameは対象外なので変わらない
+        air = Air.objects.get(pk=self.air.id)
+        self.assertNotEqual(air.name, '名前をPOSTしてみる')
+        self.assertEqual(air.name, '酒井健太ANN0')
+        self.assertEqual(air.overview_before, '事前告知を更新した')
+        self.assertEqual(air.overview_after, '放送内容を更新した')
+
+        self.assertEqual(response.status_code, 302)
