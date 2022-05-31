@@ -34,6 +34,8 @@ LAST_WEEK = '先週'
 NONE_THIS_WEEK = '今週なし'
 NONE_LAST_WEEK = '先週なし'
 
+# 外部URL
+URL_GITHUB_RELEASES = 'https://github.com/shg25/rnsite/releases'
 
 
 @register.simple_tag
