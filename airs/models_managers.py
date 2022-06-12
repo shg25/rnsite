@@ -15,6 +15,12 @@ class AirLastWeekListManager(models.Manager):
         return super().get_queryset().filter(started_at__range=(last_week_started(), this_week_started())).order_by('-started_at')
 
 
+class AirTwoWeekListManager(models.Manager):
+
+    def get_queryset(self):
+        return super().get_queryset().filter(started_at__gte=last_week_started()).order_by('-started_at')
+
+
 class AirIdentificationManager(models.Manager):
 
     def get(self, broadcaster, started_at):
