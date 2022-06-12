@@ -146,8 +146,6 @@ class Air(models.Model):
     )
 
     objects = models.Manager()
-    # objects_this_week = AirThisWeekListManager()
-    # objects_last_week = AirLastWeekListManager()
     objects_two_week = AirTwoWeekListManager()
     objects_identification = AirIdentificationManager()
 

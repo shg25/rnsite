@@ -59,11 +59,8 @@ class AirModelObjectsTests(TestCase):
         self.broadcaster3 = Broadcaster.objects.create(radiko_identifier='BUN3', name='超文化放送')
 
     def test_データなし(self):
-        this_week_list = Air.objects_this_week.all()
-        self.assertEqual(len(this_week_list), 0)
-
-        last_week_list = Air.objects_last_week.all()
-        self.assertEqual(len(last_week_list), 0)
+        list = Air.objects_two_week.all()
+        self.assertEqual(len(list), 0)
 
     def test_今週の放送が1件(self):
         # 4日前の1時間番組
@@ -71,12 +68,9 @@ class AirModelObjectsTests(TestCase):
         ended = timezone.now() + datetime.timedelta(days=-4)
         air = create_air(self.broadcaster1, '酒井健太ANN0', started, ended)
 
-        this_week_list = Air.objects_this_week.all()
-        self.assertEqual(len(this_week_list), 1)
-        self.assertEqual(this_week_list[0].name, air.name)
-
-        last_week_list = Air.objects_last_week.all()
-        self.assertEqual(len(last_week_list), 0)
+        list = Air.objects_two_week.all()
+        self.assertEqual(len(list), 1)
+        self.assertEqual(list[0].name, air.name)
 
     def test_未来の放送が1件と今週の放送が1件(self):
         # 4日後の1時間放送
@@ -89,13 +83,10 @@ class AirModelObjectsTests(TestCase):
         ended2 = timezone.now() + datetime.timedelta(days=-4)
         air2 = create_air(self.broadcaster1, '酒井健太ANN0', started2, ended2)
 
-        this_week_list = Air.objects_this_week.all()
-        self.assertEqual(len(this_week_list), 2)
-        self.assertEqual(this_week_list[0].name, air1.name)
-        self.assertEqual(this_week_list[1].name, air2.name)
-
-        last_week_list = Air.objects_last_week.all()
-        self.assertEqual(len(last_week_list), 0)
+        list = Air.objects_two_week.all()
+        self.assertEqual(len(list), 2)
+        self.assertEqual(list[0].name, air1.name)
+        self.assertEqual(list[1].name, air2.name)
 
     def test_今週の放送が1件と先週の放送が1件(self):
         # 12日前の1時間番組
@@ -108,13 +99,10 @@ class AirModelObjectsTests(TestCase):
         ended2 = timezone.now() + datetime.timedelta(days=-4)
         air2 = create_air(self.broadcaster2, '赤もみじANN0', started2, ended2)
 
-        this_week_list = Air.objects_this_week.all()
-        self.assertEqual(len(this_week_list), 1)
-        self.assertEqual(this_week_list[0].name, air2.name)
-
-        last_week_list = Air.objects_last_week.all()
-        self.assertEqual(len(last_week_list), 1)
-        self.assertEqual(last_week_list[0].name, air1.name)
+        list = Air.objects_two_week.all()
+        self.assertEqual(len(list), 2)
+        self.assertEqual(list[0].name, air2.name)
+        self.assertEqual(list[1].name, air1.name)
 
     def test_放送局と開始日時で放送を検索(self):
         # 12日前の1時間番組
