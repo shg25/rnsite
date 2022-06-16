@@ -87,7 +87,7 @@
       <li><a href="javascript:window.location.replace('{% url 'airs:nanitozo_apply_good' air_id=air.id pk=my_nanitozo.id %}')">{% rn_const 'TITLE_NANITOZO_APPLY_GOOD' %}</a></li>
       {% endif %}
       <li>
-        <a href="#">…</a>
+        <a href="">…</a>
         <div uk-dropdown="pos: top-center">
           <ul class="uk-nav uk-navbar-dropdown-nav">
             <li>
@@ -126,52 +126,7 @@
 
 {% block content %}
 
-{% with adt=air.started_at|init_rn_datetime:air.ended_at %}
-<header class="rn-padding">
-  {% comment %} TODO nanitozo_icon_list_mask_negativeクリックで nanitozo_icon_listに表示を差し替える {% endcomment %}
-  {% if nanitozo_icon_list_mask_negative %}
-  <div class="uk-text-right">
-    {% for nanitozo_icon in nanitozo_icon_list_mask_negative %}<span uk-icon="{{ nanitozo_icon.0.value }}" class="uk-icon{% if nanitozo_icon.1 %} uk-text-success{% endif %}"></span>{% endfor %}
-  </div>
-  {% endif %}
-  <h1 class="uk-text-lead uk-margin-remove">{{ air.name }}</h1>
-  <h2 class="uk-text-default uk-margin-remove-top uk-margin-small-bottom">
-    {{ air.started_at|rn_ymdhm }} {{ adt.airtime }}<small>min</small>
-  </h2>
-
-  {% if air.broadcaster %}
-
-  <div class="uk-flex uk-flex-middle">
-    <span uk-icon="icon: microphone" class="uk-icon"></span>
-    <span class="uk-text-middle mgl-s"><a href="{% url 'airs:broadcaster' air.broadcaster.id %}">{{ air.broadcaster.name }}</a></span>
-  </div>
-
-  <div class="uk-flex uk-flex-middle">
-    <span uk-icon="icon: link" class="uk-icon"></span>
-    <span class="uk-text-middle mgl-s"><a href="{{ air.started_at|radiko_link:air.broadcaster.radiko_identifier }}" target="_blank" rel="noopener noreferrer">radiko</a></span>
-    <span class="uk-text-middle uk-margin-small-left"><a href="#" onclick="copyToClipboardAndShowAlert('{{ air.started_at|radiko_link:air.broadcaster.radiko_identifier }}')">URLコピー</a></span>
-    <span class="uk-text-middle uk-margin-small-left"><a href="{{ air.started_at|radiko_link_next_week:air.broadcaster.radiko_identifier }}" target="_blank" rel="noopener noreferrer">radiko+1w</a></span>
-  </div>
-
-  {% endif %}
-
-  {% if air.program %}
-  <div class="uk-flex uk-flex-middle">
-    <span uk-icon="icon: info" class="uk-icon"></span>
-    <span class="uk-text-middle mgl-s"><a href="{% url 'airs:program' air.program.id %}">{{ air.program.name }}</a></span>
-  </div>
-  {% endif %}
-</header>
-{% endwith %}
-
-<hr class="uk-divider-small uk-margin-remove">
-
-{% comment %} 放送概要表示 ここから {% endcomment %}
-<div class="rn-padding">
-  {% include 'base/block_comment.html' with header='事前告知' description='ネタバレなし（のはず）' comment=air.overview_before nodata='入力なし' %}
-  {% include 'base/block_comment.html' with header='番組内容' description='ネタバレあり' comment=air.overview_after nodata='入力なし' %}
-</div>
-{% comment %} 放送概要表示 ここまで {% endcomment %}
+{% include 'airs/air_header_block.html' with air=air %}
 
 {% if nanitozo_list %}
 

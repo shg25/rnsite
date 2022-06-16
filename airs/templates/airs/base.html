@@ -65,7 +65,7 @@
             <li class="uk-active"><a href="{% url 'airs:programs' %}">番組</a></li>
             {% endif %} {% endcomment %}
             <li>
-              <a href="#">…</a>
+              <a href="">…</a>
               <div uk-dropdown="pos: top-center">
                 <ul class="uk-nav uk-navbar-dropdown-nav">
                   <li class="{% if request.resolver_match.url_name == 'users' %}uk-active{% endif %}"><a href="{% url 'airs:users' %}">{% rn_const 'TITLE_USER_LIST' %}</a></li>
