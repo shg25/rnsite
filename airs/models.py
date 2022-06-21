@@ -162,6 +162,7 @@ class Air(models.Model):
             # 曜日が同じで番組名が一致するものがあれば聴いたと判断（False）
             if item.name == self.name:
                 return False
+        # print('一致なし → True')
         return True
 
     def was_aired_this_week(self):

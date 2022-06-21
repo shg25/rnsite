@@ -3,7 +3,62 @@ import datetime
 from django.test import TestCase
 from django.utils import timezone
 
-from ...models import Air, Broadcaster
+from ...models import Air, Broadcaster, Program
+
+
+class AirModelUnNanitozoThisWeekTests(TestCase):
+    def setUp(self):
+        self.broadcaster_a = Broadcaster(name='放送局A')
+        self.broadcaster_b = Broadcaster(name='放送局B')
+        self.program_a = Program(name='番組A')
+        self.program_b = Program(name='番組B')
+
+        self.now = timezone.now()
+
+        time = self.now + datetime.timedelta(days=-10)
+        self.future_air = Air(
+            broadcaster=self.broadcaster_a,
+            name='テスト放送',
+            started_at=time
+        )
+        # print('time: ' + str(time))
+
+    def test_同じ曜日_同じ時分_同じ放送局_違う放送名_then_False(self):
+        list = [
+            Air(
+                broadcaster=self.broadcaster_a,
+                name='今週のテスト放送',
+                started_at=self.now + datetime.timedelta(days=-3)
+            )
+        ]
+        # print('item: ' + str(list[0].started_at))
+        self.assertIs(self.future_air.un_nanitozo_this_week(list), False)
+
+    def test_同じ曜日_同じ時分_違う放送局_違う放送名_then_True(self):
+        list = [
+            Air(
+                broadcaster=self.broadcaster_b,  # ←ここ
+                name='今週のテスト放送',
+                started_at=self.now + datetime.timedelta(days=-3)
+            )
+        ]
+        # print('item: ' + str(list[0].started_at))
+        self.assertIs(self.future_air.un_nanitozo_this_week(list), True)
+
+    def test_同じ曜日_違う時分_同じ放送局_同じ放送名_then_False(self):
+        list = [
+            Air(
+                broadcaster=self.broadcaster_a,
+                name='テスト放送',
+                started_at=self.now + datetime.timedelta(days=-3, hours=+1)
+            )
+        ]
+        # print('item: ' + str(list[0].started_at))
+        self.assertIs(self.future_air.un_nanitozo_this_week(list), False)
+
+    def test_今週の放送がゼロ_then_True(self):
+        list = []
+        self.assertIs(self.future_air.un_nanitozo_this_week(list), True)
 
 
 class AirModelAiredAtTests(TestCase):
