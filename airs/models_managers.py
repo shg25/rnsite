@@ -3,16 +3,10 @@ from django.db import models
 from common.util.datetime_extensions import this_week_started, last_week_started
 
 
-class AirThisWeekListManager(models.Manager):
+class AirTwoWeekListManager(models.Manager):
 
     def get_queryset(self):
-        return super().get_queryset().filter(started_at__gte=this_week_started()).order_by('-started_at')
-
-
-class AirLastWeekListManager(models.Manager):
-
-    def get_queryset(self):
-        return super().get_queryset().filter(started_at__range=(last_week_started(), this_week_started())).order_by('-started_at')
+        return super().get_queryset().filter(started_at__gte=last_week_started()).order_by('-started_at')
 
 
 class AirIdentificationManager(models.Manager):

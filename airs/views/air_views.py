@@ -7,7 +7,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import UserPassesTestMixin
 from django.shortcuts import get_object_or_404, redirect
 
-from common.util.datetime_extensions import new_datetime, new_date, timedelta_days
+from common.util.datetime_extensions import new_datetime, new_date, timedelta_days, this_week_started
 from common.util.url_extensions import scraping_title
 from common.util.log_extensions import logger_share_text
 from common.util.string_extensions import find_urls, share_text_to_formatted_name
@@ -32,13 +32,34 @@ class AirListView(generic.ListView):
     # queryset = Air.objects.filter(started_at__gte=this_week_started()).order_by('-started_at') # これを使えばviewではair_listで取得できるがなぜかキャッシュらしきものが残るので一旦使わない
 
     def get_context_data(self, *args, **kwargs):
-        # TODO 2週間分を別々に取得しないで、一気に2週間分取得してそれぞれのリストに振り分ける → TODO オススメも書き出す
         context = super().get_context_data(*args, **kwargs)
-        context['this_week_list'] = Air.objects_this_week.all()
-        context['last_week_list'] = Air.objects_last_week.all()
 
-        # TODO オススメ放送取得（1/3）
-        # context['recommend_list'] = Air.objects.filter(started_at__range=(last_week_started(), timezone.now())).order_by('-started_at')
+        two_week_list = Air.objects_two_week.all()
+        context['this_week_list'] = list(filter(lambda x: x.started_at >= this_week_started(), two_week_list))
+        context['last_week_list'] = list(filter(lambda x: x.started_at < this_week_started(), two_week_list))
+
+        if self.request.user:
+            my_this_week_list = []
+            for item in context['this_week_list']:
+                nanitozo_list = item.nanitozo_set.all()
+                my_nanitozo_list = list(filter(lambda x: x.user == self.request.user, nanitozo_list))
+                if bool(my_nanitozo_list):
+                    my_this_week_list.append(item)
+            context['my_this_week_list'] = my_this_week_list
+
+            my_last_week_list = []
+            for item in context['last_week_list']:
+                nanitozo_list = item.nanitozo_set.all()
+                my_nanitozo_list = list(filter(lambda x: x.user == self.request.user, nanitozo_list))
+                if bool(my_nanitozo_list):
+                    my_last_week_list.append(item)
+            context['my_last_week_list'] = my_last_week_list
+
+            un_nanitozo_list = []
+            for item in context['my_last_week_list']:
+                if item.un_nanitozo_this_week(context['my_this_week_list']):
+                    un_nanitozo_list.append(item)
+            context['un_nanitozo_list'] = un_nanitozo_list
 
         return context
         # TODO  全面的に filter(started_at__lte=timezone.now()) の値を調整する、実際は事前登録も可とするので、現在時刻との比較は不要

@@ -10,14 +10,15 @@
 <ul class="uk-tab" data-uk-tab="{connect:'#tab-contents'}">
     <li><a href="">{% rn_const 'THIS_WEEK' %}<small> {{ this_week_list|length }}</small></a></li>
     <li><a href="">{% rn_const 'LAST_WEEK' %}<small> {{ last_week_list|length }}</small></a></li>
-
-    {% comment %} # TODO オススメ放送取得（2/3） {% endcomment %}
-    {% comment %} <li><a href="">!!</a></li> {% endcomment %}
+    {% if user.is_authenticated %}
+    <li><a href="">YOU<small> {{ my_this_week_list|length }},{{ my_last_week_list|length }},{{ un_nanitozo_list|length }}</small></a></li>
+    {% endif %}
 </ul>
 
-<article id="tab-contents" class="uk-switcher rn-padding">
+<article id="tab-contents" class="uk-switcher">
     {% comment %} タブ1 {% endcomment %}
-    <div>
+    <div class="rn-padding">
+        {% comment %} 今週の放送 {% endcomment %}
         {% if this_week_list %}
         {% regroup this_week_list by started_at|rn_regroup_date as airs %}
 
@@ -36,7 +37,8 @@
     </div>
 
     {% comment %} タブ2 {% endcomment %}
-    <div>
+    <div class="rn-padding">
+        {% comment %} 先週の放送 {% endcomment %}
         {% if last_week_list %}
         {% regroup last_week_list by started_at|rn_regroup_date as airs %}
 
@@ -54,26 +56,77 @@
         {% endif %}
     </div>
 
+    {% if user.is_authenticated %}
     {% comment %} タブ3 {% endcomment %}
+    <div>
+        {% comment %} スイッチ {% endcomment %}
+        <ul class="uk-tab-bottom" uk-tab>
+            <li class="uk-active"><a href="">今週<small> {{ my_this_week_list|length }}</small></a></li>
+            <li><a href="">先週<small> {{ my_last_week_list|length }}</small></a></li>
+            <li><a href="">未<small> {{ un_nanitozo_list|length }}</small></a></li>
+        </ul>
 
-    {% comment %} # TODO オススメ放送取得（3/3） {% endcomment %}
-    {% comment %} <div>
-        {% if recommend_list %}
-        {% regroup recommend_list by started_at|rn_regroup_date as airs %}
+        <article id="tab-contents" class="uk-switcher rn-padding">
+            <div>
+                {% comment %} 今週の放送 {% endcomment %}
+                {% if my_this_week_list %}
+                {% regroup my_this_week_list by started_at|rn_regroup_date as airs %}
 
-        {% for started_at, local_airs in airs %}
-        {% include 'base/lead.html' with title=started_at|rn_regrouped_date_weekday caption=started_at|rn_regrouped_date_md %}
+                {% for started_at, local_airs in airs %}
+                {% include 'base/lead.html' with title=started_at|rn_regrouped_date_weekday caption=started_at|rn_regrouped_date_md %}
 
-        {% for air in local_airs %}
-        {% include 'list/item_air.html' with air=air %}
-        {% endfor %}
+                {% for air in local_airs %}
+                {% include 'list/item_air.html' with air=air %}
+                {% endfor %}
 
-        {% endfor %}
+                {% endfor %}
 
-        {% else %}
-        <p>データなし</p>
-        {% endif %}
-    </div> {% endcomment %}
+                {% else %}
+                <p>{% rn_const 'NONE_THIS_WEEK' %}</p>
+                {% endif %}
+            </div>
+
+            <div>
+                {% comment %} 先週の放送 {% endcomment %}
+                {% if my_last_week_list %}
+                {% regroup my_last_week_list by started_at|rn_regroup_date as airs %}
+
+                {% for started_at, local_airs in airs %}
+                {% include 'base/lead.html' with title=started_at|rn_regrouped_date_weekday caption=started_at|rn_regrouped_date_md %}
+
+                {% for air in local_airs %}
+                {% include 'list/item_air.html' with air=air %}
+                {% endfor %}
+
+                {% endfor %}
+
+                {% else %}
+                <p>{% rn_const 'NONE_LAST_WEEK' %}</p>
+                {% endif %}
+            </div>
+
+            <div>
+                {% comment %} 未の放送 {% endcomment %}
+                {% if un_nanitozo_list %}
+                {% regroup un_nanitozo_list by started_at|rn_regroup_date as airs %}
+
+                {% for started_at, local_airs in airs %}
+                {% include 'base/lead.html' with title=started_at|rn_regrouped_date_weekday caption=started_at|rn_regrouped_date_md %}
+
+                {% for air in local_airs %}
+                {% include 'list/item_air.html' with air=air %}
+                {% endfor %}
+
+                {% endfor %}
+
+                {% else %}
+                <p>"未"なし</p>
+                {% endif %}
+            </div>
+        </article>
+
+    </div>
+    {% endif %}
 
 </article>
 {% endblock content %}

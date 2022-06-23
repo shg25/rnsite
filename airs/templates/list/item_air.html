@@ -2,15 +2,25 @@
 {% load rn_datetime %}
 {% with adt=air.started_at|init_rn_datetime:air.ended_at air_nanitozo_icon_list=air|air_nanitozo_icon_list:user nanitozo_done=air|air_nanitozo_done:user %}
 
-<div class="uk-margin-bottom uk-animation-toggle" tabindex="0">
+<div id="modal-air{{air.id}}" uk-modal>
+    <div class="uk-modal-dialog">
+        {% include 'airs/air_header_block.html' with air=air %}
+    </div>
+</div>
 
-    <a href="{% url 'airs:detail' air.id %}" class="uk-display-block uk-link-reset uk-animation-slide-bottom-small{% if nanitozo_done.good_done or nanitozo_done.comment_done %} border-left-success{% elif nanitozo_done.nanitozo_done %} border-left-muted{% endif %}">
+<div class="toggle-block-air{{air.id}}" hidden>
+
+</div>
+
+<div class="uk-margin-bottom uk-animation-toggle uk-grid-collapse" tabindex="0" uk-grid>
+
+    <a href="{% url 'airs:detail' air.id %}" class="uk-width-expand uk-display-block uk-link-reset uk-animation-slide-bottom-small{% if nanitozo_done.good_done or nanitozo_done.comment_done %} border-left-success{% elif nanitozo_done.nanitozo_done %} border-left-muted{% endif %}">
 
         <div class="uk-grid-collapse uk-flex-middle" uk-grid>
             <h5 class="uk-width-auto uk-text-small">
                 <span class="mgr-s">{{ adt.hm }}</span><span class="mgr-s">{{ adt.airtime }}<small>min</small></span><span class="mgr-s">{{ air.broadcaster.abbreviation }}</span>
             </h5>
-            <div class="uk-width-expand uk-text-right  mgl-m">
+            <div class="uk-width-expand uk-text-right mgl-m">
                 {% for nanitozo_icon in air_nanitozo_icon_list %}<span uk-icon="{{ nanitozo_icon.0.value }}" class="uk-icon{% if nanitozo_icon.1 %} uk-text-success{% endif %}"></span>{% endfor %}
             </div>
 
@@ -37,10 +47,11 @@
 
         <div class="uk-grid-collapse uk-flex-middle" uk-grid>
             <h4 class="uk-width-expand uk-text-truncate uk-text-small">{{ air.name }}</h4>
-            {% comment %} スコアは一旦非表示 TODO 今週じゃない場合は+1Wのradikoリンクつけたい {% endcomment %}
-            {% comment %} <div class="mgl-s uk-text-small">{{ nanitozo_count.score }}pt</div> {% endcomment %}
         </div>
     </a>
+
+    {% comment %} 右端配置アイコン {% endcomment %}
+    <a href="#modal-air{{air.id}}" uk-toggle><span uk-icon="icon: expand" class="uk-text-primary"></span></a>
 </div>
 
 {% endwith %}

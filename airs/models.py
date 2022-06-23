@@ -146,12 +146,24 @@ class Air(models.Model):
     )
 
     objects = models.Manager()
-    objects_this_week = AirThisWeekListManager()
-    objects_last_week = AirLastWeekListManager()
+    objects_two_week = AirTwoWeekListManager()
     objects_identification = AirIdentificationManager()
 
     def __str__(self):
         return str(self.broadcaster)[:4] + '_' + str(self.started_at.astimezone(pytztimezone('Asia/Tokyo')))[:16] + '_' + self.name[:8]
+
+    def un_nanitozo_this_week(self, air_list_this_week):
+        # 今週分の放送リストから曜日が同じものだけ取得
+        same_weeks = list(filter(lambda x: x.started_at.weekday() == self.started_at.weekday(), air_list_this_week))
+        for item in same_weeks:
+            # 曜日が同じで時分と放送局が一致するものがあれば聴いたと判断（False）
+            if item.started_at.hour == self.started_at.hour and item.started_at.minute == self.started_at.minute and item.broadcaster == self.broadcaster:
+                return False
+            # 曜日が同じで番組名が一致するものがあれば聴いたと判断（False）
+            if item.name == self.name:
+                return False
+        # print('一致なし → True')
+        return True
 
     def was_aired_this_week(self):
         now = timezone.now()
