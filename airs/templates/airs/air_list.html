@@ -11,7 +11,8 @@
     <li><a href="">{% rn_const 'THIS_WEEK' %}<small> {{ this_week_list|length }}</small></a></li>
     <li><a href="">{% rn_const 'LAST_WEEK' %}<small> {{ last_week_list|length }}</small></a></li>
     {% if user.is_authenticated %}
-    <li><a href="">YOU<small> {{ my_this_week_list|length }},{{ my_last_week_list|length }},{{ un_nanitozo_list|length }}</small></a></li>
+    <li><a href="">未<small> {{ un_nanitozo_list|length }}</small></a></li>
+    {% comment %} <li><a href="">YOU<small> {{ my_this_week_list|length }},{{ my_last_week_list|length }},{{ un_nanitozo_list|length }}</small></a></li> {% endcomment %}
     {% endif %}
 </ul>
 
@@ -58,8 +59,28 @@
 
     {% if user.is_authenticated %}
     {% comment %} タブ3 {% endcomment %}
+    <div class="rn-padding">
+        {% comment %} 先週の放送 {% endcomment %}
+        {% if un_nanitozo_list %}
+        {% regroup un_nanitozo_list by started_at|rn_regroup_date as airs %}
+
+        {% for started_at, local_airs in airs %}
+        {% include 'base/lead.html' with title=started_at|rn_regrouped_date_weekday caption=started_at|rn_regrouped_date_md %}
+
+        {% for air in local_airs %}
+        {% include 'list/item_air.html' with air=air %}
+        {% endfor %}
+
+        {% endfor %}
+
+        {% else %}
+        <p>"未"なし</p>
+        {% endif %}
+    </div>
+
+    {% comment %}
     <div>
-        {% comment %} スイッチ {% endcomment %}
+        <!-- スイッチ -->
         <ul class="uk-tab-bottom" uk-tab>
             <li class="uk-active"><a href="">今週<small> {{ my_this_week_list|length }}</small></a></li>
             <li><a href="">先週<small> {{ my_last_week_list|length }}</small></a></li>
@@ -68,7 +89,7 @@
 
         <article id="tab-contents" class="uk-switcher rn-padding">
             <div>
-                {% comment %} 今週の放送 {% endcomment %}
+                <!-- 今週の放送 -->
                 {% if my_this_week_list %}
                 {% regroup my_this_week_list by started_at|rn_regroup_date as airs %}
 
@@ -87,7 +108,7 @@
             </div>
 
             <div>
-                {% comment %} 先週の放送 {% endcomment %}
+                <!-- 先週の放送 -->
                 {% if my_last_week_list %}
                 {% regroup my_last_week_list by started_at|rn_regroup_date as airs %}
 
@@ -106,7 +127,7 @@
             </div>
 
             <div>
-                {% comment %} 未の放送 {% endcomment %}
+                <!-- 未の放送 -->
                 {% if un_nanitozo_list %}
                 {% regroup un_nanitozo_list by started_at|rn_regroup_date as airs %}
 
@@ -126,6 +147,7 @@
         </article>
 
     </div>
+    {% endcomment %}
     {% endif %}
 
 </article>

@@ -3,7 +3,7 @@ from django import template
 register = template.Library()
 
 
-VERSION_NAME = 'v2.2.0'
+VERSION_NAME = 'v2.2.1'
 VERSION_NAME_FOR_STATIC_FILE = '?20220528'
 
 SITE_NAME = 'R.N.' + ' ' + VERSION_NAME
