@@ -14,8 +14,8 @@ logger = logging.getLogger(__name__)
 
 def logger_share_text(share_text):
     logger = logging.getLogger('share_text')
-    # logger.debug('debug:' + share_text)  # 表示されない
-    # logger.info('info:' + share_text)  # 表示されない
-    logger.warning(share_text)  # 表示される
-    # logger.error('error:' + share_text)  # 表示される
-    # logger.critical('critical:' + share_text)  # 表示される
+    # logger.debug(share_text)  # 表示されない
+    logger.info(share_text)
+    # logger.warning(share_text)
+    # logger.error(share_text)
+    # logger.critical(share_text)

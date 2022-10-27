@@ -81,8 +81,8 @@ class AirCreateByShareTextView(generic.FormView):
         # share_text = 'アルコ＆ピース D.C.GARAGE | TBSラジオ | 2021/10/05/火  24:00-25:00 https://radiko.jp/share/?sid=TBS&t=20211006000000' # 例1
 
         # 投稿したシェアテキストはそのままログに記録する
-        print('printの挙動確認用：' + share_text)  # テスト
-        logger_share_text('loggerの挙動確認用：' + share_text)
+        # print('printの挙動確認用：' + share_text)  # テスト
+        logger_share_text(share_text)
 
         # - - - - - - - - - - - - - - - - - - - - - - - -
         # [share_text]からradikoのURLを抜き出す
