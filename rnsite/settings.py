@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 from pathlib import Path
 import os
 import django_heroku
+import logging.config
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 # BASE_DIR = Path(__file__).resolve().parent.parent # 初期値
@@ -122,22 +123,19 @@ USE_L10N = True
 
 USE_TZ = True
 
+LOGGING_CONFIG = None
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
     'formatters': {
-        'production': {
-            'format': '%(asctime)s [%(levelname)s] %(process)d %(thread)d '
-                      '%(pathname)s:%(lineno)d %(message)s'
+        'simple': {
+            'format': '%(asctime)s [%(levelname)s] %(name)s: %(message)s',
         },
     },
     'handlers': {
         'console': {
-            'level': 'INFO',
-            'filters': ['require_debug_true'],
             'class': 'logging.StreamHandler',
-            'formatter': 'production',
-
+            'formatter': 'simple',
         },
     },
     'loggers': {
@@ -146,18 +144,9 @@ LOGGING = {
             'level': 'DEBUG',
             'propagate': False,
         },
-        '': {
-            'handlers': ['console'],
-            'level': 'INFO',
-            'propagate': False,
-        },
-        'django': {
-            'handlers': ['console'],
-            'level': 'INFO',
-            'propagate': False,
-        },
     },
 }
+logging.config.dictConfig(LOGGING)
 
 
 # login、logoutのリダイレクト先をカスタマイズ
