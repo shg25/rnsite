@@ -294,6 +294,9 @@ class AirDetailView(generic.DetailView):
 
         nanitozo_icon_list = []
         nanitozo_icon_list_mask_negative = []
+        if air.overview_before or air.overview_after:
+            nanitozo_icon_list.append((NanitozoIconType.has_air_overview, False))
+            nanitozo_icon_list_mask_negative.append((NanitozoIconType.has_air_overview, False))
         for nanitozo in context['comment_open_recommend_nanitozo_list']:
             nanitozo_icon_list.append((NanitozoIconType.comment_recommend, nanitozo.user == self.request.user))
             nanitozo_icon_list_mask_negative.append((NanitozoIconType.comment_recommend, nanitozo.user == self.request.user))

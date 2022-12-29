@@ -8,3 +8,4 @@ class NanitozoIconType(Enum):
     comment_recommend = 'icon: star'
     comment = 'icon: comment'
     comment_negative = 'icon: paint-bucket'
+    has_air_overview = 'icon: info'

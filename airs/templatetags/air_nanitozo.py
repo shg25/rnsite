@@ -10,6 +10,12 @@ def air_nanitozo_icon_list(air, request_user):
     all_list = air_nanitozo_all_list(air)
 
     nanitozo_icon_list = []
+
+    # 最初に放送概要があるかどうかを確認してアイコンを付与
+    if air.overview_before or air.overview_after:
+        nanitozo_icon_list.append((NanitozoIconType.has_air_overview, False))
+
+    # 以下はユーザーの何卒を検証
     for nanitozo in all_list['comment_recommend_list']:
         nanitozo_icon_list.append((NanitozoIconType.comment_recommend, nanitozo.user == request_user))
     for nanitozo in all_list['good_list']:
