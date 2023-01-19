@@ -93,16 +93,6 @@ def air_nanitozo_dict(air, request_user):
     # 感想入力あり or ネガ入力ありでフィルタリング
     comment_mask_negative_list = list(filter(lambda x: x.comment_open == True and ((x.comment != None and len(x.comment) != 0) or (x.comment_negative != None and len(x.comment_negative) != 0)), nanitozo_list))
 
-    # 自分のものでフィルタリング
-    my_nanitozo_list = list(filter(lambda x: x.user == request_user, nanitozo_list))
-    if my_nanitozo_list:
-        my_nanitozo = my_nanitozo_list[0]
-    else:
-        my_nanitozo = None # これ無いとreturnのところでreferenced before assignmentになる
-
-    # 自分以外のユーザーでフィルタリング
-    other_users_list = list(filter(lambda x: x.user != request_user, nanitozo_list))
-
     return {
         'nanitozo_list': nanitozo_list,
         'good_list': good_list,
@@ -110,6 +100,4 @@ def air_nanitozo_dict(air, request_user):
         'comment_list': comment_list,
         'comment_negative_list': comment_negative_list,
         'comment_mask_negative_list': comment_mask_negative_list,
-        'my_nanitozo': my_nanitozo,
-        'other_users_list': other_users_list,
     }

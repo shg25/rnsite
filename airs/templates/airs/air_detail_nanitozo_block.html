@@ -5,10 +5,6 @@
 
 {% if dict.nanitozo_list %}
 
-{% if not dict.my_nanitozo %}
-{% include 'base/separator.html' %}
-{% endif %}
-
 <div class="uk-background-muted">
   <div class="rn-padding uk-background-default">
     <h2 class="uk-text-default uk-margin-remove">
@@ -28,10 +24,7 @@
     </div>
   </div>
 
-  {% if dict.my_nanitozo %}
-  {% include 'list/item_reaction.html' with nanitozo=dict.my_nanitozo %}
-  {% endif %}
-  {% for nanitozo in dict.other_users_list %}
+  {% for nanitozo in dict.nanitozo_list %}
   {% include 'list/item_reaction.html' with nanitozo=nanitozo %}
   {% endfor %}
 </div>
