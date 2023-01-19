@@ -11,7 +11,6 @@ from common.util.datetime_extensions import new_datetime, new_date, timedelta_da
 from common.util.url_extensions import scraping_title
 from common.util.log_extensions import logger_share_text
 from common.util.string_extensions import find_urls, share_text_to_formatted_name
-from common.util.enum.nanitozo_icon_type_extensions import NanitozoIconType
 
 from ..models import Air, FormattedName
 from ..forms import AirCreateByShareTextForm, AirUpdateForm
@@ -275,56 +274,4 @@ class AirDetailView(generic.DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        air = context.get('object')
-
-        # 対象の放送の何卒リスト
-        nanitozo_list = air.nanitozo_set.all()
-        context['nanitozo_list'] = nanitozo_list
-
-        # 下書き含む
-        context['good_nanitozo_list'] = list(filter(lambda x: x.good == True, nanitozo_list))
-
-        # 下書きは含まない
-        context['comment_open_recommend_nanitozo_list'] = list(filter(lambda x: x.comment_open == True and x.comment_recommend != None and len(x.comment_recommend) != 0, nanitozo_list))
-        context['comment_open_nanitozo_list'] = list(filter(lambda x: x.comment_open == True and x.comment != None and len(x.comment) != 0, nanitozo_list))
-        context['comment_open_negative_nanitozo_list'] = list(filter(lambda x: x.comment_open == True and x.comment_negative != None and len(x.comment_negative) != 0, nanitozo_list))
-
-        # 下書きではない and （コメント あり or ネガあり）
-        context['comment_open_mask_negative_nanitozo_list'] = list(filter(lambda x: x.comment_open == True and ((x.comment != None and len(x.comment) != 0) or (x.comment_negative != None and len(x.comment_negative) != 0)), nanitozo_list))
-
-        nanitozo_icon_list = []
-        nanitozo_icon_list_mask_negative = []
-        if air.overview_before or air.overview_after:
-            nanitozo_icon_list.append((NanitozoIconType.has_air_overview, False))
-            nanitozo_icon_list_mask_negative.append((NanitozoIconType.has_air_overview, False))
-        for nanitozo in context['comment_open_recommend_nanitozo_list']:
-            nanitozo_icon_list.append((NanitozoIconType.comment_recommend, nanitozo.user == self.request.user))
-            nanitozo_icon_list_mask_negative.append((NanitozoIconType.comment_recommend, nanitozo.user == self.request.user))
-        for nanitozo in context['good_nanitozo_list']:
-            nanitozo_icon_list.append((NanitozoIconType.good, nanitozo.user == self.request.user))
-            nanitozo_icon_list_mask_negative.append((NanitozoIconType.good, nanitozo.user == self.request.user))
-
-        # [nanitozo_icon_list]は感想とネガそれぞれのアイコンをセット
-        for nanitozo in context['comment_open_nanitozo_list']:
-            nanitozo_icon_list.append((NanitozoIconType.comment, nanitozo.user == self.request.user))
-        for nanitozo in context['comment_open_negative_nanitozo_list']:
-            nanitozo_icon_list.append((NanitozoIconType.comment_negative, nanitozo.user == self.request.user))
-
-        # [nanitozo_icon_list_mask_negative]は感想とネガのどちらか1つがあればコメントアイコンを1つセット（両方あってもコメントアイコン1つだけ）
-        for nanitozo in context['comment_open_mask_negative_nanitozo_list']:
-            nanitozo_icon_list_mask_negative.append((NanitozoIconType.comment, nanitozo.user == self.request.user))
-
-        for nanitozo in nanitozo_list:
-            nanitozo_icon_list.append((NanitozoIconType.nanitozo, nanitozo.user == self.request.user))
-            nanitozo_icon_list_mask_negative.append((NanitozoIconType.nanitozo, nanitozo.user == self.request.user))
-        context['nanitozo_icon_list'] = nanitozo_icon_list
-        context['nanitozo_icon_list_mask_negative'] = nanitozo_icon_list_mask_negative
-
-        my_nanitozo_list = list(filter(lambda x: x.user == self.request.user, nanitozo_list))
-        if bool(my_nanitozo_list):
-            context['my_nanitozo'] = my_nanitozo_list[0]
-
-        # 自分以外のnanitozo
-        context['other_nanitozo_list'] = list(filter(lambda x: x.user != self.request.user, nanitozo_list))
-
         return context

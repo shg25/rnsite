@@ -1,6 +1,7 @@
 {% extends 'airs/base.html' %}
 {% load rn_const %}
 {% load rn_datetime %}
+{% load air_nanitozo %}
 
 {% block title %}{{ air.name }} {{ air.started_at|rn_ymdhm }} {{ air.broadcaster.name }}{% rn_const 'TITLE_SUFFIX' %}{% endblock title %}
 
@@ -9,6 +10,8 @@
 
 {% block nav %}
 {% if user.is_authenticated %}
+{% with my_nanitozo=air|air_my_nanitozo:user %}
+
 <nav class="uk-navbar-container" uk-navbar>
   <div class="uk-navbar-left"></div>
   <div class="uk-navbar-right">
@@ -121,6 +124,7 @@
 
 {% comment %} <a class="uk-button uk-button-danger uk-width-1-1 uk-margin-bottom" href="#nanitozo-delete" uk-toggle>何卒取消</a> {% endcomment %}
 
+{% endwith %}
 {% endif %}
 {% endblock nav %}
 
@@ -128,38 +132,6 @@
 
 {% include 'airs/air_header_block.html' with air=air %}
 
-{% if nanitozo_list %}
-
-{% if not my_nanitozo %}
-{% include 'base/separator.html' %}
-{% endif %}
-
-<div class="uk-background-muted">
-  <div class="rn-padding uk-background-default">
-    <h2 class="uk-text-default uk-margin-remove">
-      みんなの何卒
-    </h2>
-    <div>
-      {% comment %} 何卒 {% endcomment %}
-      {% include 'base/sum_reaction.html' with nanitozo_list=nanitozo_list icon='icon: user' label='何卒' is_negative=False %}
-      {% comment %} 満足 {% endcomment %}
-      {% include 'base/sum_reaction.html' with nanitozo_list=good_nanitozo_list icon='icon: happy' label='満足' is_negative=False %}
-      {% comment %} 推し {% endcomment %}
-      {% include 'base/sum_reaction.html' with nanitozo_list=comment_open_recommend_nanitozo_list icon='icon: star' label='推し' is_negative=False %}
-      {% comment %} 感想 {% endcomment %}
-      {% include 'base/sum_reaction.html' with nanitozo_list=comment_open_nanitozo_list icon='icon: comment' label='感想' is_negative=False %}
-      {% comment %} ネガ {% endcomment %}
-      {% include 'base/sum_reaction.html' with nanitozo_list=comment_open_negative_nanitozo_list icon='icon: paint-bucket' label='ネガ' is_negative=True %}
-    </div>
-  </div>
-
-  {% if my_nanitozo %}
-  {% include 'list/item_reaction.html' with nanitozo=my_nanitozo %}
-  {% endif %}
-  {% for nanitozo in other_nanitozo_list %}
-  {% include 'list/item_reaction.html' with nanitozo=nanitozo %}
-  {% endfor %}
-</div>
-{% endif %}
+{% include 'airs/air_detail_nanitozo_block.html' with air=air  %}
 
 {% endblock content %}

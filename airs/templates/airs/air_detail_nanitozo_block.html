@@ -1,0 +1,41 @@
+{% comment %} 放送詳細内の何卒一覧 {% endcomment %}
+{% load air_nanitozo %}
+
+{% with dict=air|air_nanitozo_dict:user %}
+
+{% if dict.nanitozo_list %}
+
+{% if not dict.my_nanitozo %}
+{% include 'base/separator.html' %}
+{% endif %}
+
+<div class="uk-background-muted">
+  <div class="rn-padding uk-background-default">
+    <h2 class="uk-text-default uk-margin-remove">
+      みんなの何卒
+    </h2>
+    <div>
+      {% comment %} 何卒 {% endcomment %}
+      {% include 'base/sum_reaction.html' with nanitozo_list=dict.nanitozo_list icon='icon: user' label='何卒' is_negative=False %}
+      {% comment %} 満足 {% endcomment %}
+      {% include 'base/sum_reaction.html' with nanitozo_list=dict.good_list icon='icon: happy' label='満足' is_negative=False %}
+      {% comment %} 推し {% endcomment %}
+      {% include 'base/sum_reaction.html' with nanitozo_list=dict.comment_recommend_list icon='icon: star' label='推し' is_negative=False %}
+      {% comment %} 感想 {% endcomment %}
+      {% include 'base/sum_reaction.html' with nanitozo_list=dict.comment_list icon='icon: comment' label='感想' is_negative=False %}
+      {% comment %} ネガ {% endcomment %}
+      {% include 'base/sum_reaction.html' with nanitozo_list=dict.comment_negative_list icon='icon: paint-bucket' label='ネガ' is_negative=True %}
+    </div>
+  </div>
+
+  {% if dict.my_nanitozo %}
+  {% include 'list/item_reaction.html' with nanitozo=dict.my_nanitozo %}
+  {% endif %}
+  {% for nanitozo in dict.other_users_list %}
+  {% include 'list/item_reaction.html' with nanitozo=nanitozo %}
+  {% endfor %}
+</div>
+{% endif %}
+
+
+{% endwith %}

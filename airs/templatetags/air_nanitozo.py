@@ -7,7 +7,7 @@ register = template.Library()
 
 @register.filter
 def air_nanitozo_icon_list(air, request_user):
-    all_list = air_nanitozo_all_list(air)
+    all_list = air_nanitozo_dict(air, request_user)
 
     nanitozo_icon_list = []
 
@@ -34,7 +34,7 @@ def air_nanitozo_icon_list(air, request_user):
 # NOTE スコア表示を一旦やめた
 # @register.filter
 # def air_nanitozo_count(air):
-#     all_list = air_nanitozo_all_list(air)
+#     all_list = air_nanitozo_dict(air, request_user)
 #     nanitozo_count = len(all_list['nanitozo_list'])
 #     good_count = len(all_list['good_list'])
 #     comment_count = len(all_list['comment_recommend_list']) + len(all_list['comment_list']) + len(all_list['comment_negative_list'])
@@ -49,7 +49,7 @@ def air_nanitozo_icon_list(air, request_user):
 
 @register.filter
 def air_nanitozo_done(air, request_user):
-    all_list = air_nanitozo_all_list(air)
+    all_list = air_nanitozo_dict(air, request_user)
     my_nanitozo_list = list(filter(lambda x: x.user == request_user, all_list['nanitozo_list']))
     my_good_list = list(filter(lambda x: x.user == request_user, all_list['good_list']))
     my_comment_recommend_list = list(filter(lambda x: x.user == request_user, all_list['comment_recommend_list']))
@@ -62,19 +62,47 @@ def air_nanitozo_done(air, request_user):
         'comment_done': comment_done,
     }
 
+@register.filter
+def air_my_nanitozo(air, request_user):
+    # 何卒全部
+    nanitozo_list = air.nanitozo_set.all()
 
-# - - - -
-def air_nanitozo_list(air):
-    return air.nanitozo_set.all()
+    # 自分のものでフィルタリング
+    my_nanitozo_list = list(filter(lambda x: x.user == request_user, nanitozo_list))
+    if my_nanitozo_list:
+        return my_nanitozo_list[0]
+    else:
+        return None # これ無いとreturnのところでreferenced before assignmentになる
 
 
-def air_nanitozo_all_list(air):
-    nanitozo_list = air_nanitozo_list(air)
+@register.filter
+def air_nanitozo_dict(air, request_user):
+    # 何卒全部
+    nanitozo_list = air.nanitozo_set.all()
+
+    # 満足でフィルタリング
     good_list = list(filter(lambda x: x.good == True, nanitozo_list))
+
+    # 以下の感想系のリストは下書きは含まない（x.comment_open == True）
+    # 推し入力ありでフィルタリング
     comment_recommend_list = list(filter(lambda x: x.comment_open == True and x.comment_recommend != None and len(x.comment_recommend) != 0, nanitozo_list))
+    # 感想入力ありでフィルタリング
     comment_list = list(filter(lambda x: x.comment_open == True and x.comment != None and len(x.comment) != 0, nanitozo_list))
+    # ネガ入力ありでフィルタリング
     comment_negative_list = list(filter(lambda x: x.comment_open == True and x.comment_negative != None and len(x.comment_negative) != 0, nanitozo_list))
+    # 感想入力あり or ネガ入力ありでフィルタリング
     comment_mask_negative_list = list(filter(lambda x: x.comment_open == True and ((x.comment != None and len(x.comment) != 0) or (x.comment_negative != None and len(x.comment_negative) != 0)), nanitozo_list))
+
+    # 自分のものでフィルタリング
+    my_nanitozo_list = list(filter(lambda x: x.user == request_user, nanitozo_list))
+    if my_nanitozo_list:
+        my_nanitozo = my_nanitozo_list[0]
+    else:
+        my_nanitozo = None # これ無いとreturnのところでreferenced before assignmentになる
+
+    # 自分以外のユーザーでフィルタリング
+    other_users_list = list(filter(lambda x: x.user != request_user, nanitozo_list))
+
     return {
         'nanitozo_list': nanitozo_list,
         'good_list': good_list,
@@ -82,4 +110,6 @@ def air_nanitozo_all_list(air):
         'comment_list': comment_list,
         'comment_negative_list': comment_negative_list,
         'comment_mask_negative_list': comment_mask_negative_list,
+        'my_nanitozo': my_nanitozo,
+        'other_users_list': other_users_list,
     }
