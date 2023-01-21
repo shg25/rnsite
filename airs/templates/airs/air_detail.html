@@ -1,7 +1,6 @@
 {% extends 'airs/base.html' %}
 {% load rn_const %}
 {% load rn_datetime %}
-{% load air_nanitozo %}
 
 {% block title %}{{ air.name }} {{ air.started_at|rn_ymdhm }} {{ air.broadcaster.name }}{% rn_const 'TITLE_SUFFIX' %}{% endblock title %}
 
@@ -9,123 +8,7 @@
 {% endblock header %}
 
 {% block nav %}
-{% if user.is_authenticated %}
-{% with my_nanitozo=air|air_my_nanitozo:user %}
-
-<nav class="uk-navbar-container" uk-navbar>
-  <div class="uk-navbar-left"></div>
-  <div class="uk-navbar-right">
-    <ul class="uk-navbar-nav">
-      <li>
-        <a href="#modal-overview" uk-toggle>{% rn_const 'TITLE_AIR_UPDATE' %}</a>
-        <div id="modal-overview" class="uk-modal-full" uk-modal>
-          <div class="uk-modal-dialog">
-            <button class="uk-modal-close-full uk-modal-close-default" type="button" uk-close></button>
-            <div uk-height-viewport>
-              <div class="rn-padding">
-                <h1 class="uk-text-lead">{% rn_const 'TITLE_AIR_UPDATE' %}</h1>
-                <form action="{% url 'airs:air_update' air.id %}" id="form_air_update" method="post">{% csrf_token %}
-                  <p class="uk-article-meta uk-margin-remove">共同編集で上書きしあう可能性があるので極力手早くお願いします（そのうちいい感じの解決方法を考えます）</p>
-                  <hr class="uk-divider-small">
-
-                  <p class="uk-margin-remove"><label for="id_overview_before">事前告知<small> ネタバレなし</small></label>
-                    <textarea name="overview_before" rows="4" id="id_overview_before" class="uk-textarea mgt-s" placeholder="ゲスト：なかやまきんに君
-・筋肉ルーレットカジノ">{{ air.overview_before|default_if_none:'' }}</textarea></p>
-                  <p class="uk-article-meta mgt-s uk-margin-bottom">※前回の放送や放送前にTwitterで告知があったゲストや企画</p>
-
-                  <p class="uk-margin-remove"><label for="id_overview_after">放送内容<small> ネタバレあり</small></label>
-                    <textarea name="overview_after" rows="4" id="id_overview_after" class="uk-textarea mgt-s" placeholder="飛び入りゲスト：岡村隆史
-・ご飯炊き対決
-・ネスミスはパン">{{ air.overview_after|default_if_none:'' }}</textarea></p>
-                  <p class="uk-article-meta mgt-s uk-margin-remove-bottom">※放送前に発表がなかったゲストや企画、放送内の印象的なワードなど</p>
-                  <div class="uk-text-right mgt-s">
-                    <input type="submit" form="form_air_update" value="&nbsp;更新&nbsp;" class="uk-button uk-button-primary uk-button">
-                  </div>
-                </form>
-              </div>
-            </div>
-          </div>
-        </div>
-      </li>
-
-      {% if my_nanitozo %}
-      <li>
-        <a href="#modal-comment" class="{% if not my_nanitozo.comment_open %}uk-text-warning{% elif my_nanitozo.has_comment %}uk-text-success{% endif %}" uk-toggle>{% rn_const 'TITLE_NANITOZO_UPDATE' %}</a>
-        <div id="modal-comment" class="uk-modal-full" uk-modal>
-          <div class="uk-modal-dialog">
-            <button class="uk-modal-close-full uk-modal-close-default" type="button" uk-close></button>
-            <div uk-height-viewport>
-              <div class="rn-padding">
-                <h1 class="uk-text-lead">{% rn_const 'TITLE_NANITOZO_UPDATE' %}</h1>
-                <form action="{% url 'airs:nanitozo_update' air_id=air.id pk=my_nanitozo.id %}" id="form_nanitozo_update" method="post">{% csrf_token %}
-                  <div class="uk-margin-remove-top uk-margin-bottom">
-                    <label for="id_comment_recommend"><span uk-icon="star" class="uk-icon"></span><span class="uk-text-middle mgl-ss">推し</span><small> ネタバレ少なめ推薦文</small></label>
-                    <textarea name="comment_recommend" rows="4" id="id_comment_recommend" class="uk-textarea mgt-s">{{ my_nanitozo.comment_recommend|default_if_none:'' }}</textarea><br>
-                  </div>
-                  <div class="uk-margin-remove-top uk-margin-bottom">
-                    <label for="id_comment"><span uk-icon="comment" class="uk-icon"></span><span class="uk-text-middle mgl-ss">感想</span><small> ネタバレあり</small></label>
-                    <textarea name="comment" rows="4" id="id_comment" class="uk-textarea mgt-s">{{ my_nanitozo.comment|default_if_none:'' }}</textarea>
-                  </div>
-                  <div class="uk-margin-remove-top uk-margin-bottom">
-                    <label for="id_comment_negative"><span uk-icon="paint-bucket" class="uk-icon"></span><span class="uk-text-middle mgl-ss">ネガ</span><small> 気分を害する人がいるかもな感想</small></label>
-                    <textarea name="comment_negative" rows="4" id="id_comment_negative" class="uk-textarea mgt-s">{{ my_nanitozo.comment_negative|default_if_none:'' }}</textarea>
-                  </div>
-                  <div class="uk-grid-collapse uk-flex-middle" uk-grid>
-                    <div class="uk-width-expand">
-                      <input type="checkbox" name="comment_open" id="id_comment_open" class="uk-checkbox" {% if my_nanitozo.comment_open %} checked{% endif %}><label for="id_comment_open" class="label_comment_open mgl-s">感想公開<small> OFFで下書き保存</small></label>
-                    </div>
-                    <div class="uk-width-auto">
-                      <input type="submit" form="form_nanitozo_update" value="&nbsp;更新&nbsp;" class="uk-button uk-button-primary uk-button">
-                    </div>
-                  </div>
-                </form>
-              </div>
-            </div>
-          </div>
-        </div>
-      </li>
-      {% if my_nanitozo.good == True %}
-      <li><a href="javascript:window.location.replace('{% url 'airs:nanitozo_cancel_good' air_id=air.id pk=my_nanitozo.id %}')" class="uk-text-success">{% rn_const 'TITLE_NANITOZO_CANCEL_GOOD' %}</a></li>
-      {% else %}
-      <li><a href="javascript:window.location.replace('{% url 'airs:nanitozo_apply_good' air_id=air.id pk=my_nanitozo.id %}')">{% rn_const 'TITLE_NANITOZO_APPLY_GOOD' %}</a></li>
-      {% endif %}
-      <li>
-        <a href="">…</a>
-        <div uk-dropdown="pos: top-center">
-          <ul class="uk-nav uk-navbar-dropdown-nav">
-            <li>
-              <a href="#nanitozo-delete" uk-toggle>{% rn_const 'TITLE_NANITOZO_DELETE' %}</a>
-              <div id="nanitozo-delete" uk-modal>
-                <div class="uk-modal-dialog">
-                  <button class="uk-modal-close-default" type="button" uk-close></button>
-                  <div class="uk-modal-header">
-                    <h2 class="uk-modal-title">何卒を取り消す</h2>
-                  </div>
-                  <div class="uk-modal-body">
-                    <p>何卒を取り消す場合は「実行」をタップ！<br><br><span class="uk-text-danger">※投稿した各種感想文も削除されます</span><br><span class="uk-text-danger">※放送は削除されないしできません（必要があれば管理者に依頼を）</span></p>
-                  </div>
-                  <div class="uk-modal-footer uk-text-right">
-                    <button class="uk-button uk-button-default uk-modal-close" type="button">キャンセル</button>
-                    <a href="javascript:window.location.replace('{% url 'airs:nanitozo_delete' air_id=air.id pk=my_nanitozo.id %}')" class="uk-button uk-button-danger" type="button">実行</a>
-                  </div>
-                </div>
-              </div>
-            </li>
-          </ul>
-        </div>
-      </li>
-      {% else %}{% comment %} not my_nanitozo {% endcomment %}
-      <li><a href="javascript:window.location.replace('{% url 'airs:nanitozo_create' air.id %}')">何卒！</a></li>
-      {% endif %}
-    </ul>
-  </div>
-</nav>
-<hr class="uk-margin-remove">
-
-{% comment %} <a class="uk-button uk-button-danger uk-width-1-1 uk-margin-bottom" href="#nanitozo-delete" uk-toggle>何卒取消</a> {% endcomment %}
-
-{% endwith %}
-{% endif %}
+{% include 'airs/air_detail_navbar.html' with air=air  is_detail_page=True %}
 {% endblock nav %}
 
 {% block content %}
