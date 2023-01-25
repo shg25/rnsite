@@ -1,5 +1,7 @@
+import json
+
 from django.db import IntegrityError
-from django.http import HttpResponseForbidden, HttpResponseRedirect, HttpResponseNotAllowed
+from django.http import HttpResponse, HttpResponseForbidden, HttpResponseRedirect, HttpResponseNotAllowed
 from django.shortcuts import get_object_or_404
 from django.urls import reverse
 from django.views import generic
@@ -27,6 +29,27 @@ class NanitozoListView(generic.ListView):
 @login_required
 def nanitozo_create(request, air_id):
     air = get_object_or_404(Air, pk=air_id)
+    nanitozo_create_and_set_message(request, air)
+
+    return HttpResponseRedirect(reverse('airs:detail', args=(air.id,)))
+
+
+def nanitozo_create_api(request, air_id):
+    # 「@login_required」だとリダイレクトしてログイン画面のHTMLを返してしまうので独自にログイン判定する
+    if not request.user.is_authenticated:
+        return HttpResponseForbidden()
+
+    air = get_object_or_404(Air, pk=air_id)
+    nanitozo_create_and_set_message(request, air)
+
+    # 以下、適当にJSONを返してる TODO 現状、ほとんどメッセージをDjangoテンプレートのコンポーネント任せだけど、ここはどうすると良いか
+    params = {'result': 1}
+    json_str = json.dumps(params, ensure_ascii=False, indent=2)  # json形式に変換
+    return HttpResponse(json_str)
+
+
+# ローカル処理
+def nanitozo_create_and_set_message(request, air):
     try:
         air.nanitozo_set.create(user=request.user)
     except IntegrityError:
@@ -35,7 +58,6 @@ def nanitozo_create(request, air_id):
         messages.error(request, '何卒登録エラー：' + str(type(err)))
     else:
         messages.success(request, '何卒！')
-    return HttpResponseRedirect(reverse('airs:detail', args=(air.id,)))
 
 
 @login_required

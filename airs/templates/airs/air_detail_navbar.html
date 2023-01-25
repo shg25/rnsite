@@ -144,7 +144,7 @@
       {% if is_detail_page %}
       <li><a href="{% url 'airs:nanitozo_create' air.id %}">何卒！</a></li>
       {% else %}{% comment %} not is_detail_page {% endcomment %}
-      <li><a href="javascript:window.location.replace('{% url 'airs:nanitozo_create' air.id %}')">何卒！</a></li>
+      <li><a href="javascript:void(0)" onclick="fetchAndReload('{% url 'airs:nanitozo_create_api' air.id %}')">何卒！</a></li>
       {% endif %}{% comment %} is_detail_page {% endcomment %}
       {% comment %} ここまで 何卒 {% endcomment %}
 

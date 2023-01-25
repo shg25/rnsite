@@ -12,3 +12,21 @@ const copyToClipboardAndShowAlert = text => {
         window.alert(text + ' をたぶんコピーしました（IEは無理っぽい）')
     }, 0)
 }
+
+const fetchAndReload = url => {
+    console.log(url)
+    fetch(url)
+        .then((response) => {
+            if (!response.ok) {
+                throw new Error(response.status + " " + response.statusText)
+            }
+            return response.json()
+        })
+        .then((data) => {
+            console.log(data)
+            location.reload()
+        })
+        .catch((error) => {
+            alert("すんません、エラーでしたわ！\n\n↓↓エラー内容↓↓\n" + error)
+        });
+}

@@ -23,6 +23,8 @@ urlpatterns = [
     path('ns/', nanitozo_views.NanitozoListView.as_view(), name='ns'),
     # 既存の放送に何卒作成（ログイン必須）
     path('<int:air_id>/nanitozo/create/', nanitozo_views.nanitozo_create, name='nanitozo_create'),
+    # 既存の放送に何卒作成 非同期（ログイン必須）
+    path('<int:air_id>/nanitozo/create/api', nanitozo_views.nanitozo_create_api, name='nanitozo_create_api'),
     # 何卒修正（ログイン必須）
     path('<int:air_id>/nanitozo/update/<int:pk>', nanitozo_views.nanitozo_update, name='nanitozo_update'),
     # 何卒満足（ログイン必須）

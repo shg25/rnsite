@@ -1,4 +1,5 @@
 import datetime
+import json
 
 from django.contrib.auth import get_user_model
 from django.test import TestCase
@@ -29,6 +30,11 @@ class NanitozoLoginRequiredViewByGuestTests(TestCase):
         url = reverse('airs:nanitozo_create', args=(self.air.id,))
         response = self.client.get(url)
         self.assertEqual(response.status_code, 302)
+
+    def test_何卒登録API(self):
+        url = reverse('airs:nanitozo_create_api', args=(self.air.id,))
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 403)
 
     def test_何卒取消(self):
         url = reverse('airs:nanitozo_delete', args=(self.air.id, self.setted_nanitozo.id))
@@ -78,6 +84,23 @@ class NanitozoCreateTests(TestCase):
         my_nanitozo_list = list(filter(lambda x: x.user == self.user, nanitozo_list))
         self.assertEqual(len(my_nanitozo_list), 1)
         self.assertEqual(response.status_code, 302)
+
+    def test_何卒登録API(self):
+        # ログイン
+        self.user = UserModel.objects.create(username='test', email='test@test.com', password='123456', last_name='ABC')
+        self.client.force_login(self.user)
+
+        # 何卒登録
+        url = reverse('airs:nanitozo_create_api', args=(self.air.id,))
+        response = self.client.get(url)
+
+        # 自分自身の何卒が1件あるはず
+        air = Air.objects.get(pk=self.air.id)
+        nanitozo_list = air.nanitozo_set.all()
+        my_nanitozo_list = list(filter(lambda x: x.user == self.user, nanitozo_list))
+        self.assertEqual(len(my_nanitozo_list), 1)
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(json.loads(response.content)['result'], 1)
 
 
 class NanitozoDeleteTests(TestCase):
