@@ -41,6 +41,11 @@ class NanitozoLoginRequiredViewByGuestTests(TestCase):
         response = self.client.get(url)
         self.assertEqual(response.status_code, 302)
 
+    def test_何卒取消API(self):
+        url = reverse('airs:nanitozo_delete_api', args=(self.air.id, self.setted_nanitozo.id))
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 403)
+
     def test_感想更新(self):
         url = reverse('airs:nanitozo_update', args=(self.air.id, self.setted_nanitozo.id))
         response = self.client.get(url)
@@ -132,6 +137,19 @@ class NanitozoDeleteTests(TestCase):
         self.assertEqual(my_nanitozo, None)
 
         self.assertEqual(response.status_code, 302)
+
+    def test_何卒取消API(self):
+        # 何卒を取り消す
+        url = reverse('airs:nanitozo_delete_api', args=(self.air.id, self.my_nanitozo.id))
+        response = self.client.get(url)
+
+        # 自分自身の何卒がないはず
+        air = Air.objects.get(pk=self.air.id)
+        my_nanitozo = air.nanitozo_set.filter(user=self.user).first()
+        self.assertEqual(my_nanitozo, None)
+
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(json.loads(response.content)['result'], 1)
 
 
 class NanitozoUpdateTests(TestCase):

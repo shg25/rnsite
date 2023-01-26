@@ -66,14 +66,35 @@ def nanitozo_delete(request, air_id, pk):
     if nanitozo.user.id != request.user.id:
         return HttpResponseForbidden()  # 編集権限なしエラー
 
+    nanitozo_delete_and_set_message(request, air_id, pk)
+    return HttpResponseRedirect(reverse('airs:detail', args=(air_id,)))
+
+
+def nanitozo_delete_api(request, air_id, pk):
+    # 「@login_required」だとリダイレクトしてログイン画面のHTMLを返してしまうので独自にログイン判定する
+    if not request.user.is_authenticated:
+        return HttpResponseForbidden()
+
+    nanitozo = get_object_or_404(Nanitozo, pk=pk)
+    if nanitozo.user.id != request.user.id:
+        return HttpResponseForbidden()  # 編集権限なしエラー
+
+    nanitozo_delete_and_set_message(request, air_id, pk)
+
+    # 以下、適当にJSONを返してる TODO 現状、ほとんどメッセージをDjangoテンプレートのコンポーネント任せだけど、ここはどうすると良いか
+    params = {'result': 1}
+    json_str = json.dumps(params, ensure_ascii=False, indent=2)  # json形式に変換
+    return HttpResponse(json_str)
+
+
+# ローカル処理
+def nanitozo_delete_and_set_message(request, air_id, pk):
     try:
         Nanitozo.objects.get(pk=pk).delete()
     except:
         messages.error(request, '既に何卒を取り消してました！')
-        return HttpResponseRedirect(reverse('airs:detail', args=(air_id,)))
     else:
         messages.success(request, '何卒を取り消しました！')
-        return HttpResponseRedirect(reverse('airs:detail', args=(air_id,)))
 
 
 @login_required

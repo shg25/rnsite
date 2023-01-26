@@ -33,6 +33,8 @@ urlpatterns = [
     path('<int:air_id>/nanitozo/cancel_good/<int:pk>', nanitozo_views.nanitozo_cancel_good, name='nanitozo_cancel_good'),
     # 何卒取消（ログイン必須）
     path('<int:air_id>/nanitozo/delete/<int:pk>', nanitozo_views.nanitozo_delete, name='nanitozo_delete'),
+    # 何卒取消 非同期（ログイン必須）
+    path('<int:air_id>/nanitozo/delete/api/<int:pk>', nanitozo_views.nanitozo_delete_api, name='nanitozo_delete_api'),
 
     # 放送作成 & 何卒作成（ログイン必須）
     path('air/create/', air_views.AirCreateByShareTextView.as_view(), name='air_create'),

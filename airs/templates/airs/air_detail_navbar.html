@@ -133,7 +133,7 @@
           </ul>
         </div>
         {% else %}{% comment %} not is_detail_page {% endcomment %}
-        <a href="{% url 'airs:nanitozo_delete' air_id=air.id pk=my_nanitozo.id %}">{% rn_const 'TITLE_NANITOZO_DELETE' %}</a>
+        <a href="javascript:void(0)" onclick="fetchAndReload('{% url 'airs:nanitozo_delete_api' air_id=air.id pk=my_nanitozo.id %}')">{% rn_const 'TITLE_NANITOZO_DELETE' %}</a>
         {% endif %}{% comment %} is_detail_page {% endcomment %}
       </li>
       {% comment %} ここまで 「…」と何卒取消 {% endcomment %}
