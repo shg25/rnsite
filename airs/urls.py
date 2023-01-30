@@ -29,8 +29,12 @@ urlpatterns = [
     path('<int:air_id>/nanitozo/update/<int:pk>', nanitozo_views.nanitozo_update, name='nanitozo_update'),
     # 何卒満足（ログイン必須）
     path('<int:air_id>/nanitozo/apply_good/<int:pk>', nanitozo_views.nanitozo_apply_good, name='nanitozo_apply_good'),
+    # 何卒満足 非同期（ログイン必須）
+    path('<int:air_id>/nanitozo/apply_good/api/<int:pk>', nanitozo_views.nanitozo_apply_good_api, name='nanitozo_apply_good_api'),
     # 何卒満足キャンセル（ログイン必須）
     path('<int:air_id>/nanitozo/cancel_good/<int:pk>', nanitozo_views.nanitozo_cancel_good, name='nanitozo_cancel_good'),
+    # 何卒満足キャンセル 非同期（ログイン必須）
+    path('<int:air_id>/nanitozo/cancel_good/api/<int:pk>', nanitozo_views.nanitozo_cancel_good_api, name='nanitozo_cancel_good_api'),
     # 何卒取消（ログイン必須）
     path('<int:air_id>/nanitozo/delete/<int:pk>', nanitozo_views.nanitozo_delete, name='nanitozo_delete'),
     # 何卒取消 非同期（ログイン必須）

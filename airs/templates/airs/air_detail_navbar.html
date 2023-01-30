@@ -109,11 +109,21 @@
 
       {% comment %} ここから 満足と満足キャンセル {% endcomment %}
       {% if is_detail_page %}
+
       {% if my_nanitozo.good == True %}
       <li><a href="javascript:window.location.replace('{% url 'airs:nanitozo_cancel_good' air_id=air.id pk=my_nanitozo.id %}')" class="uk-text-success">{% rn_const 'TITLE_NANITOZO_CANCEL_GOOD' %}</a></li>
       {% else %}
       <li><a href="javascript:window.location.replace('{% url 'airs:nanitozo_apply_good' air_id=air.id pk=my_nanitozo.id %}')">{% rn_const 'TITLE_NANITOZO_APPLY_GOOD' %}</a></li>
       {% endif %}
+
+      {% else %}{% comment %} not is_detail_page {% endcomment %}
+
+      {% if my_nanitozo.good == True %}
+      <li><a href="javascript:void(0)" onclick="fetchAndReload('{% url 'airs:nanitozo_cancel_good_api' air_id=air.id pk=my_nanitozo.id %}')" class="uk-text-success">{% rn_const 'TITLE_NANITOZO_CANCEL_GOOD' %}</a></li>
+      {% else %}
+      <li><a href="javascript:void(0)" onclick="fetchAndReload('{% url 'airs:nanitozo_apply_good_api' air_id=air.id pk=my_nanitozo.id %}')">{% rn_const 'TITLE_NANITOZO_APPLY_GOOD' %}</a></li>
+      {% endif %}
+
       {% endif %}{% comment %} is_detail_page {% endcomment %}
       {% comment %} ここから 満足と満足キャンセル {% endcomment %}
 
@@ -145,7 +155,10 @@
           </ul>
         </div>
         {% else %}{% comment %} not is_detail_page {% endcomment %}
-        <a href="javascript:void(0)" onclick="fetchAndReload('{% url 'airs:nanitozo_delete_api' air_id=air.id pk=my_nanitozo.id %}')">{% rn_const 'TITLE_NANITOZO_DELETE' %}</a>
+
+        {% comment %} モーダルの何卒取り消し {% endcomment %}
+        <a href="javascript:void(0)" onclick="fetchAndReload('{% url 'airs:nanitozo_delete_api' air_id=air.id pk=my_nanitozo.id %}')" class="uk-text-success">何卒！</a>
+
         {% endif %}{% comment %} is_detail_page {% endcomment %}
       </li>
       {% comment %} ここまで 「…」と何卒取消 {% endcomment %}
@@ -154,9 +167,12 @@
 
       {% comment %} ここから 何卒 {% endcomment %}
       {% if is_detail_page %}
-      <li><a href="{% url 'airs:nanitozo_create' air.id %}">何卒！</a></li>
+      <li><a href="{% url 'airs:nanitozo_create' air.id %}">何卒？</a></li>
       {% else %}{% comment %} not is_detail_page {% endcomment %}
-      <li><a href="javascript:void(0)" onclick="fetchAndReload('{% url 'airs:nanitozo_create_api' air.id %}')">何卒！</a></li>
+
+      {% comment %} TODO <li><a href="javascript:void(0)" onclick="fetchAndReload('{% url 'airs:nanitozo_create_api' air.id %}')">何卒+満足！</a></li> {% endcomment %}
+      <li><a href="javascript:void(0)" onclick="fetchAndReload('{% url 'airs:nanitozo_create_api' air.id %}')">何卒？</a></li>
+
       {% endif %}{% comment %} is_detail_page {% endcomment %}
       {% comment %} ここまで 何卒 {% endcomment %}
 
@@ -164,8 +180,6 @@
     </ul>
   </div>
 </nav>
-
-{% comment %} <a class="uk-button uk-button-danger uk-width-1-1 uk-margin-bottom" href="#nanitozo-delete" uk-toggle>何卒取消</a> {% endcomment %}
 
 {% endif %}{% comment %} user.is_authenticated {% endcomment %}
 

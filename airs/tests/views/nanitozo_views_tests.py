@@ -61,10 +61,20 @@ class NanitozoLoginRequiredViewByGuestTests(TestCase):
         response = self.client.get(url)
         self.assertEqual(response.status_code, 302)
 
+    def test_満足API(self):
+        url = reverse('airs:nanitozo_apply_good_api', args=(self.air.id, self.setted_nanitozo.id))
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 403)
+
     def test_満足取消(self):
         url = reverse('airs:nanitozo_cancel_good', args=(self.air.id, self.setted_nanitozo.id))
         response = self.client.get(url)
         self.assertEqual(response.status_code, 302)
+
+    def test_満足取消_api(self):
+        url = reverse('airs:nanitozo_cancel_good_api', args=(self.air.id, self.setted_nanitozo.id))
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 403)
 
 
 class NanitozoCreateTests(TestCase):
@@ -285,6 +295,29 @@ class NanitozoGoodApplyCancelTests(TestCase):
         self.assertEqual(my_nanitozo.good, False)
         self.assertEqual(response.status_code, 302)
 
+    def test_満足からの満足取り消しAPI(self):
+        self.assertEqual(self.my_nanitozo.good, False)
+
+        # 満足
+        url = reverse('airs:nanitozo_apply_good_api', args=(self.air.id, self.my_nanitozo.id))
+        response = self.client.get(url)
+
+        air = Air.objects.get(pk=self.air.id)
+        my_nanitozo = air.nanitozo_set.filter(user=self.user).first()
+        self.assertEqual(my_nanitozo.good, True)
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(json.loads(response.content)['result'], 1)
+
+        # 取消
+        url = reverse('airs:nanitozo_cancel_good_api', args=(self.air.id, self.my_nanitozo.id))
+        response = self.client.get(url)
+
+        air = Air.objects.get(pk=self.air.id)
+        my_nanitozo = air.nanitozo_set.filter(user=self.user).first()
+        self.assertEqual(my_nanitozo.good, False)
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(json.loads(response.content)['result'], 1)
+
     def test_満足_get_別ユーザー(self):
         # 別ユーザーでログイン
         self.user = UserModel.objects.create(username='test2', email='test2@test.com', password='123456', last_name='BCD')
@@ -295,3 +328,15 @@ class NanitozoGoodApplyCancelTests(TestCase):
 
         # Guestの場合と同じ結果になってしまう TODO Viewを今のリダイレクト形式から変えたら書き換える
         self.assertEqual(response.status_code, 302)
+
+    def test_満足API_get_別ユーザー(self):
+        # 別ユーザーでログイン
+        self.user = UserModel.objects.create(username='test2', email='test2@test.com', password='123456', last_name='BCD')
+        self.client.force_login(self.user)
+
+        url = reverse('airs:nanitozo_apply_good_api', args=(self.air.id, self.my_nanitozo.id))
+        response = self.client.get(url)
+
+        # メッセージの出し分けだけなので、Guestの場合と同じ結果になってしまう
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(json.loads(response.content)['result'], 1)

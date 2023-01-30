@@ -66,7 +66,7 @@ def nanitozo_delete(request, air_id, pk):
     if nanitozo.user.id != request.user.id:
         return HttpResponseForbidden()  # 編集権限なしエラー
 
-    nanitozo_delete_and_set_message(request, air_id, pk)
+    nanitozo_delete_and_set_message(request, pk)
     return HttpResponseRedirect(reverse('airs:detail', args=(air_id,)))
 
 
@@ -79,7 +79,7 @@ def nanitozo_delete_api(request, air_id, pk):
     if nanitozo.user.id != request.user.id:
         return HttpResponseForbidden()  # 編集権限なしエラー
 
-    nanitozo_delete_and_set_message(request, air_id, pk)
+    nanitozo_delete_and_set_message(request, pk)
 
     # 以下、適当にJSONを返してる TODO 現状、ほとんどメッセージをDjangoテンプレートのコンポーネント任せだけど、ここはどうすると良いか
     params = {'result': 1}
@@ -88,7 +88,7 @@ def nanitozo_delete_api(request, air_id, pk):
 
 
 # ローカル処理
-def nanitozo_delete_and_set_message(request, air_id, pk):
+def nanitozo_delete_and_set_message(request, pk):
     try:
         Nanitozo.objects.get(pk=pk).delete()
     except:
@@ -118,10 +118,29 @@ def nanitozo_update(request, air_id, pk):
 
 @login_required
 def nanitozo_apply_good(request, air_id, pk):
-    change_for = True
+    nanitozo_apply_good_and_set_message(request, pk)
 
+    return HttpResponseRedirect(reverse('airs:detail', args=(air_id,)))
+
+
+def nanitozo_apply_good_api(request, air_id, pk):
+    # 「@login_required」だとリダイレクトしてログイン画面のHTMLを返してしまうので独自にログイン判定する
+    if not request.user.is_authenticated:
+        return HttpResponseForbidden()
+
+    nanitozo_apply_good_and_set_message(request, pk)
+
+    # 以下、適当にJSONを返してる TODO 現状、ほとんどメッセージをDjangoテンプレートのコンポーネント任せだけど、ここはどうすると良いか
+    params = {'result': 1}
+    json_str = json.dumps(params, ensure_ascii=False, indent=2)  # json形式に変換
+    return HttpResponse(json_str)
+
+
+# ローカル処理
+def nanitozo_apply_good_and_set_message(request, pk):
     nanitozo = get_object_or_404(Nanitozo, pk=pk)
 
+    change_for = True
     if nanitozo.good == change_for:  # 変更する必要があるか確認
         messages.warning(request, 'もう満足してますね')
     elif nanitozo.user != request.user:  # ログインしているユーザーが一致しているか確認
@@ -131,15 +150,32 @@ def nanitozo_apply_good(request, air_id, pk):
         nanitozo.save(update_fields=['good'])
         messages.success(request, '満足！')
 
-    return HttpResponseRedirect(reverse('airs:detail', args=(air_id,)))
-
 
 @login_required
 def nanitozo_cancel_good(request, air_id, pk):
-    change_for = False
+    nanitozo_cancel_good_and_set_message(request, pk)
 
+    return HttpResponseRedirect(reverse('airs:detail', args=(air_id,)))
+
+
+def nanitozo_cancel_good_api(request, air_id, pk):
+    # 「@login_required」だとリダイレクトしてログイン画面のHTMLを返してしまうので独自にログイン判定する
+    if not request.user.is_authenticated:
+        return HttpResponseForbidden()
+
+    nanitozo_cancel_good_and_set_message(request, pk)
+
+    # 以下、適当にJSONを返してる TODO 現状、ほとんどメッセージをDjangoテンプレートのコンポーネント任せだけど、ここはどうすると良いか
+    params = {'result': 1}
+    json_str = json.dumps(params, ensure_ascii=False, indent=2)  # json形式に変換
+    return HttpResponse(json_str)
+
+
+# ローカル処理
+def nanitozo_cancel_good_and_set_message(request, pk):
     nanitozo = get_object_or_404(Nanitozo, pk=pk)
 
+    change_for = False
     if nanitozo.good == change_for:  # 変更する必要があるか確認
         messages.warning(request, '既に満足がキャンセルされてました')
     elif nanitozo.user != request.user:  # ログインしているユーザーが一致しているか確認
@@ -148,5 +184,3 @@ def nanitozo_cancel_good(request, air_id, pk):
         nanitozo.good = change_for
         nanitozo.save(update_fields=['good'])
         messages.success(request, '満足 has been キャンセルド！')
-
-    return HttpResponseRedirect(reverse('airs:detail', args=(air_id,)))
