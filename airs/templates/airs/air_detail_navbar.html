@@ -1,6 +1,3 @@
-{% comment %} そもそもログインユーザー以外には表示しない {% endcomment %}
-{% if user.is_authenticated %}
-
 {% comment %} 放送一覧のモーダルと放送詳細のナビバーの共通パーツ {% endcomment %}
 {% comment %} [is_detail] {% endcomment %}
 {% load air_nanitozo %}
@@ -8,6 +5,21 @@
 {% load rn_datetime %}
 
 {% with my_nanitozo=air|air_my_nanitozo:user %}
+
+{% comment %} モーダルの場合はCLOSEボタンを表示 {% endcomment %}
+{% if not is_detail_page %}
+<nav class="uk-navbar-container" uk-navbar>
+  <div class="uk-navbar-left"></div>
+  <div class="uk-navbar-right">
+    <ul class="uk-navbar-nav">
+      <li><a href="javascript:void(0)"><button class="uk-modal-close" type="button" uk-close></button></a></li>
+    </ul>
+  </div>
+</nav>
+{% endif %}{% comment %} モーダルの場合はCLOSEボタンを表示 {% endcomment %}
+
+
+{% if user.is_authenticated %}
 
 <nav class="uk-navbar-container" uk-navbar>
   <div class="uk-navbar-left"></div>
@@ -139,7 +151,7 @@
       {% comment %} ここまで 「…」と何卒取消 {% endcomment %}
 
       {% else %}{% comment %} not my_nanitozo 何卒してないユーザーに表示 {% endcomment %}
-      
+
       {% comment %} ここから 何卒 {% endcomment %}
       {% if is_detail_page %}
       <li><a href="{% url 'airs:nanitozo_create' air.id %}">何卒！</a></li>
@@ -152,10 +164,12 @@
     </ul>
   </div>
 </nav>
-<hr class="uk-margin-remove">
 
 {% comment %} <a class="uk-button uk-button-danger uk-width-1-1 uk-margin-bottom" href="#nanitozo-delete" uk-toggle>何卒取消</a> {% endcomment %}
 
-{% endwith %}
+{% endif %}{% comment %} user.is_authenticated {% endcomment %}
 
-{% endif %}
+{% comment %} 下に線を引いておく（詳細画面で未ログインだと上に入っちゃうけど気にしない） {% endcomment %}
+<hr class="uk-margin-remove">
+
+{% endwith %}
