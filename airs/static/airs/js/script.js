@@ -13,8 +13,14 @@ const copyToClipboardAndShowAlert = text => {
     }, 0)
 }
 
-const fetchAndReload = url => {
-    console.log(url)
+const fetchAndReload = (url, message = "") => {
+    if (!!message) {
+        const result = window.confirm(message)
+        if (!result) {
+            return
+        }
+    }
+    // console.log(url)
     fetch(url)
         .then((response) => {
             if (!response.ok) {
