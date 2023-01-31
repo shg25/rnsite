@@ -36,6 +36,16 @@ class NanitozoLoginRequiredViewByGuestTests(TestCase):
         response = self.client.get(url)
         self.assertEqual(response.status_code, 403)
 
+    def test_何卒登録with満足(self):
+        url = reverse('airs:nanitozo_create_with_good', args=(self.air.id,))
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 302)
+
+    def test_何卒登録with満足API(self):
+        url = reverse('airs:nanitozo_create_with_good_api', args=(self.air.id,))
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 403)
+
     def test_何卒取消(self):
         url = reverse('airs:nanitozo_delete', args=(self.air.id, self.setted_nanitozo.id))
         response = self.client.get(url)
@@ -98,6 +108,7 @@ class NanitozoCreateTests(TestCase):
         nanitozo_list = air.nanitozo_set.all()
         my_nanitozo_list = list(filter(lambda x: x.user == self.user, nanitozo_list))
         self.assertEqual(len(my_nanitozo_list), 1)
+        self.assertEqual(my_nanitozo_list[0].good, False)
         self.assertEqual(response.status_code, 302)
 
     def test_何卒登録API(self):
@@ -114,6 +125,50 @@ class NanitozoCreateTests(TestCase):
         nanitozo_list = air.nanitozo_set.all()
         my_nanitozo_list = list(filter(lambda x: x.user == self.user, nanitozo_list))
         self.assertEqual(len(my_nanitozo_list), 1)
+        self.assertEqual(my_nanitozo_list[0].good, False)
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(json.loads(response.content)['result'], 1)
+
+
+class NanitozoCreateWithGoodTests(TestCase):
+    def setUp(self):
+        # 4日前の1時間番組
+        started = timezone.now() + datetime.timedelta(days=-7, hours=-1)
+        ended = timezone.now() + datetime.timedelta(days=-7)
+        self.air = create_air('酒井健太ANN0', started, ended)
+
+    def test_満足何卒(self):
+        # ログイン
+        self.user = UserModel.objects.create(username='test', email='test@test.com', password='123456', last_name='ABC')
+        self.client.force_login(self.user)
+
+        # 何卒登録
+        url = reverse('airs:nanitozo_create_with_good', args=(self.air.id,))
+        response = self.client.get(url)
+
+        # 自分自身の何卒が1件あるはず
+        air = Air.objects.get(pk=self.air.id)
+        nanitozo_list = air.nanitozo_set.all()
+        my_nanitozo_list = list(filter(lambda x: x.user == self.user, nanitozo_list))
+        self.assertEqual(len(my_nanitozo_list), 1)
+        self.assertEqual(my_nanitozo_list[0].good, True)
+        self.assertEqual(response.status_code, 302)
+
+    def test_満足何卒API(self):
+        # ログイン
+        self.user = UserModel.objects.create(username='test', email='test@test.com', password='123456', last_name='ABC')
+        self.client.force_login(self.user)
+
+        # 何卒登録
+        url = reverse('airs:nanitozo_create_with_good_api', args=(self.air.id,))
+        response = self.client.get(url)
+
+        # 自分自身の何卒が1件あるはず
+        air = Air.objects.get(pk=self.air.id)
+        nanitozo_list = air.nanitozo_set.all()
+        my_nanitozo_list = list(filter(lambda x: x.user == self.user, nanitozo_list))
+        self.assertEqual(len(my_nanitozo_list), 1)
+        self.assertEqual(my_nanitozo_list[0].good, True)
         self.assertEqual(response.status_code, 200)
         self.assertEqual(json.loads(response.content)['result'], 1)
 

@@ -25,6 +25,10 @@ urlpatterns = [
     path('<int:air_id>/nanitozo/create/', nanitozo_views.nanitozo_create, name='nanitozo_create'),
     # 既存の放送に何卒作成 非同期（ログイン必須）
     path('<int:air_id>/nanitozo/create/api', nanitozo_views.nanitozo_create_api, name='nanitozo_create_api'),
+    # 既存の放送に何卒+満足（ログイン必須）
+    path('<int:air_id>/nanitozo/create/good/', nanitozo_views.nanitozo_create_with_good, name='nanitozo_create_with_good'),
+    # 既存の放送に何卒+満足 非同期（ログイン必須）
+    path('<int:air_id>/nanitozo/create/good/api', nanitozo_views.nanitozo_create_with_good_api, name='nanitozo_create_with_good_api'),
     # 何卒修正（ログイン必須）
     path('<int:air_id>/nanitozo/update/<int:pk>', nanitozo_views.nanitozo_update, name='nanitozo_update'),
     # 何卒満足（ログイン必須）

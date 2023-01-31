@@ -61,6 +61,40 @@ def nanitozo_create_and_set_message(request, air):
 
 
 @login_required
+def nanitozo_create_with_good(request, air_id):
+    air = get_object_or_404(Air, pk=air_id)
+    nanitozo_create_with_good_and_set_message(request, air)
+
+    return HttpResponseRedirect(reverse('airs:detail', args=(air.id,)))
+
+
+def nanitozo_create_with_good_api(request, air_id):
+    # 「@login_required」だとリダイレクトしてログイン画面のHTMLを返してしまうので独自にログイン判定する
+    if not request.user.is_authenticated:
+        return HttpResponseForbidden()
+
+    air = get_object_or_404(Air, pk=air_id)
+    nanitozo_create_with_good_and_set_message(request, air)
+
+    # 以下、適当にJSONを返してる TODO 現状、ほとんどメッセージをDjangoテンプレートのコンポーネント任せだけど、ここはどうすると良いか
+    params = {'result': 1}
+    json_str = json.dumps(params, ensure_ascii=False, indent=2)  # json形式に変換
+    return HttpResponse(json_str)
+
+
+# ローカル処理
+def nanitozo_create_with_good_and_set_message(request, air):
+    try:
+        air.nanitozo_set.create(user=request.user, good=True)
+    except IntegrityError:
+        messages.warning(request, '何卒済みの放送')
+    except Exception as err:
+        messages.error(request, '何卒登録エラー：' + str(type(err)))
+    else:
+        messages.success(request, '（満足そうに）何卒！')
+
+
+@login_required
 def nanitozo_delete(request, air_id, pk):
     nanitozo = get_object_or_404(Nanitozo, pk=pk)
     if nanitozo.user.id != request.user.id:

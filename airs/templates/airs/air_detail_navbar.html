@@ -167,10 +167,11 @@
 
       {% comment %} ここから 何卒 {% endcomment %}
       {% if is_detail_page %}
+      <li><a href="{% url 'airs:nanitozo_create_with_good' air.id %}">満足何卒？</a></li>
       <li><a href="{% url 'airs:nanitozo_create' air.id %}">何卒？</a></li>
       {% else %}{% comment %} not is_detail_page {% endcomment %}
 
-      {% comment %} TODO <li><a href="javascript:void(0)" onclick="fetchAndReload('{% url 'airs:nanitozo_create_api' air.id %}')">何卒+満足！</a></li> {% endcomment %}
+      <li><a href="javascript:void(0)" onclick="fetchAndReload('{% url 'airs:nanitozo_create_with_good_api' air.id %}')">満足何卒？</a></li>
       <li><a href="javascript:void(0)" onclick="fetchAndReload('{% url 'airs:nanitozo_create_api' air.id %}')">何卒？</a></li>
 
       {% endif %}{% comment %} is_detail_page {% endcomment %}
