@@ -1,16 +1,15 @@
 {% comment %} 放送一覧のモーダルと放送詳細の上部の共通パーツ {% endcomment %}
 {% comment %} headerタグのみっぽいファイル名だけど放送概要まで入れ込んだ {% endcomment %}
+{% load air_nanitozo %}
 {% load rn_const %}
 {% load rn_datetime %}
 
-{% with adt=air.started_at|init_rn_datetime:air.ended_at %}
+{% with adt=air.started_at|init_rn_datetime:air.ended_at air_nanitozo_icon_list=air|air_nanitozo_icon_list:user %}
 <header class="rn-padding">
 
-  {% comment %} アイコンの羅列 放送一覧では[nanitozo_icon_list_mask_negative]が空なので非表示になるはず {% endcomment %}
-  {% comment %} TODO nanitozo_icon_list_mask_negativeクリックで nanitozo_icon_listに表示を差し替える {% endcomment %}
-  {% if nanitozo_icon_list_mask_negative %}
+  {% if air_nanitozo_icon_list %}
   <div class="uk-text-right">
-    {% for nanitozo_icon in nanitozo_icon_list_mask_negative %}<span uk-icon="{{ nanitozo_icon.0.value }}" class="uk-icon{% if nanitozo_icon.1 %} uk-text-success{% endif %}"></span>{% endfor %}
+    {% for nanitozo_icon in air_nanitozo_icon_list %}<span uk-icon="{{ nanitozo_icon.0.value }}" class="uk-icon{% if nanitozo_icon.1 %} uk-text-success{% endif %}"></span>{% endfor %}
   </div>
   {% endif %}
 
@@ -29,7 +28,7 @@
   <div class="uk-flex uk-flex-middle">
     <span uk-icon="icon: link" class="uk-icon"></span>
     <span class="uk-text-middle mgl-s"><a href="{{ air.started_at|radiko_link:air.broadcaster.radiko_identifier }}" target="_blank" rel="noopener noreferrer">radiko</a></span>
-    <span class="uk-text-middle uk-margin-small-left"><a href="" onclick="copyToClipboardAndShowAlert('{{ air.started_at|radiko_link:air.broadcaster.radiko_identifier }}')">URLコピー</a></span>
+    <span class="uk-text-middle uk-margin-small-left"><a href="javascript:void(0)" onclick="copyToClipboardAndShowAlert('{{ air.started_at|radiko_link:air.broadcaster.radiko_identifier }}')">URLコピー</a></span>
     <span class="uk-text-middle uk-margin-small-left"><a href="{{ air.started_at|radiko_link_next_week:air.broadcaster.radiko_identifier }}" target="_blank" rel="noopener noreferrer">radiko+1w</a></span>
   </div>
 

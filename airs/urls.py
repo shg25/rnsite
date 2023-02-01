@@ -23,14 +23,26 @@ urlpatterns = [
     path('ns/', nanitozo_views.NanitozoListView.as_view(), name='ns'),
     # 既存の放送に何卒作成（ログイン必須）
     path('<int:air_id>/nanitozo/create/', nanitozo_views.nanitozo_create, name='nanitozo_create'),
+    # 既存の放送に何卒作成 非同期（ログイン必須）
+    path('<int:air_id>/nanitozo/create/api', nanitozo_views.nanitozo_create_api, name='nanitozo_create_api'),
+    # 既存の放送に何卒+満足（ログイン必須）
+    path('<int:air_id>/nanitozo/create/good/', nanitozo_views.nanitozo_create_with_good, name='nanitozo_create_with_good'),
+    # 既存の放送に何卒+満足 非同期（ログイン必須）
+    path('<int:air_id>/nanitozo/create/good/api', nanitozo_views.nanitozo_create_with_good_api, name='nanitozo_create_with_good_api'),
     # 何卒修正（ログイン必須）
     path('<int:air_id>/nanitozo/update/<int:pk>', nanitozo_views.nanitozo_update, name='nanitozo_update'),
     # 何卒満足（ログイン必須）
     path('<int:air_id>/nanitozo/apply_good/<int:pk>', nanitozo_views.nanitozo_apply_good, name='nanitozo_apply_good'),
+    # 何卒満足 非同期（ログイン必須）
+    path('<int:air_id>/nanitozo/apply_good/api/<int:pk>', nanitozo_views.nanitozo_apply_good_api, name='nanitozo_apply_good_api'),
     # 何卒満足キャンセル（ログイン必須）
     path('<int:air_id>/nanitozo/cancel_good/<int:pk>', nanitozo_views.nanitozo_cancel_good, name='nanitozo_cancel_good'),
+    # 何卒満足キャンセル 非同期（ログイン必須）
+    path('<int:air_id>/nanitozo/cancel_good/api/<int:pk>', nanitozo_views.nanitozo_cancel_good_api, name='nanitozo_cancel_good_api'),
     # 何卒取消（ログイン必須）
     path('<int:air_id>/nanitozo/delete/<int:pk>', nanitozo_views.nanitozo_delete, name='nanitozo_delete'),
+    # 何卒取消 非同期（ログイン必須）
+    path('<int:air_id>/nanitozo/delete/api/<int:pk>', nanitozo_views.nanitozo_delete_api, name='nanitozo_delete_api'),
 
     # 放送作成 & 何卒作成（ログイン必須）
     path('air/create/', air_views.AirCreateByShareTextView.as_view(), name='air_create'),
