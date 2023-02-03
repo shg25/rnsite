@@ -3,9 +3,11 @@ import datetime
 from django.contrib.auth import get_user_model
 from django.test import TestCase
 from django.utils import timezone
+from django.utils.timezone import make_aware
 from django.urls import reverse
 
-from ...models import Air
+from ...models import FormattedName, Broadcaster, Program, Air
+from ...views.air_views import pickAirFromRadikoPageTitle
 
 UserModel = get_user_model()
 
@@ -84,6 +86,8 @@ class AirDetailViewTests(TestCase):
 
         self.assertContains(response, self.air.name)
         self.assertNotContains(response, '+放送登録')
+        self.assertNotContains(response, '満足何卒？')
+        self.assertNotContains(response, '何卒？')
         self.assertNotContains(response, '感想編集')
 
     def test_連絡詳細_ログインして何卒してない(self):
@@ -97,6 +101,8 @@ class AirDetailViewTests(TestCase):
         self.assertContains(response, self.air.name)
         self.assertContains(response, '+放送登録')
         self.assertContains(response, 'ABC')
+        self.assertContains(response, '満足何卒？')
+        self.assertContains(response, '何卒？')
         self.assertNotContains(response, '感想編集')
 
     def test_連絡詳細_ログインして何卒した(self):
@@ -113,6 +119,8 @@ class AirDetailViewTests(TestCase):
         self.assertContains(response, self.air.name)
         self.assertContains(response, '+放送登録')
         self.assertContains(response, 'ABC')
+        self.assertNotContains(response, '満足何卒？')
+        self.assertNotContains(response, '何卒？')
         self.assertContains(response, '感想編集')
 
 
@@ -211,3 +219,55 @@ class AirUpdateTests(TestCase):
         self.assertEqual(air.overview_after, '放送内容を更新した')
 
         self.assertEqual(response.status_code, 302)
+
+
+class PickAirFromRadikoPageTitleTest(TestCase):
+
+    def setUp(self):
+        self.formattedNameProgram1 = FormattedName.objects.create(id=2, name='ｻｽﾍﾟﾝﾀﾞｰｽﾞのﾓｰﾌﾟｯｼｭ!!')
+        self.formattedNameBroadcaster1 = FormattedName.objects.create(id=1, name='sbsﾗｼﾞｵ')
+
+        program1 = Program.objects.create(name="サスペンダーズのモープッシュ！！")
+        program1.formatted_names.set([self.formattedNameProgram1])
+        self.program1 = program1
+
+        broadcaster1 = Broadcaster.objects.create(radiko_identifier='SBS', name='SBSラジオ')
+        broadcaster1.formatted_names.set([self.formattedNameBroadcaster1])
+        self.broadcaster1 = broadcaster1
+
+    def test_全てのデータが揃っている場合(self):
+        title = '2023年1月29日（日）8:00～8:30 | サスペンダーズのモープッシュ！！ | SBSラジオ | radiko'
+        result = pickAirFromRadikoPageTitle(title)
+        self.assertEqual(result['program_name'], 'サスペンダーズのモープッシュ！！')
+        self.assertEqual(result['program'], self.program1)
+        self.assertEqual(result['broadcaster'], self.broadcaster1)
+        self.assertEqual(result['started_at'], make_aware(datetime.datetime(2023, 1, 29, 8, 0)))
+        self.assertEqual(result['ended_at'], make_aware(datetime.datetime(2023, 1, 29, 8, 30)))
+    
+    def test_全てのデータが揃っている場合_24時から30分(self):
+        title = '2023年1月29日（日）24:00～24:30 | サスペンダーズのモープッシュ！！ | SBSラジオ | radiko'
+        result = pickAirFromRadikoPageTitle(title)
+        self.assertEqual(result['program_name'], 'サスペンダーズのモープッシュ！！')
+        self.assertEqual(result['program'], self.program1)
+        self.assertEqual(result['broadcaster'], self.broadcaster1)
+        self.assertEqual(result['started_at'], make_aware(datetime.datetime(2023, 1, 30, 0, 0)))
+        self.assertEqual(result['ended_at'], make_aware(datetime.datetime(2023, 1, 30, 0, 30)))
+
+    def test_全てのデータが揃っている場合_深夜4時から朝6時(self):
+        title = '2023年1月29日（日）28:00～30:00 | サスペンダーズのモープッシュ！！ | SBSラジオ | radiko'
+        result = pickAirFromRadikoPageTitle(title)
+        self.assertEqual(result['program_name'], 'サスペンダーズのモープッシュ！！')
+        self.assertEqual(result['program'], self.program1)
+        self.assertEqual(result['broadcaster'], self.broadcaster1)
+        self.assertEqual(result['started_at'], make_aware(datetime.datetime(2023, 1, 30, 4, 0)))
+        self.assertEqual(result['ended_at'], make_aware(datetime.datetime(2023, 1, 30, 6, 0)))
+
+
+    def test_存在しないbroadcasterとprogramの場合_24時から30分(self):
+        title = '2023年1月29日（日）24:00～24:30 | 存在しない番組名 | 存在しないブロードキャスト | radiko'
+        result = pickAirFromRadikoPageTitle(title)
+        self.assertEqual(result['program_name'], '存在しない番組名')
+        self.assertEqual(result['program'], None)
+        self.assertEqual(result['broadcaster'], None)
+        self.assertEqual(result['started_at'], make_aware(datetime.datetime(2023, 1, 30, 0, 0)))
+        self.assertEqual(result['ended_at'], make_aware(datetime.datetime(2023, 1, 30, 0, 30)))

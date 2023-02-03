@@ -117,108 +117,20 @@ class AirCreateByShareTextView(generic.FormView):
             return super().form_invalid(form)
 
         # - - - - - - - - - - - - - - - - - - - - - - - -
-        # タイトル末尾の「| radiko」を除去
-        # rfindで後ろから「|」を検索して、それより前だけ残す
-        title = title[:title.rfind('|')]
-        # print(title)
+        dict = pickAirFromRadikoPageTitle(title)
 
         # - - - - - - - - - - - - - - - - - - - - - - - -
-        # タイトルから放送局名を取得
-        # rfindで後ろから「|」を検索して、それより後ろを取得 → 「| TBSラジオ 」
-        # 「|」を削除して、前後のスペースを除去 → 「TBSラジオ」
-        broadcaster_name = title[title.rfind('|'):].replace('|', '').strip()
-
-        # - - - - - - - - - - - - - - - - - - - - - - - -
-        # タイトルから放送局名を除去
-        # rfindで後ろから「|」を検索して、それより前だけ残す
-        title = title[:title.rfind('|')]
-        # title = '2021年10月5日（火）24:00～25:00 | アルコ＆ピース D.C.GARAGE '
-        # print(title)
-
-        # - - - - - - - - - - - - - - - - - - - - - - - -
-        # タイトルから番組名を取得
-        # findで前から「|」を検索して、それより後ろを取得 → 「| アルコ＆ピース D.C.GARAGE 」
-        # 「|」を削除して、前後のスペースを除去 → 「アルコ＆ピース D.C.GARAGE」
-        program_name = title[title.find('|'):].replace('|', '').strip()
-
-        # - - - - - - - - - - - - - - - - - - - - - - - -
-        # 放送開始日時と放送終了日時を作成
-
-        # findで前から「|」を検索して、それより前だけ残して、前後のスペースを除去 → 「2021年10月5日（火）24:00～25:00」
-        title = title[:title.find('|')].strip()
-        # print(title)
-
-        # 曜日を除去 → 「2021年10月5日24:00～25:00」が残る
-        title = title.replace('（月）', '').replace('（火）', '').replace('（水）', '').replace('（木）', '').replace('（金）', '').replace('（土）', '').replace('（日）', '')
-        # print(title)
-
-        # 「年」「月」「日」「:」「～」「:」を半角カンマに置換 → 「2021,10,5,24,00,25,00」
-        title = title.replace('年', ',').replace('月', ',').replace('日', ',').replace(':', ',').replace('～', ',')
-        # print(title)
-
-        # 半角カンマで分割して日付を作成
-        split_title = title.split(',')  # ['2021', '10', '5', '24', '00', '25', '00']
-        title_date = new_date(int(split_title[0]), int(split_title[1]), int(split_title[2]))
-
-        # 開始時間と終了時間を取得
-        started_hour = int(split_title[3])
-        started_minute = int(split_title[4])
-        ended_hour = int(split_title[5])
-        ended_minute = int(split_title[6])
-
-        # 開始日時と終了日時どちらも24時以降は次の日にして24時間マイナスする
-        if started_hour > 23:
-            started_at = timedelta_days(title_date, 1)
-            started_hour = started_hour - 24
-        else:
-            started_at = title_date
-
-        started_at = new_datetime(started_at.year, started_at.month, started_at.day, started_hour, started_minute)
-
-        if ended_hour > 23:
-            ended_at = timedelta_days(title_date, 1)
-            ended_hour = ended_hour - 24
-        else:
-            ended_at = title_date
-
-        ended_at = new_datetime(ended_at.year, ended_at.month, ended_at.day, ended_hour, ended_minute)
-
-        # - - - - - - - - - - - - - - - - - - - - - - - -
-        # Airに保存する放送局情報を取得（検索がヒットしない場合は[None]が入ってDBには[null]で保存されるはず）
-        broadcaster_formatted_name = share_text_to_formatted_name(broadcaster_name)
-        try:
-            broadcaster_formatted_name_object = FormattedName.objects.get(name=broadcaster_formatted_name)
-            broadcaster = broadcaster_formatted_name_object.broadcaster_set.first()
-        except FormattedName.DoesNotExist:
-            # broadcasterはFormattedNameがヒットしなくてもエラーにならないのでここを通らないはず
-            broadcaster = None
-
-        # Airに保存する番組情報を取得（検索がヒットしない場合は[None]が入ってDBには[null]で保存されるはず）
-        program_formatted_name = share_text_to_formatted_name(program_name)
-        try:
-            program_formatted_name_object = FormattedName.objects.get(name=program_formatted_name)
-            programs = program_formatted_name_object.program_set.all()
-            if programs.count() == 0:
-                program = None
-            elif programs.count() == 1:
-                program = programs.first()
-            else:
-                program = programs.filter(day_of_week=title_date.weekday()).first()
-        except FormattedName.DoesNotExist:  # programはcatchしないとエラーになる（broadcasterはFormattedNameがヒットしなくてもなぜかエラーにならない）
-            program = None
-
-        # - - - - - - - - - - - - - - - - - - - - - - - -
-        if program_name == None or program_name == '' or started_at > ended_at:
+        if dict['program_name'] == None or dict['program_name'] == '' or dict['started_at'] > dict['ended_at']:
             messages.error(self.request, 'パースエラー！\n送信内容をサイト管理者に伝えてください')  # TODO share_textをどこかに記録したい
             return super().form_invalid(form)
 
         # - - - - - - - - - - - - - - - - - - - - - - - -
         # [overview_before]と[overview_after]以外をinstanceにセット
-        form.instance.name = program_name
-        form.instance.program = program
-        form.instance.broadcaster = broadcaster
-        form.instance.started_at = started_at  # 日本時刻として扱われる模様 例：datetimeで[2021-10-06 00:00:00]を登録 → DBは[2021-10-05T15:00:00Z]
-        form.instance.ended_at = ended_at  # 日本時刻として扱われる模様 例：datetimeで[2021-10-06 01:00:00]を登録 → DBは[2021-10-05T16:00:00Z]
+        form.instance.name = dict['program_name']
+        form.instance.program = dict['program']
+        form.instance.broadcaster = dict['broadcaster']
+        form.instance.started_at = dict['started_at']  # 日本時刻として扱われる模様 例：datetimeで[2021-10-06 00:00:00]を登録 → DBは[2021-10-05T15:00:00Z]
+        form.instance.ended_at = dict['ended_at']  # 日本時刻として扱われる模様 例：datetimeで[2021-10-06 01:00:00]を登録 → DBは[2021-10-05T16:00:00Z]
         form.instance.overview_before = ''  # TODO 一時的に share_text がセットされているので空にしている
 
         # - - - - - - - - - - - - - - - - - - - - - - - -
@@ -227,11 +139,12 @@ class AirCreateByShareTextView(generic.FormView):
             saved_air = form.save()
         except IntegrityError:
             messages.warning(self.request, '登録済みの放送')
-            if broadcaster == None:
+            if form.instance.broadcaster == None:
                 messages.error(self.request, '放送局情報なし\n送信内容をサイト管理者に伝えてください')
                 return super().form_invalid(form)
             else:
-                saved_air = Air.objects_identification.get(broadcaster=broadcaster, started_at=started_at).first()
+                # 引き続き何卒登録のために登録済みの放送を取得する
+                saved_air = Air.objects_identification.get(broadcaster=form.instance.broadcaster, started_at=form.instance.started_at).first()
         except Exception as err:
             messages.error(self.request, '放送登録エラー：' + str(type(err)))
             return super().form_invalid(form)
@@ -252,6 +165,106 @@ class AirCreateByShareTextView(generic.FormView):
 
         # return super().form_valid(form)
         return HttpResponseRedirect(reverse('airs:detail', args=(saved_air.id,)))
+
+
+def pickAirFromRadikoPageTitle(title):
+    # タイトル末尾の「| radiko」を除去
+    # rfindで後ろから「|」を検索して、それより前だけ残す
+    title = title[:title.rfind('|')]
+    # print(title)
+
+    # - - - - - - - - - - - - - - - - - - - - - - - -
+    # タイトルから放送局名を取得
+    # rfindで後ろから「|」を検索して、それより後ろを取得 → 「| TBSラジオ 」
+    # 「|」を削除して、前後のスペースを除去 → 「TBSラジオ」
+    broadcaster_name = title[title.rfind('|'):].replace('|', '').strip()
+
+    # - - - - - - - - - - - - - - - - - - - - - - - -
+    # タイトルから放送局名を除去
+    # rfindで後ろから「|」を検索して、それより前だけ残す
+    title = title[:title.rfind('|')]
+    # title = '2021年10月5日（火）24:00～25:00 | アルコ＆ピース D.C.GARAGE '
+    # print(title)
+
+    # - - - - - - - - - - - - - - - - - - - - - - - -
+    # タイトルから番組名を取得
+    # findで前から「|」を検索して、それより後ろを取得 → 「| アルコ＆ピース D.C.GARAGE 」
+    # 「|」を削除して、前後のスペースを除去 → 「アルコ＆ピース D.C.GARAGE」
+    program_name = title[title.find('|'):].replace('|', '').strip()
+
+    # - - - - - - - - - - - - - - - - - - - - - - - -
+    # 放送開始日時と放送終了日時を作成
+
+    # findで前から「|」を検索して、それより前だけ残して、前後のスペースを除去 → 「2021年10月5日（火）24:00～25:00」
+    title = title[:title.find('|')].strip()
+    # print(title)
+
+    # 曜日を除去 → 「2021年10月5日24:00～25:00」が残る
+    title = title.replace('（月）', '').replace('（火）', '').replace('（水）', '').replace('（木）', '').replace('（金）', '').replace('（土）', '').replace('（日）', '')
+    # print(title)
+
+    # 「年」「月」「日」「:」「～」「:」を半角カンマに置換 → 「2021,10,5,24,00,25,00」
+    title = title.replace('年', ',').replace('月', ',').replace('日', ',').replace(':', ',').replace('～', ',')
+    # print(title)
+
+    # 半角カンマで分割して日付を作成
+    split_title = title.split(',')  # ['2021', '10', '5', '24', '00', '25', '00']
+    title_date = new_date(int(split_title[0]), int(split_title[1]), int(split_title[2]))
+
+    # 開始時間と終了時間を取得
+    started_hour = int(split_title[3])
+    started_minute = int(split_title[4])
+    ended_hour = int(split_title[5])
+    ended_minute = int(split_title[6])
+
+    # 開始日時と終了日時どちらも24時以降は次の日にして24時間マイナスする
+    if started_hour > 23:
+        started_at = timedelta_days(title_date, 1)
+        started_hour = started_hour - 24
+    else:
+        started_at = title_date
+
+    started_at = new_datetime(started_at.year, started_at.month, started_at.day, started_hour, started_minute)
+
+    if ended_hour > 23:
+        ended_at = timedelta_days(title_date, 1)
+        ended_hour = ended_hour - 24
+    else:
+        ended_at = title_date
+
+    ended_at = new_datetime(ended_at.year, ended_at.month, ended_at.day, ended_hour, ended_minute)
+
+    # - - - - - - - - - - - - - - - - - - - - - - - -
+    # Airに保存する放送局情報を取得（検索がヒットしない場合は[None]が入ってDBには[null]で保存されるはず）
+    broadcaster_formatted_name = share_text_to_formatted_name(broadcaster_name)
+    try:
+        broadcaster_formatted_name_object = FormattedName.objects.get(name=broadcaster_formatted_name)
+        broadcaster = broadcaster_formatted_name_object.broadcaster_set.first()
+    except FormattedName.DoesNotExist:
+        # broadcasterはFormattedNameがヒットしなくてもエラーにならないのでここを通らないはず
+        broadcaster = None
+
+    # Airに保存する番組情報を取得（検索がヒットしない場合は[None]が入ってDBには[null]で保存されるはず）
+    program_formatted_name = share_text_to_formatted_name(program_name)
+    try:
+        program_formatted_name_object = FormattedName.objects.get(name=program_formatted_name)
+        programs = program_formatted_name_object.program_set.all()
+        if programs.count() == 0:
+            program = None
+        elif programs.count() == 1:
+            program = programs.first()
+        else:
+            program = programs.filter(day_of_week=title_date.weekday()).first()
+    except FormattedName.DoesNotExist:  # programはcatchしないとエラーになる（broadcasterはFormattedNameがヒットしなくてもなぜかエラーにならない）
+        program = None
+
+    return {
+        'program_name': program_name,
+        'program': program,
+        'broadcaster': broadcaster,
+        'started_at': started_at,  # 日本時刻として扱われる模様 例：datetimeで[2021-10-06 00:00:00]を登録 → DBは[2021-10-05T15:00:00Z]
+        'ended_at': ended_at,  # 日本時刻として扱われる模様 例：datetimeで[2021-10-06 01:00:00]を登録 → DBは[2021-10-05T16:00:00Z]
+    }
 
 
 @login_required
