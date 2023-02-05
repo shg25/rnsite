@@ -86,22 +86,13 @@ class AirCreateByShareTextView(generic.FormView):
 
         # - - - - - - - - - - - - - - - - - - - - - - - -
         # [share_text]からradikoのURLを抜き出す
-        urls = find_urls(share_text)
-        if len(urls) == 0:
-            messages.error(self.request, 'URLが見つかりません')
+        result = pickRadikoUrlFromShareText(share_text)
+        # share_textに問題があればエラーメッセージを表示
+        if result['status'] == StatusType.fail.value:
+            messages.error(self.request, result['data']['title'])
             return super().form_invalid(form)
 
-        has_radiko = False
-        for url in urls:
-            has_radiko = 'radiko.jp' in url
-            if has_radiko:
-                radiko_url = url
-                break
-
-        if not has_radiko:
-            messages.error(self.request, 'radikoのURLが見つかりません')
-            return super().form_invalid(form)
-
+        radiko_url = result['data']['radiko_url']
         # radiko_url = "https://radiko.jp/share/?sid=TBS&t=20211006000000"
 
         # - - - - - - - - - - - - - - - - - - - - - - - -
@@ -161,6 +152,40 @@ class AirCreateByShareTextView(generic.FormView):
 
         # return super().form_valid(form)
         return HttpResponseRedirect(reverse('airs:detail', args=(saved_air.id,)))
+
+
+def pickRadikoUrlFromShareText(share_text):
+    urls = find_urls(share_text)
+
+    if len(urls) == 0:
+        return {
+            'status': StatusType.fail.value,
+            'data': {
+                'title': 'URLが見つかりません'
+            }
+        }
+
+    has_radiko = False
+    for url in urls:
+        has_radiko = 'radiko.jp' in url
+        if has_radiko:
+            radiko_url = url
+            break
+
+    if not has_radiko:
+        return {
+            'status': StatusType.fail.value,
+            'data': {
+                'title': 'radikoのURLが見つかりません'
+            }
+        }
+
+    return {
+        'status': StatusType.success.value,
+        'data': {
+            'radiko_url': radiko_url
+        }
+    }
 
 
 def pickAirFromRadikoPageTitle(title):

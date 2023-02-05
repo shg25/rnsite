@@ -7,7 +7,7 @@ from django.utils.timezone import make_aware
 from django.urls import reverse
 
 from ...models import FormattedName, Broadcaster, Program, Air
-from ...views.air_views import pickAirFromRadikoPageTitle
+from ...views.air_views import pickRadikoUrlFromShareText, pickAirFromRadikoPageTitle
 
 UserModel = get_user_model()
 
@@ -221,6 +221,39 @@ class AirUpdateTests(TestCase):
         self.assertEqual(response.status_code, 302)
 
 
+class pickRadikoUrlFromShareTextTest(TestCase):
+
+    def test_一般的な処理(self):
+        share_text = 'オードリーのオールナイトニッポン | ニッポン放送 | 2023/02/04/土  25:00-27:00 https://radiko.jp/share/?sid=LFR&t=20230205010000'
+        result = pickRadikoUrlFromShareText(share_text)
+        self.assertEqual(result['status'], 'success')
+        self.assertEqual(result['data']['radiko_url'], 'https://radiko.jp/share/?sid=LFR&t=20230205010000')
+
+    def test_間違って2つペーストしたとかでURLが2つ含まれている場合は先のURLを取得(self):
+        share_text = '沈黙の金曜日 | FM FUJI | 2023/02/03/金  21:00-23:00 https://radiko.jp/share/?sid=FM-FUJI&t=20230203210000 オードリーのオールナイトニッポン | ニッポン放送 | 2023/02/04/土  25:00-27:00 https://radiko.jp/share/?sid=LFR&t=20230205010000'
+        result = pickRadikoUrlFromShareText(share_text)
+        self.assertEqual(result['status'], 'success')
+        self.assertEqual(result['data']['radiko_url'], 'https://radiko.jp/share/?sid=FM-FUJI&t=20230203210000')
+
+    def test_3つURLがあったとしてradikoのURLだけを取得して先にセットしたほうを取得(self):
+        share_text = '1つめ（not radiko） https://twitter.com/home 2つめ（radiko） https://radiko.jp/share/?sid=FM-FUJI&t=20230203210000 3つめ（radiko） https://radiko.jp/share/?sid=LFR&t=20230205010000'
+        result = pickRadikoUrlFromShareText(share_text)
+        self.assertEqual(result['status'], 'success')
+        self.assertEqual(result['data']['radiko_url'], 'https://radiko.jp/share/?sid=FM-FUJI&t=20230203210000')
+
+    def test_URLが1つもない場合はfail(self):
+        share_text = 'オードリーのオールナイトニッポン | ニッポン放送 | 2023/02/04/土  25:00-27:00'
+        result = pickRadikoUrlFromShareText(share_text)
+        self.assertEqual(result['status'], 'fail')
+        self.assertEqual(result['data']['title'], 'URLが見つかりません')
+
+    def test_radikoのURLが1つもない場合はfail(self):
+        share_text = 'オードリーのオールナイトニッポン | ニッポン放送 | 2023/02/04/土  25:00-27:00 https://twitter.com/home'
+        result = pickRadikoUrlFromShareText(share_text)
+        self.assertEqual(result['status'], 'fail')
+        self.assertEqual(result['data']['title'], 'radikoのURLが見つかりません')
+
+
 class PickAirFromRadikoPageTitleTest(TestCase):
 
     def setUp(self):
@@ -256,7 +289,7 @@ class PickAirFromRadikoPageTitleTest(TestCase):
         self.assertEqual(result['data']['broadcaster'], self.broadcaster1)
         self.assertEqual(result['data']['started_at'], make_aware(datetime.datetime(2023, 1, 29, 8, 0)))
         self.assertEqual(result['data']['ended_at'], make_aware(datetime.datetime(2023, 1, 29, 8, 30)))
-    
+
     def test_全てのデータが揃っている場合_24時から30分(self):
         title = '2023年1月29日（日）24:00～24:30 | サスペンダーズのモープッシュ！！ | SBSラジオ | radiko'
         result = pickAirFromRadikoPageTitle(title)
@@ -276,7 +309,6 @@ class PickAirFromRadikoPageTitleTest(TestCase):
         self.assertEqual(result['data']['broadcaster'], self.broadcaster1)
         self.assertEqual(result['data']['started_at'], make_aware(datetime.datetime(2023, 1, 30, 4, 0)))
         self.assertEqual(result['data']['ended_at'], make_aware(datetime.datetime(2023, 1, 30, 6, 0)))
-
 
     def test_存在しないbroadcasterとprogramの場合_24時から30分(self):
         title = '2023年1月29日（日）24:00～24:30 | 存在しない番組名 | 存在しないブロードキャスト | radiko'
