@@ -7,6 +7,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import UserPassesTestMixin
 from django.shortcuts import get_object_or_404, redirect
 
+from common.util.enum.status_type import StatusType
 from common.util.datetime_extensions import new_datetime, new_date, timedelta_days, this_week_started
 from common.util.url_extensions import scraping_title
 from common.util.log_extensions import logger_share_text
@@ -87,7 +88,7 @@ class AirCreateByShareTextView(generic.FormView):
         # [share_text]からradikoのURLを抜き出す
         urls = find_urls(share_text)
         if len(urls) == 0:
-            messages.error(self.request, 'radikoのURLが見つかりません')  # TODO share_textをどこかに記録したい
+            messages.error(self.request, 'URLが見つかりません')
             return super().form_invalid(form)
 
         has_radiko = False
@@ -96,6 +97,10 @@ class AirCreateByShareTextView(generic.FormView):
             if has_radiko:
                 radiko_url = url
                 break
+
+        if not has_radiko:
+            messages.error(self.request, 'radikoのURLが見つかりません')
+            return super().form_invalid(form)
 
         # radiko_url = "https://radiko.jp/share/?sid=TBS&t=20211006000000"
 
@@ -106,23 +111,14 @@ class AirCreateByShareTextView(generic.FormView):
         # print(title)
 
         # - - - - - - - - - - - - - - - - - - - - - - - -
-        # タイトルに「|」が3つ以上含まれていることを確認
-        # ※タイトルにも含まれる可能性があるので3以上は許可
-        if title.count('|') < 3:
-            # print('「|」が3つない')
-            if 'この番組の配信は終了しました' in title:
-                messages.error(self.request, '配信が終了した放送\nどうにか登録したいならサイト管理者に相談を')
-            else:
-                messages.error(self.request, 'なぜかエラー！\n送信内容をサイト管理者に伝えてください')  # TODO share_textをどこかに記録したい
+        result = pickAirFromRadikoPageTitle(title)
+
+        # パース処理でエラーがあれば処理を中断してエラーメッセージを表示
+        if result['status'] == StatusType.error.value:
+            messages.error(self.request, result['message'])
             return super().form_invalid(form)
 
-        # - - - - - - - - - - - - - - - - - - - - - - - -
-        dict = pickAirFromRadikoPageTitle(title)
-
-        # - - - - - - - - - - - - - - - - - - - - - - - -
-        if dict['program_name'] == None or dict['program_name'] == '' or dict['started_at'] > dict['ended_at']:
-            messages.error(self.request, 'パースエラー！\n送信内容をサイト管理者に伝えてください')  # TODO share_textをどこかに記録したい
-            return super().form_invalid(form)
+        dict = result['data']
 
         # - - - - - - - - - - - - - - - - - - - - - - - -
         # [overview_before]と[overview_after]以外をinstanceにセット
@@ -168,6 +164,19 @@ class AirCreateByShareTextView(generic.FormView):
 
 
 def pickAirFromRadikoPageTitle(title):
+    # タイトルに「|」が3つ以上含まれていることを確認
+    # ※タイトルにも含まれる可能性があるので3以上は許可
+    if title.count('|') < 3:
+        # print('「|」が3つない')
+        if 'この番組の配信は終了しました' in title:
+            message = '配信が終了した放送\nどうにか登録したいならサイト管理者に相談を'
+        else:
+            message = 'なぜかエラー！\n送信内容をサイト管理者に伝えてください'
+        return {
+            'status': StatusType.error.value,
+            'message': message
+        }
+
     # タイトル末尾の「| radiko」を除去
     # rfindで後ろから「|」を検索して、それより前だけ残す
     title = title[:title.rfind('|')]
@@ -258,12 +267,22 @@ def pickAirFromRadikoPageTitle(title):
     except FormattedName.DoesNotExist:  # programはcatchしないとエラーになる（broadcasterはFormattedNameがヒットしなくてもなぜかエラーにならない）
         program = None
 
+    # データとして破綻がないか確認
+    if program_name == None or program_name == '' or started_at > ended_at:
+        return {
+            'status': StatusType.error.value,
+            'message': 'パースエラー！\n送信内容をサイト管理者に伝えてください'
+        }
+
     return {
-        'program_name': program_name,
-        'program': program,
-        'broadcaster': broadcaster,
-        'started_at': started_at,  # 日本時刻として扱われる模様 例：datetimeで[2021-10-06 00:00:00]を登録 → DBは[2021-10-05T15:00:00Z]
-        'ended_at': ended_at,  # 日本時刻として扱われる模様 例：datetimeで[2021-10-06 01:00:00]を登録 → DBは[2021-10-05T16:00:00Z]
+        'status': StatusType.success.value,
+        'data': {
+            'program_name': program_name,
+            'program': program,
+            'broadcaster': broadcaster,
+            'started_at': started_at,  # 日本時刻として扱われる模様 例：datetimeで[2021-10-06 00:00:00]を登録 → DBは[2021-10-05T15:00:00Z]
+            'ended_at': ended_at,  # 日本時刻として扱われる模様 例：datetimeで[2021-10-06 01:00:00]を登録 → DBは[2021-10-05T16:00:00Z]
+        }
     }
 
 
