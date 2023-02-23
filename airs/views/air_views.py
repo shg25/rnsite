@@ -1,5 +1,9 @@
+import json
+
+from urllib.parse import unquote
+
 from django.db import IntegrityError
-from django.http import HttpResponseNotAllowed, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseNotAllowed, HttpResponseRedirect
 from django.urls import reverse
 from django.views import generic
 from django.contrib import messages
@@ -8,7 +12,7 @@ from django.contrib.auth.mixins import UserPassesTestMixin
 from django.shortcuts import get_object_or_404, redirect
 
 from common.util.enum.status_type import StatusType
-from common.util.datetime_extensions import new_datetime, new_date, timedelta_days, this_week_started
+from common.util.datetime_extensions import new_datetime, new_date, timedelta_days, this_week_started, output_ymdhm
 from common.util.url_extensions import scraping_title
 from common.util.log_extensions import logger_share_text
 from common.util.string_extensions import find_urls, share_text_to_formatted_name
@@ -309,6 +313,27 @@ def pickAirFromRadikoPageTitle(title):
             'ended_at': ended_at,  # 日本時刻として扱われる模様 例：datetimeで[2021-10-06 01:00:00]を登録 → DBは[2021-10-05T16:00:00Z]
         }
     }
+
+
+@login_required
+def air_create_url_check(_, encoded_radiko_url):
+    title = scraping_title(unquote(encoded_radiko_url))  # '2021年10月5日（火）24:00～25:00 | アルコ＆ピース D.C.GARAGE | TBSラジオ | radiko'
+    result = pickAirFromRadikoPageTitleApi(title)
+    json_str = json.dumps(result, ensure_ascii=False, indent=2)  # json形式に変換
+    return HttpResponse(json_str)
+
+
+def pickAirFromRadikoPageTitleApi(title):
+    result = pickAirFromRadikoPageTitle(title)
+    # 成功した場合はデータを整形（オブジェクトを全て文字列に置換） TODO ValueObject的なもの（data class?）を用意した方がいいかも
+    if result['status'] == StatusType.success.value:
+        if result['data']['program'] != None:
+            result['data']['program'] = result['data']['program'].name
+        if result['data']['broadcaster'] != None:
+            result['data']['broadcaster'] = result['data']['broadcaster'].name
+        result['data']['started_at'] = output_ymdhm(result['data']['started_at'])
+        result['data']['ended_at'] = output_ymdhm(result['data']['ended_at'])
+    return result
 
 
 @login_required

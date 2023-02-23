@@ -13,6 +13,38 @@ const copyToClipboardAndShowAlert = text => {
     }, 0)
 }
 
+const radikoUrlChecker = (url) => {
+    console.log(url)
+
+    fetch(url)
+        .then((response) => {
+            if (!response.ok) {
+                throw new Error(response.status + " " + response.statusText)
+            }
+            return response.json()
+        })
+        .then((json) => {
+            if (json.status == 'success') {
+                // console.log(json)
+                if (confirm(json.data.program_name +
+                        '\n' + json.data.broadcaster +
+                        '\n' + json.data.started_at +
+                        ' 〜 ' + json.data.ended_at)) {
+                    alert('ここで処理する予定')
+                }
+            } else if (json.status == 'error') {
+                // TODO errorの場合をとfailで分岐（その前に、運用方針があってるか相談）
+                console.log(json)
+                alert('エラーです')
+            } else {
+                alert('想定外のエラー！')
+            }
+        })
+        .catch((error) => {
+            alert("すんません、エラーでしたわ！\n\n↓↓エラー内容↓↓\n" + error)
+        })
+}
+
 const fetchAndReload = (url, message = "") => {
     if (!!message) {
         const result = window.confirm(message)
@@ -34,5 +66,5 @@ const fetchAndReload = (url, message = "") => {
         })
         .catch((error) => {
             alert("すんません、エラーでしたわ！\n\n↓↓エラー内容↓↓\n" + error)
-        });
+        })
 }

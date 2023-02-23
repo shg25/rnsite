@@ -27,9 +27,10 @@
 
   <div class="uk-flex uk-flex-middle">
     <span uk-icon="icon: link" class="uk-icon"></span>
-    <span class="uk-text-middle mgl-s"><a href="{{ air.started_at|radiko_link:air.broadcaster.radiko_identifier }}" target="_blank" rel="noopener noreferrer">radiko</a></span>
-    <span class="uk-text-middle uk-margin-small-left"><a href="javascript:void(0)" onclick="copyToClipboardAndShowAlert('{{ air.started_at|radiko_link:air.broadcaster.radiko_identifier }}')">URLコピー</a></span>
-    <span class="uk-text-middle uk-margin-small-left"><a href="{{ air.started_at|radiko_link_next_week:air.broadcaster.radiko_identifier }}" target="_blank" rel="noopener noreferrer">radiko+1w</a></span>
+    <span class="uk-text-middle mgl-s"><a href="{{ air.started_at|radiko_url:air.broadcaster.radiko_identifier }}" target="_blank" rel="noopener noreferrer">radiko</a></span>
+    <span class="uk-text-middle uk-margin-small-left"><a href="javascript:void(0)" onclick="copyToClipboardAndShowAlert('{{ air.started_at|radiko_url:air.broadcaster.radiko_identifier }}')">URLコピー</a></span>
+    <span class="uk-text-middle uk-margin-small-left"><a href="{{ air.started_at|radiko_url_next_week:air.broadcaster.radiko_identifier }}" target="_blank" rel="noopener noreferrer">radiko+1w</a></span>
+    <span class="uk-text-middle uk-margin-small-left"><a href="javascript:void(0)" onclick="radikoUrlChecker('{% url 'airs:air_create_url_check' encoded_radiko_url=air.started_at|encoded_radiko_url_next_week:air.broadcaster.radiko_identifier %}')">get+1w</a></span>
   </div>
 
   {% endif %}

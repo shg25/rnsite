@@ -1,3 +1,5 @@
+from urllib.parse import quote
+
 from django import template
 
 from common.util.datetime_extensions import *
@@ -44,10 +46,15 @@ class RNDatetime:
 
 
 @register.filter
-def radiko_link(started, radiko_identifier):
-    return output_radiko_link(started, radiko_identifier)
+def radiko_url(started, radiko_identifier):
+    return output_radiko_url(started, radiko_identifier)
 
 
 @register.filter
-def radiko_link_next_week(started, radiko_identifier):
-    return output_radiko_link_next_week(started, radiko_identifier)
+def radiko_url_next_week(started, radiko_identifier):
+    return output_radiko_url_next_week(started, radiko_identifier)
+
+
+@register.filter
+def encoded_radiko_url_next_week(started, radiko_identifier):
+    return quote(radiko_url_next_week(started, radiko_identifier), safe='')
