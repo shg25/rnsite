@@ -1,9 +1,7 @@
-import json
-
 from urllib.parse import unquote
 
-from django.db import IntegrityError
-from django.http import HttpResponse, HttpResponseNotAllowed, HttpResponseRedirect
+from django.db import IntegrityError, transaction
+from django.http import HttpResponseNotAllowed, HttpResponseRedirect, JsonResponse
 from django.urls import reverse
 from django.views import generic
 from django.contrib import messages
@@ -137,6 +135,7 @@ class AirCreateByShareTextView(generic.FormView):
                 # 引き続き何卒登録のために登録済みの放送を取得する
                 saved_air = Air.objects_identification.get(broadcaster=form.instance.broadcaster, started_at=form.instance.started_at).first()
         except Exception as err:
+            # 想定していないエラーなので処理を中断する
             messages.error(self.request, '放送登録エラー：' + str(type(err)))
             return super().form_invalid(form)
         else:
@@ -303,6 +302,13 @@ def pickAirFromRadikoPageTitle(title):
             'message': 'パースエラー！\n送信内容をサイト管理者に伝えてください'
         }
 
+    # 登録がない放送局の場合はこの時点でエラーにする
+    if broadcaster == None:
+        return {
+            'status': StatusType.error.value,
+            'message': '予想外の放送局名なのでエラー！\n送信内容をサイト管理者に伝えてください'
+        }
+
     return {
         'status': StatusType.success.value,
         'data': {
@@ -319,8 +325,90 @@ def pickAirFromRadikoPageTitle(title):
 def air_create_url_check(_, encoded_radiko_url):
     title = scraping_title(unquote(encoded_radiko_url))  # '2021年10月5日（火）24:00～25:00 | アルコ＆ピース D.C.GARAGE | TBSラジオ | radiko'
     result = pickAirFromRadikoPageTitleApi(title)
-    json_str = json.dumps(result, ensure_ascii=False, indent=2)  # json形式に変換
-    return HttpResponse(json_str)
+    return JsonResponse(result)
+
+
+@login_required
+def air_create_by_title(request):
+    if request.method != 'POST':
+        return HttpResponseNotAllowed('POSTじゃないと')
+
+    radiko_title = request.POST.get('radiko_title')
+    if radiko_title == None:
+        messages.error(request, '必要なデータが飛んできてない')
+        return {
+            'status': StatusType.error.value,
+            'message': '必要なデータが飛んできてない'
+        }
+
+    result = pickAirFromRadikoPageTitle(radiko_title)
+    result = _save_air_and_nanitozo(request, result)
+
+    return JsonResponse(result)
+
+
+@transaction.atomic  # TODO これがないとテストで[TransactionManagementError]になるが、よくわからないので相談する 1/2
+def _save_air_and_nanitozo(request, result):
+    # パース処理でエラーがあれば処理を中断してエラーメッセージを表示
+    if result['status'] == StatusType.error.value:
+        messages.error(request, result['message'])
+        return result
+
+    dict = result['data']
+    air = Air(
+        name=dict['program_name'],
+        program=dict['program'],
+        broadcaster=dict['broadcaster'],
+        started_at=dict['started_at'],
+        ended_at=dict['ended_at'],
+    )
+
+    # 放送登録
+    try:
+        with transaction.atomic():  # TODO これがないとテストで[TransactionManagementError]になるが、よくわからないので相談する 2/2
+            saved_air = air.save()
+            # ↑この方法だと saved_air が入らず「None」になる
+    except IntegrityError:
+        messages.warning(request, '登録済みの放送')
+        # 引き続き何卒登録のために登録済みの放送を取得する
+    except Exception as err:
+        # TODO エラーログを取る
+        messages.error(request, '放送登録エラー：' + str(type(err)))
+        return {
+            'status': StatusType.error.value,
+            'message': '放送登録時に想定外のエラーが発生したので処理を中断：' + str(type(err))
+        }
+    else:
+        messages.success(request, '放送登録完了！')
+
+    # save()時にsaved_airが取得できないのでここで取得する
+    saved_air = Air.objects_identification.get(broadcaster=air.broadcaster, started_at=air.started_at).first()
+    if saved_air == None:
+        # TODO エラーログを取る
+        messages.error(request, '放送情報が見つからないので処理を中断\n送信内容をサイト管理者に伝えてください')
+        return {
+            'status': StatusType.error.value,
+            'message': '登録したはずの放送情報が見つからないので処理を中断します：' + str(type(err))
+        }
+
+    # 何卒登録 → 結果がどうあれエラー内容はメッセージで表示して正常終了する
+    try:
+        saved_air.nanitozo_set.create(user=request.user)
+    except IntegrityError:
+        messages.warning(request, '何卒済みの放送')
+    except Exception as err:
+        # TODO エラーログを取る
+        messages.error(request, '何卒登録エラー：' + str(type(err)))
+    else:
+        messages.success(request, '何卒！')
+
+    return {
+        'status': StatusType.success.value,
+        'data': {
+            'message': '何卒処理まで完了',
+            'next_url': reverse('airs:detail', args=(saved_air.id,)),
+        }
+    }
 
 
 def pickAirFromRadikoPageTitleApi(title):
@@ -333,6 +421,7 @@ def pickAirFromRadikoPageTitleApi(title):
             result['data']['broadcaster'] = result['data']['broadcaster'].name
         result['data']['started_at'] = output_ymdhm(result['data']['started_at'])
         result['data']['ended_at'] = output_ymdhm(result['data']['ended_at'])
+        result['data']['radiko_title'] = title
     return result
 
 
