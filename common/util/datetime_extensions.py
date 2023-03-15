@@ -72,6 +72,23 @@ def __create_radiko_url(dt_tokyo, radiko_identifier):
 #
 
 
+def air_started_diff_days(air_started):
+    now = __datetime_now()
+    if __is_midnight(now):
+        now = timedelta_days(now, -1)
+    today = new_datetime(now.year, now.month, now.day, 5, 0)
+
+    if __is_midnight(air_started):
+        air_started = timedelta_days(air_started, -1)
+    aired = new_datetime(air_started.year, air_started.month, air_started.day, 5, 0)
+
+    td = aired - today
+    return td.days
+
+
+#
+
+
 def this_week_started():
     now = __datetime_now()
     if __is_midnight(now):

@@ -8,8 +8,8 @@
 <header class="rn-padding">
 
   {% if air_nanitozo_icon_list %}
-  <div class="uk-text-right">
-    {% for nanitozo_icon in air_nanitozo_icon_list %}<span uk-icon="{{ nanitozo_icon.0.value }}" class="uk-icon{% if nanitozo_icon.1 %} uk-text-success{% endif %}"></span>{% endfor %}
+  <div class="uk-text-left">
+    <span class="uk-label {{ air.started_at|air_date_label_class }} mgr-s">{{ air.started_at|air_date_label_text }}</span>{% for nanitozo_icon in air_nanitozo_icon_list %}<span uk-icon="{{ nanitozo_icon.0.value }}" class="uk-icon{% if nanitozo_icon.1 %} uk-text-success{% endif %}"></span>{% endfor %}
   </div>
   {% endif %}
 
