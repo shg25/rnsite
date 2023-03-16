@@ -1,5 +1,7 @@
-from django.db import IntegrityError
-from django.http import HttpResponseNotAllowed, HttpResponseRedirect
+from urllib.parse import unquote
+
+from django.db import IntegrityError, transaction
+from django.http import HttpResponseNotAllowed, HttpResponseRedirect, JsonResponse
 from django.urls import reverse
 from django.views import generic
 from django.contrib import messages
@@ -7,7 +9,8 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import UserPassesTestMixin
 from django.shortcuts import get_object_or_404, redirect
 
-from common.util.datetime_extensions import new_datetime, new_date, timedelta_days, this_week_started
+from common.util.enum.status_type import StatusType
+from common.util.datetime_extensions import new_datetime, new_date, timedelta_days, this_week_started, output_ymdhm
 from common.util.url_extensions import scraping_title
 from common.util.log_extensions import logger_share_text
 from common.util.string_extensions import find_urls, share_text_to_formatted_name
@@ -85,18 +88,13 @@ class AirCreateByShareTextView(generic.FormView):
 
         # - - - - - - - - - - - - - - - - - - - - - - - -
         # [share_text]からradikoのURLを抜き出す
-        urls = find_urls(share_text)
-        if len(urls) == 0:
-            messages.error(self.request, 'radikoのURLが見つかりません')  # TODO share_textをどこかに記録したい
+        result = pickRadikoUrlFromShareText(share_text)
+        # share_textに問題があればエラーメッセージを表示
+        if result['status'] == StatusType.fail.value:
+            messages.error(self.request, result['data']['title'])
             return super().form_invalid(form)
 
-        has_radiko = False
-        for url in urls:
-            has_radiko = 'radiko.jp' in url
-            if has_radiko:
-                radiko_url = url
-                break
-
+        radiko_url = result['data']['radiko_url']
         # radiko_url = "https://radiko.jp/share/?sid=TBS&t=20211006000000"
 
         # - - - - - - - - - - - - - - - - - - - - - - - -
@@ -106,119 +104,22 @@ class AirCreateByShareTextView(generic.FormView):
         # print(title)
 
         # - - - - - - - - - - - - - - - - - - - - - - - -
-        # タイトルに「|」が3つ以上含まれていることを確認
-        # ※タイトルにも含まれる可能性があるので3以上は許可
-        if title.count('|') < 3:
-            # print('「|」が3つない')
-            if 'この番組の配信は終了しました' in title:
-                messages.error(self.request, '配信が終了した放送\nどうにか登録したいならサイト管理者に相談を')
-            else:
-                messages.error(self.request, 'なぜかエラー！\n送信内容をサイト管理者に伝えてください')  # TODO share_textをどこかに記録したい
+        result = pickAirFromRadikoPageTitle(title)
+
+        # パース処理でエラーがあれば処理を中断してエラーメッセージを表示
+        if result['status'] == StatusType.error.value:
+            messages.error(self.request, result['message'])
             return super().form_invalid(form)
 
-        # - - - - - - - - - - - - - - - - - - - - - - - -
-        # タイトル末尾の「| radiko」を除去
-        # rfindで後ろから「|」を検索して、それより前だけ残す
-        title = title[:title.rfind('|')]
-        # print(title)
-
-        # - - - - - - - - - - - - - - - - - - - - - - - -
-        # タイトルから放送局名を取得
-        # rfindで後ろから「|」を検索して、それより後ろを取得 → 「| TBSラジオ 」
-        # 「|」を削除して、前後のスペースを除去 → 「TBSラジオ」
-        broadcaster_name = title[title.rfind('|'):].replace('|', '').strip()
-
-        # - - - - - - - - - - - - - - - - - - - - - - - -
-        # タイトルから放送局名を除去
-        # rfindで後ろから「|」を検索して、それより前だけ残す
-        title = title[:title.rfind('|')]
-        # title = '2021年10月5日（火）24:00～25:00 | アルコ＆ピース D.C.GARAGE '
-        # print(title)
-
-        # - - - - - - - - - - - - - - - - - - - - - - - -
-        # タイトルから番組名を取得
-        # findで前から「|」を検索して、それより後ろを取得 → 「| アルコ＆ピース D.C.GARAGE 」
-        # 「|」を削除して、前後のスペースを除去 → 「アルコ＆ピース D.C.GARAGE」
-        program_name = title[title.find('|'):].replace('|', '').strip()
-
-        # - - - - - - - - - - - - - - - - - - - - - - - -
-        # 放送開始日時と放送終了日時を作成
-
-        # findで前から「|」を検索して、それより前だけ残して、前後のスペースを除去 → 「2021年10月5日（火）24:00～25:00」
-        title = title[:title.find('|')].strip()
-        # print(title)
-
-        # 曜日を除去 → 「2021年10月5日24:00～25:00」が残る
-        title = title.replace('（月）', '').replace('（火）', '').replace('（水）', '').replace('（木）', '').replace('（金）', '').replace('（土）', '').replace('（日）', '')
-        # print(title)
-
-        # 「年」「月」「日」「:」「～」「:」を半角カンマに置換 → 「2021,10,5,24,00,25,00」
-        title = title.replace('年', ',').replace('月', ',').replace('日', ',').replace(':', ',').replace('～', ',')
-        # print(title)
-
-        # 半角カンマで分割して日付を作成
-        split_title = title.split(',')  # ['2021', '10', '5', '24', '00', '25', '00']
-        title_date = new_date(int(split_title[0]), int(split_title[1]), int(split_title[2]))
-
-        # 開始時間と終了時間を取得
-        started_hour = int(split_title[3])
-        started_minute = int(split_title[4])
-        ended_hour = int(split_title[5])
-        ended_minute = int(split_title[6])
-
-        # 開始日時と終了日時どちらも24時以降は次の日にして24時間マイナスする
-        if started_hour > 23:
-            started_at = timedelta_days(title_date, 1)
-            started_hour = started_hour - 24
-        else:
-            started_at = title_date
-
-        started_at = new_datetime(started_at.year, started_at.month, started_at.day, started_hour, started_minute)
-
-        if ended_hour > 23:
-            ended_at = timedelta_days(title_date, 1)
-            ended_hour = ended_hour - 24
-        else:
-            ended_at = title_date
-
-        ended_at = new_datetime(ended_at.year, ended_at.month, ended_at.day, ended_hour, ended_minute)
-
-        # - - - - - - - - - - - - - - - - - - - - - - - -
-        # Airに保存する放送局情報を取得（検索がヒットしない場合は[None]が入ってDBには[null]で保存されるはず）
-        broadcaster_formatted_name = share_text_to_formatted_name(broadcaster_name)
-        try:
-            broadcaster_formatted_name_object = FormattedName.objects.get(name=broadcaster_formatted_name)
-            broadcaster = broadcaster_formatted_name_object.broadcaster_set.first()
-        except FormattedName.DoesNotExist:
-            # broadcasterはFormattedNameがヒットしなくてもエラーにならないのでここを通らないはず
-            broadcaster = None
-
-        # Airに保存する番組情報を取得（検索がヒットしない場合は[None]が入ってDBには[null]で保存されるはず）
-        program_formatted_name = share_text_to_formatted_name(program_name)
-        try:
-            program_formatted_name_object = FormattedName.objects.get(name=program_formatted_name)
-            programs = program_formatted_name_object.program_set.all()
-            if programs.count() == 0:
-                program = None
-            elif programs.count() == 1:
-                program = programs.first()
-            else:
-                program = programs.filter(day_of_week=title_date.weekday()).first()
-        except FormattedName.DoesNotExist:  # programはcatchしないとエラーになる（broadcasterはFormattedNameがヒットしなくてもなぜかエラーにならない）
-            program = None
-
-        # - - - - - - - - - - - - - - - - - - - - - - - -
-        if program_name == None or program_name == '' or started_at > ended_at:
-            messages.error(self.request, 'パースエラー！\n送信内容をサイト管理者に伝えてください')  # TODO share_textをどこかに記録したい
-            return super().form_invalid(form)
+        dict = result['data']
 
         # - - - - - - - - - - - - - - - - - - - - - - - -
         # [overview_before]と[overview_after]以外をinstanceにセット
-        form.instance.name = program_name
-        form.instance.program = program
-        form.instance.broadcaster = broadcaster
-        form.instance.started_at = started_at  # 日本時刻として扱われる模様 例：datetimeで[2021-10-06 00:00:00]を登録 → DBは[2021-10-05T15:00:00Z]
-        form.instance.ended_at = ended_at  # 日本時刻として扱われる模様 例：datetimeで[2021-10-06 01:00:00]を登録 → DBは[2021-10-05T16:00:00Z]
+        form.instance.name = dict['program_name']
+        form.instance.program = dict['program']
+        form.instance.broadcaster = dict['broadcaster']
+        form.instance.started_at = dict['started_at']  # 日本時刻として扱われる模様 例：datetimeで[2021-10-06 00:00:00]を登録 → DBは[2021-10-05T15:00:00Z]
+        form.instance.ended_at = dict['ended_at']  # 日本時刻として扱われる模様 例：datetimeで[2021-10-06 01:00:00]を登録 → DBは[2021-10-05T16:00:00Z]
         form.instance.overview_before = ''  # TODO 一時的に share_text がセットされているので空にしている
 
         # - - - - - - - - - - - - - - - - - - - - - - - -
@@ -227,12 +128,14 @@ class AirCreateByShareTextView(generic.FormView):
             saved_air = form.save()
         except IntegrityError:
             messages.warning(self.request, '登録済みの放送')
-            if broadcaster == None:
+            if form.instance.broadcaster == None:
                 messages.error(self.request, '放送局情報なし\n送信内容をサイト管理者に伝えてください')
                 return super().form_invalid(form)
             else:
-                saved_air = Air.objects_identification.get(broadcaster=broadcaster, started_at=started_at).first()
+                # 引き続き何卒登録のために登録済みの放送を取得する
+                saved_air = Air.objects_identification.get(broadcaster=form.instance.broadcaster, started_at=form.instance.started_at).first()
         except Exception as err:
+            # 想定していないエラーなので処理を中断する
             messages.error(self.request, '放送登録エラー：' + str(type(err)))
             return super().form_invalid(form)
         else:
@@ -252,6 +155,274 @@ class AirCreateByShareTextView(generic.FormView):
 
         # return super().form_valid(form)
         return HttpResponseRedirect(reverse('airs:detail', args=(saved_air.id,)))
+
+
+def pickRadikoUrlFromShareText(share_text):
+    urls = find_urls(share_text)
+
+    if len(urls) == 0:
+        return {
+            'status': StatusType.fail.value,
+            'data': {
+                'title': 'URLが見つかりません'
+            }
+        }
+
+    has_radiko = False
+    for url in urls:
+        has_radiko = 'radiko.jp' in url
+        if has_radiko:
+            radiko_url = url
+            break
+
+    if not has_radiko:
+        return {
+            'status': StatusType.fail.value,
+            'data': {
+                'title': 'radikoのURLが見つかりません'
+            }
+        }
+
+    return {
+        'status': StatusType.success.value,
+        'data': {
+            'radiko_url': radiko_url
+        }
+    }
+
+
+def pickAirFromRadikoPageTitle(title):
+    # タイトルに「|」が3つ以上含まれていることを確認
+    # ※タイトルにも含まれる可能性があるので3以上は許可
+    if title.count('|') < 3:
+        # print('「|」が3つない')
+        if 'この番組の配信は終了しました' in title:
+            message = '配信が終了した放送\nどうにか登録したいならサイト管理者に相談を'
+        else:
+            message = 'なぜかエラー！\n送信内容をサイト管理者に伝えてください'
+        return {
+            'status': StatusType.error.value,
+            'message': message
+        }
+
+    # タイトル末尾の「| radiko」を除去
+    # rfindで後ろから「|」を検索して、それより前だけ残す
+    title = title[:title.rfind('|')]
+    # print(title)
+
+    # - - - - - - - - - - - - - - - - - - - - - - - -
+    # タイトルから放送局名を取得
+    # rfindで後ろから「|」を検索して、それより後ろを取得 → 「| TBSラジオ 」
+    # 「|」を削除して、前後のスペースを除去 → 「TBSラジオ」
+    broadcaster_name = title[title.rfind('|'):].replace('|', '').strip()
+
+    # - - - - - - - - - - - - - - - - - - - - - - - -
+    # タイトルから放送局名を除去
+    # rfindで後ろから「|」を検索して、それより前だけ残す
+    title = title[:title.rfind('|')]
+    # title = '2021年10月5日（火）24:00～25:00 | アルコ＆ピース D.C.GARAGE '
+    # print(title)
+
+    # - - - - - - - - - - - - - - - - - - - - - - - -
+    # タイトルから番組名を取得
+    # findで前から「|」を検索して、それより後ろを取得 → 「| アルコ＆ピース D.C.GARAGE 」
+    # 「|」を削除して、前後のスペースを除去 → 「アルコ＆ピース D.C.GARAGE」
+    program_name = title[title.find('|'):].replace('|', '').strip()
+
+    # - - - - - - - - - - - - - - - - - - - - - - - -
+    # 放送開始日時と放送終了日時を作成
+
+    # findで前から「|」を検索して、それより前だけ残して、前後のスペースを除去 → 「2021年10月5日（火）24:00～25:00」
+    title = title[:title.find('|')].strip()
+    # print(title)
+
+    # 曜日を除去 → 「2021年10月5日24:00～25:00」が残る
+    title = title.replace('（月）', '').replace('（火）', '').replace('（水）', '').replace('（木）', '').replace('（金）', '').replace('（土）', '').replace('（日）', '')
+    # print(title)
+
+    # 「年」「月」「日」「:」「～」「:」を半角カンマに置換 → 「2021,10,5,24,00,25,00」
+    title = title.replace('年', ',').replace('月', ',').replace('日', ',').replace(':', ',').replace('～', ',')
+    # print(title)
+
+    # 半角カンマで分割して日付を作成
+    split_title = title.split(',')  # ['2021', '10', '5', '24', '00', '25', '00']
+    title_date = new_date(int(split_title[0]), int(split_title[1]), int(split_title[2]))
+
+    # 開始時間と終了時間を取得
+    started_hour = int(split_title[3])
+    started_minute = int(split_title[4])
+    ended_hour = int(split_title[5])
+    ended_minute = int(split_title[6])
+
+    # 開始日時と終了日時どちらも24時以降は次の日にして24時間マイナスする
+    if started_hour > 23:
+        started_at = timedelta_days(title_date, 1)
+        started_hour = started_hour - 24
+    else:
+        started_at = title_date
+
+    started_at = new_datetime(started_at.year, started_at.month, started_at.day, started_hour, started_minute)
+
+    if ended_hour > 23:
+        ended_at = timedelta_days(title_date, 1)
+        ended_hour = ended_hour - 24
+    else:
+        ended_at = title_date
+
+    ended_at = new_datetime(ended_at.year, ended_at.month, ended_at.day, ended_hour, ended_minute)
+
+    # - - - - - - - - - - - - - - - - - - - - - - - -
+    # Airに保存する放送局情報を取得（検索がヒットしない場合は[None]が入ってDBには[null]で保存されるはず）
+    broadcaster_formatted_name = share_text_to_formatted_name(broadcaster_name)
+    try:
+        broadcaster_formatted_name_object = FormattedName.objects.get(name=broadcaster_formatted_name)
+        broadcaster = broadcaster_formatted_name_object.broadcaster_set.first()
+    except FormattedName.DoesNotExist:
+        # broadcasterはFormattedNameがヒットしなくてもエラーにならないのでここを通らないはず
+        broadcaster = None
+
+    # Airに保存する番組情報を取得（検索がヒットしない場合は[None]が入ってDBには[null]で保存されるはず）
+    program_formatted_name = share_text_to_formatted_name(program_name)
+    try:
+        program_formatted_name_object = FormattedName.objects.get(name=program_formatted_name)
+        programs = program_formatted_name_object.program_set.all()
+        if programs.count() == 0:
+            program = None
+        elif programs.count() == 1:
+            program = programs.first()
+        else:
+            program = programs.filter(day_of_week=title_date.weekday()).first()
+    except FormattedName.DoesNotExist:  # programはcatchしないとエラーになる（broadcasterはFormattedNameがヒットしなくてもなぜかエラーにならない）
+        program = None
+
+    # データとして破綻がないか確認
+    if program_name == None or program_name == '' or started_at > ended_at:
+        return {
+            'status': StatusType.error.value,
+            'message': 'パースエラー！\n送信内容をサイト管理者に伝えてください'
+        }
+
+    # 登録がない放送局の場合はこの時点でエラーにする
+    if broadcaster == None:
+        return {
+            'status': StatusType.error.value,
+            'message': '予想外の放送局名なのでエラー！\n送信内容をサイト管理者に伝えてください'
+        }
+
+    return {
+        'status': StatusType.success.value,
+        'data': {
+            'program_name': program_name,
+            'program': program,
+            'broadcaster': broadcaster,
+            'started_at': started_at,  # 日本時刻として扱われる模様 例：datetimeで[2021-10-06 00:00:00]を登録 → DBは[2021-10-05T15:00:00Z]
+            'ended_at': ended_at,  # 日本時刻として扱われる模様 例：datetimeで[2021-10-06 01:00:00]を登録 → DBは[2021-10-05T16:00:00Z]
+        }
+    }
+
+
+@login_required
+def air_create_url_check(_, encoded_radiko_url):
+    title = scraping_title(unquote(encoded_radiko_url))  # '2021年10月5日（火）24:00～25:00 | アルコ＆ピース D.C.GARAGE | TBSラジオ | radiko'
+    result = pickAirFromRadikoPageTitleApi(title)
+    return JsonResponse(result)
+
+
+@login_required
+def air_create_by_title(request):
+    if request.method != 'POST':
+        return HttpResponseNotAllowed('POSTじゃないと')
+
+    radiko_title = request.POST.get('radiko_title')
+    if radiko_title == None:
+        messages.error(request, '必要なデータが飛んできてない')
+        return {
+            'status': StatusType.error.value,
+            'message': '必要なデータが飛んできてない'
+        }
+
+    result = pickAirFromRadikoPageTitle(radiko_title)
+    result = _save_air_and_nanitozo(request, result)
+
+    return JsonResponse(result)
+
+
+@transaction.atomic  # TODO これがないとテストで[TransactionManagementError]になるが、よくわからないので相談する 1/2
+def _save_air_and_nanitozo(request, result):
+    # パース処理でエラーがあれば処理を中断してエラーメッセージを表示
+    if result['status'] == StatusType.error.value:
+        messages.error(request, result['message'])
+        return result
+
+    dict = result['data']
+    air = Air(
+        name=dict['program_name'],
+        program=dict['program'],
+        broadcaster=dict['broadcaster'],
+        started_at=dict['started_at'],
+        ended_at=dict['ended_at'],
+    )
+
+    # 放送登録
+    try:
+        with transaction.atomic():  # TODO これがないとテストで[TransactionManagementError]になるが、よくわからないので相談する 2/2
+            saved_air = air.save()
+            # ↑この方法だと saved_air が入らず「None」になる
+    except IntegrityError:
+        messages.warning(request, '登録済みの放送')
+        # 引き続き何卒登録のために登録済みの放送を取得する
+    except Exception as err:
+        # TODO エラーログを取る
+        messages.error(request, '放送登録エラー：' + str(type(err)))
+        return {
+            'status': StatusType.error.value,
+            'message': '放送登録時に想定外のエラーが発生したので処理を中断：' + str(type(err))
+        }
+    else:
+        messages.success(request, '放送登録完了！')
+
+    # save()時にsaved_airが取得できないのでここで取得する
+    saved_air = Air.objects_identification.get(broadcaster=air.broadcaster, started_at=air.started_at).first()
+    if saved_air == None:
+        # TODO エラーログを取る
+        messages.error(request, '放送情報が見つからないので処理を中断\n送信内容をサイト管理者に伝えてください')
+        return {
+            'status': StatusType.error.value,
+            'message': '登録したはずの放送情報が見つからないので処理を中断します：' + str(type(err))
+        }
+
+    # 何卒登録 → 結果がどうあれエラー内容はメッセージで表示して正常終了する
+    try:
+        saved_air.nanitozo_set.create(user=request.user)
+    except IntegrityError:
+        messages.warning(request, '何卒済みの放送')
+    except Exception as err:
+        # TODO エラーログを取る
+        messages.error(request, '何卒登録エラー：' + str(type(err)))
+    else:
+        messages.success(request, '何卒！')
+
+    return {
+        'status': StatusType.success.value,
+        'data': {
+            'message': '何卒処理まで完了',
+            'next_url': reverse('airs:detail', args=(saved_air.id,)),
+        }
+    }
+
+
+def pickAirFromRadikoPageTitleApi(title):
+    result = pickAirFromRadikoPageTitle(title)
+    # 成功した場合はデータを整形（オブジェクトを全て文字列に置換） TODO ValueObject的なもの（data class?）を用意した方がいいかも
+    if result['status'] == StatusType.success.value:
+        if result['data']['program'] != None:
+            result['data']['program'] = result['data']['program'].name
+        if result['data']['broadcaster'] != None:
+            result['data']['broadcaster'] = result['data']['broadcaster'].name
+        result['data']['started_at'] = output_ymdhm(result['data']['started_at'])
+        result['data']['ended_at'] = output_ymdhm(result['data']['ended_at'])
+        result['data']['radiko_title'] = title
+    return result
 
 
 @login_required

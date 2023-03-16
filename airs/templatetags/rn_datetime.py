@@ -1,8 +1,52 @@
+from urllib.parse import quote
+
 from django import template
 
 from common.util.datetime_extensions import *
 
 register = template.Library()
+
+
+@register.filter
+def air_date_label_text(air_started_at):
+    days = air_started_diff_days(air_started_at)
+
+    # 例 現在時刻 2023/02/15 5:00〜28:59（= 2023/02/16 4:59）
+    if days >= 2:  # 例 2023/02/17 5:00〜
+        return '明後日以降'
+    elif days == 1:  # 例 2023/02/16 5:00〜28:59（= 2023/02/17 4:59）
+        return '明日'
+    elif days == 0:  # 例 22023/02/15 5:00〜28:59（= 2023/02/16 4:59）
+        return '今日'
+    elif days >= -6:  # 例 2023/02/09〜02/14 → 例 2023/02/09 5:00〜
+        return '今週'
+    elif days == -7:  # 例 2023/02/08 → 例 2023/02/08 5:00〜
+        return 'ちょうど1週間前'
+    elif days >= -14:  # 例 2023/02/01〜02/07 → 例 2023/02/01 5:00〜
+        return '先週'
+    else:
+        return ''  # 先週より前の場合は非表示
+
+
+@register.filter
+def air_date_label_class(air_started_at):
+    days = air_started_diff_days(air_started_at)
+
+    # 例 現在時刻 2023/02/15 5:00〜28:59（= 2023/02/16 4:59）
+    if days >= 2:  # 例 2023/02/17 5:00〜
+        return 'uk-label-danger'  # 明後日以降
+    elif days == 1:  # 例 2023/02/16 5:00〜28:59（= 2023/02/17 4:59）
+        return 'uk-label-danger'  # 明日
+    elif days == 0:  # 例 22023/02/15 5:00〜28:59（= 2023/02/16 4:59）
+        return 'uk-label-danger'  # 今日
+    elif days >= -6:  # 例 2023/02/09〜02/14 → 例 2023/02/09 5:00〜
+        return 'uk-label-success'  # 今週
+    elif days == -7:  # 例 2023/02/08 → 例 2023/02/08 5:00〜
+        return 'uk-label-success'  # ちょうど1週間前
+    elif days >= -14:  # 例 2023/02/01〜02/07 → 例 2023/02/01 5:00〜
+        return 'uk-label-warning'  # 先週
+    else:
+        return 'uk-hidden'  # 先週より前の場合は非表示
 
 
 @register.filter
@@ -44,10 +88,15 @@ class RNDatetime:
 
 
 @register.filter
-def radiko_link(started, radiko_identifier):
-    return output_radiko_link(started, radiko_identifier)
+def radiko_url(started, radiko_identifier):
+    return output_radiko_url(started, radiko_identifier)
 
 
 @register.filter
-def radiko_link_next_week(started, radiko_identifier):
-    return output_radiko_link_next_week(started, radiko_identifier)
+def radiko_url_next_week(started, radiko_identifier):
+    return output_radiko_url_next_week(started, radiko_identifier)
+
+
+@register.filter
+def encoded_radiko_url_next_week(started, radiko_identifier):
+    return quote(radiko_url_next_week(started, radiko_identifier), safe='')

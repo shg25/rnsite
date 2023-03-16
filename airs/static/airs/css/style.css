@@ -170,3 +170,7 @@ input[type="checkbox"] + label.label_comment_open {
 input[type="checkbox"]:checked + label.label_comment_open {
   color: #666;
 }
+
+.uk-label {
+  font-size: 12px;
+}

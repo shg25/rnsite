@@ -1,6 +1,6 @@
 from django import template
 
-from common.util.enum.nanitozo_icon_type_extensions import NanitozoIconType
+from common.util.enum.nanitozo_icon_type import NanitozoIconType
 
 register = template.Library()
 

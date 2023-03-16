@@ -46,6 +46,10 @@ urlpatterns = [
 
     # 放送作成 & 何卒作成（ログイン必須）
     path('air/create/', air_views.AirCreateByShareTextView.as_view(), name='air_create'),
+    # radikoのシェアURLで放送内容check（ログイン必須）
+    path('air/create_url_check/<str:encoded_radiko_url>', air_views.air_create_url_check, name='air_create_url_check'),
+    # radikoのタイトルを元に放送作成 & 何卒作成（ログイン必須）
+    path('air/create_by_title/', air_views.air_create_by_title, name='air_create_by_title'),
     # 放送更新（ログイン必須）
     path('air/update/<int:pk>', air_views.air_update, name='air_update'),
     # 放送一覧
