@@ -101,3 +101,10 @@ def air_nanitozo_dict(air, request_user):
         'comment_negative_list': comment_negative_list,
         'comment_mask_negative_list': comment_mask_negative_list,
     }
+
+
+# 以下、放送以外の各種詳細ページで使うもの
+
+@register.filter
+def monthly_list_filtering_target_year(monthly_list, target_year):
+    return list(filter(lambda x: x['monthly_date'].year == target_year, monthly_list))
