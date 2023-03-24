@@ -3,7 +3,7 @@
 {% load air_nanitozo %}
 {% comment %} {% load static %} {% endcomment %}
 
-{% block title %}{{ user }}{% rn_const 'TITLE_SUFFIX' %}{% endblock title %}
+{% block title %}{{ user.last_name }}{% rn_const 'TITLE_SUFFIX' %}{% endblock title %}
 
 {% block header %}{% endblock header %}
 
@@ -15,13 +15,13 @@
   </div>
 
   <div class="rn-padding">
-    {% for y in nanitozo_trunc_year %}
+    {% for nm in nanitozo_monthly %}
     <hr class="uk-divider-small uk-margin-small-bottom">
-    <h3 class="uk-text-default uk-padding-remove uk-margin-remove-top uk-margin-small-bottom">{{ y.monthly_date.year }}<small class="mgl-ss">年</small> {{ y.count }}<small class="mgl-ss">何卒</small></h3>
-
-    {% for m in nanitozo_trunc_month|monthly_list_filtering_target_year:y.monthly_date.year %}
+    <h3 class="uk-text-default uk-padding-remove uk-margin-remove-top uk-margin-small-bottom">{{ nm.year }}<small class="mgl-ss">年</small> {{ nm.sum }}<small class="mgl-ss">何卒</small></h3>
+    {% for m in nm.nanitozo_trunc_month %}
     <div class="uk-child-width-expand uk-flex-middle uk-margin-remove-top" uk-grid>
-      <h5 class="uk-width-1-6 uk-text-right uk-text-small">
+      <h5 class="uk-width-1-3 uk-text-right uk-text-small">
+        {% if m.monthly_date.year != nm.year %}{{ m.monthly_date|date:'Y' }}<small class="mgl-ss">年</small>{% endif %}
         {{ m.monthly_date|date:'n' }}<small class="mgl-ss">月</small>
       </h5>
       <div class="uk-width-1-4 uk-text-right uk-text-small">
