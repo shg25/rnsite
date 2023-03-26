@@ -38,6 +38,12 @@ class UserDetailView(generic.DetailView):
             target_year -= 1
 
         context['nanitozo_monthly'] = nanitozo_monthly
+
+        # 今月分のデータの色変え用のデータ
+        now = datetime.datetime.now()
+        this_month = make_aware(datetime.datetime(now.year, now.month, 1, 0, 0))
+        context['this_month'] = this_month
+
         return context
 
     def monthly_list_filtering_target_year(self, nanitozo_trunc_month, target_year):
