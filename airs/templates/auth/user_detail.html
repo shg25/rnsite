@@ -15,25 +15,7 @@
   </div>
 
   <div class="rn-padding">
-    {% for nm in nanitozo_monthly %}
-    <hr class="uk-divider-small uk-margin-small-bottom">
-    <h3 class="uk-text-default uk-padding-remove uk-margin-remove-top uk-margin-small-bottom">{{ nm.year }}<small class="mgl-ss">年</small> {{ nm.sum }}<small class="mgl-ss">何卒</small></h3>
-    {% for m in nm.nanitozo_trunc_month %}
-    <div class="uk-child-width-expand uk-flex-middle uk-margin-remove-top{% if m.monthly_date == this_month %} uk-text-success{% endif %}" uk-grid>
-      <h5 class="uk-width-1-3 uk-text-right uk-text-small{% if m.monthly_date == this_month %} uk-text-success{% endif %}">
-        {% if m.monthly_date.year != nm.year %}{{ m.monthly_date|date:'Y' }}<small class="mgl-ss">年</small>{% endif %}
-        {{ m.monthly_date|date:'n' }}<small class="mgl-ss">月</small>
-      </h5>
-      <div class="uk-width-1-4 uk-text-right uk-text-small">
-        {{ m.count }}<small class="mgl-ss">何卒</small>
-      </div>
-      <div class="uk-text-right mgl-m">
-        {% comment %} <a href="" class="uk-text-small">Link</a> {% endcomment %}
-      </div>
-    </div>
-
-    {% endfor %}
-    {% endfor %}
+    {% include 'list/item_monthly_count.html' with unit='何卒' %}
   </div>
 
   {% comment %} {% else %} {% endcomment %}

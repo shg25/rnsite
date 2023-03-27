@@ -7,24 +7,29 @@
 {% block header %}{% endblock header %}
 
 {% block content %}
-<article class="rn-padding">
-  {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+<article>
 
-  <h1 class="uk-text-lead">{{ broadcaster.name }}</h1>
+  <div class="rn-padding">
+    <h1 class="uk-text-lead">{{ broadcaster.name }}</h1>
 
-  <dl class="uk-description-list">
-    <dt>略称</dt>
-    <dd>{{ broadcaster.abbreviation }}</dd>
+    <dl class="uk-description-list">
+      <dt>略称</dt>
+      <dd>{{ broadcaster.abbreviation }}</dd>
 
-    <dt>サイトURL</dt>
-    <dd><a href="{{ broadcaster.site_url }}" target="_blank">{{ broadcaster.site_url }}</a></dd>
+      <dt>サイトURL</dt>
+      <dd><a href="{{ broadcaster.site_url }}" target="_blank">{{ broadcaster.site_url }}</a></dd>
 
-    <dt>Wikipedia</dt>
-    <dd><a href="{{ broadcaster.wikipedia_url }}" target="_blank">{{ broadcaster.wikipedia_url }}</a></dd>
+      <dt>Wikipedia</dt>
+      <dd><a href="{{ broadcaster.wikipedia_url }}" target="_blank">{{ broadcaster.wikipedia_url }}</a></dd>
 
-    <dt>所在地</dt>
-    <dd>{{ broadcaster.address }}</dd>
-  </dl>
+      <dt>所在地</dt>
+      <dd>{{ broadcaster.address }}</dd>
+    </dl>
+  </div>
+
+  <div class="rn-padding">
+    {% include 'list/item_monthly_count.html' with unit='放送' %}
+  </div>
 
 </article>
 {% endblock content %}
