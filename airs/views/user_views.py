@@ -2,7 +2,7 @@ import datetime
 
 from django.views import generic
 from django.contrib.auth.models import User
-from django.db.models.functions import TruncMonth, TruncYear
+from django.db.models.functions import TruncMonth
 from django.db.models import Count
 from django.utils.timezone import make_aware
 
@@ -32,7 +32,6 @@ class UserDetailView(generic.DetailView):
         nanitozo_monthly = []
         target_year = 2023 # こっちが最大値（例：2022年まで）
         while target_year >= 2022: # こちらが最小値（例：2021年から）
-            print(target_year)
             monthly_list = self.monthly_list_filtering_target_year(nanitozo_trunc_month, target_year)
             nanitozo_monthly.append(monthly_list)
             target_year -= 1

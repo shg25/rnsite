@@ -7,24 +7,47 @@
 {% block header %}{% endblock header %}
 
 {% block content %}
-<article class="rn-padding">
-  {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+<article>
 
-  <h1 class="uk-text-lead">{{ broadcaster.name }}</h1>
+  <div class="rn-padding">
+    <h1 class="uk-text-lead">{{ broadcaster.name }}</h1>
 
-  <dl class="uk-description-list">
-    <dt>略称</dt>
-    <dd>{{ broadcaster.abbreviation }}</dd>
+    <dl class="uk-description-list">
+      <dt>略称</dt>
+      <dd>{{ broadcaster.abbreviation }}</dd>
 
-    <dt>サイトURL</dt>
-    <dd><a href="{{ broadcaster.site_url }}" target="_blank">{{ broadcaster.site_url }}</a></dd>
+      <dt>サイトURL</dt>
+      <dd><a href="{{ broadcaster.site_url }}" target="_blank">{{ broadcaster.site_url }}</a></dd>
 
-    <dt>Wikipedia</dt>
-    <dd><a href="{{ broadcaster.wikipedia_url }}" target="_blank">{{ broadcaster.wikipedia_url }}</a></dd>
+      <dt>Wikipedia</dt>
+      <dd><a href="{{ broadcaster.wikipedia_url }}" target="_blank">{{ broadcaster.wikipedia_url }}</a></dd>
 
-    <dt>所在地</dt>
-    <dd>{{ broadcaster.address }}</dd>
-  </dl>
+      <dt>所在地</dt>
+      <dd>{{ broadcaster.address }}</dd>
+    </dl>
+  </div>
+
+  <div class="rn-padding">
+    {% for yearly_count in yearly_count_list %}
+    <hr class="uk-divider-small uk-margin-small-bottom">
+    <h3 class="uk-text-default uk-padding-remove uk-margin-remove-top uk-margin-small-bottom">{{ yearly_count.year }}<small class="mgl-ss">年</small> {{ yearly_count.count }}<small class="mgl-ss">放送</small></h3>
+    {% for monthly_count in yearly_count.monthly_count_list %}
+    <div class="uk-child-width-expand uk-flex-middle uk-margin-remove-top{% if monthly_count.monthly_date == this_month %} uk-text-success{% endif %}" uk-grid>
+      <h5 class="uk-width-1-3 uk-text-right uk-text-small{% if monthly_count.monthly_date == this_month %} uk-text-success{% endif %}">
+        {% if monthly_count.monthly_date.year != yearly_count.year %}{{ monthly_count.monthly_date|date:'Y' }}<small class="mgl-ss">年</small>{% endif %}
+        {{ monthly_count.monthly_date|date:'n' }}<small class="mgl-ss">月</small>
+      </h5>
+      <div class="uk-width-1-4 uk-text-right uk-text-small">
+        {{ monthly_count.count }}<small class="mgl-ss">放送</small>
+      </div>
+      <div class="uk-text-right mgl-m">
+        {% comment %} <a href="" class="uk-text-small">Link</a> {% endcomment %}
+      </div>
+    </div>
+
+    {% endfor %}
+    {% endfor %}
+  </div>
 
 </article>
 {% endblock content %}
