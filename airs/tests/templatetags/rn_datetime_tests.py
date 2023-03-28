@@ -8,6 +8,8 @@ from ...templatetags.rn_datetime import *
 
 class AirDateLabelTests(TestCase):
 
+    # 以下、freeze_time → not深夜
+
     @freezegun.freeze_time('2023-02-15 5:30:00')
     def test_2日後の日中の放送(self):
         air_started_at = timezone.make_aware(timezone.datetime(2023, 2, 17, 12, 0))
@@ -60,13 +62,29 @@ class AirDateLabelTests(TestCase):
     def test_昨日の日中の放送(self):
         air_started_at = timezone.make_aware(timezone.datetime(2023, 2, 14, 12, 0))
         response = air_date_label_text(air_started_at)
-        self.assertEqual(response, '今週')
+        self.assertEqual(response, '昨日')
         response = air_date_label_class(air_started_at)
         self.assertEqual(response, 'uk-label-success')
 
     @freezegun.freeze_time('2023-02-15 5:30:00')
     def test_昨日の深夜の放送(self):
         air_started_at = timezone.make_aware(timezone.datetime(2023, 2, 15, 1, 0))
+        response = air_date_label_text(air_started_at)
+        self.assertEqual(response, '昨日')
+        response = air_date_label_class(air_started_at)
+        self.assertEqual(response, 'uk-label-success')
+
+    @freezegun.freeze_time('2023-02-15 5:30:00')
+    def test_昨日の日中の放送(self):
+        air_started_at = timezone.make_aware(timezone.datetime(2023, 2, 13, 12, 0))
+        response = air_date_label_text(air_started_at)
+        self.assertEqual(response, '今週')
+        response = air_date_label_class(air_started_at)
+        self.assertEqual(response, 'uk-label-success')
+
+    @freezegun.freeze_time('2023-02-15 5:30:00')
+    def test_昨日の深夜の放送(self):
+        air_started_at = timezone.make_aware(timezone.datetime(2023, 2, 14, 1, 0))
         response = air_date_label_text(air_started_at)
         self.assertEqual(response, '今週')
         response = air_date_label_class(air_started_at)
@@ -152,7 +170,9 @@ class AirDateLabelTests(TestCase):
         response = air_date_label_class(air_started_at)
         self.assertEqual(response, 'uk-hidden')
 
-    #
+    # ここまで、freeze_time → not深夜
+
+    # 以下、freeze_time → is深夜
 
     @freezegun.freeze_time('2023-02-16 4:59:00')
     def test_深夜から2日後の日中の放送(self):
@@ -206,13 +226,29 @@ class AirDateLabelTests(TestCase):
     def test_深夜から昨日の日中の放送(self):
         air_started_at = timezone.make_aware(timezone.datetime(2023, 2, 14, 12, 0))
         response = air_date_label_text(air_started_at)
-        self.assertEqual(response, '今週')
+        self.assertEqual(response, '昨日')
         response = air_date_label_class(air_started_at)
         self.assertEqual(response, 'uk-label-success')
 
     @freezegun.freeze_time('2023-02-16 4:59:00')
     def test_深夜から昨日の深夜の放送(self):
         air_started_at = timezone.make_aware(timezone.datetime(2023, 2, 15, 1, 0))
+        response = air_date_label_text(air_started_at)
+        self.assertEqual(response, '昨日')
+        response = air_date_label_class(air_started_at)
+        self.assertEqual(response, 'uk-label-success')
+
+    @freezegun.freeze_time('2023-02-16 4:59:00')
+    def test_深夜から昨日の日中の放送(self):
+        air_started_at = timezone.make_aware(timezone.datetime(2023, 2, 13, 12, 0))
+        response = air_date_label_text(air_started_at)
+        self.assertEqual(response, '今週')
+        response = air_date_label_class(air_started_at)
+        self.assertEqual(response, 'uk-label-success')
+
+    @freezegun.freeze_time('2023-02-16 4:59:00')
+    def test_深夜から昨日の深夜の放送(self):
+        air_started_at = timezone.make_aware(timezone.datetime(2023, 2, 14, 1, 0))
         response = air_date_label_text(air_started_at)
         self.assertEqual(response, '今週')
         response = air_date_label_class(air_started_at)
@@ -297,3 +333,5 @@ class AirDateLabelTests(TestCase):
         self.assertEqual(response, '')
         response = air_date_label_class(air_started_at)
         self.assertEqual(response, 'uk-hidden')
+
+    # ここまで、freeze_time → is深夜
