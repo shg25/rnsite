@@ -18,6 +18,8 @@ def air_date_label_text(air_started_at):
         return '明日'
     elif days == 0:  # 例 22023/02/15 5:00〜28:59（= 2023/02/16 4:59）
         return '今日'
+    elif days == -1:  # 例 22023/02/14 5:00〜28:59（= 2023/02/15 4:59）
+        return '昨日'
     elif days >= -6:  # 例 2023/02/09〜02/14 → 例 2023/02/09 5:00〜
         return '今週'
     elif days == -7:  # 例 2023/02/08 → 例 2023/02/08 5:00〜
@@ -39,6 +41,8 @@ def air_date_label_class(air_started_at):
         return 'uk-label-danger'  # 明日
     elif days == 0:  # 例 22023/02/15 5:00〜28:59（= 2023/02/16 4:59）
         return 'uk-label-danger'  # 今日
+    elif days == -1:  # 例 22023/02/14 5:00〜28:59（= 2023/02/15 4:59）
+        return 'uk-label-success'  # 昨日
     elif days >= -6:  # 例 2023/02/09〜02/14 → 例 2023/02/09 5:00〜
         return 'uk-label-success'  # 今週
     elif days == -7:  # 例 2023/02/08 → 例 2023/02/08 5:00〜

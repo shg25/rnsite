@@ -78,6 +78,7 @@ def air_started_diff_days(air_started):
         now = timedelta_days(now, -1)
     today = new_datetime(now.year, now.month, now.day, 5, 0)
 
+    air_started = air_started.astimezone(pytztimezone('Asia/Tokyo'))  # タイムゾーンを日本時間にする
     if __is_midnight(air_started):
         air_started = timedelta_days(air_started, -1)
     aired = new_datetime(air_started.year, air_started.month, air_started.day, 5, 0)
