@@ -146,15 +146,15 @@ class AirCreateByShareTextView(generic.FormView):
             saved_air.nanitozo_set.create(user=self.request.user)
         except IntegrityError:
             messages.warning(self.request, '何卒済みの放送')
-            return HttpResponseRedirect(reverse('airs:detail', args=(saved_air.id,)))
+            return HttpResponseRedirect(saved_air.get_absolute_url())
         except Exception as err:
             messages.error(self.request, '何卒登録エラー：' + str(type(err)))
-            return HttpResponseRedirect(reverse('airs:detail', args=(saved_air.id,)))
+            return HttpResponseRedirect(saved_air.get_absolute_url())
         else:
             messages.success(self.request, '何卒！')
 
         # return super().form_valid(form)
-        return HttpResponseRedirect(reverse('airs:detail', args=(saved_air.id,)))
+        return HttpResponseRedirect(saved_air.get_absolute_url())
 
 
 def pickRadikoUrlFromShareText(share_text):
@@ -406,7 +406,7 @@ def _save_air_and_nanitozo(request, result):
         'status': StatusType.success.value,
         'data': {
             'message': '何卒処理まで完了',
-            'next_url': reverse('airs:detail', args=(saved_air.id,)),
+            'next_url': saved_air.get_absolute_url(),
         }
     }
 
@@ -437,7 +437,7 @@ def air_update(request, pk):
         messages.success(request, '更新完了！')
     else:
         messages.error(request, '更新失敗！')
-    return redirect('airs:detail', pk=pk)
+    return redirect(air.get_absolute_url())
 
 
 class AirDetailView(generic.DetailView):

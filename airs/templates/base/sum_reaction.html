@@ -4,7 +4,7 @@
     </div>
     {% if is_negative == False %}
     <div class="uk-width-expand uk-text-truncate uk-text-small uk-margin-small-left mgt-s">
-        {% for nanitozo in nanitozo_list %}<a href="{% url 'airs:user' nanitozo.user.id %}">{{ nanitozo.user.last_name }}</a> {% endfor %}
+        {% for nanitozo in nanitozo_list %}<a href="{{ nanitozo.user.get_absolute_url }}">{{ nanitozo.user.last_name }}</a> {% endfor %}
     </div>
     {% endif %}
 </div>

@@ -31,7 +31,7 @@ def nanitozo_create(request, air_id):
     air = get_object_or_404(Air, pk=air_id)
     nanitozo_create_and_set_message(request, air)
 
-    return HttpResponseRedirect(reverse('airs:detail', args=(air.id,)))
+    return HttpResponseRedirect(air.get_absolute_url())
 
 
 def nanitozo_create_api(request, air_id):
@@ -65,7 +65,7 @@ def nanitozo_create_with_good(request, air_id):
     air = get_object_or_404(Air, pk=air_id)
     nanitozo_create_with_good_and_set_message(request, air)
 
-    return HttpResponseRedirect(reverse('airs:detail', args=(air.id,)))
+    return HttpResponseRedirect(air.get_absolute_url())
 
 
 def nanitozo_create_with_good_api(request, air_id):

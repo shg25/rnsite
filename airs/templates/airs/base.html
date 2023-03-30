@@ -57,13 +57,7 @@
           <ul class="uk-navbar-nav">
             <li class="{% if request.resolver_match.url_name == 'index' %}uk-active{% endif %}"><a href="{% url 'airs:index' %}">{% rn_const 'TITLE_AIR_LIST' %}</a></li>
             <li class="{% if request.resolver_match.url_name == 'ns' %}uk-active{% endif %}"><a href="{% url 'airs:ns' %}">{% rn_const 'TITLE_NANITOZO_LIST' %}</a></li>
-            {% comment %} {% if request.resolver_match.url_name == 'users' %}
-            <li class="uk-active"><a href="{% url 'airs:users' %}">リスナー</a></li>
-            {% elif request.resolver_match.url_name == 'broadcasters' %}
-            <li class="uk-active"><a href="{% url 'airs:broadcasters' %}">放送局</a></li>
-            {% elif request.resolver_match.url_name == 'programs' %}
-            <li class="uk-active"><a href="{% url 'airs:programs' %}">番組</a></li>
-            {% endif %} {% endcomment %}
+
             <li>
               <a href="">…</a>
               <div uk-dropdown="pos: top-center">

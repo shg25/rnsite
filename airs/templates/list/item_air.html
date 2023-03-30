@@ -16,7 +16,7 @@
 
 <div class="uk-margin-bottom uk-animation-toggle uk-grid-collapse" tabindex="0" uk-grid>
 
-    <a href="{% url 'airs:detail' air.id %}" class="uk-width-expand uk-display-block uk-link-reset uk-animation-slide-bottom-small{% if nanitozo_done.good_done or nanitozo_done.comment_done %} border-left-success{% elif nanitozo_done.nanitozo_done %} border-left-muted{% endif %}">
+    <a href="{{ air.get_absolute_url }}" class="uk-width-expand uk-display-block uk-link-reset uk-animation-slide-bottom-small{% if nanitozo_done.good_done or nanitozo_done.comment_done %} border-left-success{% elif nanitozo_done.nanitozo_done %} border-left-muted{% endif %}">
 
         <div class="uk-grid-collapse uk-flex-middle" uk-grid>
             <h5 class="uk-width-auto uk-text-small">

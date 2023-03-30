@@ -4,7 +4,7 @@
 
 <div class="uk-margin-bottom uk-animation-toggle" tabindex="0">
 
-    <a href="{% url 'airs:detail' nanitozo.air.id %}" class="uk-display-block uk-link-reset uk-animation-slide-bottom-small{% if user.is_authenticated and nanitozo.user.last_name == user.last_name%} border-left-muted{% endif %}">
+    <a href="{{ nanitozo.air.get_absolute_url }}" class="uk-display-block uk-link-reset uk-animation-slide-bottom-small{% if user.is_authenticated and nanitozo.user.last_name == user.last_name%} border-left-muted{% endif %}">
 
         <h5 class="uk-text-small uk-margin-remove">
             <span class="mgr-s">{{ nanitozo.user.last_name }}</span><span class="mgr-s">{{ ndt.hm }}</span>{% if nanitozo.good %}<span class="mgr-s">{% include 'base/icon.html' with icon='happy' %}</span>{% endif %}{% if nanitozo.has_comment %}{% include 'base/icon.html' with icon='comment' %}{% endif %}
