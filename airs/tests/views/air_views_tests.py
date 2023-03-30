@@ -83,7 +83,7 @@ class AirDetailViewTests(TestCase):
         self.air = create_air('酒井健太ANN0', started, ended)
 
     def test_連絡詳細_ゲスト(self):
-        url = reverse('airs:detail', args=(self.air.id,))
+        url = self.air.get_absolute_url()
         response = self.client.get(url)
 
         self.assertContains(response, self.air.name)
@@ -97,7 +97,7 @@ class AirDetailViewTests(TestCase):
         self.user = UserModel.objects.create(username='test', email='test@test.com', password='123456', last_name='ABC')
         self.client.force_login(self.user)
 
-        url = reverse('airs:detail', args=(self.air.id,))
+        url = self.air.get_absolute_url()
         response = self.client.get(url)
 
         self.assertContains(response, self.air.name)
@@ -115,7 +115,7 @@ class AirDetailViewTests(TestCase):
         # 登録した放送に何卒
         self.air.nanitozo_set.create(user=self.user)
 
-        url = reverse('airs:detail', args=(self.air.id,))
+        url = self.air.get_absolute_url()
         response = self.client.get(url)
 
         self.assertContains(response, self.air.name)

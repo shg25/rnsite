@@ -22,7 +22,7 @@
 
   <div class="uk-flex uk-flex-middle">
     <span uk-icon="icon: microphone" class="uk-icon"></span>
-    <span class="uk-text-middle mgl-s"><a href="{% url 'airs:broadcaster' air.broadcaster.id %}">{{ air.broadcaster.name }}</a></span>
+    <span class="uk-text-middle mgl-s"><a href="{{ air.broadcaster.get_absolute_url }}">{{ air.broadcaster.name }}</a></span>
   </div>
 
   <div class="uk-flex uk-flex-middle">
@@ -38,7 +38,7 @@
   {% if air.program %}
   <div class="uk-flex uk-flex-middle">
     <span uk-icon="icon: info" class="uk-icon"></span>
-    <span class="uk-text-middle mgl-s"><a href="{% url 'airs:program' air.program.id %}">{{ air.program.name }}</a></span>
+    <span class="uk-text-middle mgl-s"><a href="{{ air.program.get_absolute_url }}">{{ air.program.name }}</a></span>
   </div>
   {% endif %}
 </header>

@@ -118,7 +118,7 @@
 
       {% else %}{% comment %} not is_detail_page {% endcomment %}
 
-      <li><a href="{% url 'airs:detail' air.id %}">別画面で感想編集</a></li>
+      <li><a href="{{ air.get_absolute_url }}">別画面で感想編集</a></li>
 
       {% if my_nanitozo.good == True %}
       <li><a href="javascript:void(0)" onclick="fetchAndReload('{% url 'airs:nanitozo_cancel_good_api' air_id=air.id pk=my_nanitozo.id %}', '満足じゃなかった？')" class="uk-text-success">{% rn_const 'TITLE_NANITOZO_CANCEL_GOOD' %}</a></li>

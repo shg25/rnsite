@@ -3,18 +3,27 @@ import datetime
 from django.db import models
 from django.contrib.auth.models import User
 from django.core.validators import MaxValueValidator, MinValueValidator
-from django.db.models import constraints
+from django.urls import reverse
 from django.utils import timezone
 from pytz import timezone as pytztimezone  # TODO どこかにまとめる
 
 from airs.models_managers import *
 
 
+#
 def get_last_name(self):
     return self.last_name
 
 
-User.add_to_class("__str__", get_last_name)
+User.add_to_class('__str__', get_last_name)
+
+
+#
+def get_absolute_url_user(self):
+    return reverse('airs:user', kwargs={'pk': self.pk})
+
+
+User.add_to_class('get_absolute_url', get_absolute_url_user)
 
 
 # 整形した名前
@@ -71,6 +80,9 @@ class Broadcaster(models.Model):
     def __str__(self):
         return self.name
 
+    def get_absolute_url(self):
+        return reverse('airs:broadcaster', kwargs={'pk': self.pk})
+
 
 # 番組
 class Program(models.Model):
@@ -113,6 +125,9 @@ class Program(models.Model):
     def __str__(self):
         return self.name
 
+    def get_absolute_url(self):
+        return reverse('airs:program', kwargs={'pk': self.pk})
+
 
 # 放送
 class Air(models.Model):
@@ -151,6 +166,9 @@ class Air(models.Model):
 
     def __str__(self):
         return str(self.broadcaster)[:4] + '_' + str(self.started_at.astimezone(pytztimezone('Asia/Tokyo')))[:16] + '_' + self.name[:8]
+
+    def get_absolute_url(self):
+        return reverse('airs:detail', kwargs={'pk': self.pk})
 
     def un_nanitozo_this_week(self, air_list_this_week):
         # 今週分の放送リストから曜日が同じものだけ取得
