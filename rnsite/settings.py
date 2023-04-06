@@ -183,7 +183,7 @@ if not DEBUG:
     STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.StaticFilesStorage'
 
     sentry_sdk.init(
-        dsn="https://8d76563e97dc417ea6f4b74aac62183c@o4504928316424192.ingest.sentry.io/4504928321536000",
+        dsn=os.getenv('SENTRY_DSN'),
         integrations=[
             DjangoIntegration(),
         ],
