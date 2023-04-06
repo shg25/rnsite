@@ -25,7 +25,10 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))  # Heroku
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    'localhost',
+    'r.ntbr.info',
+]
 
 # Application definition
 
@@ -159,7 +162,7 @@ LOGOUT_REDIRECT_URL = 'airs:index'
 
 # ログインセッションの有効期限
 # SESSION_COOKIE_AGE = 1209600 # デフォルトの2週間
-SESSION_SAVE_EVERY_REQUEST = True # これを追加したら随時延長
+SESSION_SAVE_EVERY_REQUEST = True  # これを追加したら随時延長
 
 
 # Static files (CSS, JavaScript, Images)
