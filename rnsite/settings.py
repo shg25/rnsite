@@ -25,10 +25,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))  # Heroku
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
-ALLOWED_HOSTS = [
-    'localhost',
-    'r.ntbr.info',
-]
+ALLOWED_HOSTS = []
 
 # Application definition
 
