@@ -8,6 +8,19 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## 開発コマンド
 
+### 初回セットアップ
+```bash
+# 1. local_settings.py を作成（必須）
+# ルートディレクトリに local_settings.py を作成し、下記「ローカル開発設定」の内容を記述
+
+# 2. データベース初期化
+python manage.py migrate
+python manage.py loaddata airs/fixtures/*.json
+
+# 3. 開発サーバー起動
+python manage.py runserver
+```
+
 ### 基本的なDjangoコマンド
 ```bash
 # 開発サーバー起動
@@ -121,10 +134,31 @@ heroku run --app=[環境名] pip list
 ## 開発時の注意点
 
 ### ローカル開発設定
-`local_settings.py` をルートディレクトリに作成（.gitignore対象）:
+**重要**: `local_settings.py` をルートディレクトリに作成する必要があります（.gitignore対象）:
 ```python
 SECRET_KEY = '適当な文字列'
 DEBUG = True
+
+# ローカル開発用にSQLiteを使用（PostgreSQL依存関係の問題回避）
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': 'db.sqlite3',
+    }
+}
+
+# テスト環境用に静的ファイルの設定を簡素化
+STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.StaticFilesStorage'
+```
+
+### ローカル開発データベース（SQLite）
+- **推奨**: PostgreSQLの代わりにSQLiteを使用
+- **理由**: PostgreSQL依存関係（psycopg2）の設定が不要で環境構築が簡単
+- **ファイル**: `db.sqlite3`（プロジェクト固有、他プロジェクトに影響なし）
+- **初期セットアップ**:
+```bash
+python manage.py migrate
+python manage.py loaddata airs/fixtures/*.json  # 374オブジェクトのテストデータ投入
 ```
 
 ### データベース制約
