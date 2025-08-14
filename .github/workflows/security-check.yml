@@ -1,0 +1,40 @@
+name: Security Check
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  security-check:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Check for secrets
+      run: |
+        echo "🔍 機密情報チェック実行中..."
+        
+        # 機密情報パターンの検索
+        if grep -r -i -n --exclude-dir=.git \
+          -e "secret_key.*=" -e "password.*=" -e "api_key.*=" \
+          -e "\.env" -e "@gmail\.com" -e "@yahoo\.com" \
+          . ; then
+          echo "❌ 機密情報の可能性がある内容が検出されました"
+          exit 1
+        fi
+        
+        # 保護すべきファイルの確認
+        if find . -name "local_settings.py" -not -path "./.git/*" | grep -q .; then
+          echo "❌ local_settings.py が見つかりました"
+          exit 1
+        fi
+        
+        if find . -name "*.env" -not -path "./.git/*" | grep -q .; then
+          echo "❌ .env ファイルが見つかりました"
+          exit 1
+        fi
+        
+        echo "✅ セキュリティチェック完了"

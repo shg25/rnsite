@@ -1,0 +1,43 @@
+#!/bin/bash
+# Claude Code pre-commit hook - セキュリティチェック
+
+echo "🔍 セキュリティチェックを実行中..."
+
+# 機密情報パターンの検索
+SECRET_MATCHES=$(grep -r -i -n --exclude-dir=.git --exclude=*.sqlite3 \
+  -e "secret_key.*=" -e "password.*=" -e "api_key.*=" -e "token.*=" \
+  -e "dsn.*=" -e "\.env" -e "@gmail\.com" -e "@yahoo\.com" \
+  . || true)
+
+if [ ! -z "$SECRET_MATCHES" ]; then
+  echo "❌ 機密情報の可能性がある内容が検出されました:"
+  echo "$SECRET_MATCHES"
+  echo ""
+  echo "コミット前に以下を確認してください:"
+  echo "1. 実際の機密情報でないか"
+  echo "2. .gitignoreに追加すべきファイルでないか"
+  echo "3. 環境変数に移動すべき設定でないか"
+  echo ""
+  read -p "続行しますか？ (y/N): " -n 1 -r
+  echo
+  if [[ ! $REPLY =~ ^[Yy]$ ]]; then
+    echo "❌ コミットを中止しました"
+    exit 1
+  fi
+fi
+
+# local_settings.pyが追跡されていないかチェック
+if git diff --cached --name-only | grep -q "local_settings.py"; then
+  echo "❌ local_settings.py がコミットに含まれています！"
+  echo "このファイルには機密情報が含まれる可能性があります。"
+  exit 1
+fi
+
+# .env ファイルがないかチェック
+if git diff --cached --name-only | grep -q "\.env"; then
+  echo "❌ .env ファイルがコミットに含まれています！"
+  echo "環境変数ファイルは公開すべきではありません。"
+  exit 1
+fi
+
+echo "✅ セキュリティチェック完了"
