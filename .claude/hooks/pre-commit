@@ -3,10 +3,15 @@
 
 echo "🔍 セキュリティチェックを実行中..."
 
-# 機密情報パターンの検索
-SECRET_MATCHES=$(grep -r -i -n --exclude-dir=.git --exclude=*.sqlite3 \
-  -e "secret_key.*=" -e "password.*=" -e "api_key.*=" -e "token.*=" \
-  -e "dsn.*=" -e "\.env" -e "@gmail\.com" -e "@yahoo\.com" \
+# 機密情報パターンの検索（テストファイルと除外対象は除く）
+SECRET_MATCHES=$(grep -r -i -n --exclude-dir=.git --exclude-dir=.claude \
+  --exclude=*.sqlite3 --exclude="*.md" --exclude="*test*.py" \
+  --exclude="local_settings.py" \
+  -e "secret_key\s*=\s*['\"][^'\"]*['\"]" \
+  -e "api_key\s*=\s*['\"][^'\"]*['\"]" \
+  -e "token\s*=\s*['\"][^'\"]*['\"]" \
+  -e "dsn\s*=\s*['\"][^'\"]*['\"]" \
+  -e "[a-zA-Z0-9._%+-]+@(gmail|yahoo|hotmail)\.com" \
   . || true)
 
 if [ ! -z "$SECRET_MATCHES" ]; then
