@@ -1,7 +1,8 @@
 {
   "permissions": {
     "allow": [
-      "Bash(python manage.py test:*)"
+      "Bash(python manage.py test:*)",
+      "WebSearch"
     ],
     "deny": [],
     "ask": []

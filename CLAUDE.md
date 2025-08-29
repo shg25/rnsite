@@ -67,7 +67,34 @@ pip check
 pip freeze > requirements.txt
 ```
 
-### Herokuデプロイ関連
+### Railwayデプロイ関連
+```bash
+# Railway CLIインストール
+npm install -g @railway/cli
+
+# Railwayログイン
+railway login
+
+# プロジェクト作成・デプロイ
+railway project create
+railway up
+
+# Railway環境変数設定
+railway variables set SECRET_KEY=your_secret_key
+railway variables set DATABASE_URL=postgresql://...
+
+# Railway環境でコマンド実行
+railway run python manage.py migrate
+railway run python manage.py createsuperuser
+
+# Railwayログ確認
+railway logs
+
+# Railwayドメイン生成
+railway domain
+```
+
+### 旧Herokuデプロイ関連（非推奨）
 ```bash
 # Herokuにデプロイ
 git push heroku main
@@ -205,3 +232,29 @@ python manage.py loaddata airs/fixtures/*.json  # 374オブジェクトのテス
 - `beautifulsoup4`: WEBスクレイピング & HTMLパーサ
 - `mojimoji`: 全角半角変換
 - `urlextract`: 文字列からURL抽出
+
+## Railway移行について
+
+### Railway移行の利点
+- **コスト削減**: Herokuより安価な料金体系
+- **簡単なデプロイ**: GitHubリポジトリからの自動デプロイ
+- **モダンな開発体験**: より直感的なUI/UX
+
+### 移行手順
+1. **Railway設定**: GitHubリポジトリを接続
+2. **環境変数設定**: `SECRET_KEY`, `DATABASE_URL`等を設定
+3. **PostgreSQLサービス**: Railwayで新しくPostgreSQLを作成
+4. **データ移行**: Herokuからデータをエクスポート/インポート
+
+### 必要な環境変数
+```
+SECRET_KEY=django_secret_key
+DATABASE_URL=postgresql://user:password@host:port/dbname
+SENTRY_DSN=sentry_dsn_url（任意）
+```
+
+### コード変更点
+- `django-heroku` → `dj-database-url` + WhiteNoise設定
+- `ALLOWED_HOSTS = ['*']` でRailwayドメインに対応
+- `railway.json`でデプロイ設定を自動化
+- `psycopg2-binary`でPostgreSQL接続を確保

@@ -12,7 +12,7 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 
 from pathlib import Path
 import os
-import django_heroku
+import dj_database_url
 import logging.config
 import sentry_sdk
 from sentry_sdk.integrations.django import DjangoIntegration
@@ -25,7 +25,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))  # Heroku
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 # Application definition
 
@@ -82,14 +82,10 @@ WSGI_APPLICATION = 'rnsite.wsgi.application'
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'nanitozo',
-        'USER': os.environ.get('DB_USER'),
-        'PASSWORD': os.environ.get('DB_PASSWORD'),
-        'HOST': '',
-        'PORT': '',
-    }
+    'default': dj_database_url.config(
+        default='sqlite:///db.sqlite3',
+        conn_max_age=600,
+    )
 }
 
 
@@ -167,8 +163,9 @@ SESSION_SAVE_EVERY_REQUEST = True  # これを追加したら随時延長
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATIC_URL = '/static/'
 
-# Activate Django-Heroku.
-django_heroku.settings(locals())
+# Railway環境での静的ファイル設定
+MIDDLEWARE.insert(1, 'whitenoise.middleware.WhiteNoiseMiddleware')
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
 
 
 DEBUG = False
@@ -180,20 +177,14 @@ except ImportError:
 
 if not DEBUG:
     SECRET_KEY = os.getenv('SECRET_KEY')
-    STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.StaticFilesStorage'
 
-    sentry_sdk.init(
-        dsn=os.getenv('SENTRY_DSN'),
-        integrations=[
-            DjangoIntegration(),
-        ],
-
-        # Set traces_sample_rate to 1.0 to capture 100%
-        # of transactions for performance monitoring.
-        # We recommend adjusting this value in production.
-        traces_sample_rate=1.0,
-
-        # If you wish to associate users to errors (assuming you are using
-        # django.contrib.auth) you may enable sending PII data.
-        send_default_pii=True
-    )
+    # Sentry設定（任意）
+    if os.getenv('SENTRY_DSN'):
+        sentry_sdk.init(
+            dsn=os.getenv('SENTRY_DSN'),
+            integrations=[
+                DjangoIntegration(),
+            ],
+            traces_sample_rate=1.0,
+            send_default_pii=True
+        )
