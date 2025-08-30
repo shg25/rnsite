@@ -20,4 +20,4 @@ COPY . .
 EXPOSE 8000
 
 # アプリケーションを起動
-CMD ["sh", "-c", "python manage.py migrate && python manage.py collectstatic --noinput && gunicorn rnsite.wsgi --bind 0.0.0.0:$PORT"]
+CMD ["sh", "-c", "python manage.py migrate && python manage.py collectstatic --noinput -v 2 && ls -la staticfiles/ && gunicorn rnsite.wsgi --bind 0.0.0.0:$PORT"]
