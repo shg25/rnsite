@@ -188,10 +188,59 @@ railway environment new staging
 railway run python manage.py loaddata airs/fixtures/*.json
 ```
 
+# STG環境の4つの運用パターン
+
+## パターン1: 完全分離型（標準）
+- **Web**: STG専用
+- **DB**: STG専用（テストデータ）
+- **用途**: DB変更を伴う開発、Migration テスト
+- **コスト**: Web + DB
+```bash
+railway environment staging
+# Dashboard > Duplicate from production
+railway run python manage.py loaddata airs/fixtures/*.json
+```
+
+## パターン2: 本番DB共有型（効率重視） ⭐
+- **Web**: STG専用  
+- **DB**: 本番DB共有（READ-ONLY）
+- **用途**: フロントエンド修正、表示確認、UI テスト
+- **コスト**: Web のみ（DB料金節約）
+```bash
+railway environment staging
+# Dashboard > web service のみ作成
+railway variables set DATABASE_URL=$PRODUCTION_DATABASE_URL
+# 注意：READ-ONLY運用必須
+```
+
+## パターン3: App Sleep 活用型
+- **運用**: 通常はスリープ、必要時のみ起動
+- **コスト**: 最小限（自動制御）
+
+## パターン4: 完全削除型  
+- **運用**: 使わない期間は完全削除
+- **コスト**: ゼロ（再作成5分）
+
 # 実用的運用スケジュール
-- **開発期間**: STG環境フル稼働
+- **DB影響なし修正**: パターン2（本番DB共有）推奨
+- **DB変更あり修正**: パターン1（完全分離）
 - **開発休止期間（1-2週間）**: App Sleep任せ（自動）
 - **長期休止期間（1ヶ月以上）**: 環境削除を検討
+
+# 本番DB共有時の安全対策
+```sql
+-- 本番DB内でSTG専用読み取り専用ユーザー作成
+CREATE USER staging_readonly WITH PASSWORD 'secure_password';
+GRANT SELECT ON ALL TABLES IN SCHEMA public TO staging_readonly;
+GRANT USAGE ON SCHEMA public TO staging_readonly;
+```
+
+```python
+# settings.py でSTG環境のWrite操作制限
+if os.getenv('RAILWAY_ENVIRONMENT') == 'staging':
+    # Read-Only 接続推奨
+    pass
+```
 ```
 
 ### 旧Herokuデプロイ関連（非推奨）
