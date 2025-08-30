@@ -163,6 +163,11 @@ SESSION_SAVE_EVERY_REQUEST = True  # これを追加したら随時延長
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATIC_URL = '/static/'
 
+# 静的ファイルの検索パス
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'airs/static'),
+]
+
 # Railway環境での静的ファイル設定
 MIDDLEWARE.insert(1, 'whitenoise.middleware.WhiteNoiseMiddleware')
 
