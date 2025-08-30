@@ -106,17 +106,68 @@ railway run pg_dump $DATABASE_URL > backup_$(date +%Y%m%d).sql
 # 毎日5AM UTCで自動バックアップ（S3設定が必要）
 ```
 
+### STG環境運用ガイド
+```bash
+# STG環境セットアップ（初回のみ）
+railway environment new staging         # staging環境作成
+railway environment staging            # staging環境に切り替え
+# Railway Dashboard > Settings > Environments > staging > Duplicate from production
+
+# STG環境デプロイ
+railway environment staging            # staging環境に切り替え
+git push origin develop               # developブランチをstaging環境にデプロイ
+
+# STG環境確認
+railway environment staging
+railway variables                     # STG環境固有の環境変数確認
+railway logs -d                      # STGデプロイログ確認
+railway shell                        # STG環境でのシェルアクセス
+
+# STG → 本番環境移行フロー
+1. developブランチで開発 → STG環境でテスト
+2. STG環境で動作確認完了
+3. main/masterブランチにマージ
+4. production環境へデプロイ
+
+# STG環境データ管理
+railway environment staging
+railway run python manage.py loaddata airs/fixtures/*.json  # テストデータ投入
+railway run python manage.py migrate                       # DB migration
+```
+
 ### Railway運用チェックリスト
 ```bash
 # 月次確認事項
-1. コスト監視: Railway Dashboardでusage確認
-2. ログ確認: `railway logs`でエラーチェック
+1. コスト監視: Railway Dashboardでusage確認（本番+STG）
+2. ログ確認: `railway logs`でエラーチェック（各環境）
 3. データベース状況: 接続数、サイズ確認
 4. バックアップ状況: S3バケット確認（設定済みの場合）
 
 # 緊急時対応
 railway rollback     # 前バージョンに戻す
 railway restart      # サービス再起動
+
+# 環境切り替えコマンド
+railway environment production  # 本番環境
+railway environment staging     # STG環境
+```
+
+### STG/本番環境の使い分け指針
+```bash
+# STG環境の目的
+- 新機能の動作確認
+- DB migrationの事前テスト  
+- 本番環境に影響を与えない実験
+- 外部API連携のテスト
+
+# データ管理方針
+- STG: テストデータ（fixturesファイル使用）
+- 本番: 実データ（本番運用データ）
+
+# コスト最適化
+- STG環境は小容量のPostgreSQLインスタンス使用
+- STG環境の自動スリープ設定（非アクティブ時）
+- 不要な時期はSTG環境を一時停止
 ```
 
 ### 旧Herokuデプロイ関連（非推奨）
