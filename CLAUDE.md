@@ -161,8 +161,68 @@ railway environment staging     # STG環境
 - 外部API連携のテスト
 
 # データ管理方針
-- STG: テストデータ（fixturesファイル使用）
-- 本番: 実データ（本番運用データ）
+- **STG**: テストデータ（fixturesファイル使用）または本番データ（リアルデータテスト用）
+- **本番**: 実データ（本番運用データ）
+
+## STGデータの選択肢
+
+### パターンA: テストデータ使用
+```bash
+railway environment staging
+railway run python manage.py loaddata airs/fixtures/*.json  # 374オブジェクトのテストデータ
+```
+
+### パターンB: 本番データ使用（リアルデータテスト）
+```bash
+# 1. 本番データをバックアップ
+railway environment production
+railway run pg_dump $DATABASE_URL -Ft > production_backup_$(date +%Y%m%d).dump
+
+# 2. STG環境に本番データを投入
+railway environment staging
+# 注意: STGの既存データは削除される
+railway run pg_restore -d $DATABASE_URL --clean --no-owner production_backup_$(date +%Y%m%d).dump
+
+# 3. マイグレーション実行（必要に応じて）
+railway run python manage.py migrate
+```
+
+### パターンC: 本番データの匿名化版
+```bash
+# 本番データを匿名化してSTGに投入
+railway environment production
+railway run pg_dump $DATABASE_URL --data-only -Ft > production_data.dump
+
+railway environment staging
+# カスタムスクリプトで個人情報をマスク
+railway run python manage.py anonymize_data  # 独自実装が必要
+railway run pg_restore -d $DATABASE_URL --data-only production_data.dump
+```
+
+## 本番データ投入時の考慮事項
+
+### コスト影響（軽微）
+- **現在サイズ**: 本番97.3MB → STGにも97.3MB
+- **追加コスト**: 数十円程度/月（PostgreSQLストレージ料金）
+- **転送コスト**: 1回限り数円程度
+
+### リスク管理
+```bash
+# 1. データ投入前のSTGバックアップ
+railway environment staging  
+railway run pg_dump $DATABASE_URL -Ft > stg_before_$(date +%Y%m%d).dump
+
+# 2. 本番データ投入
+pg_restore -d $STG_DATABASE_URL --clean production_backup.dump
+
+# 3. 問題があった場合の復旧
+pg_restore -d $STG_DATABASE_URL --clean stg_before_$(date +%Y%m%d).dump
+```
+
+### セキュリティ考慮
+- 本番ユーザーデータの適切な取り扱い
+- 必要に応じて個人情報の匿名化
+- STG環境へのアクセス制限確認
 
 # コスト最適化戦略
 - STG環境は小容量のPostgreSQLインスタンス使用
