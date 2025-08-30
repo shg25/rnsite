@@ -164,10 +164,34 @@ railway environment staging     # STG環境
 - STG: テストデータ（fixturesファイル使用）
 - 本番: 実データ（本番運用データ）
 
-# コスト最適化
+# コスト最適化戦略
 - STG環境は小容量のPostgreSQLインスタンス使用
-- STG環境の自動スリープ設定（非アクティブ時）
-- 不要な時期はSTG環境を一時停止
+- App Sleep自動機能活用（10分非アクティブで自動スリープ）
+- 長期間未使用時：環境削除で最大コスト削減
+
+# STG環境のコスト管理
+```bash
+# パターン1: 自動スリープ（推奨）
+# 設定不要・10分非アクティブで自動スリープ
+# アクセス時に自動復帰・データ保持
+
+# パターン2: 一時的サービス削除
+railway environment staging
+# Railway Dashboard > web service > Delete（DBは維持）
+
+# パターン3: 環境完全削除（最大節約）
+# Railway Dashboard > Settings > Environments > staging > Delete
+
+# STG環境再作成（必要時）
+railway environment new staging
+# Dashboard > Duplicate from production
+railway run python manage.py loaddata airs/fixtures/*.json
+```
+
+# 実用的運用スケジュール
+- **開発期間**: STG環境フル稼働
+- **開発休止期間（1-2週間）**: App Sleep任せ（自動）
+- **長期休止期間（1ヶ月以上）**: 環境削除を検討
 ```
 
 ### 旧Herokuデプロイ関連（非推奨）
