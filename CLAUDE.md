@@ -67,7 +67,7 @@ pip check
 pip freeze > requirements.txt
 ```
 
-### Railwayデプロイ関連
+### Railway本番運用
 ```bash
 # Railway CLIインストール
 npm install -g @railway/cli
@@ -75,23 +75,48 @@ npm install -g @railway/cli
 # Railwayログイン
 railway login
 
-# プロジェクト作成・デプロイ
-railway project create
-railway up
+# プロジェクトリンク（初回のみ）
+railway link
 
-# Railway環境変数設定
-railway variables set SECRET_KEY=your_secret_key
-railway variables set DATABASE_URL=postgresql://...
+# デプロイ
+git push origin railway-migration  # または main
 
 # Railway環境でコマンド実行
 railway run python manage.py migrate
 railway run python manage.py createsuperuser
 
-# Railwayログ確認
-railway logs
+# ログ確認
+railway logs           # 全ログ
+railway logs -d        # デプロイログ
+railway logs -b        # ビルドログ
 
-# Railwayドメイン生成
-railway domain
+# 環境変数管理
+railway variables      # 一覧表示
+railway variables set KEY=value
+railway variables del KEY
+
+# シェルアクセス
+railway shell
+
+# 手動バックアップ（重要な変更前）
+railway run pg_dump $DATABASE_URL > backup_$(date +%Y%m%d).sql
+
+# Railway自動バックアップテンプレート（推奨）
+# https://railway.app/template/XV2dlg
+# 毎日5AM UTCで自動バックアップ（S3設定が必要）
+```
+
+### Railway運用チェックリスト
+```bash
+# 月次確認事項
+1. コスト監視: Railway Dashboardでusage確認
+2. ログ確認: `railway logs`でエラーチェック
+3. データベース状況: 接続数、サイズ確認
+4. バックアップ状況: S3バケット確認（設定済みの場合）
+
+# 緊急時対応
+railway rollback     # 前バージョンに戻す
+railway restart      # サービス再起動
 ```
 
 ### 旧Herokuデプロイ関連（非推奨）
