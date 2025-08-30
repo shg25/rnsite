@@ -1,0 +1,26 @@
+{
+  "name": "railway-smart-backup",
+  "version": "1.0.0",
+  "description": "Smart PostgreSQL backup service with size monitoring and auto-cleanup",
+  "main": "smart-backup.js",
+  "scripts": {
+    "start": "node smart-backup.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "aws-sdk": "^2.1400.0",
+    "node-cron": "^3.0.2"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "keywords": [
+    "postgresql",
+    "backup",
+    "railway",
+    "s3",
+    "automation"
+  ],
+  "author": "Railway Smart Backup",
+  "license": "MIT"
+}
