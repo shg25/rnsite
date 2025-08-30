@@ -165,7 +165,7 @@ STATIC_URL = '/static/'
 
 # Railway環境での静的ファイル設定
 MIDDLEWARE.insert(1, 'whitenoise.middleware.WhiteNoiseMiddleware')
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
+
 
 
 DEBUG = False
@@ -177,6 +177,9 @@ except ImportError:
 
 if not DEBUG:
     SECRET_KEY = os.getenv('SECRET_KEY')
+    
+    # 本番環境での静的ファイル設定
+    STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.StaticFilesStorage'
 
     # Sentry設定（任意）
     if os.getenv('SENTRY_DSN'):
