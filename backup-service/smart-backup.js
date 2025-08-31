@@ -36,7 +36,8 @@ const s3 = new AWS.S3({
  * PostgreSQL dump実行
  */
 async function createDump() {
-  const timestamp = new Date().toISOString().split('T')[0];
+  const now = new Date();
+  const timestamp = now.toISOString().replace(/[:.]/g, '-').slice(0, -5); // 2025-08-31T15-44-32
   const filename = `${BACKUP_PREFIX}-${timestamp}.sql`;
   
   console.log(`📦 Creating database dump: ${filename}`);
@@ -132,6 +133,9 @@ function checkSizeChange(currentSize, previousSize) {
  * Slack通知送信
  */
 async function sendSlackNotification(message) {
+  console.log(`🔍 Slack notification called with message: "${message}"`);
+  console.log(`🔍 SLACK_WEBHOOK_URL length: ${SLACK_WEBHOOK_URL ? SLACK_WEBHOOK_URL.length : 'undefined'}`);
+  
   if (!SLACK_WEBHOOK_URL || SLACK_WEBHOOK_URL === 'https://hooks.slack.com/your/webhook/url') {
     console.log('📢 Slack notification skipped (no valid webhook URL)');
     return;
@@ -265,8 +269,11 @@ async function main() {
     // 4. 異常検知時の通知
     if (!sizeCheck.isNormal) {
       const message = `Database size changed by ${sizeCheck.changePercent.toFixed(1)}% (${dumpResult.sizeInMB}MB)`;
+      console.log(`🚨 Sending Slack notification: ${message}`);
       await sendSlackNotification(message);
       console.log('⚠️ Size change detected, but backup continues...');
+    } else {
+      console.log(`✅ Normal size change: ${sizeCheck.changePercent.toFixed(1)}% (within ${BACKUP_SIZE_THRESHOLD}% threshold)`);
     }
     
     // 5. S3アップロード
