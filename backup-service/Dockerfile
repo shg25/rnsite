@@ -1,7 +1,7 @@
 FROM node:18-alpine
 
-# PostgreSQL 17対応クライアントツールをインストール
-RUN apk add --no-cache postgresql16-client postgresql-client
+# PostgreSQL 17対応のため、最新のPostgreSQLクライアントをインストール
+RUN apk update && apk add --no-cache postgresql-client || apk add --no-cache postgresql16-client
 
 WORKDIR /app
 

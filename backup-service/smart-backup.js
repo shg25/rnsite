@@ -42,12 +42,26 @@ async function createDump() {
   console.log(`📦 Creating database dump: ${filename}`);
   
   return new Promise((resolve, reject) => {
-    exec(`pg_dump "${DATABASE_URL}" --no-password --compress=0 --verbose > ${filename} 2>/dev/null || pg_dump "${DATABASE_URL}" --compress=0 > ${filename}`, async (error, stdout, stderr) => {
-      if (error) {
-        console.error('❌ Dump failed:', error);
-        reject(error);
+    // PostgreSQL v17対応: 複数のpg_dumpオプションを試行
+    const dumpCommands = [
+      `pg_dump "${DATABASE_URL}" --no-password --compress=0 --verbose > ${filename}`,
+      `pg_dump "${DATABASE_URL}" --compress=0 > ${filename}`,
+      `pg_dump "${DATABASE_URL}" > ${filename}`,
+      `PGPASSWORD="${DATABASE_URL.split(':')[3].split('@')[0]}" pg_dump -h ${DATABASE_URL.split('@')[1].split(':')[0]} -p ${DATABASE_URL.split(':')[4].split('/')[0]} -U ${DATABASE_URL.split('://')[1].split(':')[0]} -d ${DATABASE_URL.split('/').pop()} > ${filename}`
+    ];
+    
+    const tryDumpCommand = (commandIndex) => {
+      if (commandIndex >= dumpCommands.length) {
+        reject(new Error('All pg_dump methods failed'));
         return;
       }
+      
+      exec(dumpCommands[commandIndex], async (error, stdout, stderr) => {
+        if (error) {
+          console.log(`⚠️ Command ${commandIndex + 1} failed, trying next...`);
+          tryDumpCommand(commandIndex + 1);
+          return;
+        }
       
       try {
         const stats = await fs.stat(filename);
@@ -62,7 +76,10 @@ async function createDump() {
       } catch (statError) {
         reject(statError);
       }
-    });
+      });
+    };
+    
+    tryDumpCommand(0);
   });
 }
 
