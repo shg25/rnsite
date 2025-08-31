@@ -291,7 +291,11 @@ async function main() {
     
     console.log('🎉 Smart backup completed successfully!');
     
-    // 8. 成功通知（異常検知がなかった場合のみ）
+    // 8. 成功通知（常に送信）
+    const successMessage = `Weekly backup completed: ${dumpResult.sizeInMB}MB (${sizeCheck.changePercent.toFixed(1)}% change)`;
+    console.log(`🚨 Sending success notification...`);
+    await sendSlackNotification(successMessage);
+    
     if (sizeCheck.isNormal) {
       console.log(`✅ Weekly backup: ${dumpResult.sizeInMB}MB (${sizeCheck.changePercent.toFixed(1)}% change)`);
     }
