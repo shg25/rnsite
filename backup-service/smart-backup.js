@@ -140,35 +140,46 @@ async function sendSlackNotification(message) {
   try {
     const https = require('https');
     const data = JSON.stringify({
-      text: `🛡️ Database Backup Alert: ${message}`,
-      username: 'Railway Backup Bot',
-      icon_emoji: ':floppy_disk:'
+      text: `🛡️ Database Backup Alert: ${message}`
     });
     
+    const url = new URL(SLACK_WEBHOOK_URL);
     const options = {
+      hostname: url.hostname,
+      port: url.port || 443,
+      path: url.pathname,
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'Content-Length': data.length
+        'Content-Length': Buffer.byteLength(data)
       }
     };
     
     return new Promise((resolve, reject) => {
-      const req = https.request(SLACK_WEBHOOK_URL, options, (res) => {
-        if (res.statusCode === 200) {
-          console.log('📱 Slack notification sent');
-          resolve();
-        } else {
-          reject(new Error(`Slack API returned ${res.statusCode}`));
-        }
+      const req = https.request(options, (res) => {
+        let body = '';
+        res.on('data', chunk => body += chunk);
+        res.on('end', () => {
+          if (res.statusCode === 200) {
+            console.log('📱 Slack notification sent successfully');
+            resolve();
+          } else {
+            console.error(`📱 Slack API error ${res.statusCode}: ${body}`);
+            resolve(); // エラーでもプロセスを継続
+          }
+        });
       });
       
-      req.on('error', reject);
+      req.on('error', (error) => {
+        console.error('📱 Failed to send Slack notification:', error.message);
+        resolve(); // エラーでもプロセスを継続
+      });
+      
       req.write(data);
       req.end();
     });
   } catch (error) {
-    console.error('📱 Failed to send Slack notification:', error);
+    console.error('📱 Slack notification error:', error.message);
   }
 }
 
@@ -261,8 +272,12 @@ async function main() {
     // 5. S3アップロード
     await uploadToS3(dumpResult.filename, dumpResult.size);
     
-    // 6. 前回ファイル削除
-    await deletePreviousBackup(previousBackup);
+    // 6. 前回ファイル削除（サイズ異常時は保持）
+    if (sizeCheck.isNormal) {
+      await deletePreviousBackup(previousBackup);
+    } else {
+      console.log(`🛡️ Size anomaly detected (${sizeCheck.changePercent.toFixed(1)}% change). Previous backup preserved for safety.`);
+    }
     
     // 7. ローカルファイルクリーンアップ
     await cleanupLocalFile(dumpResult.filename);
@@ -278,11 +293,7 @@ async function main() {
     console.error('💥 Backup failed:', error);
     
     // エラー通知
-    try {
-      await sendSlackNotification(`Backup failed: ${error.message}`);
-    } catch (slackError) {
-      console.error('📱 Failed to send Slack error notification:', slackError.message);
-    }
+    await sendSlackNotification(`Backup failed: ${error.message}`);
     process.exit(1);
   }
 }
