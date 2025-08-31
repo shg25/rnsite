@@ -266,11 +266,8 @@ async function main() {
     // 3. サイズチェック
     const sizeCheck = checkSizeChange(dumpResult.size, previousBackup);
     
-    // 4. 異常検知時の通知
+    // 4. 異常検知時の通知（サイズ異常検知のみ）
     if (!sizeCheck.isNormal) {
-      const message = `Database size changed by ${sizeCheck.changePercent.toFixed(1)}% (${dumpResult.sizeInMB}MB)`;
-      console.log(`🚨 Sending Slack notification: ${message}`);
-      await sendSlackNotification(message);
       console.log('⚠️ Size change detected, but backup continues...');
     } else {
       console.log(`✅ Normal size change: ${sizeCheck.changePercent.toFixed(1)}% (within ${BACKUP_SIZE_THRESHOLD}% threshold)`);
@@ -291,10 +288,22 @@ async function main() {
     
     console.log('🎉 Smart backup completed successfully!');
     
-    // 8. 成功通知（常に送信）
-    const successMessage = `Weekly backup completed: ${dumpResult.sizeInMB}MB (${sizeCheck.changePercent.toFixed(1)}% change)`;
-    console.log(`🚨 Sending success notification...`);
-    await sendSlackNotification(successMessage);
+    // 8. 成功時のSlack通知（3パターン分岐）
+    let notificationMessage;
+    let notificationIcon;
+    
+    if (!sizeCheck.isNormal) {
+      // パターン3: バックアップ成功だがデータ量異常により前回分保持
+      notificationMessage = `⚠️ Weekly backup completed with size anomaly: ${dumpResult.sizeInMB}MB (${sizeCheck.changePercent.toFixed(1)}% change from previous backup). Previous backup preserved for safety.`;
+      notificationIcon = "⚠️";
+    } else {
+      // パターン1: バックアップ成功（正常）
+      notificationMessage = `✅ Weekly backup completed successfully: ${dumpResult.sizeInMB}MB (${sizeCheck.changePercent.toFixed(1)}% change from previous backup). Previous backup deleted.`;
+      notificationIcon = "✅";
+    }
+    
+    console.log(`🚨 Sending ${notificationIcon} notification...`);
+    await sendSlackNotification(notificationMessage);
     
     if (sizeCheck.isNormal) {
       console.log(`✅ Weekly backup: ${dumpResult.sizeInMB}MB (${sizeCheck.changePercent.toFixed(1)}% change)`);
@@ -303,8 +312,10 @@ async function main() {
   } catch (error) {
     console.error('💥 Backup failed:', error);
     
-    // エラー通知
-    await sendSlackNotification(`Backup failed: ${error.message}`);
+    // パターン2: バックアップ失敗
+    const errorMessage = `❌ Weekly backup failed: ${error.message}. Please check the system immediately.`;
+    console.log(`🚨 Sending ❌ error notification...`);
+    await sendSlackNotification(errorMessage);
     process.exit(1);
   }
 }
