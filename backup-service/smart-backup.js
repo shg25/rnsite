@@ -42,7 +42,7 @@ async function createDump() {
   console.log(`📦 Creating database dump: ${filename}`);
   
   return new Promise((resolve, reject) => {
-    exec(`pg_dump --no-password "${DATABASE_URL}" > ${filename}`, async (error, stdout, stderr) => {
+    exec(`pg_dump "${DATABASE_URL}" --no-password --compress=0 --verbose > ${filename} 2>/dev/null || pg_dump "${DATABASE_URL}" --compress=0 > ${filename}`, async (error, stdout, stderr) => {
       if (error) {
         console.error('❌ Dump failed:', error);
         reject(error);
