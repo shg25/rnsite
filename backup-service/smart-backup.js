@@ -46,8 +46,7 @@ async function createDump() {
     const dumpCommands = [
       `pg_dump "${DATABASE_URL}" --no-password --compress=0 --verbose > ${filename}`,
       `pg_dump "${DATABASE_URL}" --compress=0 > ${filename}`,
-      `pg_dump "${DATABASE_URL}" > ${filename}`,
-      `PGPASSWORD="${DATABASE_URL.split(':')[3].split('@')[0]}" pg_dump -h ${DATABASE_URL.split('@')[1].split(':')[0]} -p ${DATABASE_URL.split(':')[4].split('/')[0]} -U ${DATABASE_URL.split('://')[1].split(':')[0]} -d ${DATABASE_URL.split('/').pop()} > ${filename}`
+      `pg_dump "${DATABASE_URL}" > ${filename}`
     ];
     
     const tryDumpCommand = (commandIndex) => {
