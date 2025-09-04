@@ -1,7 +1,7 @@
 const cron = require('node-cron');
 const { main } = require('./smart-backup');
 
-// 環境変数から cron スケジュールを取得
+// 環境変数からcronスケジュールを取得
 const BACKUP_CRON_SCHEDULE = process.env.BACKUP_CRON_SCHEDULE || '0 5 * * 0'; // デフォルト: 毎週日曜 5AM UTC
 
 console.log('🕐 Smart Backup Cron Service Started');
@@ -19,7 +19,7 @@ cron.schedule(BACKUP_CRON_SCHEDULE, async () => {
   console.log('⏳ Next backup scheduled...\n');
 });
 
-// プロセス終了時の処理
+// グレースフルシャットダウンハンドラー
 process.on('SIGTERM', () => {
   console.log('👋 Smart Backup Service shutting down...');
   process.exit(0);

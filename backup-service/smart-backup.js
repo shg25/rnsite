@@ -1,17 +1,19 @@
 #!/usr/bin/env node
 
 /**
- * 高機能PostgreSQLバックアップスクリプト
- * - 週1回自動実行
- * - データサイズ比較による異常検知
- * - 前回バックアップファイルの自動削除
- * - Slack通知機能
+ * PostgreSQL スマートバックアップサービス
+ * 
+ * 機能:
+ * - PostgreSQLデータベースの自動バックアップ
+ * - サイズ異常検知とアラートシステム
+ * - 前回バックアップの安全な削除機能
+ * - 3パターンSlack通知システム
+ * - AWS S3暗号化ストレージ
  */
 
 const { exec } = require('child_process');
 const AWS = require('aws-sdk');
 const fs = require('fs').promises;
-const path = require('path');
 
 // 環境変数
 const {
@@ -33,21 +35,24 @@ const s3 = new AWS.S3({
 });
 
 /**
- * PostgreSQL dump実行
+ * タイムスタンプ付きPostgreSQLデータベースダンプを作成
+ * @returns {Object} ファイル名、サイズ、MB単位サイズを含むダンプ結果
  */
 async function createDump() {
   const now = new Date();
-  const timestamp = now.toISOString().replace(/[:.]/g, '-').slice(0, -5); // 2025-08-31T15-44-32
+  const timestamp = now.toISOString().replace(/[:.]/g, '-').slice(0, -5);
   const filename = `${BACKUP_PREFIX}-${timestamp}.sql`;
   
   console.log(`📦 Creating database dump: ${filename}`);
   
   return new Promise((resolve, reject) => {
-    // PostgreSQL v17対応: 複数のpg_dumpオプションを試行
+    // PostgreSQL v17サーバーと古いpg_dumpクライアント間の互換性問題対応
+    // Railwayのサーバー：v17.6、コンテナのpg_dump：v16系（2025年時点）
+    // pg_dumpクライアントとサーバーのバージョン不一致時に失敗する可能性があるため、段階的にフォールバック
     const dumpCommands = [
-      `pg_dump "${DATABASE_URL}" --no-password --compress=0 --verbose > ${filename}`,
-      `pg_dump "${DATABASE_URL}" --compress=0 > ${filename}`,
-      `pg_dump "${DATABASE_URL}" > ${filename}`
+      `pg_dump "${DATABASE_URL}" --no-password --compress=0 --verbose > ${filename}`, // 最新機能版（v17対応）
+      `pg_dump "${DATABASE_URL}" --compress=0 > ${filename}`,                         // 基本版（圧縮無効）
+      `pg_dump "${DATABASE_URL}" > ${filename}`                                       // 最小限版（最高互換性）
     ];
     
     const tryDumpCommand = (commandIndex) => {
@@ -56,9 +61,9 @@ async function createDump() {
         return;
       }
       
-      exec(dumpCommands[commandIndex], async (error, stdout, stderr) => {
+      exec(dumpCommands[commandIndex], async (error) => {
         if (error) {
-          console.log(`⚠️ Command ${commandIndex + 1} failed, trying next...`);
+          console.log(`⚠️ pg_dumpコマンド ${commandIndex + 1} が失敗（バージョン互換性問題の可能性）、代替コマンドを試行...`);
           tryDumpCommand(commandIndex + 1);
           return;
         }
@@ -84,7 +89,8 @@ async function createDump() {
 }
 
 /**
- * 前回バックアップサイズを取得
+ * S3から前回のバックアップ情報を取得
+ * @returns {Object|null} 前回のバックアップデータまたはnull（見つからない場合）
  */
 async function getPreviousBackupSize() {
   try {
@@ -98,7 +104,7 @@ async function getPreviousBackupSize() {
       return null;
     }
     
-    // 最新のファイルを取得
+    // 最新のバックアップファイルを取得
     const latest = objects.Contents
       .sort((a, b) => b.LastModified - a.LastModified)[0];
     
@@ -114,7 +120,10 @@ async function getPreviousBackupSize() {
 }
 
 /**
- * サイズ変化をチェック
+ * バックアップサイズ変化率をチェック
+ * @param {number} currentSize - 現在のバックアップサイズ（バイト）
+ * @param {Object|null} previousSize - 前回のバックアップ情報
+ * @returns {Object} isNormalとchangePercentを含むサイズチェック結果
  */
 function checkSizeChange(currentSize, previousSize) {
   if (!previousSize) {
@@ -130,11 +139,10 @@ function checkSizeChange(currentSize, previousSize) {
 }
 
 /**
- * Slack通知送信
+ * Slack webhookへ通知を送信
+ * @param {string} message - 送信するメッセージ
  */
 async function sendSlackNotification(message) {
-  console.log(`🔍 Slack notification called with message: "${message}"`);
-  console.log(`🔍 SLACK_WEBHOOK_URL length: ${SLACK_WEBHOOK_URL ? SLACK_WEBHOOK_URL.length : 'undefined'}`);
   
   if (!SLACK_WEBHOOK_URL || SLACK_WEBHOOK_URL === 'https://hooks.slack.com/your/webhook/url') {
     console.log('📢 Slack notification skipped (no valid webhook URL)');
@@ -159,7 +167,7 @@ async function sendSlackNotification(message) {
       }
     };
     
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve) => {
       const req = https.request(options, (res) => {
         let body = '';
         res.on('data', chunk => body += chunk);
@@ -188,7 +196,10 @@ async function sendSlackNotification(message) {
 }
 
 /**
- * S3にファイルアップロード
+ * バックアップファイルをAWS S3に暗号化してアップロード
+ * @param {string} filename - アップロードするローカルファイル名
+ * @param {number} filesize - ファイルサイズ（バイト）
+ * @returns {boolean} アップロード成功ステータス
  */
 async function uploadToS3(filename, filesize) {
   try {
@@ -217,7 +228,8 @@ async function uploadToS3(filename, filesize) {
 }
 
 /**
- * 前回バックアップファイルを削除
+ * S3から前回のバックアップファイルを削除
+ * @param {Object|null} previousBackup - 前回のバックアップ情報
  */
 async function deletePreviousBackup(previousBackup) {
   if (!previousBackup) {
@@ -238,7 +250,8 @@ async function deletePreviousBackup(previousBackup) {
 }
 
 /**
- * ローカルファイル削除
+ * ローカル一時バックアップファイルをクリーンアップ
+ * @param {string} filename - 削除するローカルファイル
  */
 async function cleanupLocalFile(filename) {
   try {
@@ -250,77 +263,69 @@ async function cleanupLocalFile(filename) {
 }
 
 /**
- * メイン処理
+ * メインバックアップ処理の実行
+ * 完全なバックアップワークフローを統制
  */
 async function main() {
   console.log('🚀 Starting smart backup process...');
   console.log(`📅 ${new Date().toLocaleString('ja-JP', { timeZone: 'Asia/Tokyo' })}`);
   
   try {
-    // 1. 前回バックアップサイズ取得
+    // 1. 前回バックアップ情報を取得
     const previousBackup = await getPreviousBackupSize();
     
-    // 2. データベースダンプ
+    // 2. データベースダンプを作成
     const dumpResult = await createDump();
     
-    // 3. サイズチェック
+    // 3. サイズ変化をチェック
     const sizeCheck = checkSizeChange(dumpResult.size, previousBackup);
     
-    // 4. 異常検知時の通知（サイズ異常検知のみ）
+    // 4. サイズチェック結果をログ出力
     if (!sizeCheck.isNormal) {
       console.log('⚠️ Size change detected, but backup continues...');
     } else {
       console.log(`✅ Normal size change: ${sizeCheck.changePercent.toFixed(1)}% (within ${BACKUP_SIZE_THRESHOLD}% threshold)`);
     }
     
-    // 5. S3アップロード
+    // 5. S3にアップロード
     await uploadToS3(dumpResult.filename, dumpResult.size);
     
-    // 6. 前回ファイル削除（サイズ異常時は保持）
+    // 6. 前回バックアップを削除（サイズ異常検知時は保持）
     if (sizeCheck.isNormal) {
       await deletePreviousBackup(previousBackup);
     } else {
       console.log(`🛡️ Size anomaly detected (${sizeCheck.changePercent.toFixed(1)}% change). Previous backup preserved for safety.`);
     }
     
-    // 7. ローカルファイルクリーンアップ
+    // 7. ローカルファイルをクリーンアップ
     await cleanupLocalFile(dumpResult.filename);
     
     console.log('🎉 Smart backup completed successfully!');
     
-    // 8. 成功時のSlack通知（3パターン分岐）
+    // 8. Slack通知を送信（3パターン：正常、異常、エラー）
     let notificationMessage;
-    let notificationIcon;
     
     if (!sizeCheck.isNormal) {
-      // パターン3: バックアップ成功だがデータ量異常により前回分保持
+      // パターン3: バックアップ成功だがサイズ異常を検知
       notificationMessage = `⚠️ Weekly backup completed with size anomaly: ${dumpResult.sizeInMB}MB (${sizeCheck.changePercent.toFixed(1)}% change from previous backup). Previous backup preserved for safety.`;
-      notificationIcon = "⚠️";
     } else {
       // パターン1: バックアップ成功（正常）
       notificationMessage = `✅ Weekly backup completed successfully: ${dumpResult.sizeInMB}MB (${sizeCheck.changePercent.toFixed(1)}% change from previous backup). Previous backup deleted.`;
-      notificationIcon = "✅";
     }
     
-    console.log(`🚨 Sending ${notificationIcon} notification...`);
     await sendSlackNotification(notificationMessage);
-    
-    if (sizeCheck.isNormal) {
-      console.log(`✅ Weekly backup: ${dumpResult.sizeInMB}MB (${sizeCheck.changePercent.toFixed(1)}% change)`);
-    }
     
   } catch (error) {
     console.error('💥 Backup failed:', error);
     
     // パターン2: バックアップ失敗
     const errorMessage = `❌ Weekly backup failed: ${error.message}. Please check the system immediately.`;
-    console.log(`🚨 Sending ❌ error notification...`);
     await sendSlackNotification(errorMessage);
     process.exit(1);
   }
 }
 
-// 実行
+// 直接実行サポート
 if (require.main === module) {
   main();
 }

@@ -1,7 +1,10 @@
 FROM node:18-alpine
 
-# PostgreSQL 17対応のため、最新のPostgreSQLクライアントをインストール
-RUN apk update && apk add --no-cache postgresql-client || apk add --no-cache postgresql16-client
+# PostgreSQL v17サーバー対応：v17専用クライアント→最新安定版→v16の順でフォールバック
+RUN apk update && \
+    (apk add --no-cache --repository=http://dl-cdn.alpinelinux.org/alpine/edge/main postgresql17-client || \
+     apk add --no-cache postgresql-client || \
+     apk add --no-cache postgresql16-client)
 
 WORKDIR /app
 
@@ -11,12 +14,10 @@ RUN npm install --production
 
 # アプリケーションファイルをコピー
 COPY smart-backup.js ./
-
-# cronジョブとして実行する場合
 COPY cron-backup.js ./
 
-# 実行権限を付与
+# 実行権限を設定
 RUN chmod +x smart-backup.js
 
-# デフォルトコマンド（cronまたは単発実行）
+# デフォルトコマンド（cronスケジューラーを実行）
 CMD ["node", "cron-backup.js"]
