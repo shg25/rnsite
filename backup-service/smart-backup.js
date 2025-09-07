@@ -9,6 +9,7 @@
  * - 前回バックアップの安全な削除機能
  * - 3パターンSlack通知システム
  * - AWS S3暗号化ストレージ
+ * - 自動テスト機能付き
  */
 
 const { exec } = require('child_process');
@@ -330,4 +331,14 @@ if (require.main === module) {
   main();
 }
 
-module.exports = { main };
+// テスト用エクスポート
+module.exports = {
+  main,
+  checkSizeChange,
+  sendSlackNotification,
+  getPreviousBackupSize,
+  createDump,
+  uploadToS3,
+  deletePreviousBackup,
+  cleanupLocalFile
+};
