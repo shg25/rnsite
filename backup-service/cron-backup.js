@@ -12,7 +12,7 @@ const cron = require('node-cron');
 const { main } = require('./smart-backup');
 
 // 環境変数からcronスケジュールを取得
-const BACKUP_CRON_SCHEDULE = process.env.BACKUP_CRON_SCHEDULE || '35 1 * * *'; // テスト用: 10:35 JST (01:35 UTC)
+const BACKUP_CRON_SCHEDULE = process.env.BACKUP_CRON_SCHEDULE || '0 19 * * 1'; // デフォルト: 毎週月曜 4AM JST (19:00 UTC前日)
 
 console.log('🕐 Smart Backup Cron Service Started');
 console.log(`📅 Schedule: ${BACKUP_CRON_SCHEDULE} (${new Date().toLocaleString('ja-JP', { timeZone: 'Asia/Tokyo' })})`);
