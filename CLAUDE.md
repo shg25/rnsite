@@ -118,7 +118,7 @@ AWS_SECRET_ACCESS_KEY=your_aws_secret_key
 AWS_S3_BUCKET=your-backup-bucket-name
 AWS_S3_REGION=ap-northeast-1
 BACKUP_DATABASE_URL=$DATABASE_URL
-BACKUP_CRON_SCHEDULE="0 5 * * 0"  # 毎週日曜日 5:00 AM UTC (日本時間14:00)
+BACKUP_CRON_SCHEDULE="0 19 * * 1"  # 毎週月曜日 4:00 AM JST (UTC 日曜19:00)
 
 # 3. 高機能版の追加設定（容量チェック + 前回データ削除）
 BACKUP_SIZE_CHECK_ENABLED=true

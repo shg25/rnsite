@@ -1,16 +1,22 @@
 {
   "name": "railway-smart-backup",
   "version": "1.0.0",
-  "description": "Smart PostgreSQL backup service with size monitoring and auto-cleanup",
+  "description": "Smart PostgreSQL backup service with size monitoring, auto-cleanup, and automated testing",
   "main": "smart-backup.js",
   "scripts": {
     "start": "node smart-backup.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage"
   },
   "dependencies": {
     "aws-sdk": "^2.1400.0",
     "node-cron": "^3.0.2",
     "pg": "^8.11.0"
+  },
+  "devDependencies": {
+    "jest": "^29.7.0",
+    "@jest/globals": "^29.7.0"
   },
   "engines": {
     "node": ">=18.0.0"
@@ -20,7 +26,10 @@
     "backup",
     "railway",
     "s3",
-    "automation"
+    "automation",
+    "testing",
+    "jest",
+    "slack"
   ],
   "author": "Railway Smart Backup",
   "license": "MIT"

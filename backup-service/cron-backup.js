@@ -1,8 +1,18 @@
+/**
+ * PostgreSQL バックアップ cronスケジューラー
+ * 
+ * 機能:
+ * - 環境変数によるcronスケジュール設定
+ * - smart-backup.jsのメイン処理を定期実行
+ * - グレースフルシャットダウン対応
+ * - Railway環境での安定動作
+ */
+
 const cron = require('node-cron');
 const { main } = require('./smart-backup');
 
 // 環境変数からcronスケジュールを取得
-const BACKUP_CRON_SCHEDULE = process.env.BACKUP_CRON_SCHEDULE || '0 5 * * 0'; // デフォルト: 毎週日曜 5AM UTC
+const BACKUP_CRON_SCHEDULE = process.env.BACKUP_CRON_SCHEDULE || '0 19 * * 1'; // デフォルト: 毎週月曜 4AM JST (19:00 UTC前日)
 
 console.log('🕐 Smart Backup Cron Service Started');
 console.log(`📅 Schedule: ${BACKUP_CRON_SCHEDULE} (${new Date().toLocaleString('ja-JP', { timeZone: 'Asia/Tokyo' })})`);
