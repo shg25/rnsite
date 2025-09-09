@@ -664,11 +664,47 @@ SECURE_HSTS_SECONDS = 31536000     # HSTS設定
 ```json
 {
   "deploy": {
-    "healthcheckPath": "/health/",
-    "healthcheckTimeout": 30,
-    "startCommand": "gunicorn --workers 2 --timeout 120"
+    "restartPolicyType": "ON_FAILURE",
+    "restartPolicyMaxRetries": 10
   }
 }
+```
+
+### 運用上の既知の問題と今後の改善案
+
+#### Railway内部ヘルスチェック機能の課題（2025年9月時点）
+
+**問題の概要**:
+Railway の内部ヘルスチェック機能（`"healthcheckPath": "/health/"`）を設定すると、デプロイ時に「Healthcheck failure」が発生し、デプロイが失敗と判定される現象が確認されている。
+
+**技術的詳細**:
+- **アプリケーション自体**: 完全に正常動作
+- **ヘルスチェックエンドポイント**: `/health/` は正常応答（200 OK）
+- **手動確認**: `curl https://your-app.railway.app/health/` で正常確認済み
+- **ALLOWED_HOSTS**: `healthcheck.railway.app` も適切に設定済み
+- **失敗箇所**: Railway内部の「Network > Healthcheck」フェーズで失敗
+
+**現在の回避策**:
+- Railway標準ヘルスチェック機能を無効化
+- 手動監視とログ監視で代替
+- アプリケーションの安定稼働を最優先
+
+**今後の改善案**:
+1. **Railway側のアップデート待ち**: ヘルスチェック機能の改善を期待
+2. **外部監視サービス導入**: Uptime Robot、Pingdom等での監視
+3. **カスタムヘルスチェック実装**: より詳細な健康状態監視
+4. **Railway コミュニティでの情報収集**: 同様の問題の解決事例を調査
+
+**代替監視方法**:
+```bash
+# 手動ヘルスチェック
+curl https://your-app.railway.app/health/
+
+# Railway ログ監視
+railway logs
+
+# 自動バックアップ監視（週1回実行確認）
+# backup-service ログで成功・失敗を確認
 ```
 
 ### Railway本番環境の料金詳細（2025年最新）

@@ -29,7 +29,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))  # Heroku
 def get_allowed_hosts():
     """
     Railway環境での動的ALLOWED_HOSTS設定
-    独自ドメイン対応、複数ドメイン対応
+    独自ドメイン対応、複数ドメイン対応、Railwayヘルスチェック対応
     """
     allowed_hosts = []
     

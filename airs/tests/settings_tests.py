@@ -99,3 +99,4 @@ class AllowedHostsTest(TestCase):
         # 無効なURLの場合はローカル開発環境の設定にフォールバック
         expected_hosts = ['localhost', '127.0.0.1', '[::1]']
         self.assertEqual(hosts, expected_hosts)
+    
