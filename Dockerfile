@@ -23,4 +23,4 @@ EXPOSE 8000
 RUN mkdir -p staticfiles
 
 # アプリケーションを起動
-CMD ["sh", "-c", "python manage.py migrate && python manage.py collectstatic --noinput -v 2 && ls -la staticfiles/ && gunicorn rnsite.wsgi --bind 0.0.0.0:$PORT"]
+CMD ["sh", "-c", "python manage.py migrate && python manage.py collectstatic --noinput -v 2 && gunicorn rnsite.wsgi:application --bind 0.0.0.0:${PORT:-8000} --workers 2 --timeout 120 --access-logfile - --error-logfile -"]
