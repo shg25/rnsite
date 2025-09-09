@@ -609,13 +609,67 @@ python manage.py loaddata airs/fixtures/*.json  # 374オブジェクトのテス
 SECRET_KEY=django_secret_key
 DATABASE_URL=postgresql://user:password@host:port/dbname
 SENTRY_DSN=sentry_dsn_url（任意）
+RAILWAY_STATIC_URL=https://your-app.railway.app（自動設定）
+RAILWAY_PUBLIC_DOMAIN=your-app.railway.app（自動設定）
+
+# 独自ドメイン使用時に追加
+CUSTOM_DOMAIN=your-custom-domain.com
+```
+
+### 独自ドメイン設定手順
+```bash
+# 1. Railway Dashboard > Settings > Domains
+# 2. Add Custom Domain: your-custom-domain.com
+# 3. DNS設定: CNAME your-custom-domain.com → your-app.railway.app
+# 4. Railway環境変数に追加
+railway variables set CUSTOM_DOMAIN=your-custom-domain.com
+
+# 5. デプロイ（自動的にALLOWED_HOSTSが更新される）
+git push origin railway-migration
 ```
 
 ### コード変更点
 - `django-heroku` → `dj-database-url` + WhiteNoise設定
-- `ALLOWED_HOSTS = ['*']` でRailwayドメインに対応
+- `ALLOWED_HOSTS`を動的に設定（Railway環境では自動ドメイン検出）
 - `railway.json`でデプロイ設定を自動化
 - `psycopg2-binary`でPostgreSQL接続を確保
+
+### 運用強化機能（2025年9月実装）
+#### 1. ヘルスチェック機能
+- **エンドポイント**: `/health/`
+- **機能**: データベース接続確認付きヘルスチェック
+- **Railway設定**: 自動復旧、30秒タイムアウト
+
+#### 2. セキュリティ強化
+```python
+# 本番環境での強化セキュリティ設定
+SECURE_SSL_REDIRECT = True          # HTTPS強制リダイレクト
+SESSION_COOKIE_SECURE = True        # セキュアクッキー
+CSRF_COOKIE_SECURE = True          # CSRFトークン保護
+SECURE_HSTS_SECONDS = 31536000     # HSTS設定
+```
+
+#### 3. セキュリティヘッダー自動付与
+- **Content Security Policy (CSP)**: XSS攻撃防止
+- **X-Frame-Options**: クリックジャッキング防止
+- **X-Content-Type-Options**: MIMEタイプスニッフィング防止
+- **Strict-Transport-Security**: HTTPS強制
+
+#### 4. 本番ログ最適化
+- **レベル**: INFO以上（DEBUGログ無効化）
+- **フォーマット**: 構造化ログ（関数名・行番号付き）
+- **ターゲット**: Django・airs・share_textの適切なログレベル設定
+
+#### 5. Railway最適化設定
+```json
+{
+  "deploy": {
+    "healthcheckPath": "/health/",
+    "healthcheckTimeout": 30,
+    "startCommand": "gunicorn --workers 2 --timeout 120"
+  }
+}
+```
 
 ### Railway本番環境の料金詳細（2025年最新）
 - **基本プラン**: $5/月（従量制超過分も含む）

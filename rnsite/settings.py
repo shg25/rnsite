@@ -25,7 +25,39 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))  # Heroku
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
-ALLOWED_HOSTS = ['*']
+# Railway環境での適切なALLOWED_HOSTS設定
+def get_allowed_hosts():
+    """
+    Railway環境での動的ALLOWED_HOSTS設定
+    独自ドメイン対応、複数ドメイン対応
+    """
+    allowed_hosts = []
+    
+    # 1. カスタムドメイン設定（独自ドメイン用）
+    custom_domain = os.getenv('CUSTOM_DOMAIN', '')
+    if custom_domain:
+        allowed_hosts.append(custom_domain)
+    
+    # 2. Railway自動設定ドメイン
+    railway_static_url = os.getenv('RAILWAY_STATIC_URL', '')
+    if railway_static_url:
+        from urllib.parse import urlparse
+        parsed_url = urlparse(railway_static_url)
+        if parsed_url.netloc and parsed_url.netloc not in allowed_hosts:
+            allowed_hosts.append(parsed_url.netloc)
+    
+    # 3. Railway公式ドメイン（フォールバック）
+    railway_public_domain = os.getenv('RAILWAY_PUBLIC_DOMAIN', '')
+    if railway_public_domain and railway_public_domain not in allowed_hosts:
+        allowed_hosts.append(railway_public_domain)
+    
+    # 4. ローカル開発環境
+    if not allowed_hosts:
+        allowed_hosts = ['localhost', '127.0.0.1', '[::1]']
+    
+    return allowed_hosts
+
+ALLOWED_HOSTS = get_allowed_hosts()
 
 # Application definition
 
@@ -51,6 +83,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'airs.middleware.SecurityHeadersMiddleware',
 ]
 
 ROOT_URLCONF = 'rnsite.urls'
@@ -123,30 +156,7 @@ USE_L10N = True
 
 USE_TZ = True
 
-LOGGING_CONFIG = None
-LOGGING = {
-    'version': 1,
-    'disable_existing_loggers': False,
-    'formatters': {
-        'simple': {
-            'format': '%(asctime)s [%(levelname)s] %(name)s: %(message)s',
-        },
-    },
-    'handlers': {
-        'console': {
-            'class': 'logging.StreamHandler',
-            'formatter': 'simple',
-        },
-    },
-    'loggers': {
-        'share_text': {
-            'handlers': ['console'],
-            'level': 'DEBUG',
-            'propagate': False,
-        },
-    },
-}
-logging.config.dictConfig(LOGGING)
+# ログ設定はDEBUG定義後に移動
 
 
 # login、logoutのリダイレクト先をカスタマイズ
@@ -184,11 +194,68 @@ try:
 except ImportError:
     pass
 
+# ログ設定（DEBUG定義後）
+LOGGING_CONFIG = None
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'development': {
+            'format': '%(asctime)s [%(levelname)s] %(name)s: %(message)s',
+        },
+        'production': {
+            'format': '%(asctime)s [%(levelname)s] %(name)s.%(funcName)s:%(lineno)d - %(message)s',
+        },
+    },
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+            'formatter': 'production' if not DEBUG else 'development',
+        },
+    },
+    'root': {
+        'handlers': ['console'],
+        'level': 'INFO' if not DEBUG else 'DEBUG',
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['console'],
+            'level': 'INFO',
+            'propagate': False,
+        },
+        'airs': {
+            'handlers': ['console'],
+            'level': 'INFO' if not DEBUG else 'DEBUG',
+            'propagate': False,
+        },
+        'share_text': {
+            'handlers': ['console'],
+            'level': 'INFO' if not DEBUG else 'DEBUG',
+            'propagate': False,
+        },
+    },
+}
+logging.config.dictConfig(LOGGING)
+
 if not DEBUG:
     SECRET_KEY = os.getenv('SECRET_KEY')
     
     # 本番環境での静的ファイル設定
     STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
+    
+    # セキュリティ設定の強化
+    SECURE_BROWSER_XSS_FILTER = True
+    SECURE_CONTENT_TYPE_NOSNIFF = True
+    X_FRAME_OPTIONS = 'DENY'
+    
+    # HTTPS強制設定（Railway環境では自動でHTTPSが有効）
+    SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+    SECURE_SSL_REDIRECT = True
+    SESSION_COOKIE_SECURE = True
+    CSRF_COOKIE_SECURE = True
+    SECURE_HSTS_SECONDS = 31536000
+    SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+    SECURE_HSTS_PRELOAD = True
 
     # Sentry設定（任意）
     if os.getenv('SENTRY_DSN'):

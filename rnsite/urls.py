@@ -15,6 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import include, path
+from airs.health_views import health_check
 
 admin.site.site_title = 'R.N. 管理サイト'  # 'Django 管理サイト'
 admin.site.site_header = 'R.N. 管理サイト' # 'Django 管理サイト'
@@ -23,5 +24,6 @@ admin.site.site_header = 'R.N. 管理サイト' # 'Django 管理サイト'
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('accounts/', include('django.contrib.auth.urls')),
+    path('health/', health_check, name='health_check'),
     path('', include('airs.urls')),
 ]
