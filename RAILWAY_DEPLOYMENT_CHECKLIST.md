@@ -50,12 +50,17 @@ curl -v https://your-app.railway.app/health/
 # }
 ```
 
-#### B. Railway自動監視の確認
+#### B. アプリケーション基本動作確認
 ```bash
-# Railway Dashboard > Service > Health Checks でステータス確認
-# ✅ Health check: Passing
-# ✅ Path: /health/
-# ✅ Timeout: 30s
+# メインページにアクセス
+curl -v https://your-app.railway.app/
+
+# 個別番組ページにアクセス
+curl -v https://your-app.railway.app/1/
+
+# 期待されるレスポンス例
+# HTTP/1.1 200 OK
+# Content-Type: text/html; charset=utf-8
 ```
 
 ### 2. セキュリティヘッダーの確認
@@ -140,7 +145,7 @@ railway ps
 # 確認ポイント
 # ✅ Workers: 2プロセス
 # ✅ Memory Usage: 適切範囲内
-# ✅ Health Check: Passing
+# ✅ Service Status: Running
 # ✅ Restart Policy: ON_FAILURE (最大10回)
 ```
 
@@ -171,7 +176,7 @@ curl -I https://your-app.railway.app/static/airs/css/style.css
 
 | 問題 | 症状 | 対処法 |
 |------|------|--------|
-| ヘルスチェック失敗 | 503エラー | `railway logs`でDB接続エラーを確認 |
+| アプリケーション起動失敗 | 503エラー | `railway logs`でDB接続・環境変数エラーを確認 |
 | セキュリティヘッダー無し | ヘッダー不在 | ミドルウェアの設定順序を確認 |
 | ALLOWED_HOSTS エラー | 400 Bad Request | 環境変数`CUSTOM_DOMAIN`を確認 |
 | HTTPS設定無効 | HTTPアクセス可能 | `SECURE_SSL_REDIRECT`設定を確認 |
@@ -195,11 +200,12 @@ railway run env | grep -E "(SECRET_KEY|DATABASE_URL|CUSTOM_DOMAIN)"
 - [ ] ローカルでのテスト実行（全てパス）
 - [ ] Railway環境変数設定完了
 - [ ] ヘルスチェックエンドポイント正常動作
+- [ ] メインページ・個別ページ正常動作
 - [ ] セキュリティヘッダー全て設定済み
 - [ ] ALLOWED_HOSTS正常動作（不正ドメインブロック）
 - [ ] HTTPS強制リダイレクト動作
 - [ ] ログレベル最適化確認
-- [ ] Railway設定（workers, healthcheck）動作
+- [ ] Railway設定（workers, restart policy）動作
 - [ ] データベース接続正常
 - [ ] 静的ファイル配信正常
 - [ ] セキュリティチェッカーでA評価以上
