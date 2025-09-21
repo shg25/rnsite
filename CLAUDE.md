@@ -79,7 +79,7 @@ railway login
 railway link
 
 # デプロイ
-git push origin railway-migration  # または main
+git push origin release  # 本番リリース用ブランチ
 
 # Railway環境でコマンド実行
 railway run python manage.py migrate
@@ -279,195 +279,66 @@ railway environment production  # 本番環境
 railway environment staging     # STG環境
 ```
 
-### STG/本番環境の使い分け指針
+### STG環境運用方針
+
+**標準パターン**: 完全分離型 + App Sleep活用
+
 ```bash
-# STG環境の目的
-- 新機能の動作確認
-- DB migrationの事前テスト  
-- 本番環境に影響を与えない実験
-- 外部API連携のテスト
+# STG環境の基本仕様
+- 本番環境から完全分離（安全性確保）
+- App Sleep自動適用（$1-3/月の低コスト運用）
+- テストデータ使用（374オブジェクト）
+- 月初作成・不要時削除の効率運用
 
-# データ管理方針
-- **STG**: テストデータ（fixturesファイル使用）または本番データ（リアルデータテスト用）
-- **本番**: 実データ（本番運用データ）
-
-## STGデータの選択肢
-
-### パターンA: テストデータ使用
-```bash
-railway environment staging
-railway run python manage.py loaddata airs/fixtures/*.json  # 374オブジェクトのテストデータ
-```
-
-### パターンB: 本番データ使用（リアルデータテスト）
-```bash
-# 1. 本番データをバックアップ
-railway environment production
-railway run pg_dump $DATABASE_URL -Ft > production_backup_$(date +%Y%m%d).dump
-
-# 2. STG環境に本番データを投入
-railway environment staging
-# 注意: STGの既存データは削除される
-railway run pg_restore -d $DATABASE_URL --clean --no-owner production_backup_$(date +%Y%m%d).dump
-
-# 3. マイグレーション実行（必要に応じて）
-railway run python manage.py migrate
-```
-
-### パターンC: 本番データの匿名化版
-```bash
-# 本番データを匿名化してSTGに投入
-railway environment production
-railway run pg_dump $DATABASE_URL --data-only -Ft > production_data.dump
-
-railway environment staging
-# カスタムスクリプトで個人情報をマスク
-railway run python manage.py anonymize_data  # 独自実装が必要
-railway run pg_restore -d $DATABASE_URL --data-only production_data.dump
-```
-
-## 本番データ投入時の考慮事項
-
-### コスト影響（軽微）
-- **現在サイズ**: 本番97.3MB → STGにも97.3MB
-- **追加コスト**: 数十円程度/月（PostgreSQLストレージ料金）
-- **転送コスト**: 1回限り数円程度
-
-### リスク管理
-```bash
-# 1. データ投入前のSTGバックアップ
-railway environment staging  
-railway run pg_dump $DATABASE_URL -Ft > stg_before_$(date +%Y%m%d).dump
-
-# 2. 本番データ投入
-pg_restore -d $STG_DATABASE_URL --clean production_backup.dump
-
-# 3. 問題があった場合の復旧
-pg_restore -d $STG_DATABASE_URL --clean stg_before_$(date +%Y%m%d).dump
-```
-
-### セキュリティ考慮
-- 本番ユーザーデータの適切な取り扱い
-- 必要に応じて個人情報の匿名化
-- STG環境へのアクセス制限確認
-
-# コスト最適化戦略
-- STG環境は小容量のPostgreSQLインスタンス使用
-- App Sleep自動機能活用（10分非アクティブで自動スリープ）
-- 長期間未使用時：環境削除で最大コスト削減
-
-# STG環境のコスト管理
-```bash
-# パターン1: 自動スリープ（推奨）
-# 設定不要・10分非アクティブで自動スリープ
-# アクセス時に自動復帰・データ保持
-
-# パターン2: 一時的サービス削除
-railway environment staging
-# Railway Dashboard > web service > Delete（DBは維持）
-
-# パターン3: 環境完全削除（最大節約）
-# Railway Dashboard > Settings > Environments > staging > Delete
-
-# STG環境再作成（必要時）
+# 基本的なSTG環境作成
 railway environment new staging
-# Dashboard > Duplicate from production
+railway environment staging
+railway add postgresql
+railway run python manage.py migrate
 railway run python manage.py loaddata airs/fixtures/*.json
 ```
 
-# STG環境の4つの運用パターン
+**詳細手順**: [docs/deployment/stg-environment-setup.md](docs/deployment/stg-environment-setup.md)
 
-## パターン1: 完全分離型（標準）
-- **Web**: STG専用
-- **DB**: STG専用（テストデータ）
-- **用途**: DB変更を伴う開発、Migration テスト
-- **コスト**: Web + DB
+### STG環境の用途
+- DB変更を伴う開発・Migration テスト
+- フロントエンド修正・UI テスト  
+- 新機能の安全な検証
+- 緊急時の動作確認
+```
+
+### Git ブランチ戦略
+
 ```bash
-railway environment staging
-# Dashboard > Duplicate from production
-railway run python manage.py loaddata airs/fixtures/*.json
+# ブランチ構成
+railway-migration  # Railway移行作業用（現在のブランチ）
+develop           # 開発用ブランチ
+release           # 本番リリース用ブランチ  
+main              # メインブランチ（安定版）
+
+# 開発フロー
+1. railway-migration → release（移行完了後）
+2. develop → staging → release → production
+3. release → main（本番リリース完了後）
+
+# 基本的な運用
+git checkout develop     # 日常開発
+git checkout release     # 本番リリース
+git checkout main        # 安定版確認
 ```
 
-## パターン2: 本番DB共有型（効率重視） ⭐
-- **Web**: STG専用  
-- **DB**: 本番DB共有（READ-ONLY）
-- **用途**: フロントエンド修正、表示確認、UI テスト
-- **コスト**: Web のみ（DB料金節約）
+### ドキュメント体系
+
 ```bash
-railway environment staging
-# Dashboard > web service のみ作成
-railway variables set DATABASE_URL=$PRODUCTION_DATABASE_URL
-# 注意：READ-ONLY運用必須
-```
+# プロジェクトドキュメント構成
+docs/
+├── deployment/          # デプロイ・環境構築
+│   ├── stg-environment-setup.md
+│   └── railway-deployment-checklist.md
+├── development/         # 開発環境・手順
+└── operations/          # 運用・保守
 
-## パターン3: App Sleep 活用型（STG専用推奨）
-- **運用**: 10分非アクティブで自動スリープ、アクセス時に自動復帰
-- **コスト**: 最小限（自動制御）
-- **注意**: 本番環境では非推奨（ユーザー体験悪化のため）
-
-### App Sleep の詳細仕様
-```bash
-# スリープ条件
-- 10分間アウトバウンドトラフィック無し
-- DB接続、テレメトリ、外部API呼び出し等が対象
-
-# 復帰条件  
-- インターネットからのリクエスト
-- 初回リクエストでウェイクアップ（コールドブート時間あり）
-
-# 本番環境での問題
-- 初回アクセス時に "Application failed to respond" エラー
-- 即座にリフレッシュ必要でユーザー体験悪化
-- 環境別設定不可（プロジェクト全体に適用）
-
-# スリープを防ぐ要因
-- アクティブなDB接続プール
-- フレームワークのテレメトリ（Next.js等）  
-- 定期的な外部API呼び出し
-```
-
-## パターン4: 完全削除型  
-- **運用**: 使わない期間は完全削除
-- **コスト**: ゼロ（再作成5分）
-
-# 実用的運用スケジュール
-- **DB影響なし修正**: パターン2（本番DB共有）推奨
-- **DB変更あり修正**: パターン1（完全分離）
-- **開発休止期間（1-2週間）**: App Sleep任せ（自動）
-- **長期休止期間（1ヶ月以上）**: 環境削除を検討
-
-# 本番DB共有時の安全対策
-```sql
--- 本番DB内でSTG専用読み取り専用ユーザー作成
-CREATE USER staging_readonly WITH PASSWORD 'secure_password';
-GRANT SELECT ON ALL TABLES IN SCHEMA public TO staging_readonly;
-GRANT USAGE ON SCHEMA public TO staging_readonly;
-```
-
-```python
-# settings.py でSTG環境のWrite操作制限
-if os.getenv('RAILWAY_ENVIRONMENT') == 'staging':
-    # Read-Only 接続推奨
-    pass
-```
-```
-
-### 旧Herokuデプロイ関連（非推奨）
-```bash
-# Herokuにデプロイ
-git push heroku main
-
-# Herokuでマイグレーション実行
-heroku run python manage.py migrate
-
-# Herokuログ確認
-heroku logs --tail
-
-# Heroku環境でbashセッション開始
-heroku run --app=[環境名] bash
-
-# Heroku環境でのライブラリ確認
-heroku run --app=[環境名] pip list
+# 詳細な手順は各専用ドキュメントを参照
 ```
 
 ## アプリケーションアーキテクチャ
