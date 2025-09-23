@@ -12,7 +12,7 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 
 from pathlib import Path
 import os
-import django_heroku
+import dj_database_url
 import logging.config
 import sentry_sdk
 from sentry_sdk.integrations.django import DjangoIntegration
@@ -25,7 +25,39 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))  # Heroku
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
-ALLOWED_HOSTS = []
+# Railway環境での適切なALLOWED_HOSTS設定
+def get_allowed_hosts():
+    """
+    Railway環境での動的ALLOWED_HOSTS設定
+    独自ドメイン対応、複数ドメイン対応、Railwayヘルスチェック対応
+    """
+    allowed_hosts = []
+    
+    # 1. カスタムドメイン設定（独自ドメイン用）
+    custom_domain = os.getenv('CUSTOM_DOMAIN', '')
+    if custom_domain:
+        allowed_hosts.append(custom_domain)
+    
+    # 2. Railway自動設定ドメイン
+    railway_static_url = os.getenv('RAILWAY_STATIC_URL', '')
+    if railway_static_url:
+        from urllib.parse import urlparse
+        parsed_url = urlparse(railway_static_url)
+        if parsed_url.netloc and parsed_url.netloc not in allowed_hosts:
+            allowed_hosts.append(parsed_url.netloc)
+    
+    # 3. Railway公式ドメイン（フォールバック）
+    railway_public_domain = os.getenv('RAILWAY_PUBLIC_DOMAIN', '')
+    if railway_public_domain and railway_public_domain not in allowed_hosts:
+        allowed_hosts.append(railway_public_domain)
+    
+    # 4. ローカル開発環境
+    if not allowed_hosts:
+        allowed_hosts = ['localhost', '127.0.0.1', '[::1]']
+    
+    return allowed_hosts
+
+ALLOWED_HOSTS = get_allowed_hosts()
 
 # Application definition
 
@@ -51,6 +83,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'airs.middleware.SecurityHeadersMiddleware',
 ]
 
 ROOT_URLCONF = 'rnsite.urls'
@@ -82,14 +115,10 @@ WSGI_APPLICATION = 'rnsite.wsgi.application'
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'nanitozo',
-        'USER': os.environ.get('DB_USER'),
-        'PASSWORD': os.environ.get('DB_PASSWORD'),
-        'HOST': '',
-        'PORT': '',
-    }
+    'default': dj_database_url.config(
+        default='sqlite:///db.sqlite3',
+        conn_max_age=600,
+    )
 }
 
 
@@ -127,30 +156,7 @@ USE_L10N = True
 
 USE_TZ = True
 
-LOGGING_CONFIG = None
-LOGGING = {
-    'version': 1,
-    'disable_existing_loggers': False,
-    'formatters': {
-        'simple': {
-            'format': '%(asctime)s [%(levelname)s] %(name)s: %(message)s',
-        },
-    },
-    'handlers': {
-        'console': {
-            'class': 'logging.StreamHandler',
-            'formatter': 'simple',
-        },
-    },
-    'loggers': {
-        'share_text': {
-            'handlers': ['console'],
-            'level': 'DEBUG',
-            'propagate': False,
-        },
-    },
-}
-logging.config.dictConfig(LOGGING)
+# ログ設定はDEBUG定義後に移動
 
 
 # login、logoutのリダイレクト先をカスタマイズ
@@ -167,8 +173,18 @@ SESSION_SAVE_EVERY_REQUEST = True  # これを追加したら随時延長
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATIC_URL = '/static/'
 
-# Activate Django-Heroku.
-django_heroku.settings(locals())
+# 静的ファイルの検索パス
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'airs/static'),
+]
+
+# Railway環境での静的ファイル設定
+MIDDLEWARE.insert(1, 'whitenoise.middleware.WhiteNoiseMiddleware')
+
+# WhiteNoise設定
+WHITENOISE_USE_FINDERS = True
+WHITENOISE_AUTOREFRESH = True
+
 
 
 DEBUG = False
@@ -178,22 +194,76 @@ try:
 except ImportError:
     pass
 
+# ログ設定（DEBUG定義後）
+LOGGING_CONFIG = None
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'development': {
+            'format': '%(asctime)s [%(levelname)s] %(name)s: %(message)s',
+        },
+        'production': {
+            'format': '%(asctime)s [%(levelname)s] %(name)s.%(funcName)s:%(lineno)d - %(message)s',
+        },
+    },
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+            'formatter': 'production' if not DEBUG else 'development',
+        },
+    },
+    'root': {
+        'handlers': ['console'],
+        'level': 'INFO' if not DEBUG else 'DEBUG',
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['console'],
+            'level': 'INFO',
+            'propagate': False,
+        },
+        'airs': {
+            'handlers': ['console'],
+            'level': 'INFO' if not DEBUG else 'DEBUG',
+            'propagate': False,
+        },
+        'share_text': {
+            'handlers': ['console'],
+            'level': 'INFO' if not DEBUG else 'DEBUG',
+            'propagate': False,
+        },
+    },
+}
+logging.config.dictConfig(LOGGING)
+
 if not DEBUG:
     SECRET_KEY = os.getenv('SECRET_KEY')
-    STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.StaticFilesStorage'
+    
+    # 本番環境での静的ファイル設定
+    STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
+    
+    # セキュリティ設定の強化
+    SECURE_BROWSER_XSS_FILTER = True
+    SECURE_CONTENT_TYPE_NOSNIFF = True
+    X_FRAME_OPTIONS = 'DENY'
+    
+    # HTTPS強制設定（Railway環境では自動でHTTPSが有効）
+    SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+    SECURE_SSL_REDIRECT = True
+    SESSION_COOKIE_SECURE = True
+    CSRF_COOKIE_SECURE = True
+    SECURE_HSTS_SECONDS = 31536000
+    SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+    SECURE_HSTS_PRELOAD = True
 
-    sentry_sdk.init(
-        dsn=os.getenv('SENTRY_DSN'),
-        integrations=[
-            DjangoIntegration(),
-        ],
-
-        # Set traces_sample_rate to 1.0 to capture 100%
-        # of transactions for performance monitoring.
-        # We recommend adjusting this value in production.
-        traces_sample_rate=1.0,
-
-        # If you wish to associate users to errors (assuming you are using
-        # django.contrib.auth) you may enable sending PII data.
-        send_default_pii=True
-    )
+    # Sentry設定（任意）
+    if os.getenv('SENTRY_DSN'):
+        sentry_sdk.init(
+            dsn=os.getenv('SENTRY_DSN'),
+            integrations=[
+                DjangoIntegration(),
+            ],
+            traces_sample_rate=1.0,
+            send_default_pii=True
+        )

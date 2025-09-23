@@ -1,2 +1,1 @@
-web: gunicorn rnsite.wsgi
-release: python manage.py migrate
+web: gunicorn rnsite.wsgi --log-file -
