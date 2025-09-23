@@ -13,3 +13,6 @@ coverage/
 
 # Backup temporary files
 *.sql
+
+backup-service/node_modules/
+
