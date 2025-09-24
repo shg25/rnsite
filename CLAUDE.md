@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## プロジェクト概要
 
-これは「raisyumo-nanitozo!!」というラジオ聴取管理システムのDjangoアプリケーションです。ユーザーがラジオ番組の聴取履歴を記録し、コメントを共有するソーシャルプラットフォームです。
+「raisyumo-nanitozo!!」はラジオ聴取管理システムのDjangoアプリケーションです。ユーザーがラジオ番組の聴取履歴を記録し、コメントを共有するソーシャルプラットフォームです。
 
 ## 開発コマンド
 
@@ -38,6 +38,10 @@ python manage.py test
 
 # デバッグモードでテスト実行
 python manage.py test --debug-mode
+
+# 単体テスト実行例
+python manage.py test airs.tests.models.air_model_tests
+python manage.py test airs.tests.views.air_views_tests
 
 # Django shell起動
 python manage.py shell
@@ -80,6 +84,7 @@ railway link
 
 # デプロイ
 git push origin release  # 本番リリース用ブランチ
+git push origin develop  # STG環境用ブランチ
 
 # Railway環境でコマンド実行
 railway run python manage.py migrate
@@ -101,244 +106,38 @@ railway shell
 # 手動バックアップ（重要な変更前）
 railway run pg_dump $DATABASE_URL > backup_$(date +%Y%m%d).sql
 
-# Railway自動バックアップテンプレート（推奨）
-# https://railway.app/template/XV2dlg
-
-## 週1回自動バックアップシステム（高機能版）
-
-### セットアップ手順
-```bash
-# 1. Railway S3 Backup Template をデプロイ
-# https://railway.app/template/XV2dlg にアクセス
-# "Deploy Now" をクリック
-
-# 2. 環境変数設定
-AWS_ACCESS_KEY_ID=your_aws_access_key
-AWS_SECRET_ACCESS_KEY=your_aws_secret_key  
-AWS_S3_BUCKET=your-backup-bucket-name
-AWS_S3_REGION=ap-northeast-1
-BACKUP_DATABASE_URL=$DATABASE_URL
-BACKUP_CRON_SCHEDULE="0 19 * * 1"  # 毎週月曜日 4:00 AM JST (UTC 日曜19:00)
-
-# 3. 高機能版の追加設定（容量チェック + 前回データ削除）
-BACKUP_SIZE_CHECK_ENABLED=true
-BACKUP_SIZE_THRESHOLD=50  # 50%の増減でアラート
-BACKUP_RETENTION_WEEKS=1  # 1週間分のみ保持
-SLACK_WEBHOOK_URL=your_slack_webhook_url  # 異常通知用（任意）
-```
-
-### 高機能バックアップの仕様
-```javascript
-// バックアップ処理のフロー
-1. 現在のDBをdump
-2. ファイルサイズをチェック
-3. 前回バックアップとサイズ比較
-4. 異常がなければS3にアップロード
-5. 前回のバックアップファイルを削除
-6. ログ記録 & 通知（必要に応じて）
-
-// 容量チェックロジック
-const currentSize = backupFile.size;
-const previousSize = await getPreviousBackupSize();
-const changePercent = Math.abs((currentSize - previousSize) / previousSize * 100);
-
-if (changePercent > BACKUP_SIZE_THRESHOLD) {
-  // アラート送信（Slack等）
-  await sendAlert(`DB size changed by ${changePercent}%`);
-}
-```
-
-### 想定される動作
-```bash
-# 正常時（毎週日曜日14:00 JST）
-2025-09-07 14:00: バックアップ開始
-2025-09-07 14:01: DB dump完了 (97.5MB)
-2025-09-07 14:01: サイズチェックOK (前回比+0.2%)  
-2025-09-07 14:01: S3アップロード完了
-2025-09-07 14:01: 前回ファイル削除
-2025-09-07 14:01: バックアップ完了
-
-# 異常検知時
-2025-09-14 14:00: バックアップ開始
-2025-09-14 14:01: DB dump完了 (150MB)
-2025-09-14 14:01: ⚠️ サイズ異常検知 (前回比+54%)
-2025-09-14 14:01: Slack通知送信
-2025-09-14 14:01: バックアップは継続実行
-2025-09-14 14:01: 前回ファイル削除
-```
-
-### コスト試算
-```bash
-# 週1回バックアップ（97.3MB）
-- S3ストレージ: 1つのファイルのみ保持 = $0.002/月
-- Railway→S3転送: 0.097GB × 4回/月 × $0.10 = $0.039/月
-- バックアップサービス: Railway App Sleep で自動節約
-- 合計: 約$0.04/月（5円程度）
-
-# Railway Metal適用後（2025年Q1以降）
-- 転送コスト50%削減: $0.019/月
-- 合計: 約$0.02/月（3円程度）
-```
-
-## Railway料金体系（2025年最新版）
-
-### 基本料金構造
-```bash
-# Hobby Plan: $5/月（$5使用量クレジット付き）
-# 使用量が$5以下なら追加料金なし
-# $5超過分のみ追加課金
-
-# 現在の使用量ベース課金レート
-- CPU: $20/vCPU/月
-- Memory: $10/GB/月  
-- Volume(ストレージ): $0.25/GB/月（現行）→ $0.15/GB/月（Railway Metal）
-- Network Egress(データ転送): $0.10/GB/月（現行）→ $0.05/GB/月（Railway Metal）
-
-# Railway Metal（2025年Q1完了予定）
-# 80%のワークロードがRailway Metal移行で自動適用
-# ストレージ40%削減、転送料50%削減
-```
-
-### PostgreSQLのコスト構成
-```bash
-# データベースの実際のコスト要因
-1. CPU使用量: クエリ処理時のみ課金
-2. Memory使用量: データキャッシュ等
-3. Volume使用量: DB データサイズ（現在97.3MB）
-4. Network Egress: 外部へのデータ転送
-
-# 97.3MBデータベースの月間コスト例
-# 現行レート
-- Volume: 0.097GB × $0.25 = $0.024/月
-- CPU/Memory: 低負荷時は数十円程度/月
-- 合計: $1-2程度/月（$5クレジット内）
-
-# Railway Metal適用後（2025年Q1以降）
-- Volume: 0.097GB × $0.15 = $0.015/月（40%削減）
-```
-
-### バックアップのコスト影響
-```bash
-# 週1回バックアップ（97.3MB）の追加コスト
-- S3 Standard Storage: 0.097GB × $0.023 = $0.002/月
-- Network Egress（Railway→S3）: 
-  現行: 0.097GB × 4回/月 × $0.10 = $0.039/月
-  Railway Metal: 0.097GB × 4回/月 × $0.05 = $0.019/月（50%削減）
-- 合計追加コスト: 約$0.04/月 → $0.02/月（Railway Metal適用後）
-
-# 前回データ削除による節約効果
-- ストレージを1週間分のみ保持 → 実質コスト変化なし
-- 長期蓄積なしで最小限のS3料金
-- スマートな容量チェックで異常検知も可能
-```
-```
-
-### STG環境運用ガイド
-```bash
-# STG環境セットアップ（初回のみ）
-railway environment new staging         # staging環境作成
-railway environment staging            # staging環境に切り替え
-# Railway Dashboard > Settings > Environments > staging > Duplicate from production
-
-# STG環境デプロイ
-railway environment staging            # staging環境に切り替え
-git push origin develop               # developブランチをstaging環境にデプロイ
-
-# STG環境確認
-railway environment staging
-railway variables                     # STG環境固有の環境変数確認
-railway logs -d                      # STGデプロイログ確認
-railway shell                        # STG環境でのシェルアクセス
-
-# STG → 本番環境移行フロー
-1. developブランチで開発 → STG環境でテスト
-2. STG環境で動作確認完了
-3. main/masterブランチにマージ
-4. production環境へデプロイ
-
-# STG環境データ管理
-railway environment staging
-railway run python manage.py loaddata airs/fixtures/*.json  # テストデータ投入
-railway run python manage.py migrate                       # DB migration
-```
-
-### Railway運用チェックリスト
-```bash
-# 月次確認事項
-1. コスト監視: Railway Dashboardでusage確認（本番+STG）
-2. ログ確認: `railway logs`でエラーチェック（各環境）
-3. データベース状況: 接続数、サイズ確認
-4. バックアップ状況: S3バケット確認（設定済みの場合）
-
-# 緊急時対応
-railway rollback     # 前バージョンに戻す
-railway restart      # サービス再起動
-
-# 環境切り替えコマンド
+# 環境切り替え
 railway environment production  # 本番環境
 railway environment staging     # STG環境
 ```
 
-### STG環境運用方針
-
-**標準パターン**: 完全分離型 + App Sleep活用
-
+### バックアップシステムコマンド
 ```bash
-# STG環境の基本仕様
-- 本番環境から完全分離（安全性確保）
-- App Sleep自動適用（$1-3/月の低コスト運用）
-- テストデータ使用（374オブジェクト）
-- 月初作成・不要時削除の効率運用
+# バックアップサービスのテスト実行
+cd backup-service
+npm test
+npm run test:coverage
 
-# 基本的なSTG環境作成
-railway environment new staging
-railway environment staging
-railway add postgresql
-railway run python manage.py migrate
-railway run python manage.py loaddata airs/fixtures/*.json
-```
+# 手動バックアップ実行
+railway run node smart-backup.js
 
-**詳細手順**: [docs/deployment/stg-environment-setup.md](docs/deployment/stg-environment-setup.md)
-
-### STG環境の用途
-- DB変更を伴う開発・Migration テスト
-- フロントエンド修正・UI テスト  
-- 新機能の安全な検証
-- 緊急時の動作確認
+# バックアップサービスのデプロイ
+cd backup-service
+railway up
 ```
 
 ### Git ブランチ戦略
-
 ```bash
 # ブランチ構成
-railway-migration  # Railway移行作業用（現在のブランチ）
-develop           # 開発用ブランチ
-release           # 本番リリース用ブランチ  
+develop           # 開発用ブランチ（STG環境へデプロイ）
+release           # 本番リリース用ブランチ
 main              # メインブランチ（安定版）
 
 # 開発フロー
-1. railway-migration → release（移行完了後）
-2. develop → staging → release → production
-3. release → main（本番リリース完了後）
-
-# 基本的な運用
-git checkout develop     # 日常開発
-git checkout release     # 本番リリース
-git checkout main        # 安定版確認
-```
-
-### ドキュメント体系
-
-```bash
-# プロジェクトドキュメント構成
-docs/
-├── deployment/          # デプロイ・環境構築
-│   ├── stg-environment-setup.md
-│   └── railway-deployment-checklist.md
-├── development/         # 開発環境・手順
-└── operations/          # 運用・保守
-
-# 詳細な手順は各専用ドキュメントを参照
+1. develop → staging環境で検証
+2. develop → release（本番リリース準備）
+3. release → production環境へデプロイ
+4. release → main（本番リリース完了後）
 ```
 
 ## アプリケーションアーキテクチャ
@@ -374,11 +173,12 @@ docs/
 - Sentry統合でエラー監視
 - 日本時間（Asia/Tokyo）でのタイムゾーン設定
 - PostgreSQL使用（環境変数で認証情報管理）
-- django-herokuでHeroku環境に最適化
+- WhiteNoiseで静的ファイル配信
 
-### Heroku環境構成
-- **rnsite-stg**: Eco Dynos + Heroku Postgres Mini + Papertrail Choklad
-- **rnsite-prod**: Basic Dynos + Heroku Postgres Basic + Papertrail Choklad
+### Railway環境構成
+- **本番環境**: production環境にデプロイ
+- **STG環境**: staging環境（App Sleep活用で低コスト運用）
+- **バックアップサービス**: 週1回自動実行（S3保存）
 
 ### カスタム機能
 - radikoのシェアURLからの自動放送登録
@@ -455,6 +255,7 @@ python manage.py loaddata airs/fixtures/*.json  # 374オブジェクトのテス
 - 本番環境では `DEBUG = False`
 - 環境変数で `SECRET_KEY` と `SENTRY_DSN` を管理
 - CSRF保護とXFrame保護が有効
+- 本番環境でHTTPS強制とセキュリティヘッダー自動付与
 
 ### 使用ライブラリ（独自選択分）
 - `pytz`: タイムゾーン変換
@@ -464,16 +265,10 @@ python manage.py loaddata airs/fixtures/*.json  # 374オブジェクトのテス
 
 ## Railway移行について
 
-### Railway移行の利点
-- **コスト削減**: Herokuより安価な料金体系
-- **簡単なデプロイ**: GitHubリポジトリからの自動デプロイ
-- **モダンな開発体験**: より直感的なUI/UX
-
-### 移行手順
-1. **Railway設定**: GitHubリポジトリを接続
-2. **環境変数設定**: `SECRET_KEY`, `DATABASE_URL`等を設定
-3. **PostgreSQLサービス**: Railwayで新しくPostgreSQLを作成
-4. **データ移行**: Herokuからデータをエクスポート/インポート
+### Railway環境設定
+- GitHubリポジトリから自動デプロイ
+- DockerfileベースのビルドとデプロイVMで
+- railway.jsonで再起動ポリシー設定
 
 ### 必要な環境変数
 ```
@@ -496,14 +291,8 @@ CUSTOM_DOMAIN=your-custom-domain.com
 railway variables set CUSTOM_DOMAIN=your-custom-domain.com
 
 # 5. デプロイ（自動的にALLOWED_HOSTSが更新される）
-git push origin railway-migration
+git push origin release
 ```
-
-### コード変更点
-- `django-heroku` → `dj-database-url` + WhiteNoise設定
-- `ALLOWED_HOSTS`を動的に設定（Railway環境では自動ドメイン検出）
-- `railway.json`でデプロイ設定を自動化
-- `psycopg2-binary`でPostgreSQL接続を確保
 
 ### 運用強化機能（2025年9月実装）
 #### 1. ヘルスチェック機能
@@ -541,48 +330,24 @@ SECURE_HSTS_SECONDS = 31536000     # HSTS設定
 }
 ```
 
-### 運用上の既知の問題と今後の改善案
+### STG環境運用方針
 
-#### Railway内部ヘルスチェック機能の課題（2025年9月時点）
+**標準パターン**: 完全分離型 + App Sleep活用
 
-**問題の概要**:
-Railway の内部ヘルスチェック機能（`"healthcheckPath": "/health/"`）を設定すると、デプロイ時に「Healthcheck failure」が発生し、デプロイが失敗と判定される現象が確認されている。
-
-**技術的詳細**:
-- **アプリケーション自体**: 完全に正常動作
-- **ヘルスチェックエンドポイント**: `/health/` は正常応答（200 OK）
-- **手動確認**: `curl https://your-app.railway.app/health/` で正常確認済み
-- **ALLOWED_HOSTS**: `healthcheck.railway.app` も適切に設定済み
-- **失敗箇所**: Railway内部の「Network > Healthcheck」フェーズで失敗
-
-**現在の回避策**:
-- Railway標準ヘルスチェック機能を無効化
-- 手動監視とログ監視で代替
-- アプリケーションの安定稼働を最優先
-
-**今後の改善案**:
-1. **Railway側のアップデート待ち**: ヘルスチェック機能の改善を期待
-2. **外部監視サービス導入**: Uptime Robot、Pingdom等での監視
-3. **カスタムヘルスチェック実装**: より詳細な健康状態監視
-4. **Railway コミュニティでの情報収集**: 同様の問題の解決事例を調査
-
-**代替監視方法**:
 ```bash
-# 手動ヘルスチェック
-curl https://your-app.railway.app/health/
+# STG環境の基本仕様
+- 本番環境から完全分離（安全性確保）
+- App Sleep自動適用（$1-3/月の低コスト運用）
+- テストデータ使用（374オブジェクト）
+- 月初作成・不要時削除の効率運用
 
-# Railway ログ監視
-railway logs
-
-# 自動バックアップ監視（週1回実行確認）
-# backup-service ログで成功・失敗を確認
+# 基本的なSTG環境作成
+railway environment new staging
+railway environment staging
+railway add postgresql
+railway run python manage.py migrate
+railway run python manage.py loaddata airs/fixtures/*.json
 ```
-
-### Railway本番環境の料金詳細（2025年最新）
-- **基本プラン**: $5/月（従量制超過分も含む）
-- **PostgreSQL**: 計算量とストレージ使用量に基づく従量制
-- **実際のコスト**: PostgreSQL約$7-8/月（高使用量のため）+ Web $5/月 = 約$12-13/月
-- **比較**: Heroku $16/月 → Railway $12-13/月 で約25%削減
 
 ## 完全自動バックアップシステム（実装完了）
 
@@ -603,30 +368,11 @@ backup-service/
 - **エラー通知**: 失敗時の自動Slack通知
 - **日時ログ**: 日本時間でのログ出力
 
-### Railway導入手順
-```bash
-# 1. Railwayで新しいサービス作成
-railway service create backup-service
-
-# 2. backup-serviceディレクトリに移動
-cd backup-service
-
-# 3. 環境変数設定
-railway variables set DATABASE_URL=$RAILWAY_MAIN_DATABASE_URL
-railway variables set AWS_ACCESS_KEY_ID=your_aws_key
-railway variables set AWS_SECRET_ACCESS_KEY=your_aws_secret
-railway variables set AWS_S3_BUCKET=your_backup_bucket_name
-railway variables set SLACK_WEBHOOK_URL=your_slack_webhook_url
-
-# 4. cronサービスとしてデプロイ
-railway up
-```
-
 ### 環境変数一覧
 ```bash
 # 必須環境変数
 DATABASE_URL=postgresql://user:pass@host:port/db  # Railway DB URL
-AWS_ACCESS_KEY_ID=AKIA...                         # AWS S3アクセスキー  
+AWS_ACCESS_KEY_ID=AKIA...                         # AWS S3アクセスキー
 AWS_SECRET_ACCESS_KEY=secret...                   # AWS S3シークレット
 AWS_S3_BUCKET=my-backup-bucket                    # S3バケット名
 
@@ -636,60 +382,4 @@ BACKUP_SIZE_THRESHOLD=50                          # サイズ変化アラート�
 SLACK_WEBHOOK_URL=https://hooks.slack.com/...     # Slack通知URL（任意）
 BACKUP_CRON_SCHEDULE="0 5 * * 0"                 # cronスケジュール
 BACKUP_PREFIX=weekly-backup                       # ファイル名プレフィックス
-```
-
-### AWS S3設定手順
-```bash
-# 1. S3バケット作成
-aws s3 mb s3://your-backup-bucket --region ap-northeast-1
-
-# 2. IAMユーザー作成とポリシー添付
-aws iam create-user --user-name railway-backup-user
-
-# 3. 必要な権限（S3フルアクセス）
-{
-    "Version": "2012-10-17",
-    "Statement": [
-        {
-            "Effect": "Allow", 
-            "Action": ["s3:GetObject", "s3:PutObject", "s3:DeleteObject", "s3:ListBucket"],
-            "Resource": ["arn:aws:s3:::your-backup-bucket/*", "arn:aws:s3:::your-backup-bucket"]
-        }
-    ]
-}
-```
-
-### バックアップ運用フロー
-1. **スケジュール起動**: 毎週日曜5AM UTC（日本時間14時）
-2. **前回サイズ取得**: S3から最新バックアップサイズ確認
-3. **データベースダンプ**: `pg_dump`で完全バックアップ作成
-4. **サイズ異常検知**: 50%以上の変化でSlackアラート送信
-5. **S3アップロード**: AES256暗号化でクラウド保存
-6. **前回ファイル削除**: 古いバックアップを自動削除
-7. **ローカルクリーンアップ**: 一時ファイル削除
-8. **実行結果通知**: 成功/失敗をSlack通知
-
-### ログ出力例
-```
-🚀 Starting smart backup process...
-📅 2025/08/31 14:00:00
-📊 Previous backup: 2.45MB
-📦 Creating database dump: weekly-backup-2025-08-31.sql
-✅ Dump completed: 2.52MB
-📈 Size change: 2.9% (threshold: 50%)
-☁️ Uploading to S3: weekly-backup-2025-08-31.sql
-✅ Upload completed
-🗑️ Deleted previous backup: weekly-backup-2025-08-24.sql
-🧹 Cleaned up local file: weekly-backup-2025-08-31.sql
-🎉 Smart backup completed successfully!
-✅ Weekly backup: 2.52MB (2.9% change)
-```
-
-### 手動実行方法
-```bash
-# バックアップサービス内で単発実行
-railway run node smart-backup.js
-
-# または、Railway環境で直接実行
-railway exec node smart-backup.js
 ```
