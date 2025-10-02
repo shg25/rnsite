@@ -6,7 +6,7 @@ from django.utils.timezone import make_aware
 
 
 MAX_YEAR = 2023
-MIN_YEAR = 2022
+MIN_YEAR = 2019
 
 
 def this_month():
