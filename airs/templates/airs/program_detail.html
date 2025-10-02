@@ -7,25 +7,60 @@
 {% block header %}{% endblock header %}
 
 {% block content %}
-<article class="rn-padding">
-  {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+<article>
+  <div class="rn-padding">
+    <h1 class="uk-text-lead uk-margin-remove">{{ program.name }}</h1>
+    <h2 class="uk-text-default uk-margin-remove-top uk-margin-small-bottom">
+      {{ program_nanitozo_count }}何卒<small> {{ program_air_count }}放送</small>
+    </h2>
 
-  <h1 class="uk-text-lead">{{ program.name }}</h1>
+    {% if program.broadcaster %}
+    <div class="uk-flex uk-flex-middle">
+      <span uk-icon="icon: location" class="uk-icon"></span>
+      <span class="uk-text-middle mgl-s"><a href="{{ program.broadcaster.get_absolute_url }}">{{ program.broadcaster }}</a></span>
+    </div>
+    {% endif %}
 
-  <dl class="uk-description-list">
+    {% if program.twitter_user_name %}
+    <div class="uk-flex uk-flex-middle">
+      <span uk-icon="icon: twitter" class="uk-icon"></span>
+      <span class="uk-text-middle mgl-s"><a href="https://x.com/{{ program.twitter_user_name }}" target="_blank">X</a></span>
+    </div>
+    {% endif %}
 
-    <dt>Twitterスクリーンネーム</dt>
-    <dd>{{ program.twitter_user_name }}</dd>
+    {% if program.site_url %}
+    <div class="uk-flex uk-flex-middle">
+      <span uk-icon="icon: home" class="uk-icon"></span>
+      <span class="uk-text-middle mgl-s"><a href="{{ program.site_url }}" target="_blank">公式サイト</a></span>
+    </div>
+    {% endif %}
 
-    <dt>サイトURL</dt>
-    <dd><a href="{{ program.site_url }}" target="_blank">{{ program.site_url }}</a></dd>
+    {% if program.wikipedia_url %}
+    <div class="uk-flex uk-flex-middle">
+      <span uk-icon="icon: world" class="uk-icon"></span>
+      <span class="uk-text-middle mgl-s"><a href="{{ program.wikipedia_url }}" target="_blank">Wikipedia</a></span>
+    </div>
+    {% endif %}
+  </div>
 
-    <dt>Wikipedia</dt>
-    <dd><a href="{{ program.wikipedia_url }}" target="_blank">{{ program.wikipedia_url }}</a></dd>
+  {% if user_nanitozo_ranking %}
+  <hr class="uk-divider-small uk-margin-small-bottom">
 
-    <dt>キー局</dt>
-    <dd>{{ program.broadcaster }}</dd>
-  </dl>
+  <div class="rn-padding">
+    {% for user in user_nanitozo_ranking %}
+    <div class="uk-margin-bottom uk-animation-toggle" tabindex="0">
+      <a href="{{ user.get_absolute_url }}" class="uk-display-block uk-link-reset uk-animation-slide-bottom-small border-left-muted">
+        <h3 class="uk-text-small uk-margin-remove">
+          {{ user.nanitozo_count }}何卒
+        </h3>
+        <div class="uk-grid-collapse uk-flex-middle" uk-grid>
+          <h2 class="uk-width-expand uk-text-truncate uk-text-small">{{ user }}</h2>
+        </div>
+      </a>
+    </div>
+    {% endfor %}
+  </div>
+  {% endif %}
 
 </article>
 {% endblock content %}

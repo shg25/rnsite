@@ -187,3 +187,200 @@ class ProgramsListViewTests(TestCase):
         )
         self.assertContains(response, '何卒あり番組')
         self.assertNotContains(response, '何卒なし番組')
+
+
+class ProgramDetailViewTests(TestCase):
+    def setUp(self):
+        # 放送局作成
+        self.broadcaster = Broadcaster.objects.create(
+            radiko_identifier='TBS',
+            name='TBSラジオ',
+            abbreviation='TBS',
+            address='東京都'
+        )
+
+        # ユーザー作成
+        self.user1 = UserModel.objects.create_user(
+            username='test_user1',
+            last_name='AAA'
+        )
+        self.user2 = UserModel.objects.create_user(
+            username='test_user2',
+            last_name='BBB'
+        )
+        self.user3 = UserModel.objects.create_user(
+            username='test_user3',
+            last_name='CCC'
+        )
+
+        # 番組作成
+        self.program = Program.objects.create(
+            name='テスト番組',
+            twitter_user_name='test_radio',
+            site_url='https://example.com',
+            wikipedia_url='https://wikipedia.org',
+            broadcaster=self.broadcaster
+        )
+
+    def test_番組詳細の基本表示(self):
+        response = self.client.get(reverse('airs:program', kwargs={'pk': self.program.pk}))
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, 'テスト番組')
+        self.assertContains(response, 'TBSラジオ')
+
+    def test_統計情報の集計_何卒あり(self):
+        # Air作成（3件）
+        now = timezone.now()
+        air1 = Air.objects.create(
+            broadcaster=self.broadcaster,
+            program=self.program,
+            name='第1回',
+            started_at=now - datetime.timedelta(days=3),
+            ended_at=now - datetime.timedelta(days=3, hours=-1)
+        )
+        air2 = Air.objects.create(
+            broadcaster=self.broadcaster,
+            program=self.program,
+            name='第2回',
+            started_at=now - datetime.timedelta(days=2),
+            ended_at=now - datetime.timedelta(days=2, hours=-1)
+        )
+        air3 = Air.objects.create(
+            broadcaster=self.broadcaster,
+            program=self.program,
+            name='第3回',
+            started_at=now - datetime.timedelta(days=1),
+            ended_at=now - datetime.timedelta(days=1, hours=-1)
+        )
+
+        # Nanitozo作成（5件）
+        Nanitozo.objects.create(air=air1, user=self.user1, comment='コメント1')
+        Nanitozo.objects.create(air=air1, user=self.user2, comment='コメント2')
+        Nanitozo.objects.create(air=air2, user=self.user1, comment='コメント3')
+        Nanitozo.objects.create(air=air2, user=self.user3, comment='コメント4')
+        Nanitozo.objects.create(air=air3, user=self.user1, comment='コメント5')
+
+        response = self.client.get(reverse('airs:program', kwargs={'pk': self.program.pk}))
+        self.assertEqual(response.status_code, 200)
+
+        # コンテキスト変数の確認
+        self.assertEqual(response.context['program_air_count'], 3)
+        self.assertEqual(response.context['program_nanitozo_count'], 5)
+
+        # テンプレートでの表示確認
+        self.assertContains(response, '5何卒')
+        self.assertContains(response, '3放送')
+
+    def test_統計情報の集計_何卒なし(self):
+        # Airのみ作成（何卒なし）
+        now = timezone.now()
+        Air.objects.create(
+            broadcaster=self.broadcaster,
+            program=self.program,
+            name='第1回',
+            started_at=now - datetime.timedelta(days=1),
+            ended_at=now - datetime.timedelta(days=1, hours=-1)
+        )
+
+        response = self.client.get(reverse('airs:program', kwargs={'pk': self.program.pk}))
+        self.assertEqual(response.status_code, 200)
+
+        # 何卒0件でも統計情報は表示される
+        self.assertEqual(response.context['program_air_count'], 1)
+        self.assertEqual(response.context['program_nanitozo_count'], 0)
+        self.assertContains(response, '0何卒')
+        self.assertContains(response, '1放送')
+
+    def test_ユーザー別何卒ランキングの表示(self):
+        # Air作成
+        now = timezone.now()
+        air1 = Air.objects.create(
+            broadcaster=self.broadcaster,
+            program=self.program,
+            name='第1回',
+            started_at=now - datetime.timedelta(days=3),
+            ended_at=now - datetime.timedelta(days=3, hours=-1)
+        )
+        air2 = Air.objects.create(
+            broadcaster=self.broadcaster,
+            program=self.program,
+            name='第2回',
+            started_at=now - datetime.timedelta(days=2),
+            ended_at=now - datetime.timedelta(days=2, hours=-1)
+        )
+        air3 = Air.objects.create(
+            broadcaster=self.broadcaster,
+            program=self.program,
+            name='第3回',
+            started_at=now - datetime.timedelta(days=1),
+            ended_at=now - datetime.timedelta(days=1, hours=-1)
+        )
+
+        # Nanitozo作成
+        # user1: 3何卒
+        Nanitozo.objects.create(air=air1, user=self.user1, comment='コメント1')
+        Nanitozo.objects.create(air=air2, user=self.user1, comment='コメント2')
+        Nanitozo.objects.create(air=air3, user=self.user1, comment='コメント3')
+        # user2: 2何卒
+        Nanitozo.objects.create(air=air1, user=self.user2, comment='コメント4')
+        Nanitozo.objects.create(air=air2, user=self.user2, comment='コメント5')
+        # user3: 1何卒
+        Nanitozo.objects.create(air=air1, user=self.user3, comment='コメント6')
+
+        response = self.client.get(reverse('airs:program', kwargs={'pk': self.program.pk}))
+        self.assertEqual(response.status_code, 200)
+
+        # ランキング順序の確認（何卒数降順、同数の場合last_name昇順）
+        ranking = response.context['user_nanitozo_ranking']
+        self.assertEqual(len(ranking), 3)
+        self.assertEqual(ranking[0], self.user1)
+        self.assertEqual(ranking[0].nanitozo_count, 3)
+        self.assertEqual(ranking[1], self.user2)
+        self.assertEqual(ranking[1].nanitozo_count, 2)
+        self.assertEqual(ranking[2], self.user3)
+        self.assertEqual(ranking[2].nanitozo_count, 1)
+
+        # テンプレートでの表示確認
+        self.assertContains(response, 'AAA')
+        self.assertContains(response, 'BBB')
+        self.assertContains(response, 'CCC')
+        self.assertContains(response, '3何卒')
+        self.assertContains(response, '2何卒')
+        self.assertContains(response, '1何卒')
+
+    def test_何卒0件の場合_ランキング非表示(self):
+        response = self.client.get(reverse('airs:program', kwargs={'pk': self.program.pk}))
+        self.assertEqual(response.status_code, 200)
+
+        # ランキングが空
+        ranking = response.context['user_nanitozo_ranking']
+        self.assertEqual(len(ranking), 0)
+
+        # ランキングセクションが表示されない（区切り線も表示されない）
+        self.assertNotContains(response, 'uk-divider-small')
+
+    def test_同じ何卒数の場合_last_name昇順ソート(self):
+        # Air作成
+        now = timezone.now()
+        air1 = Air.objects.create(
+            broadcaster=self.broadcaster,
+            program=self.program,
+            name='第1回',
+            started_at=now - datetime.timedelta(days=1),
+            ended_at=now - datetime.timedelta(days=1, hours=-1)
+        )
+
+        # 全員1何卒ずつ
+        Nanitozo.objects.create(air=air1, user=self.user3, comment='コメント1')  # CCC
+        Nanitozo.objects.create(air=air1, user=self.user1, comment='コメント2')  # AAA
+        Nanitozo.objects.create(air=air1, user=self.user2, comment='コメント3')  # BBB
+
+        response = self.client.get(reverse('airs:program', kwargs={'pk': self.program.pk}))
+        self.assertEqual(response.status_code, 200)
+
+        # last_name昇順: AAA -> BBB -> CCC
+        ranking = response.context['user_nanitozo_ranking']
+        self.assertEqual(len(ranking), 3)
+        self.assertEqual(ranking[0], self.user1)  # AAA
+        self.assertEqual(ranking[1], self.user2)  # BBB
+        self.assertEqual(ranking[2], self.user3)  # CCC
