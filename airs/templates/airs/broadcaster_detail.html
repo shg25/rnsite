@@ -10,21 +10,31 @@
 <article>
 
   <div class="rn-padding">
-    <h1 class="uk-text-lead">{{ broadcaster.name }}</h1>
+    <h1 class="uk-text-lead uk-margin-remove">{{ broadcaster.name }}</h1>
+    <h2 class="uk-text-default uk-margin-remove-top uk-margin-small-bottom">
+      {{ broadcaster.abbreviation }}
+    </h2>
 
-    <dl class="uk-description-list">
-      <dt>略称</dt>
-      <dd>{{ broadcaster.abbreviation }}</dd>
+    {% if broadcaster.site_url %}
+    <div class="uk-flex uk-flex-middle">
+      <span uk-icon="icon: home" class="uk-icon"></span>
+      <span class="uk-text-middle mgl-s"><a href="{{ broadcaster.site_url }}" target="_blank">公式サイト</a></span>
+    </div>
+    {% endif %}
 
-      <dt>サイトURL</dt>
-      <dd><a href="{{ broadcaster.site_url }}" target="_blank">{{ broadcaster.site_url }}</a></dd>
+    {% if broadcaster.wikipedia_url %}
+    <div class="uk-flex uk-flex-middle">
+      <span uk-icon="icon: world" class="uk-icon"></span>
+      <span class="uk-text-middle mgl-s"><a href="{{ broadcaster.wikipedia_url }}" target="_blank">Wikipedia</a></span>
+    </div>
+    {% endif %}
 
-      <dt>Wikipedia</dt>
-      <dd><a href="{{ broadcaster.wikipedia_url }}" target="_blank">{{ broadcaster.wikipedia_url }}</a></dd>
-
-      <dt>所在地</dt>
-      <dd>{{ broadcaster.address }}</dd>
-    </dl>
+    {% if broadcaster.address %}
+    <div class="uk-flex uk-flex-middle">
+      <span uk-icon="icon: location" class="uk-icon"></span>
+      <span class="uk-text-middle mgl-s"><a href="https://www.google.com/maps/search/{{ broadcaster.address }}?hl=ja&source=opensearch" target="_blank">Map</a></span>
+    </div>
+    {% endif %}
   </div>
 
   <div class="rn-padding">
