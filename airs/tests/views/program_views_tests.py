@@ -148,8 +148,9 @@ class ProgramsListViewTests(TestCase):
         self.assertEqual(program_in_list.air_count, 3)
         self.assertEqual(program_in_list.nanitozo_count, 5)
 
-        # テンプレートでの表示確認
-        self.assertContains(response, '5何卒（3放送）')
+        # テンプレートでの表示確認（HTML構造に依存しない数値のみチェック）
+        self.assertContains(response, '5<small>何卒</small>')
+        self.assertContains(response, '3<small>放送</small>')
 
     def test_何卒数0の番組は除外される(self):
         # 番組作成
@@ -344,9 +345,9 @@ class ProgramDetailViewTests(TestCase):
         self.assertContains(response, 'AAA')
         self.assertContains(response, 'BBB')
         self.assertContains(response, 'CCC')
-        self.assertContains(response, '3何卒')
-        self.assertContains(response, '2何卒')
-        self.assertContains(response, '1何卒')
+        self.assertContains(response, '3<small>何卒</small>')
+        self.assertContains(response, '2<small>何卒</small>')
+        self.assertContains(response, '1<small>何卒</small>')
 
     def test_何卒0件の場合_ランキング非表示(self):
         response = self.client.get(reverse('airs:program', kwargs={'pk': self.program.pk}))

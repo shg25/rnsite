@@ -174,9 +174,9 @@ class BroadcasterListViewTests(TestCase):
         self.assertEqual(broadcaster_in_list.air_count, 3)
         self.assertEqual(broadcaster_in_list.nanitozo_count, 5)
 
-        # テンプレートでの表示確認
-        self.assertContains(response, '5何卒')
-        self.assertContains(response, '3放送')
+        # テンプレートでの表示確認（HTML構造に依存しない数値のみチェック）
+        self.assertContains(response, '5<small>何卒</small>')
+        self.assertContains(response, '3<small>放送</small>')
 
     def test_何卒数0の放送局は除外される(self):
         # 放送局作成

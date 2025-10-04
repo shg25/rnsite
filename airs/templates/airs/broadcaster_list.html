@@ -16,12 +16,13 @@
 
     <div class="uk-margin-bottom uk-animation-toggle" tabindex="0">
         <a href="{{ broadcaster.get_absolute_url }}" class="uk-display-block uk-link-reset uk-animation-slide-bottom-small border-left-muted">
-            <h3 class="uk-text-small uk-margin-remove">
-                <span class="mgr-s">{{ broadcaster.nanitozo_count }}何卒</span><span class="uk-article-meta">{{ broadcaster.air_count }}放送</span>
-            </h3>
             <div class="uk-grid-collapse uk-flex-middle" uk-grid>
                 <h2 class="uk-width-expand uk-text-truncate uk-text-small">{{ broadcaster.name }}</h2>
             </div>
+
+            <p class="uk-article-meta uk-margin-remove">
+                <span class="uk-text-small mgr-s">{{ broadcaster.nanitozo_count }}<small>何卒</small></span>/<span class="mgl-s">{{ broadcaster.air_count }}<small>放送</small></span>
+            </p>
         </a>
     </div>
 

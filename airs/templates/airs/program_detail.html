@@ -50,12 +50,13 @@
     {% for user in user_nanitozo_ranking %}
     <div class="uk-margin-bottom uk-animation-toggle" tabindex="0">
       <a href="{{ user.get_absolute_url }}" class="uk-display-block uk-link-reset uk-animation-slide-bottom-small border-left-muted">
-        <h3 class="uk-text-small uk-margin-remove">
-          {{ user.nanitozo_count }}何卒
-        </h3>
         <div class="uk-grid-collapse uk-flex-middle" uk-grid>
           <h2 class="uk-width-expand uk-text-truncate uk-text-small">{{ user }}</h2>
         </div>
+
+        <p class="uk-article-meta uk-margin-remove">
+          <span class="uk-text-small">{{ user.nanitozo_count }}<small>何卒</small></span>
+        </p>
       </a>
     </div>
     {% endfor %}
