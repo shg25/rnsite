@@ -18,7 +18,7 @@ jobs:
         echo "🔍 機密情報チェック実行中..."
 
         # 機密情報パターンの検索（テストファイルと除外対象は除く）
-        SECRETS_FOUND=$(grep -r -i -n --exclude-dir=.git --exclude-dir=.claude --exclude-dir=.github \
+        SECRETS_FOUND=$(grep -r -i -n --exclude-dir=.git --exclude-dir=.claude --exclude-dir=.github --exclude-dir=node_modules \
           --exclude="*.md" --exclude="*test*.py" --exclude="local_settings.py" \
           -e "secret_key\s*=\s*['\"][^'\"]*['\"]" \
           -e "api_key\s*=\s*['\"][^'\"]*['\"]" \
