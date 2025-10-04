@@ -25,6 +25,26 @@ class BroadcasterDetailView(generic.DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
+        # 放送局全体の統計情報
+        broadcaster_stats = Broadcaster.objects.filter(pk=self.object.pk).annotate(
+            air_count=Count('air', distinct=True),
+            nanitozo_count=Count('air__nanitozo', distinct=True)
+        ).first()
+
+        context['broadcaster_air_count'] = broadcaster_stats.air_count
+        context['broadcaster_nanitozo_count'] = broadcaster_stats.nanitozo_count
+
+        # 番組ごとの何卒数ランキング（トップ10）
+        from ..models import Program
+        program_nanitozo_ranking = Program.objects.filter(
+            air__broadcaster=self.object
+        ).annotate(
+            air_count=Count('air', distinct=True),
+            nanitozo_count=Count('air__nanitozo', distinct=True)
+        ).filter(nanitozo_count__gt=0).order_by('-nanitozo_count', 'name')[:10]
+
+        context['program_nanitozo_ranking'] = program_nanitozo_ranking
+
         # TODO 理想としては、完全に月で区切らずに5:00〜4:59で区切りたいが個別にcountしていくとコスパが悪かったりするかも & 大きく変わるわけではないので優先度低
         monthly_count_list = Air.objects.filter(broadcaster=context['broadcaster'])\
             .annotate(monthly_date=TruncMonth('started_at')).values('monthly_date')\

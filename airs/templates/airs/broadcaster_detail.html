@@ -10,9 +10,9 @@
 <article>
 
   <div class="rn-padding">
-    <h1 class="uk-text-lead uk-margin-remove">{{ broadcaster.name }}</h1>
+    <h1 class="uk-text-lead uk-margin-remove">{{ broadcaster.name }}{% comment %}<span class="uk-article-meta"> {{ broadcaster.abbreviation }}</span>{% endcomment %}</h1>
     <h2 class="uk-text-default uk-margin-remove-top uk-margin-small-bottom">
-      {{ broadcaster.abbreviation }}
+      {{ broadcaster_nanitozo_count }}何卒<small> {{ broadcaster_air_count }}放送</small>
     </h2>
 
     {% if broadcaster.site_url %}
@@ -36,6 +36,27 @@
     </div>
     {% endif %}
   </div>
+
+  {% if program_nanitozo_ranking %}
+  <hr class="uk-divider-small uk-margin-small-bottom">
+
+  <div class="rn-padding">
+    {% for program in program_nanitozo_ranking %}
+    <div class="uk-margin-bottom uk-animation-toggle" tabindex="0">
+      <a href="{{ program.get_absolute_url }}" class="uk-display-block uk-link-reset uk-animation-slide-bottom-small border-left-muted">
+        <h3 class="uk-text-small uk-margin-remove">
+          <span class="mgr-s">{{ program.nanitozo_count }}何卒</span><span class="uk-article-meta">{{ program.air_count }}放送</span>
+        </h3>
+        <div class="uk-grid-collapse uk-flex-middle" uk-grid>
+          <h2 class="uk-width-expand uk-text-truncate uk-text-small">{{ program.name }}</h2>
+        </div>
+      </a>
+    </div>
+    {% endfor %}
+  </div>
+  {% endif %}
+
+  <hr class="uk-divider-small uk-margin-small-bottom">
 
   <div class="rn-padding">
     {% include 'list/item_monthly_count.html' with unit='放送' %}
