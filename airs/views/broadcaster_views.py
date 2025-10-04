@@ -26,13 +26,13 @@ class BroadcasterDetailView(generic.DetailView):
         context = super().get_context_data(**kwargs)
 
         # 放送局全体の統計情報
-        broadcaster_stats = Broadcaster.objects.filter(pk=self.object.pk).annotate(
+        broadcaster_stats = Broadcaster.objects.filter(pk=self.object.pk).aggregate(
             air_count=Count('air', distinct=True),
             nanitozo_count=Count('air__nanitozo', distinct=True)
-        ).first()
+        )
 
-        context['broadcaster_air_count'] = broadcaster_stats.air_count
-        context['broadcaster_nanitozo_count'] = broadcaster_stats.nanitozo_count
+        context['broadcaster_air_count'] = broadcaster_stats['air_count']
+        context['broadcaster_nanitozo_count'] = broadcaster_stats['nanitozo_count']
 
         # 番組ごとの何卒数ランキング（トップ10）
         from ..models import Program

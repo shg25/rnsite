@@ -23,13 +23,13 @@ class ProgramDetailView(generic.DetailView):
         context = super().get_context_data(**kwargs)
 
         # 番組全体の統計情報
-        program_stats = Program.objects.filter(pk=self.object.pk).annotate(
+        program_stats = Program.objects.filter(pk=self.object.pk).aggregate(
             air_count=Count('air', distinct=True),
             nanitozo_count=Count('air__nanitozo', distinct=True)
-        ).first()
+        )
 
-        context['program_air_count'] = program_stats.air_count
-        context['program_nanitozo_count'] = program_stats.nanitozo_count
+        context['program_air_count'] = program_stats['air_count']
+        context['program_nanitozo_count'] = program_stats['nanitozo_count']
 
         # ユーザーごとの何卒数ランキング
         user_nanitozo_ranking = User.objects.filter(
