@@ -64,6 +64,8 @@ jobs:
         pip install -r requirements.txt
 
     - name: Run Django tests
+      env:
+        SECRET_KEY: 'test-secret-key-for-ci-only-do-not-use-in-production'
       run: |
         echo "🧪 Djangoテスト実行中..."
         python manage.py test
