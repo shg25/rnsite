@@ -32,29 +32,37 @@ def get_allowed_hosts():
     独自ドメイン対応、複数ドメイン対応、Railwayヘルスチェック対応
     """
     allowed_hosts = []
-    
+
     # 1. カスタムドメイン設定（独自ドメイン用）
     custom_domain = os.getenv('CUSTOM_DOMAIN', '')
     if custom_domain:
         allowed_hosts.append(custom_domain)
-    
-    # 2. Railway自動設定ドメイン
+
+    # 2. Railway自動設定ドメイン（プロトコルなしの場合も対応）
     railway_static_url = os.getenv('RAILWAY_STATIC_URL', '')
     if railway_static_url:
         from urllib.parse import urlparse
-        parsed_url = urlparse(railway_static_url)
-        if parsed_url.netloc and parsed_url.netloc not in allowed_hosts:
-            allowed_hosts.append(parsed_url.netloc)
-    
+        # プロトコルがない場合は直接ドメインとして追加
+        if '://' not in railway_static_url:
+            if railway_static_url not in allowed_hosts:
+                allowed_hosts.append(railway_static_url)
+        else:
+            parsed_url = urlparse(railway_static_url)
+            if parsed_url.netloc and parsed_url.netloc not in allowed_hosts:
+                allowed_hosts.append(parsed_url.netloc)
+
     # 3. Railway公式ドメイン（フォールバック）
     railway_public_domain = os.getenv('RAILWAY_PUBLIC_DOMAIN', '')
     if railway_public_domain and railway_public_domain not in allowed_hosts:
         allowed_hosts.append(railway_public_domain)
-    
-    # 4. ローカル開発環境
-    if not allowed_hosts:
-        allowed_hosts = ['localhost', '127.0.0.1', '[::1]']
-    
+
+    # 4. Railwayの.railway.appドメインワイルドカード
+    allowed_hosts.append('.railway.app')
+
+    # 5. ローカル開発環境
+    if not allowed_hosts or len(allowed_hosts) == 1:  # .railway.appのみの場合
+        allowed_hosts.extend(['localhost', '127.0.0.1', '[::1]'])
+
     return allowed_hosts
 
 ALLOWED_HOSTS = get_allowed_hosts()
