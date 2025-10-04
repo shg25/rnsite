@@ -7,3 +7,4 @@ from .views.air_views_tests import *
 from .views.broadcaster_views_tests import *
 from .views.nanitozo_views_tests import *
 from .views.program_views_tests import *
+from .views.user_views_tests import *

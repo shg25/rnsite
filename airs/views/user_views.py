@@ -14,6 +14,12 @@ class UserListView(generic.ListView):
     # TODO ユーザー名昇順で表示
     # TODO 何卒した日時を保存して降順で表示（DjangoのAuthで可能であれば）
 
+    def get_queryset(self):
+        return User.objects.annotate(
+            program_count=Count('nanitozo__air__program', distinct=True),
+            nanitozo_count=Count('nanitozo', distinct=True)
+        ).filter(nanitozo_count__gt=0, is_superuser=False).order_by('-nanitozo_count', 'last_name')
+
 
 class UserDetailView(generic.DetailView):
     model = User
