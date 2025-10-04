@@ -187,7 +187,8 @@ WHITENOISE_AUTOREFRESH = True
 
 
 
-DEBUG = False
+# DEBUG設定（環境変数対応、デフォルトFalse）
+DEBUG = os.getenv('DEBUG', 'False').lower() in ('true', '1', 'yes')
 
 try:
     from local_settings import *
@@ -237,9 +238,10 @@ LOGGING = {
 }
 logging.config.dictConfig(LOGGING)
 
+# SECRET_KEY設定（本番・CI環境用）
+SECRET_KEY = os.getenv('SECRET_KEY', 'dev-secret-key-change-in-production')
+
 if not DEBUG:
-    SECRET_KEY = os.getenv('SECRET_KEY')
-    
     # 本番環境での静的ファイル設定
     STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
     

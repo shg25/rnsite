@@ -4,4 +4,7 @@ from .models.nanitozo_model_tests import *
 from .templatetags.rn_datetime_tests import *
 
 from .views.air_views_tests import *
+from .views.broadcaster_views_tests import *
 from .views.nanitozo_views_tests import *
+from .views.program_views_tests import *
+from .views.user_views_tests import *

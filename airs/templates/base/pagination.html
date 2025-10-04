@@ -1,15 +1,11 @@
-<div class="rn-padding pagination">
-    <span class="step-links">
-        <span class="current">{{ page_obj.number }}/{{ page_obj.paginator.num_pages }}</span>
-
-        {% if page_obj.has_previous %}
-        <a href="?page=1">&laquo; first</a>
-        <a href="?page={{ page_obj.previous_page_number }}">previous</a>
-        {% endif %}
-
-        {% if page_obj.has_next %}
-        <a href="?page={{ page_obj.next_page_number }}">next</a>
-        <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
-        {% endif %}
-    </span>
+<div class="rn-padding-vertical pagination">
+    <div class="step-links uk-grid-collapse uk-flex-middle" uk-grid>
+        <div>
+            {% if page_obj.has_previous %}<a href="?page=1"><span uk-icon="icon: chevron-double-left"></span><span class="uk-text-middle">最初</span></a>
+            <a href="?page={{ page_obj.previous_page_number }}"><span uk-icon="icon: chevron-left"></span><span class="uk-text-middle">前</span></a>{% endif %}
+            <span class="current uk-text-middle mgl-s mgr-s">{{ page_obj.number }}/{{ page_obj.paginator.num_pages }}</span>
+            {% if page_obj.has_next %}<a href="?page={{ page_obj.next_page_number }}"><span class="uk-text-middle">次</span><span uk-icon="icon: chevron-right"></span></a>
+            <a href="?page={{ page_obj.paginator.num_pages }}"><span class="uk-text-middle">最後</span><span uk-icon="icon: chevron-double-right"></span></a>{% endif %}
+        </div>
+    </div>
 </div>

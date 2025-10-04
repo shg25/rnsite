@@ -1,0 +1,98 @@
+name: CI
+
+on:
+  push:
+    branches: [ develop ]
+  pull_request:
+    branches: [ develop, main ]
+
+jobs:
+  security-check:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Check for secrets
+      run: |
+        echo "🔍 機密情報チェック実行中..."
+
+        # 機密情報パターンの検索（テストファイルと除外対象は除く）
+        SECRETS_FOUND=$(grep -r -i -n --exclude-dir=.git --exclude-dir=.claude --exclude-dir=.github --exclude-dir=node_modules \
+          --exclude="*.md" --exclude="*test*.py" --exclude="local_settings.py" \
+          -e "secret_key\s*=\s*['\"][^'\"]*['\"]" \
+          -e "api_key\s*=\s*['\"][^'\"]*['\"]" \
+          -e "token\s*=\s*['\"][^'\"]*['\"]" \
+          -e "dsn\s*=\s*['\"][^'\"]*['\"]" \
+          -e "[a-zA-Z0-9._%+-]+@(gmail|yahoo|hotmail)\.com" \
+          . || true)
+
+        if [ ! -z "$SECRETS_FOUND" ]; then
+          echo "❌ 実際の機密情報が検出されました:"
+          echo "$SECRETS_FOUND"
+          exit 1
+        fi
+
+        # 保護すべきファイルの確認
+        if find . -name "local_settings.py" -not -path "./.git/*" | grep -q .; then
+          echo "❌ local_settings.py が見つかりました"
+          exit 1
+        fi
+
+        if find . -name "*.env" -not -path "./.git/*" | grep -q .; then
+          echo "❌ .env ファイルが見つかりました"
+          exit 1
+        fi
+
+        echo "✅ セキュリティチェック完了"
+
+  django-tests:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.11'
+        cache: 'pip'
+
+    - name: Install dependencies
+      run: |
+        pip install --upgrade pip
+        pip install -r requirements.txt
+
+    - name: Run Django tests
+      env:
+        SECRET_KEY: 'test-secret-key-for-ci-only-do-not-use-in-production'
+        DEBUG: 'True'
+      run: |
+        echo "🧪 Djangoテスト実行中..."
+        python manage.py test
+        echo "✅ Djangoテスト完了"
+
+  backup-service-tests:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '18'
+        cache: 'npm'
+        cache-dependency-path: backup-service/package-lock.json
+
+    - name: Install dependencies
+      run: |
+        cd backup-service
+        npm ci
+
+    - name: Run backup-service tests
+      run: |
+        echo "🧪 backup-serviceテスト実行中..."
+        cd backup-service
+        npm test
+        echo "✅ backup-serviceテスト完了"
