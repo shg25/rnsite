@@ -66,6 +66,7 @@ jobs:
     - name: Run Django tests
       env:
         SECRET_KEY: 'test-secret-key-for-ci-only-do-not-use-in-production'
+        DEBUG: 'True'
       run: |
         echo "🧪 Djangoテスト実行中..."
         python manage.py test
