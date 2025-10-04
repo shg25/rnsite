@@ -187,7 +187,8 @@ WHITENOISE_AUTOREFRESH = True
 
 
 
-DEBUG = False
+# DEBUG設定（環境変数対応、デフォルトFalse）
+DEBUG = os.getenv('DEBUG', 'False').lower() in ('true', '1', 'yes')
 
 try:
     from local_settings import *
