@@ -13,7 +13,7 @@ WORKDIR /app
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
-# アプリケーションをコピー
+# アプリケーションをコピー（.dockerignoreで除外されたファイルは含まれない）
 COPY . .
 
 # ポートを公開
