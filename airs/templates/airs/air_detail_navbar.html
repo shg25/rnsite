@@ -4,7 +4,7 @@
 {% load rn_const %}
 {% load rn_datetime %}
 
-{% with my_nanitozo=air|air_my_nanitozo:user %}
+{% with my_nanitozo=air|air_my_nanitozo:request.user %}
 
 {% comment %} モーダルの場合はCLOSEボタンを表示 {% endcomment %}
 {% if not is_detail_page %}
@@ -19,7 +19,7 @@
 {% endif %}{% comment %} モーダルの場合はCLOSEボタンを表示 {% endcomment %}
 
 
-{% if user.is_authenticated %}
+{% if request.user.is_authenticated %}
 
 <nav class="uk-navbar-container" uk-navbar>
   <div class="uk-navbar-left"></div>
@@ -184,7 +184,7 @@
   </div>
 </nav>
 
-{% endif %}{% comment %} user.is_authenticated {% endcomment %}
+{% endif %}{% comment %} request.user.is_authenticated {% endcomment %}
 
 {% comment %} 下に線を引いておく（詳細画面で未ログインだと上に入っちゃうけど気にしない） {% endcomment %}
 <hr class="uk-margin-remove">

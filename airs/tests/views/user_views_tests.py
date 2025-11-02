@@ -275,3 +275,82 @@ class UserListViewTests(TestCase):
         self.assertEqual(user_list[0], user2)  # AAA
         self.assertEqual(user_list[1], user3)  # BBB
         self.assertEqual(user_list[2], user1)  # CCC
+
+
+class UserDetailViewTests(TestCase):
+    def setUp(self):
+        # 放送局作成
+        self.broadcaster = Broadcaster.objects.create(
+            radiko_identifier='TBS',
+            name='TBSラジオ',
+            abbreviation='TBS',
+            address='東京都'
+        )
+
+        # 番組作成
+        self.program = Program.objects.create(name='番組A')
+
+        # ユーザー作成
+        self.target_user = UserModel.objects.create_user(
+            username='target_user',
+            last_name='SHG'
+        )
+        self.login_user = UserModel.objects.create_user(
+            username='login_user',
+            last_name='YSG'
+        )
+
+        # Air作成
+        now = timezone.now()
+        self.air = Air.objects.create(
+            broadcaster=self.broadcaster,
+            program=self.program,
+            name='第1回',
+            started_at=now - datetime.timedelta(days=1),
+            ended_at=now - datetime.timedelta(days=1, hours=-1)
+        )
+
+        # target_userに何卒作成
+        Nanitozo.objects.create(air=self.air, user=self.target_user, comment='コメント')
+
+    def test_ユーザー詳細_未ログイン_フッターにログインボタン表示(self):
+        """未ログイン時はフッターに「ログイン」が表示される"""
+        response = self.client.get(reverse('airs:user', args=(self.target_user.id,)))
+
+        self.assertEqual(response.status_code, 200)
+        # ページタイトルには対象ユーザー名
+        self.assertContains(response, '<h1 class="uk-text-lead uk-margin-remove">SHG</h1>')
+        # フッターには「ログイン」
+        self.assertContains(response, 'ログイン')
+        # フッターに「+放送登録」は表示されない
+        self.assertNotContains(response, '+放送登録')
+
+    def test_ユーザー詳細_別ユーザーでログイン_フッターに自分の名前が表示(self):
+        """別ユーザーの詳細画面でも、フッターには自分のユーザー名が表示される"""
+        # YSGでログイン
+        self.client.force_login(self.login_user)
+
+        # SHGの詳細画面にアクセス
+        response = self.client.get(reverse('airs:user', args=(self.target_user.id,)))
+
+        self.assertEqual(response.status_code, 200)
+        # ページタイトルには対象ユーザー名（SHG）
+        self.assertContains(response, '<h1 class="uk-text-lead uk-margin-remove">SHG</h1>')
+        # フッターバーにはログインユーザー名（YSG）が表示される
+        # <a>YSG</a> の形式でフッターに表示される
+        self.assertContains(response, '<a>YSG</a>')
+        # フッターに「+放送登録」が表示される
+        self.assertContains(response, '+放送登録')
+
+    def test_ユーザー詳細_自分の詳細画面_フッターに自分の名前が表示(self):
+        """自分の詳細画面でも、フッターには自分のユーザー名が表示される"""
+        # YSGでログイン
+        self.client.force_login(self.login_user)
+
+        # 自分（YSG）の詳細画面にアクセス
+        response = self.client.get(reverse('airs:user', args=(self.login_user.id,)))
+
+        self.assertEqual(response.status_code, 200)
+        # ページタイトルもフッターも同じYSG
+        self.assertContains(response, '<h1 class="uk-text-lead uk-margin-remove">YSG</h1>')
+        self.assertContains(response, '<a>YSG</a>')

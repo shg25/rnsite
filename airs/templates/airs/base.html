@@ -71,13 +71,13 @@
           </ul>
         </div>
         <div class="uk-navbar-right">
-          {% if user.is_authenticated %}
+          {% if request.user.is_authenticated %}
           <ul class="uk-navbar-nav">
             <li>
-              <a>{{ user.last_name }}</a>
+              <a>{{ request.user.last_name }}</a>
               <div uk-dropdown="pos: top-center">
                 <ul class="uk-nav uk-navbar-dropdown-nav">
-                  <li class="uk-nav-header">{{ user.last_name }}</li>
+                  <li class="uk-nav-header">{{ request.user.last_name }}</li>
                   <li><a href="{% url 'password_change' %}" target="_blank" rel="noopener noreferrer">{% rn_const 'TITLE_PASSWORD_CHANGE' %}</a></li>
                   <li><a href="javascript:window.location.replace('{% url 'logout' %}')">{% rn_const 'TITLE_LOGOUT' %}</a></li>
                   <li class="uk-nav-divider uk-margin-small-bottom"></li>

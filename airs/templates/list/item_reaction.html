@@ -1,6 +1,6 @@
 {% load rn_datetime %}
 <div class="rn-padding-card-list uk-flex uk-flex-middle">
-    <div class="rn-padding uk-background-default uk-width-expand{% if user.is_authenticated and nanitozo.user.last_name == user.last_name%} border-left-success{% endif %}">
+    <div class="rn-padding uk-background-default uk-width-expand{% if request.user.is_authenticated and nanitozo.user.last_name == request.user.last_name%} border-left-success{% endif %}">
         <div class="uk-grid-collapse uk-flex-middle" uk-grid>
             <h2 class="uk-width-auto uk-text-default uk-margin-remove">
                 <a href="{{ nanitozo.user.get_absolute_url }}">{{ nanitozo.user.last_name }}</a>
